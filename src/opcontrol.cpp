@@ -13,21 +13,13 @@
 
 // OPControl Function
 void opcontrol() {
-	
+
+	// Controller
+	pros::Controller master(pros::E_CONTROLLER_MASTER);
+
 	// Variables
 	int arm_speed = 45;
 	int claw_speed = 45;
-
-	// Controller and Driving Motors
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	pros::Motor left_mtr(9,MOTOR_GEARSET_18,false,MOTOR_ENCODER_ROTATIONS);
-	pros::Motor right_mtr(10,MOTOR_GEARSET_18,true,MOTOR_ENCODER_ROTATIONS);
-	pros::Motor r_left_mtr(19,MOTOR_GEARSET_18,false,MOTOR_ENCODER_ROTATIONS);
-	pros::Motor r_right_mtr(20,MOTOR_GEARSET_18,true,MOTOR_ENCODER_ROTATIONS);
-
-	// Arm & Claw Motors
-	pros::Motor claw_mtr(7,MOTOR_GEARSET_36,false,MOTOR_ENCODER_ROTATIONS);
-	pros::Motor arm_mtr(8,MOTOR_GEARSET_36,false,MOTOR_ENCODER_ROTATIONS);
 
 	// Run Loop
 	while (true) {
@@ -87,5 +79,6 @@ void opcontrol() {
 		}
 
 		pros::delay(20);
+
 	}
 }
