@@ -29,11 +29,11 @@ void opcontrol() {
 		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
 
 		// Arcade Steering
-		int forward_backward = master.get_analog(ANALOG_LEFT_Y);
-		int left_right = master.get_analog(ANALOG_LEFT_X);
+		int forward_backward = master.get_analog(ANALOG_LEFT_X);
+		int left_right = master.get_analog(ANALOG_LEFT_Y);
 		left_mtr.move(forward_backward + left_right);
-		r_left_mtr.move(forward_backward + left_right);
-		right_mtr.move(forward_backward - left_right);
+		r_left_mtr.move(forward_backward - left_right);
+		right_mtr.move(forward_backward + left_right);
 		r_right_mtr.move(forward_backward - left_right);
 
 		// Arm Control
@@ -60,16 +60,16 @@ void opcontrol() {
 
 		// Strafe
 		if(master.get_digital(DIGITAL_A)){
-			right_mtr.move_velocity(-100);
-			left_mtr.move_velocity(100);
-			r_right_mtr.move_velocity(100);
-			r_left_mtr.move_velocity(-100);
+			right_mtr.move_velocity(-127);
+			left_mtr.move_velocity(127);
+			r_right_mtr.move_velocity(127);
+			r_left_mtr.move_velocity(-127);
 		}
 		else if (master.get_digital(DIGITAL_Y)){
-			right_mtr.move_velocity(100);
-			left_mtr.move_velocity(-100);
-			r_right_mtr.move_velocity(-100);
-			r_left_mtr.move_velocity(100);
+			right_mtr.move_velocity(127);
+			left_mtr.move_velocity(-127);
+			r_right_mtr.move_velocity(-127);
+			r_left_mtr.move_velocity(127);
 		}
 		else{
 			// right_mtr.move_velocity(0);
