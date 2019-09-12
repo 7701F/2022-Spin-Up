@@ -29,11 +29,11 @@ void opcontrol() {
 		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
 
 		// Arcade Steering
-		int forward_backward = master.get_analog(ANALOG_LEFT_X);
-		int left_right = master.get_analog(ANALOG_LEFT_Y);
+		int forward_backward = master.get_analog(ANALOG_LEFT_Y);
+		int left_right = master.get_analog(ANALOG_LEFT_X);
 		left_mtr.move(forward_backward + left_right);
-		r_left_mtr.move(forward_backward - left_right);
-		right_mtr.move(forward_backward + left_right);
+		r_left_mtr.move(forward_backward + left_right);
+		right_mtr.move(forward_backward - left_right);
 		r_right_mtr.move(forward_backward - left_right);
 
 		// Arm Control
