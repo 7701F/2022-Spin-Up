@@ -168,11 +168,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/motors.cpp.o",
-            "src\\motors.cpp"
+            "bin/opcontrol.cpp.o",
+            "src\\opcontrol.cpp"
         ],
         "directory": "c:\\Users\\micha\\OneDrive\\Documents\\Robotics\\day2",
-        "file": "src\\motors.cpp"
+        "file": "src\\opcontrol.cpp"
     },
     {
         "arguments": [
@@ -203,11 +203,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/opcontrol.cpp.o",
-            "src\\opcontrol.cpp"
+            "bin/motors.cpp.o",
+            "src\\motors.cpp"
         ],
         "directory": "c:\\Users\\micha\\OneDrive\\Documents\\Robotics\\day2",
-        "file": "src\\opcontrol.cpp"
+        "file": "src\\motors.cpp"
     },
     {
         "arguments": [
