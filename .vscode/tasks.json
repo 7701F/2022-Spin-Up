@@ -1,0 +1,26 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Project",
+            "type": "shell",
+            "command": "prosv5 make"
+        },
+        {
+            "label": "Build Project And Upload to V5",
+            "type": "shell",
+            "command": "prosv5 mu",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Upload Project to V5",
+            "type": "shell",
+            "command": "prosv5 upload"
+        }
+    ]
+}
