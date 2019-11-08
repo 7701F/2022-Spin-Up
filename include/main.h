@@ -1,22 +1,19 @@
 /**
- 	* \file main.h
- 	*
- 	* Contains common definitions and header files used throughout your PROS
- 	* project.
- 	*
- 	* Copyright (c) 2017-2018, Purdue University ACM SIGBots.
- 	* All rights reserved.
- 	*
- 	* This Source Code Form is subject to the terms of the Mozilla Public
- 	* License, v. 2.0. If a copy of the MPL was not distributed with this
- 	* file, You can obtain one at http://mozilla.org/MPL/2.0/.
-*/
+ * \file main.h
+ *
+ * Contains common definitions and header files used throughout your PROS
+ * project.
+ *
+ * Copyright (c) 2017-2019, Purdue University ACM SIGBots.
+ * All rights reserved.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 
 #ifndef _PROS_MAIN_H_
 #define _PROS_MAIN_H_
-
-
-
 
 /**
  * If defined, some commonly used enums will have preprocessor macros which give
@@ -38,15 +35,6 @@
 #define PROS_USE_LITERALS
 
 #include "api.h"
-
-// Declare motors
-extern pros::Motor left_mtr;
-extern pros::Motor right_mtr;
-extern pros::Motor r_left_mtr;
-extern pros::Motor r_right_mtr;
-extern pros::Motor claw_mtr;
-extern pros::Motor arm_mtr;
-
 
 /**
  * You should add more #includes here
