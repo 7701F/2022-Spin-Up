@@ -3,7 +3,7 @@ bin/
 template/
 version
 cquery_log.txt
-compile_commands.json
 temp.log
 temp.errors
 .d/
+.vscode/cquery_cached_index
