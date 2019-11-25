@@ -36,6 +36,15 @@
 
 #include "api.h"
 
+
+// Declare motors
+extern pros::Motor left_mtr;
+extern pros::Motor right_mtr;
+extern pros::Motor r_left_mtr;
+extern pros::Motor r_right_mtr;
+extern pros::Motor claw_mtr;
+extern pros::Motor arm_mtr;
+
 /**
  * You should add more #includes here
  */
