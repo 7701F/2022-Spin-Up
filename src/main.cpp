@@ -1,20 +1,23 @@
 #include "main.h"
 
+int arm_speed = 45;
+int claw_speed = 45;
+
 /**
  * A callback function for LLEMU's center button.
  *
  * When this callback is fired, it will toggle line 2 of the LCD text between
  * "I was pressed!" and nothing.
  */
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
-}
+// void on_center_button() {
+// 	static bool pressed = false;
+// 	pressed = !pressed;
+// 	if (pressed) {
+// 		pros::lcd::set_text(2, "I was pressed!");
+// 	} else {
+// 		pros::lcd::clear_line(2);
+// 	}
+// }
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -24,9 +27,19 @@ void on_center_button() {
  */
 void initialize() {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
+	
+	pros::lcd::print(0,"This code was made on Linux™");
+	pros::lcd::print(1, "       .---.");
+	pros::lcd::print(2, "      /     \\");
+	pros::lcd::print(3, "      \\.@-@./");
+	pros::lcd::print(4, "      /`\\_/`\\");
+	pros::lcd::print(5, "     //  _  \\");
+	pros::lcd::print(6, "    | \\     )|_");
+	pros::lcd::print(7, "   /`\\_`>  <_/ \\");
+	pros::lcd::print(8, "   \\__/'---'\\__/");
+	pros::lcd::set_text(9, "This robot is not a joke.");
 
-	pros::lcd::register_btn1_cb(on_center_button);
+	// pros::lcd::register_btn1_cb();
 }
 
 /**
@@ -49,9 +62,9 @@ void competition_initialize() {}
 
 
 // Distance in inches, Speed in rpms, Wait in milliseconds
-void drive(double distance, int speed, int wait){
+void drive(double distance, int speed, int wait) {
 
-    double wheel_radius = 2; //inches
+    double wheel_radius = 2.065; //inches
     double const pi = 3.14159265;
     //1 rotation will move the robot 2*pi*wheel_radius inches
     double rotations = distance/(pi*2*wheel_radius);
@@ -69,7 +82,7 @@ void drive(double distance, int speed, int wait){
 }
 
 // Degrees of turn.  Speed is RPM, Wait is milliseconds
-void turn(double degrees, int speed, int wait){
+void turn(double degrees, int speed, int wait) {
 
     double one_rotation_turn_degrees = 115; //customize to your robot
     double rotations = degrees/one_rotation_turn_degrees;
@@ -86,20 +99,52 @@ void turn(double degrees, int speed, int wait){
 
 }
 
+void grab(double degrees, int speed, int wait) {
 
+    double one_rotation_turn_degrees = 115; //customize to your robot
+    double rotations = degrees/one_rotation_turn_degrees;
+    claw_mtr.move_relative(rotations, speed);
+
+    rotations += claw_mtr.get_position();
+
+    while (!((claw_mtr.get_position() < rotations + 0.5) && (claw_mtr.get_position() > rotations -0.5 ))) {
+        pros::delay(20);
+    }
+    
+    pros::delay(wait);
+
+}
+
+void lift(double degrees, int speed, int wait) {
+
+    double one_rotation_turn_degrees = 115; //customize to your robot
+    double rotations = degrees/one_rotation_turn_degrees;
+    arm0_mtr.move_relative(rotations, speed);
+	arm1_mtr.move_relative(rotations, speed);
+	arm2_mtr.move_relative(rotations, speed);
+
+    rotations += arm0_mtr.get_position();
+
+    while (!((arm0_mtr.get_position() < rotations + 0.5) && (arm0_mtr.get_position() > rotations -0.5 ))) {
+        pros::delay(20);
+    }
+    
+    pros::delay(wait);
+
+}
 
 void autonomous() {
 
-  //front_left_mtr.move_relative(10, 100);
-  drive(60,100,1000);
-  drive(-24,100,1000);
-  drive(24,100,1000);
-  drive(-60,100,1000);
-  turn(360,100,1000);
-  turn(-180,100,1000);
-  turn(100,100,1000);
-  turn(-360,100,1000);
-  turn(360, 100, 1000);
+//   drive(60,100,1000);
+//   turn(-360,100,1000);
+//   lift(-180,100,1000);
+//   grab(-60,100,1000);
+	drive(34, 100, 1000);
+	grab(60, 100, 1000);
+	turn(180, 100, 1000);
+	drive(34, 100, 1000);
+	turn(-90, 100, 1000);
+	drive(20, 100, 1000);
 
 }
 
@@ -121,17 +166,13 @@ void opcontrol() {
 	
 	// Controller
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-
-	// Variables
-	int arm_speed = 45;
-	int claw_speed = 45;
 	
 	// Run Loop
 	while (true) {
 		// %d %d %d
-		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
+		// pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
+		                //  (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
+		                //  (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
 
 		// Arcade Steering
 		int forward_backward = master.get_analog(ANALOG_LEFT_Y);
@@ -140,24 +181,30 @@ void opcontrol() {
 		right_mtr.move(forward_backward - left_right);
 
 		// Arm Control
-		if(master.get_digital(DIGITAL_L2)){
-			arm_mtr.move_velocity(arm_speed);
+		if(master.get_digital(DIGITAL_L2)) {
+			arm0_mtr.move_velocity(arm_speed);
+			arm1_mtr.move_velocity(arm_speed);
+			arm2_mtr.move_velocity(arm_speed);
 		}
-		else if (master.get_digital(DIGITAL_L1)){
-			arm_mtr.move_velocity(-arm_speed);
+		else if (master.get_digital(DIGITAL_L1)) {
+			arm0_mtr.move_velocity(-arm_speed);
+			arm1_mtr.move_velocity(-arm_speed);
+			arm2_mtr.move_velocity(-arm_speed);
 		}
-		else{
-			arm_mtr.move_velocity(0);
+		else {
+			arm0_mtr.move_velocity(0);
+			arm0_mtr.move_velocity(0);
+			arm0_mtr.move_velocity(0);
 		}
 
 		// Grab Control
-		if(master.get_digital(DIGITAL_R1)){
+		if(master.get_digital(DIGITAL_R1)) {
 			claw_mtr.move_velocity(-claw_speed);
 		}
-		else if (master.get_digital(DIGITAL_R2)){
+		else if (master.get_digital(DIGITAL_R2)) {
 			claw_mtr.move_velocity(claw_speed);
 		}
-		else{
+		else {
 			claw_mtr.move_velocity(0);
 		}
 
