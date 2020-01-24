@@ -28,7 +28,7 @@ int claw_speed = 45;
 void initialize() {
 	pros::lcd::initialize();
 	
-	pros::lcd::print(0,"This code was made on Linux™");
+	pros::lcd::print(0,"This robot's code was made on Linux™");
 	pros::lcd::print(1, "       .---.");
 	pros::lcd::print(2, "      /     \\");
 	pros::lcd::print(3, "      \\.@-@./");
