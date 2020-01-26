@@ -1,7 +1,7 @@
 #include "main.h"
 
-int arm_speed = 45;
-int claw_speed = 45;
+int arm_speed = 60;
+int claw_speed = 30;
 
 /**
  * A callback function for LLEMU's center button.
@@ -28,16 +28,14 @@ int claw_speed = 45;
 void initialize() {
 	pros::lcd::initialize();
 	
-	pros::lcd::print(0,"This robot's code was made on Linux™");
-	pros::lcd::print(1, "       .---.");
-	pros::lcd::print(2, "      /     \\");
-	pros::lcd::print(3, "      \\.@-@./");
-	pros::lcd::print(4, "      /`\\_/`\\");
-	pros::lcd::print(5, "     //  _  \\");
-	pros::lcd::print(6, "    | \\     )|_");
-	pros::lcd::print(7, "   /`\\_`>  <_/ \\");
-	pros::lcd::print(8, "   \\__/'---'\\__/");
-	pros::lcd::set_text(9, "This robot is not a joke.");
+	pros::lcd::print(0, "       .---.");
+	pros::lcd::print(1, "      /     \\");
+	pros::lcd::print(2, "      \\.@-@./");
+	pros::lcd::print(3, "      /`\\_/`\\");
+	pros::lcd::print(4, "     //  _  \\");
+	pros::lcd::print(5, "    | \\     )|_");
+	pros::lcd::print(6, "   /`\\_`>  <_/ \\");
+	pros::lcd::print(7, "   \\__/'---'\\__/");
 
 	// pros::lcd::register_btn1_cb();
 }
@@ -47,7 +45,10 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {}
+void disabled() {
+	pros::lcd::clear();
+	pros::lcd::print(0, "Disabled by FMS/Competition Switch");
+}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -119,13 +120,11 @@ void lift(double degrees, int speed, int wait) {
 
     double one_rotation_turn_degrees = 115; //customize to your robot
     double rotations = degrees/one_rotation_turn_degrees;
-    arm0_mtr.move_relative(rotations, speed);
-	arm1_mtr.move_relative(rotations, speed);
-	arm2_mtr.move_relative(rotations, speed);
+    arm_mtr.move_relative(rotations, speed);
 
-    rotations += arm0_mtr.get_position();
+    rotations += arm_mtr.get_position();
 
-    while (!((arm0_mtr.get_position() < rotations + 0.5) && (arm0_mtr.get_position() > rotations -0.5 ))) {
+    while (!((arm_mtr.get_position() < rotations + 0.5) && (arm_mtr.get_position() > rotations -0.5 ))) {
         pros::delay(20);
     }
     
@@ -139,12 +138,15 @@ void autonomous() {
 //   turn(-360,100,1000);
 //   lift(-180,100,1000);
 //   grab(-60,100,1000);
+	// turn(-90, 100, 1000);`	z
 	drive(34, 100, 1000);
-	grab(60, 100, 1000);
-	turn(180, 100, 1000);
-	drive(34, 100, 1000);
-	turn(-90, 100, 1000);
-	drive(20, 100, 1000);
+	drive(34,-100, 1000);
+	// grab(-35, 100, 1000);
+	// turn(180, 100, 1000);
+	// drive(34, 100, 1000);
+	// turn(-90, 100, 1000);
+	// drive(20, 100, 1000);
+	// lift(500, 100 ,1000);
 
 }
 
@@ -170,9 +172,8 @@ void opcontrol() {
 	// Run Loop
 	while (true) {
 		// %d %d %d
-		// pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-		                //  (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-		                //  (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
+		pros::lcd::print(0, "%d %d    .---.", (master.get_analog(ANALOG_LEFT_X)) >> 1,
+		                 (master.get_analog(ANALOG_LEFT_Y)) >> 0);
 
 		// Arcade Steering
 		int forward_backward = master.get_analog(ANALOG_LEFT_Y);
@@ -182,19 +183,16 @@ void opcontrol() {
 
 		// Arm Control
 		if(master.get_digital(DIGITAL_L2)) {
-			arm0_mtr.move_velocity(arm_speed);
-			arm1_mtr.move_velocity(arm_speed);
-			arm2_mtr.move_velocity(arm_speed);
+			arm_mtr.move_velocity(arm_speed);
+			arm1_mtr.move_velocity(-arm_speed);
 		}
 		else if (master.get_digital(DIGITAL_L1)) {
-			arm0_mtr.move_velocity(-arm_speed);
-			arm1_mtr.move_velocity(-arm_speed);
-			arm2_mtr.move_velocity(-arm_speed);
+			arm_mtr.move_velocity(-arm_speed);
+			arm1_mtr.move_velocity(arm_speed);
 		}
 		else {
-			arm0_mtr.move_velocity(0);
-			arm0_mtr.move_velocity(0);
-			arm0_mtr.move_velocity(0);
+			arm_mtr.move_velocity(0);
+			arm1_mtr.move_velocity(0);
 		}
 
 		// Grab Control
