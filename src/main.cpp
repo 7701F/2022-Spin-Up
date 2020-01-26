@@ -1,3 +1,9 @@
+/**
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 #include "main.h"
 
 int arm_speed = 60;
@@ -46,7 +52,7 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
-	pros::lcd::clear();
+	// pros::lcd::clear();
 	pros::lcd::print(0, "Disabled by FMS/Competition Switch");
 }
 
@@ -100,6 +106,7 @@ void turn(double degrees, int speed, int wait) {
 
 }
 
+// grip the claw
 void grab(double degrees, int speed, int wait) {
 
     double one_rotation_turn_degrees = 115; //customize to your robot
@@ -116,6 +123,7 @@ void grab(double degrees, int speed, int wait) {
 
 }
 
+// lift the claw
 void lift(double degrees, int speed, int wait) {
 
     double one_rotation_turn_degrees = 115; //customize to your robot
@@ -140,7 +148,7 @@ void autonomous() {
 //   grab(-60,100,1000);
 	// turn(-90, 100, 1000);`	z
 	drive(34, 100, 1000);
-	drive(34,-100, 1000);
+	drive(-34,-100, 1000);
 	// grab(-35, 100, 1000);
 	// turn(180, 100, 1000);
 	// drive(34, 100, 1000);
