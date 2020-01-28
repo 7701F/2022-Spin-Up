@@ -8,6 +8,6 @@
 
 void displayRun() {
 
-    
+    // add stuff to push image to the display and other wacky stuff
 
 }

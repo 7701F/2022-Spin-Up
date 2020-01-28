@@ -171,7 +171,7 @@ void autonomous() {
  * If the robot is disabled or communications is lost, the
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
- */
+*/
 void opcontrol() {
 	
 	// Controller
@@ -180,40 +180,53 @@ void opcontrol() {
 	// Run Loop
 	while (true) {
 		// %d %d %d
+		// Print the analog stick values to the screen
+		// TODO: rewrite this as part of the LVGL conversion
 		pros::lcd::print(0, "%d %d    .---.", (master.get_analog(ANALOG_LEFT_X)) >> 1,
 		                 (master.get_analog(ANALOG_LEFT_Y)) >> 0);
 
+		// TODO: Add stuff for LVGL refresh and stuff
+
 		// Arcade Steering
+		// Get analog stick values
 		int forward_backward = master.get_analog(ANALOG_LEFT_Y);
 		int left_right = master.get_analog(ANALOG_LEFT_X);
+		// Move the motors
 		left_mtr.move(forward_backward + left_right);
 		right_mtr.move(forward_backward - left_right);
 
 		// Arm Control
 		if(master.get_digital(DIGITAL_L2)) {
+			// Move down?
 			arm_mtr.move_velocity(arm_speed);
 			arm1_mtr.move_velocity(-arm_speed);
 		}
 		else if (master.get_digital(DIGITAL_L1)) {
+			// Move up?
 			arm_mtr.move_velocity(-arm_speed);
 			arm1_mtr.move_velocity(arm_speed);
 		}
 		else {
+			// Zero out arm motors
 			arm_mtr.move_velocity(0);
 			arm1_mtr.move_velocity(0);
 		}
 
 		// Grab Control
 		if(master.get_digital(DIGITAL_R1)) {
+			// Move motor down when R1 is pressed
 			claw_mtr.move_velocity(-claw_speed);
 		}
 		else if (master.get_digital(DIGITAL_R2)) {
+			// Move motor up when R2 is pressed
 			claw_mtr.move_velocity(claw_speed);
 		}
 		else {
+			// If not accelerating or decellerating, zero the motor
 			claw_mtr.move_velocity(0);
 		}
 
+		// Old strafe code, not needed for new robot but kept for posterity
 		// Strafe
 		// if(master.get_digital(DIGITAL_A)){
 		// 	right_mtr.move_velocity(-127);
@@ -234,6 +247,7 @@ void opcontrol() {
 		// 	// r_left_mtr.move_velocity(0);
 		// }
 
+		// Lastly, delay
 		pros::delay(20);
 
 	}
