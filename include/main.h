@@ -36,7 +36,6 @@
 
 #include "api.h"
 
-
 // Declare motors
 extern pros::Motor left_mtr;
 extern pros::Motor right_mtr;
@@ -47,6 +46,7 @@ extern pros::Motor arm1_mtr;
 /**
  * You should add more #includes here
  */
+#include "pros/apix.h"
 //#include "okapi/api.hpp"
 //#include "pros/api_legacy.h"
 
