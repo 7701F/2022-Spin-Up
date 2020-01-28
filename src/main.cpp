@@ -2,7 +2,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
+*/
 
 #include "main.h"
 
@@ -32,16 +32,16 @@ int claw_speed = 30;
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::lcd::initialize();
+	// pros::lcd::initialize();
 	
-	pros::lcd::print(0, "       .---.");
-	pros::lcd::print(1, "      /     \\");
-	pros::lcd::print(2, "      \\.@-@./");
-	pros::lcd::print(3, "      /`\\_/`\\");
-	pros::lcd::print(4, "     //  _  \\");
-	pros::lcd::print(5, "    | \\     )|_");
-	pros::lcd::print(6, "   /`\\_`>  <_/ \\");
-	pros::lcd::print(7, "   \\__/'---'\\__/");
+	// pros::lcd::print(0, "       .---.");
+	// pros::lcd::print(1, "      /     \\");
+	// pros::lcd::print(2, "      \\.@-@./");
+	// pros::lcd::print(3, "      /`\\_/`\\");
+	// pros::lcd::print(4, "     //  _  \\");
+	// pros::lcd::print(5, "    | \\     )|_");
+	// pros::lcd::print(6, "   /`\\_`>  <_/ \\");
+	// pros::lcd::print(7, "   \\__/'---'\\__/");
 
 	// pros::lcd::register_btn1_cb();
 }
