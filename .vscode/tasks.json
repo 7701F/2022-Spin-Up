@@ -6,7 +6,10 @@
         {
             "label": "Build Project",
             "type": "shell",
-            "command": "prosv5 make"
+            "command": "prosv5 make",
+            "problemMatcher": [
+                "$gcc"
+            ]
         },
         {
             "label": "Build Project And Upload to V5",
@@ -15,7 +18,7 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
+            },
         },
         {
             "label": "Upload Project to V5",
