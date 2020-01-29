@@ -36,12 +36,10 @@
 
 #include "api.h"
 
-// Declare motors
-extern pros::Motor left_mtr;
-extern pros::Motor right_mtr;
-extern pros::Motor claw_mtr;
-extern pros::Motor arm_mtr;
-extern pros::Motor arm1_mtr;
+// Custom Headers
+#include "display.h"
+#include "motors.h"
+#include "functions.h"
 
 /**
  * You should add more #includes here
