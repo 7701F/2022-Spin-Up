@@ -38,16 +38,16 @@ void turn(double degrees, int speed, int wait) {
 
 }
 
-// grip the claw
-void grab(double degrees, int speed, int wait) {
+// angle the tray
+void angle(double degrees, int speed, int wait) {
 
     double one_rotation_turn_degrees = 115; //customize to your robot
     double rotations = degrees/one_rotation_turn_degrees;
-    claw_mtr.move_relative(rotations, speed);
+    angler_mtr.move_relative(rotations, speed);
 
-    rotations += claw_mtr.get_position();
+    rotations += angler_mtr.get_position();
 
-    while (!((claw_mtr.get_position() < rotations + 0.5) && (claw_mtr.get_position() > rotations -0.5 ))) {
+    while (!((angler_mtr.get_position() < rotations + 0.5) && (angler_mtr.get_position() > rotations -0.5 ))) {
         pros::delay(20);
     }
     
@@ -55,16 +55,17 @@ void grab(double degrees, int speed, int wait) {
 
 }
 
-// lift the claw
-void lift(double degrees, int speed, int wait) {
+// rotate the intakes
+void rotate(double degrees, int speed, int wait) {
 
     double one_rotation_turn_degrees = 115; //customize to your robot
     double rotations = degrees/one_rotation_turn_degrees;
-    arm_mtr.move_relative(rotations, speed);
+    intake_mtr.move_relative(rotations, speed);
+	intake1_mtr.move_relative(rotations, speed);
 
-    rotations += arm_mtr.get_position();
+    rotations += intake_mtr.get_position();
 
-    while (!((arm_mtr.get_position() < rotations + 0.5) && (arm_mtr.get_position() > rotations -0.5 ))) {
+    while (!((intake_mtr.get_position() < rotations + 0.5) && (intake_mtr.get_position() > rotations -0.5 ))) {
         pros::delay(20);
     }
     
