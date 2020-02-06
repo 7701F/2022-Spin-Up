@@ -6,24 +6,8 @@
 
 #include "main.h"
 
-int arm_speed = 60;
-int claw_speed = 30;
-
-/**
- * A callback function for LLEMU's center button.
- *
- * When this callback is fired, it will toggle line 2 of the LCD text between
- * "I was pressed!" and nothing.
- */
-// void on_center_button() {
-// 	static bool pressed = false;
-// 	pressed = !pressed;
-// 	if (pressed) {
-// 		pros::lcd::set_text(2, "I was pressed!");
-// 	} else {
-// 		pros::lcd::clear_line(2);
-// 	}
-// }
+int intake_speed = 172;
+int angler_speed = 30;
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -32,16 +16,6 @@ int claw_speed = 30;
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	// pros::lcd::initialize();
-	
-	// pros::lcd::print(0, "       .---.");
-	// pros::lcd::print(1, "      /     \\");
-	// pros::lcd::print(2, "      \\.@-@./");
-	// pros::lcd::print(3, "      /`\\_/`\\");
-	// pros::lcd::print(4, "     //  _  \\");
-	// pros::lcd::print(5, "    | \\     )|_");
-	// pros::lcd::print(6, "   /`\\_`>  <_/ \\");
-	// pros::lcd::print(7, "   \\__/'---'\\__/");
 
 	display();
 
@@ -52,9 +26,7 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {
-	return;
-}
+void disabled() {}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -65,9 +37,7 @@ void disabled() {
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {
-	return;
-}
+void competition_initialize() {}
 
 void autonomous() {
 
@@ -103,70 +73,45 @@ void opcontrol() {
 	
 	// Run Loop
 	while (true) {
-		/* TODO: rewrite this as part of the LVGL conversion
-		pros::lcd::print(0, "%d %d    .---.", (master.get_analog(ANALOG_LEFT_X)) >> 1, 
-			(master.get_analog(ANALOG_LEFT_Y)) >> 0);
-		*/
 
 		// Arcade Steering
 		// Get analog stick values
 		int forward_backward = master.get_analog(ANALOG_LEFT_Y);
 		int left_right = master.get_analog(ANALOG_LEFT_X);
 		// Move the motors
-		left_mtr.move(forward_backward + left_right);
-		right_mtr.move(forward_backward - left_right);
+		left_mtr.move(forward_backward - left_right);
+		right_mtr.move(forward_backward + left_right);
 
 		// Arm Control
 		if(master.get_digital(DIGITAL_L2)) {
 			// Move down?
-			arm_mtr.move_velocity(arm_speed);
-			arm1_mtr.move_velocity(-arm_speed);
+			intake_mtr.move_velocity(intake_speed);
+			intake1_mtr.move_velocity(-intake_speed);
 		}
 		else if (master.get_digital(DIGITAL_L1)) {
 			// Move up?
-			arm_mtr.move_velocity(-arm_speed);
-			arm1_mtr.move_velocity(arm_speed);
+			intake_mtr.move_velocity(-intake_speed);
+			intake1_mtr.move_velocity(intake_speed);
 		}
 		else {
 			// Zero out arm motors
-			arm_mtr.move_velocity(0);
-			arm1_mtr.move_velocity(0);
+			intake_mtr.move_velocity(0);
+			intake1_mtr.move_velocity(0);
 		}
 
-		// Grab Control
+		// Angle Control
 		if(master.get_digital(DIGITAL_R1)) {
 			// Move motor down when R1 is pressed
-			claw_mtr.move_velocity(-claw_speed);
+			angler_mtr.move_velocity(-angler_speed);
 		}
 		else if (master.get_digital(DIGITAL_R2)) {
 			// Move motor up when R2 is pressed
-			claw_mtr.move_velocity(claw_speed);
+			angler_mtr.move_velocity(angler_speed);
 		}
 		else {
 			// If not accelerating or decellerating, zero the motor
-			claw_mtr.move_velocity(0);
+			angler_mtr.move_velocity(0);
 		}
-
-		// Old strafe code, not needed for new robot but kept for posterity
-		// Strafe
-		// if(master.get_digital(DIGITAL_A)){
-		// 	right_mtr.move_velocity(-127);
-		// 	left_mtr.move_velocity(127);
-		// 	r_right_mtr.move_velocity(127);
-		// 	r_left_mtr.move_velocity(-127);
-		// }
-		// else if (master.get_digital(DIGITAL_Y)){
-		// 	right_mtr.move_velocity(127);
-		// 	left_mtr.move_velocity(-127);
-		// 	r_right_mtr.move_velocity(-127);
-		// 	r_left_mtr.move_velocity(127);
-		// }
-		// else{
-		// 	// right_mtr.move_velocity(0);
-		// 	// left_mtr.move_velocity(0);
-		// 	// r_right_mtr.move_velocity(0);
-		// 	// r_left_mtr.move_velocity(0);
-		// }
 
 		// Lastly, delay
 		pros::delay(20);
