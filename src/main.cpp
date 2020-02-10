@@ -6,7 +6,7 @@
 
 #include "main.h"
 
-int intake_speed = 172;
+// int intake_speed = 172;
 int angler_speed = 30;
 
 /**
@@ -14,7 +14,7 @@ int angler_speed = 30;
  *
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
- */
+*/
 void initialize() {
 
 	display();
@@ -25,7 +25,7 @@ void initialize() {
  * Runs while the robot is in the disabled state of Field Management System or
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
- */
+*/
 void disabled() {}
 
 /**
@@ -36,7 +36,7 @@ void disabled() {}
  *
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
- */
+*/
 void competition_initialize() {}
 
 void autonomous() {
@@ -75,9 +75,12 @@ void opcontrol() {
 	while (true) {
 
 		// Arcade Steering
-		// Get analog stick values
 		int forward_backward = master.get_analog(ANALOG_LEFT_Y);
 		int left_right = master.get_analog(ANALOG_LEFT_X);
+
+		// Intake Stick
+		int intake_speed = master.get_analog(ANALOG_RIGHT_Y);
+
 		// Move the motors
 		left_mtr.move(forward_backward - left_right);
 		right_mtr.move(forward_backward + left_right);
