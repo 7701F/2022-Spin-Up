@@ -13,3 +13,4 @@ temp.log
 temp.errors
 *.ini
 .d/
+.vscode/c_cpp_properties.json
