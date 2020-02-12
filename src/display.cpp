@@ -9,7 +9,7 @@
 
 extern Gif gif;
 
-void display() {  
+void display() {
 
   	static lv_style_t background_style;
   	lv_style_copy(&background_style, &lv_style_plain);
@@ -37,5 +37,5 @@ void display() {
   	lv_obj_t *display_title = lv_label_create(scr, NULL);
   	lv_obj_set_style(display_title, &title_style);
   	lv_label_set_text(display_title, "SNEAKY SNAKES");
-	lv_obj_align(display_title, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -15);
+    lv_obj_align(display_title, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -15);
 }
