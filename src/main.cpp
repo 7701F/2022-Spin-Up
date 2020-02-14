@@ -7,7 +7,7 @@
 #include "main.h"
 
 // int intake_speed = 172;
-int angler_speed = 30;
+int angler_speed = 60;
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -41,11 +41,12 @@ void competition_initialize() {}
 
 void autonomous() {
 
-	// Templates
-	// drive(60,100,1000);
-	// turn(-360,100,1000);
-	// lift(-180,100,1000);
-	// grab(-60,100,1000);
+	/* Templates
+		drive(60,100,1000);
+	 	turn(-360,100,1000);
+		lift(-180,100,1000);
+		grab(-60,100,1000);
+	*/
 
 	drive(34, 100, 1000);
 	drive(-34,-100, 1000);
@@ -82,24 +83,18 @@ void opcontrol() {
 		int intake_speed = master.get_analog(ANALOG_RIGHT_Y);
 
 		// Move the motors
-		left_mtr.move(forward_backward - left_right);
-		right_mtr.move(forward_backward + left_right);
+		left_mtr.move(forward_backward + left_right);
+		right_mtr.move(forward_backward - left_right);
 
 		// Arm Control
-		if(master.get_digital(DIGITAL_L2)) {
-			// Move down?
-			intake_mtr.move_velocity(intake_speed);
-			intake1_mtr.move_velocity(-intake_speed);
-		}
-		else if (master.get_digital(DIGITAL_L1)) {
-			// Move up?
-			intake_mtr.move_velocity(-intake_speed);
-			intake1_mtr.move_velocity(intake_speed);
-		}
-		else {
-			// Zero out arm motors
-			intake_mtr.move_velocity(0);
-			intake1_mtr.move_velocity(0);
+		if(true) {
+			// Move intakes
+			intake_mtr.move_velocity(-master.get_analog(ANALOG_RIGHT_Y));
+			intake1_mtr.move_velocity(master.get_analog(ANALOG_RIGHT_Y));
+		}  else {
+			// Zero out intake motors
+			intake_mtr.move_velocity(1);
+			intake1_mtr.move_velocity(1);
 		}
 
 		// Angle Control
