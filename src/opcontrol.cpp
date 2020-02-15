@@ -8,6 +8,8 @@
 
 // int intake_speed = 172;
 int angler_speed = 60;
+int intake_speed = 100;
+bool intake_on = false;
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -64,6 +66,20 @@ void opcontrol() {
 		else {
 			// If not accelerating or decellerating, zero the motor
 			angler_mtr.move_velocity(0);
+		}
+
+		// Angler Toggle
+		if(master.get_digital(DIGITAL_A) == 1) {
+			intake_on = true;
+		}
+
+		if(master.get_digital(DIGITAL_B) == 1) {
+			intake_on = false;
+		}
+
+		if(intake_on == true) {
+			intake_mtr.move_velocity(intake_speed);
+			intake1_mtr.move_velocity(-intake_speed);
 		}
 
 		// Lastly, delay
