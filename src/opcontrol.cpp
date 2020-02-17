@@ -68,7 +68,7 @@ void opcontrol() {
 			angler_mtr.move_velocity(0);
 		}
 
-		// Angler Toggle
+		// Intake Toggle
 		if(master.get_digital(DIGITAL_A) == 1) {
 			intake_on = true;
 		}
