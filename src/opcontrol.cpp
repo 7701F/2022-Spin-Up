@@ -61,7 +61,7 @@ void opcontrol() {
 		}
 		else if (master.get_digital(DIGITAL_R2)) {
 			// Move motor when R2 is pressed
-			angler_mtr.move_absolute(300, angler_speed);
+			angler_mtr.move_absolute(0, angler_speed);
 		}
 		else {
 			// If not accelerating or decellerating, zero the motor
