@@ -56,12 +56,12 @@ void opcontrol() {
 
 		// Angle Control
 		if(master.get_digital(DIGITAL_R1)) {
-			// Move motor down when R1 is pressed
-			angler_mtr.move_velocity(-angler_speed);
+			// Move motor when R1 is pressed
+			angler_mtr.move_absolute(300, -angler_speed);
 		}
 		else if (master.get_digital(DIGITAL_R2)) {
-			// Move motor up when R2 is pressed
-			angler_mtr.move_velocity(angler_speed);
+			// Move motor when R2 is pressed
+			angler_mtr.move_absolute(300, angler_speed);
 		}
 		else {
 			// If not accelerating or decellerating, zero the motor
