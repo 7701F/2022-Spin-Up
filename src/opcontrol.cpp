@@ -6,9 +6,8 @@
 
 #include "main.h"
 
-// int intake_speed = 172;
 int angler_speed = 60;
-int intake_speed = 100;
+int intake_speed = 175;
 bool intake_on = false;
 
 /**
@@ -36,28 +35,18 @@ void opcontrol() {
 		int forward_backward = master.get_analog(ANALOG_LEFT_Y);
 		int left_right = master.get_analog(ANALOG_LEFT_X);
 
-		// Intake Stick
-		int intake_speed = master.get_analog(ANALOG_RIGHT_Y);
-
-		// Move the motors
+		// Move the steering motors
 		left_mtr.move(forward_backward + left_right);
 		right_mtr.move(forward_backward - left_right);
 
-		// Arm Control
-		if(true) {
-			// Move intakes
-			intake_mtr.move_velocity(-master.get_analog(ANALOG_RIGHT_Y));
-			intake1_mtr.move_velocity(master.get_analog(ANALOG_RIGHT_Y));
-		}  else {
-			// Zero out intake motors
-			intake_mtr.move_velocity(1);
-			intake1_mtr.move_velocity(1);
-		}
-
+		// Intake control
+		intake_mtr.move_velocity(-master.get_analog(ANALOG_RIGHT_Y));
+		intake1_mtr.move_velocity(master.get_analog(ANALOG_RIGHT_Y));
+		
 		// Angle Control
 		if(master.get_digital(DIGITAL_R1)) {
 			// Move motor when R1 is pressed
-			angler_mtr.move_absolute(300, -angler_speed);
+			angler_mtr.move_absolute(534, -angler_speed);
 		}
 		else if (master.get_digital(DIGITAL_R2)) {
 			// Move motor when R2 is pressed
