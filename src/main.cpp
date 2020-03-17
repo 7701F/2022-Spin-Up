@@ -23,7 +23,9 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
 */
-void disabled() {}
+void disabled() {
+	
+}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -49,5 +51,13 @@ void autonomous() {
 
 	drive(-12, 100, 1000);
 	drive(12,-100, 1000);
+
+	intake_mtr.move_velocity(175);
+	intake1_mtr.move_velocity(-175);
+
+	pros::delay(500);
+
+	intake_mtr.move_velocity(0);
+	intake1_mtr.move_velocity(0);
 
 }
