@@ -58,21 +58,21 @@ void opcontrol() {
 		}
 
 		// Intake Arm Control
-		if(master.get_digital(DIGITAL_L1)) {
-			// Move motor when R1 is pressed
-			intakearm_mtr.move_velocity(120);
-			intakearm1_mtr.move_velocity(120);
-		}
-		else if (master.get_digital(DIGITAL_L2)) {
-			// Move motor when R2 is pressed
-			intakearm_mtr.move_velocity(-120);
-			intakearm1_mtr.move_velocity(-120);
-		}
-		else {
-			// If not accelerating or decellerating, zero the motor
-			intakearm_mtr.move_velocity(0);
-			intakearm1_mtr.move_velocity(0);
-		}
+		// if(master.get_digital(DIGITAL_L1)) {
+		// 	// Move motor when R1 is pressed
+		// 	intakearm_mtr.move_velocity(120);
+		// 	intakearm1_mtr.move_velocity(120);
+		// }
+		// else if (master.get_digital(DIGITAL_L2)) {
+		// 	// Move motor when R2 is pressed
+		// 	intakearm_mtr.move_velocity(-120);
+		// 	intakearm1_mtr.move_velocity(-120);
+		// }
+		// else {
+		// 	// If not accelerating or decellerating, zero the motor
+		// 	intakearm_mtr.move_velocity(0);
+		// 	intakearm1_mtr.move_velocity(0);
+		// }
 
 		// Intake Toggle
 		if(master.get_digital(DIGITAL_A) == 1) {
