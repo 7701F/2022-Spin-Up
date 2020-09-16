@@ -24,10 +24,10 @@ bool intake_on = false;
  * task, not resume it from where it left off.
 */
 void opcontrol() {
-	
+
 	// Controller
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	
+
 	// Run Loop
 	while (true) {
 
@@ -42,9 +42,9 @@ void opcontrol() {
 		// Intake control
 		intake_mtr.move_velocity(-master.get_analog(ANALOG_RIGHT_Y));
 		intake1_mtr.move_velocity(master.get_analog(ANALOG_RIGHT_Y));
-		
+
 		// Angle Control
-		if(master.get_digital(DIGITAL_R1)) {
+		if (master.get_digital(DIGITAL_R1)) {
 			// Move motor when R1 is pressed
 			angler_mtr.move_absolute(534, -angler_speed);
 		}
@@ -75,15 +75,15 @@ void opcontrol() {
 		// }
 
 		// Intake Toggle
-		if(master.get_digital(DIGITAL_A) == 1) {
+		if (master.get_digital(DIGITAL_A) == 1) {
 			intake_on = true;
 		}
 
-		if(master.get_digital(DIGITAL_B) == 1) {
+		if (master.get_digital(DIGITAL_B) == 1) {
 			intake_on = false;
 		}
 
-		if(intake_on == true) {
+		if (intake_on == true) {
 			intake_mtr.move_velocity(intake_speed);
 			intake1_mtr.move_velocity(-intake_speed);
 		}
