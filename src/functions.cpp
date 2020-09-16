@@ -7,12 +7,12 @@
 #include "main.h"
 
 // Distance in inches, Speed in rpms, Wait in milliseconds
-void drive(double distance, int speed, int wait) {
+void drive (double distance, int speed, int wait) {
 
     double wheel_radius = 2.065; //inches
-    double const pi = 3.14159265;
-    //1 rotation will move the robot 2*pi*wheel_radius inches
+    double const pi = 3.14159265; //1 rotation will move the robot 2*pi*wheel_radius inches
     double rotations = distance/(pi*2*wheel_radius);
+
     left_mtr.move_relative(rotations, speed);
     right_mtr.move_relative(rotations, speed);
 
@@ -27,7 +27,7 @@ void drive(double distance, int speed, int wait) {
 }
 
 // Degrees of turn.  Speed is RPM, Wait is milliseconds
-void turn(double degrees, int speed, int wait) {
+void turn (double degrees, int speed, int wait) {
 
     double one_rotation_turn_degrees = 115; //customize to your robot
     double rotations = degrees/one_rotation_turn_degrees;
@@ -39,13 +39,13 @@ void turn(double degrees, int speed, int wait) {
     while (!((left_mtr.get_position() < rotations + 0.5) && (left_mtr.get_position() > rotations -0.5 ))) {
         pros::delay(20);
     }
-    
+
     pros::delay(wait);
 
 }
 
 // angle the tray
-void angle(double degrees, int speed, int wait) {
+void angle (double degrees, int speed, int wait) {
 
     double one_rotation_turn_degrees = 115; //customize to your robot
     double rotations = degrees/one_rotation_turn_degrees;
@@ -56,13 +56,13 @@ void angle(double degrees, int speed, int wait) {
     while (!((angler_mtr.get_position() < rotations + 0.5) && (angler_mtr.get_position() > rotations -0.5 ))) {
         pros::delay(20);
     }
-    
+
     pros::delay(wait);
 
 }
 
 // rotate the intakes
-void rotate(double degrees, int speed, int wait) {
+void rotate (double degrees, int speed, int wait) {
 
     double one_rotation_turn_degrees = 115; //customize to your robot
     double rotations = degrees/one_rotation_turn_degrees;
@@ -74,7 +74,7 @@ void rotate(double degrees, int speed, int wait) {
     while (!((intake_mtr.get_position() < rotations + 0.5) && (intake_mtr.get_position() > rotations -0.5 ))) {
         pros::delay(20);
     }
-    
+
     pros::delay(wait);
 
 }
