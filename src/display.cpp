@@ -10,39 +10,33 @@
 extern Gif gif;
 
 void display() {
-  static lv_style_t background_style;
-  lv_style_copy(&background_style, &lv_style_plain);
-  background_style.body.main_color = LV_COLOR_WHITE;
-  background_style.body.grad_color = LV_COLOR_WHITE;
 
-  lv_obj_t* scr = lv_obj_create(NULL, NULL);
-  lv_obj_set_style(scr, &background_style);
-  lv_scr_load(scr);
+  	static lv_style_t background_style;
+  	lv_style_copy(&background_style, &lv_style_plain);
+  	background_style.body.main_color = LV_COLOR_WHITE;
+  	background_style.body.grad_color = LV_COLOR_WHITE;
 
-  lv_obj_t* obj = lv_obj_create(lv_scr_act(), NULL);
-  lv_obj_set_size(obj, 400, 209);
-  lv_obj_set_style(obj, &lv_style_transp);
-  lv_obj_align(obj, NULL, LV_ALIGN_CENTER, 0, -20);
+  	lv_obj_t *scr = lv_obj_create(NULL, NULL);
+  	lv_obj_set_style(scr, &background_style);
+  	lv_scr_load(scr);
 
-  Gif* gif = new Gif("/usd/image.gif", obj);
+  	lv_obj_t* obj = lv_obj_create(lv_scr_act(), NULL);
+  	lv_obj_set_size(obj, 400, 209);
+  	lv_obj_set_style(obj, &lv_style_transp);
+  	lv_obj_align(obj, NULL, LV_ALIGN_CENTER, 0, -20);
 
-  // styles
-  static lv_style_t title_style;
-  lv_style_copy(&title_style, &lv_style_plain);
-  title_style.text.font = &lv_font_dejavu_20;
-  title_style.text.color = LV_COLOR_BLACK;
+  	Gif* gif = new Gif ("/usd/image.gif", obj);
 
-  // text
-  lv_obj_t* display_title = lv_label_create(scr, NULL);
-  lv_obj_set_style(display_title, &title_style);
-  lv_label_set_text(display_title, "Connection Pending...");
-  lv_obj_align(display_title, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -15);
+  	// styles
+  	static lv_style_t title_style;
+  	lv_style_copy(&title_style, &lv_style_plain);
+  	title_style.text.font = &lv_font_dejavu_20;
+  	title_style.text.color = LV_COLOR_BLACK;
 
-  // while (true) {
-  // 	lv_label_set_text(display_title, "Connection Pending");
-  // 	lv_label_set_text(display_title, "Connection Pending.");
-  // 	lv_label_set_text(display_title, "Connection Pending..");
-  // 	lv_label_set_text(display_title, "Connection Pending...");
-  // 	pros::delay(20);
-  // }
+  	// text
+  	lv_obj_t *display_title = lv_label_create(scr, NULL);
+  	lv_obj_set_style(display_title, &title_style);
+  	lv_label_set_text(display_title, "SKETCHY SNAKES");
+	lv_obj_align(display_title, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, -15);
+
 }
