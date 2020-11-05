@@ -24,7 +24,7 @@ void initialize() {
  * the robot is enabled, this task will exit.
 */
 void disabled() {
-	
+
 }
 
 /**
@@ -52,12 +52,12 @@ void autonomous() {
 	drive(-12, 100, 1000);
 	drive(12,-100, 1000);
 
-	intake_mtr.move_velocity(175);
-	intake1_mtr.move_velocity(-175);
+	// intake_mtr.move_velocity(175);
+	// intake1_mtr.move_velocity(-175);
 
 	pros::delay(500);
 
-	intake_mtr.move_velocity(0);
-	intake1_mtr.move_velocity(0);
+	// intake_mtr.move_velocity(0);
+	// intake1_mtr.move_velocity(0);
 
 }
