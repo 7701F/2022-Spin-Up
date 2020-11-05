@@ -25,71 +25,77 @@ bool intake_on = false;
  */
 void opcontrol() {
 
-  // Controller
-  pros::Controller master(pros::E_CONTROLLER_MASTER);
+    // Controller
+    pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-  // Run Loop
-  while (true) {
-	// update screen speeeeeeeeeeeed
+    // Run Loop
+    while (true) {
+        // update screen speeeeeeeeeeeed
 
-	// Arcade Steering
-	int forward_backward = master.get_analog(ANALOG_LEFT_Y);
-	int left_right = master.get_analog(ANALOG_LEFT_X);
+        // Arcade Steering
+        int forward_backward = master.get_analog(ANALOG_LEFT_Y);
+        int left_right = master.get_analog(ANALOG_LEFT_X);
 
-	// Move the steering motors
-	leftMtr.move(forward_backward - left_right);
-	rightMtr.move(forward_backward + left_right);
-	// leftMtrR.move(forward_backward + left_right);
-	// rightMtrR.move(forward_backward - left_right);
+        // Move the steering motors
+        leftMtr.move(master.get_analog(ANALOG_LEFT_Y));
+        rightMtr.move(master.get_analog(ANALOG_RIGHT_Y));
+        // leftMtrR.move(forward_backward + left_right);
+        // rightMtrR.move(forward_backward - left_right);
 
-	// Intake control
-	intake_mtr.move_velocity(-master.get_analog(ANALOG_RIGHT_Y));
-	intake1_mtr.move_velocity(master.get_analog(ANALOG_RIGHT_Y));
+        // Intake control
+        // intake_mtr.move_velocity(-master.get_analog(ANALOG_RIGHT_Y));
+        // intake1_mtr.move_velocity(master.get_analog(ANALOG_RIGHT_Y));
 
-	// // Angle Control
-	// if (master.get_digital(DIGITAL_R1)) {
-	//   // Move motor when R1 is pressed
-	//   angler_mtr.move_absolute(534, -angler_speed);
-	// } else if (master.get_digital(DIGITAL_R2)) {
-	//   // Move motor when R2 is pressed
-	//   angler_mtr.move_absolute(0, angler_speed);
-	// } else {
-	//   // If not accelerating or decellerating, zero the motor
-	//   angler_mtr.move_velocity(0);
-	// }
+        // // Angle Control
+        // if (master.get_digital(DIGITAL_R1)) {
+        //   // Move motor when R1 is pressed
+        //   angler_mtr.move_absolute(534, -angler_speed);
+        // } else if (master.get_digital(DIGITAL_R2)) {
+        //   // Move motor when R2 is pressed
+        //   angler_mtr.move_absolute(0, angler_speed);
+        // } else {
+        //   // If not accelerating or decellerating, zero the motor
+        //   angler_mtr.move_velocity(0);
+        // }
 
-	// Intake Arm Control
-	// if(master.get_digital(DIGITAL_L1)) {
-	// 	// Move motor when R1 is pressed
-	// 	intakearm_mtr.move_velocity(120);
-	// 	intakearm1_mtr.move_velocity(120);
-	// }
-	// else if (master.get_digital(DIGITAL_L2)) {
-	// 	// Move motor when R2 is pressed
-	// 	intakearm_mtr.move_velocity(-120);
-	// 	intakearm1_mtr.move_velocity(-120);
-	// }
-	// else {
-	// 	// If not accelerating or decellerating, zero the motor
-	// 	intakearm_mtr.move_velocity(0);
-	// 	intakearm1_mtr.move_velocity(0);
-	// }
+        // Intake Arm Control
+        // if(master.get_digital(DIGITAL_L1)) {
+        // 	// Move motor when R1 is pressed
+        // 	intakearm_mtr.move_velocity(120);
+        // 	intakearm1_mtr.move_velocity(120);
+        // }
+        // else if (master.get_digital(DIGITAL_L2)) {
+        // 	// Move motor when R2 is pressed
+        // 	intakearm_mtr.move_velocity(-120);
+        // 	intakearm1_mtr.move_velocity(-120);
+        // }
+        // else {
+        // 	// If not accelerating or decellerating, zero the motor
+        // 	intakearm_mtr.move_velocity(0);
+        // 	intakearm1_mtr.move_velocity(0);
+        // }
 
-	// // Intake Toggle
-	// if (master.get_digital(DIGITAL_A) == 1) {
-	//   intake_on = true;
-	// }
+        // Intake Toggle
+        if (master.get_digital(DIGITAL_L2) == 1) {
+            //   intake_on = true;
+            intake_mtr.move_velocity(intake_speed);
+            intake1_mtr.move_velocity(-intake_speed);
+        } else {
+            intake_mtr.move_velocity(0);
+            intake1_mtr.move_velocity(0);
+        }
 
-	// if (master.get_digital(DIGITAL_B) == 1) {
-	//   intake_on = false;
-	// }
 
-	// if (intake_on == true) {
-	//   intake_mtr.move_velocity(intake_speed);
-	//   intake1_mtr.move_velocity(-intake_speed);
-	// }
+        // if (master.get_digital(DIGITAL_B) == 1) {
+        // 	intake_on = false;
+        // }
 
-	// Lastly, delay
-	pros::delay(20);
-  }
+        // if (intake_on == true) {
+        //   intake_mtr.move_velocity(intake_speed);
+        //   intake1_mtr.move_velocity(-intake_speed);
+        // }
+
+        // Lastly, delay
+        pros::delay(20);
+    }
 }
