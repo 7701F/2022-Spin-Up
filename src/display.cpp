@@ -10,7 +10,8 @@
 
 extern Gif gif;
 
-void display() {
+void display()
+{
 	static lv_style_t background_style;
 	lv_style_copy(&background_style, &lv_style_plain);
 	background_style.body.main_color = LV_COLOR_WHITE;
@@ -51,7 +52,7 @@ void display() {
 	lv_gauge_set_range(gauge1, 0, 10);
 	lv_gauge_set_critical_value(gauge1, 4.5);
 
-	lv_gauge_set_value(gauge1, 0, leftMtr.get_voltage());
+	lv_gauge_set_value(gauge1, 0, 15);
 
 	// while (true) {
 	// 	lv_label_set_text(display_title, "Connection Pending");

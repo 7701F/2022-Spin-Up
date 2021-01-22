@@ -12,8 +12,9 @@
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
 */
-void initialize() {
-    display();
+void initialize()
+{
+	display();
 }
 
 /**
@@ -21,7 +22,8 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
 */
-void disabled() {
+void disabled()
+{
 }
 
 /**
@@ -35,8 +37,9 @@ void disabled() {
 */
 void competition_initialize() {}
 
-void autonomous() {
-    /* Templates
+void autonomous()
+{
+	/* Templates
         Not really needed anymore since we just have a one cube auton now.
 
         drive(60,100,1000);
@@ -45,14 +48,14 @@ void autonomous() {
         grab(-60,100,1000);
     */
 
-    drive(-12, 100, 1000);
-    drive(12, -100, 1000);
+	drive(-12, 100, 1000);
+	drive(12, -100, 1000);
 
-    // intake_mtr.move_velocity(175);
-    // intake1_mtr.move_velocity(-175);
+	// intake_mtr.move_velocity(175);
+	// intake1_mtr.move_velocity(-175);
 
-    pros::delay(500);
+	pros::delay(500);
 
-    // intake_mtr.move_velocity(0);
-    // intake1_mtr.move_velocity(0);
+	// intake_mtr.move_velocity(0);
+	// intake1_mtr.move_velocity(0);
 }
