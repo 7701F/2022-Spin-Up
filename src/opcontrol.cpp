@@ -32,7 +32,6 @@ void opcontrol()
 	// Run Loop
 	while (true)
 	{
-		// update screen speeeeeeeeeeeed
 
 		// Arcade Steering
 		int forward_backward = master.get_analog(ANALOG_LEFT_Y);
@@ -125,5 +124,6 @@ void opcontrol()
 
 		// Lastly, delay
 		pros::delay(20);
+		
 	}
 }
