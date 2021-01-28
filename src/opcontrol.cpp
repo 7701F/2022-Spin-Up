@@ -67,13 +67,13 @@ void opcontrol()
 		if (master.get_digital(DIGITAL_L1))
 		{
 			// Move motor when R1 is pressed
-			elevator_mtr.move_velocity(200);
+			elevator_mtr.move_velocity(600);
 			elevator1_mtr.move_velocity(-600);
 		}
 		else if (master.get_digital(DIGITAL_L2))
 		{
 			// Move motor when R2 is pressed
-			elevator_mtr.move_velocity(-200);
+			elevator_mtr.move_velocity(-600);
 			elevator1_mtr.move_velocity(600);
 		}
 		else
@@ -124,6 +124,6 @@ void opcontrol()
 
 		// Lastly, delay
 		pros::delay(20);
-		
+
 	}
 }
