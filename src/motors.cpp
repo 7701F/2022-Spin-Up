@@ -18,7 +18,7 @@ pros::Motor intake_mtr(7, MOTOR_GEARSET_18, false, MOTOR_ENCODER_ROTATIONS);
 // Right Intake
 pros::Motor intake1_mtr(8, MOTOR_GEARSET_18, false, MOTOR_ENCODER_ROTATIONS);
 // Front Elevator
-pros::Motor elevator_mtr(9, MOTOR_GEARSET_18, false, MOTOR_ENCODER_ROTATIONS);
+pros::Motor elevator_mtr(9, MOTOR_GEARSET_06, false, MOTOR_ENCODER_ROTATIONS);
 // Rear Elevator
 pros::Motor elevator1_mtr(10, MOTOR_GEARSET_06, false, MOTOR_ENCODER_ROTATIONS);
 
