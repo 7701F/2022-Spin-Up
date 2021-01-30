@@ -43,13 +43,13 @@ void autonomous()
         Not really needed anymore since we just have a one cube auton now.
 
         drive(60,100,1000);
-         turn(-360,100,1000);
+        turn(-360,100,1000);
         lift(-180,100,1000);
         grab(-60,100,1000);
     */
 
-	drive(-12, 100, 1000);
-	drive(12, -100, 1000);
+	turn(360, 100, 1000);
+	turn(-360, 100, 1000);
 
 	// intake_mtr.move_velocity(175);
 	// intake1_mtr.move_velocity(-175);
