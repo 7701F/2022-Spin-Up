@@ -47,37 +47,46 @@ void turn(double degrees, int speed, int wait)
 	pros::delay(wait);
 }
 
-// angle the tray
-// void angle(double degrees, int speed, int wait) {
+// eject spheres
+void eject(double degrees, int speed, int wait)
+{
 
-//   double one_rotation_turn_degrees = 115; // customize to your robot
-//   double rotations = degrees / one_rotation_turn_degrees;
-//   angler_mtr.move_relative(rotations, speed);
+	double one_rotation_turn_degrees = 115; // customize to your robot
+	double rotations = degrees / one_rotation_turn_degrees;
 
-//   rotations += angler_mtr.get_position();
+	drive(3, 200, 1);
+	elevator_mtr.move_relative(rotations, speed);
+	elevator1_mtr.move_relative(rotations, speed);
+	// elevator_mtr.move_velocity(600);
+	// elevator1_mtr.move_velocity(-600);
 
-//   while (!((angler_mtr.get_position() < rotations + 0.5) &&
-//			(angler_mtr.get_position() > rotations - 0.5))) {
-//	 pros::delay(20);
-//   }
+	rotations += elevator_mtr.get_position();
 
-//   pros::delay(wait);
-// }
+	while (!((elevator_mtr.get_position() < rotations + 0.5) &&
+			 (elevator1_mtr.get_position() > rotations - 0.5)))
+	{
+		pros::delay(20);
+	}
+
+	pros::delay(wait);
+}
 
 // rotate the intakes
-// void rotate(double degrees, int speed, int wait) {
+void rotate(double degrees, int speed, int wait)
+{
 
-//   double one_rotation_turn_degrees = 115; // customize to your robot
-//   double rotations = degrees / one_rotation_turn_degrees;
-//   intake_mtr.move_relative(rotations, speed);
-//   intake1_mtr.move_relative(rotations, speed);
+	double one_rotation_turn_degrees = 115; // customize to your robot
+	double rotations = degrees / one_rotation_turn_degrees;
+	intake_mtr.move_relative(rotations, speed);
+	intake1_mtr.move_relative(rotations, speed);
 
-//   rotations += intake_mtr.get_position();
+	rotations += intake_mtr.get_position();
 
-//   while (!((intake_mtr.get_position() < rotations + 0.5) &&
-//			(intake_mtr.get_position() > rotations - 0.5))) {
-//	 pros::delay(20);
-//   }
+	while (!((intake_mtr.get_position() < rotations + 0.5) &&
+			 (intake_mtr.get_position() > rotations - 0.5)))
+	{
+		pros::delay(20);
+	}
 
-//   pros::delay(wait);
-// }
+	pros::delay(wait);
+}
