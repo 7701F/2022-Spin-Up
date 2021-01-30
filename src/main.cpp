@@ -44,12 +44,15 @@ void autonomous()
 
         drive(60,100,1000);
         turn(-360,100,1000);
-        lift(-180,100,1000);
-        grab(-60,100,1000);
+        eject(-180,100,1000);
+        rotate(-60,100,1000);
     */
-
-	turn(360, 100, 1000);
-	turn(-360, 100, 1000);
+	// turn(360, 200, 200);
+	// rotate(200, 200, 20);
+	drive(10, 100, 20);
+	turn(90, 200, 20);
+	drive(-10, 100, 20);
+	// eject(2000, 600, 20);
 
 	// intake_mtr.move_velocity(175);
 	// intake1_mtr.move_velocity(-175);

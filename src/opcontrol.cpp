@@ -9,6 +9,7 @@
 int angler_speed = 60;
 int intake_speed = 175;
 bool intake_on = false;
+bool outtake_on = false;
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -40,8 +41,8 @@ void opcontrol()
 		// Move the steering motors
 		leftMtr.move(master.get_analog(ANALOG_LEFT_Y));
 		rightMtr.move(master.get_analog(ANALOG_RIGHT_Y));
-		// leftMtrR.move(forward_backward + left_right);
-		// rightMtrR.move(forward_backward - left_right);
+		// leftMtr.move(forward_backward + left_right);
+		// rightMtr.move(forward_backward - left_right);
 
 		// Intake System Trigger
 		if (master.get_digital(DIGITAL_R1))
@@ -83,29 +84,12 @@ void opcontrol()
 			elevator1_mtr.move_velocity(0);
 		}
 
-		// Intake Arm Control
-		// if(master.get_digital(DIGITAL_L1)) {
-		// 	// Move motor when R1 is pressed
-		// 	intakearm_mtr.move_velocity(120);
-		// 	intakearm1_mtr.move_velocity(120);
-		// }
-		// else if (master.get_digital(DIGITAL_L2)) {
-		// 	// Move motor when R2 is pressed
-		// 	intakearm_mtr.move_velocity(-120);
-		// 	intakearm1_mtr.move_velocity(-120);
-		// }
-		// else {
-		// 	// If not accelerating or decellerating, zero the motor
-		// 	intakearm_mtr.move_velocity(0);
-		// 	intakearm1_mtr.move_velocity(0);
-		// }
-
-		// Intake Toggle
+		// // Intake Toggle
 		// if (master.get_digital(DIGITAL_L2) == 1)
 		// {
-		// 	//   intake_on = true;
-		// 	intake_mtr.move_velocity(intake_speed);
-		// 	intake1_mtr.move_velocity(-intake_speed);
+		// 	intake_on = true;
+		// 	// intake_mtr.move_velocity(intake_speed);
+		// 	// intake1_mtr.move_velocity(-intake_speed);
 		// }
 		// else
 		// {
