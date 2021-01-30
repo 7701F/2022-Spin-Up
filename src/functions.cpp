@@ -11,7 +11,7 @@ void drive(double distance, int speed, int wait)
 {
 	double wheel_radius = 2.065; // inches
 	double const pi =
-		3.14159265; // 1 rotation will move the robot 2*pi*wheel_radius inches
+		3.141592653589793238462643383279502884197169399375105820974944592307816406286; // 1 rotation will move the robot 2*pi*wheel_radius inches
 	double rotations = distance / (pi * 2 * wheel_radius);
 
 	leftMtr.move_relative(rotations, speed);
