@@ -9,7 +9,7 @@
 int angler_speed = 60;
 int intake_speed = 175;
 bool intake_on = false;
-bool outtake_on = false;
+bool intakeweirdo = false;
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -39,8 +39,8 @@ void opcontrol()
 		int left_right = master.get_analog(ANALOG_LEFT_X);
 
 		// Move the steering motors
-		leftMtr.move(master.get_analog(ANALOG_LEFT_Y));
-		rightMtr.move(master.get_analog(ANALOG_RIGHT_Y));
+		leftMtr.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
+		rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
 		// leftMtr.move(forward_backward + left_right);
 		// rightMtr.move(forward_backward - left_right);
 
@@ -84,30 +84,38 @@ void opcontrol()
 			elevator1_mtr.move_velocity(0);
 		}
 
-		// // Intake Toggle
-		// if (master.get_digital(DIGITAL_L2) == 1)
+		// if (master.get_digital(DIGITAL_Y) == 1)
 		// {
 		// 	intake_on = true;
-		// 	// intake_mtr.move_velocity(intake_speed);
-		// 	// intake1_mtr.move_velocity(-intake_speed);
 		// }
-		// else
+
+		// // Intake Toggle
+		// if (intakeweirdo == true)
 		// {
-		// 	intake_mtr.move_velocity(0);
-		// 	intake1_mtr.move_velocity(0);
-		// }
+		// 	if (master.get_digital(DIGITAL_A) == 1)
+		// 	{
+		// 		intake_on = true;
+		// 	}
 
-		// if (master.get_digital(DIGITAL_B) == 1) {
-		// 	intake_on = false;
-		// }
+		// 	if (master.get_digital(DIGITAL_B) == 1)
+		// 	{
+		// 		intake_on = false;
+		// 	}
 
-		// if (intake_on == true) {
-		//   intake_mtr.move_velocity(intake_speed);
-		//   intake1_mtr.move_velocity(-intake_speed);
+		// 	if (intake_on == true)
+		// 	{
+		// 		intake_mtr.move_velocity(200);
+		// 		intake1_mtr.move_velocity(-200);
+		// 	}
+
+		// 	if (intake_on == false)
+		// 	{
+		// 		intake_mtr.move_velocity(200);
+		// 		intake1_mtr.move_velocity(-200);
+		// 	}
 		// }
 
 		// Lastly, delay
 		pros::delay(20);
-
 	}
 }

@@ -47,12 +47,13 @@ void autonomous()
         eject(-180,100,1000);
         rotate(-60,100,1000);
     */
-	// turn(360, 200, 200);
-	// rotate(200, 200, 20);
-	drive(10, 100, 20);
-	turn(90, 200, 20);
-	drive(-10, 100, 20);
-	// eject(2000, 600, 20);
+	elevator_mtr.move_relative(1269, 600);
+	elevator1_mtr.move_relative(-1222, 600);
+	leftMtr.move_relative(120, 150);
+	rightMtr.move_relative(120, 150);
+	pros::delay(500);
+	leftMtr.move_relative(-120, 200);
+	rightMtr.move_relative(-120, 200);
 
 	// intake_mtr.move_velocity(175);
 	// intake1_mtr.move_velocity(-175);
