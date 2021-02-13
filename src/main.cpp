@@ -55,9 +55,6 @@ void autonomous()
 	// leftMtr.move_relative(-120, 200);
 	// rightMtr.move_relative(-120, 200);
 
-	// intake_mtr.move_velocity(175);
-	// intake1_mtr.move_velocity(-175);
-
 	pros::delay(500);
 
 	// intake_mtr.move_velocity(0);

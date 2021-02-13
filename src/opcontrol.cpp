@@ -116,6 +116,6 @@ void opcontrol()
 		// }
 
 		// Lastly, delay
-		pros::delay(20);
+		pros::delay(1);
 	}
 }
