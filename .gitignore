@@ -15,3 +15,6 @@ temp.errors
 *.ini
 .d/
 compile_commands.json
+
+# Vex Scorer
+vex_scorer/node_modules
