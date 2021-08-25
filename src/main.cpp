@@ -47,21 +47,21 @@ void autonomous()
         eject(-180,100,1000);
         rotate(-60,100,1000);
     */
-	elevator_mtr.move_relative(1269, 600);
-	elevator1_mtr.move_relative(-1222, 600);
-	leftMtr.move_relative(120, 150);
-	rightMtr.move_relative(120, 150);
-	pros::delay(500);
-	leftMtr.move_relative(-200, -200);
-	rightMtr.move_relative(-200, -200);
-	pros::delay(500);
-	// leftMtr.move_relative(-483, -200);
+	// elevator_mtr.move_relative(1269, 600);
+	// elevator1_mtr.move_relative(-1222, 600);
+	// leftMtr.move_relative(120, 150);
+	// rightMtr.move_relative(120, 150);
+	// pros::delay(500);
+	// leftMtr.move_relative(-200, -200);
+	// rightMtr.move_relative(-200, -200);
+	// pros::delay(500);
+	//piss leftMtr.move_relative(-483, -200);
+	//piss rightMtr.move_relative(608, -200);
+	// leftMtr.move_relative(456, 200);
+	// rightMtr.move_relative(-456, -200);
+	// pros::delay(500);
+	// leftMtr.move_relative(483, -200);
 	// rightMtr.move_relative(608, -200);
-	leftMtr.move_relative(456, 200);
-	rightMtr.move_relative(-456, -200);
-	pros::delay(500);
-	leftMtr.move_relative(483, -200);
-	rightMtr.move_relative(608, -200);
 
 	pros::delay(500);
 
