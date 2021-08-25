@@ -35,54 +35,57 @@ void opcontrol()
 	{
 
 		// Arcade Steering
-		int forward_backward = master.get_analog(ANALOG_LEFT_Y);
-		int left_right = master.get_analog(ANALOG_LEFT_X);
+		// int forward_backward = master.get_analog(ANALOG_LEFT_Y);
+		// int left_right = master.get_analog(ANALOG_LEFT_X);
 
 		// Move the steering motors
 		leftMtr.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
 		rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
+		leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
+		rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
+
 		// leftMtr.move(forward_backward + left_right);
 		// rightMtr.move(forward_backward - left_right);
 
-		// Intake System Trigger
-		if (master.get_digital(DIGITAL_R1))
-		{
-			// Move motor when R1 is pressed
-			intake_mtr.move_velocity(-200);
-			intake1_mtr.move_velocity(200);
-		}
-		else if (master.get_digital(DIGITAL_R2))
-		{
-			// Move motor when R2 is pressed
-			intake_mtr.move_velocity(200);
-			intake1_mtr.move_velocity(-200);
-		}
-		else
-		{
-			// If not accelerating or decellerating, zero the motor
-			intake_mtr.move_velocity(0);
-			intake1_mtr.move_velocity(0);
-		}
+		// // Intake System Trigger
+		// if (master.get_digital(DIGITAL_R1))
+		// {
+		// 	// Move motor when R1 is pressed
+		// 	intake_mtr.move_velocity(-200);
+		// 	intake1_mtr.move_velocity(200);
+		// }
+		// else if (master.get_digital(DIGITAL_R2))
+		// {
+		// 	// Move motor when R2 is pressed
+		// 	intake_mtr.move_velocity(200);
+		// 	intake1_mtr.move_velocity(-200);
+		// }
+		// else
+		// {
+		// 	// If not accelerating or decellerating, zero the motor
+		// 	intake_mtr.move_velocity(0);
+		// 	intake1_mtr.move_velocity(0);
+		// }
 
-		// Elevator Control
-		if (master.get_digital(DIGITAL_L1))
-		{
-			// Move motor when R1 is pressed
-			elevator_mtr.move_velocity(600);
-			elevator1_mtr.move_velocity(-600);
-		}
-		else if (master.get_digital(DIGITAL_L2))
-		{
-			// Move motor when R2 is pressed
-			elevator_mtr.move_velocity(-600);
-			elevator1_mtr.move_velocity(600);
-		}
-		else
-		{
-			// If not accelerating or decellerating, zero the motor
-			elevator_mtr.move_velocity(0);
-			elevator1_mtr.move_velocity(0);
-		}
+		// // Elevator Control
+		// if (master.get_digital(DIGITAL_L1))
+		// {
+		// 	// Move motor when R1 is pressed
+		// 	elevator_mtr.move_velocity(600);
+		// 	elevator1_mtr.move_velocity(-600);
+		// }
+		// else if (master.get_digital(DIGITAL_L2))
+		// {
+		// 	// Move motor when R2 is pressed
+		// 	elevator_mtr.move_velocity(-600);
+		// 	elevator1_mtr.move_velocity(600);
+		// }
+		// else
+		// {
+		// 	// If not accelerating or decellerating, zero the motor
+		// 	elevator_mtr.move_velocity(0);
+		// 	elevator1_mtr.move_velocity(0);
+		// }
 
 		// if (master.get_digital(DIGITAL_Y) == 1)
 		// {
