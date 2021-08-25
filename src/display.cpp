@@ -10,6 +10,7 @@
 
 extern Gif gif;
 
+// Magic beyond my understanding of LVGL
 void display()
 {
 	static lv_style_t background_style;
@@ -33,33 +34,32 @@ void display()
 	static lv_style_t title_style;
 	lv_style_copy(&title_style, &lv_style_plain);
 	title_style.text.font = &lv_font_dejavu_20;
-	title_style.text.color = LV_COLOR_WHITE;
+	title_style.text.color = LV_COLOR_GREEN;
+
+	static lv_style_t char_block_style;
+	lv_style_copy(&char_block_style, &lv_style_plain);
+	char_block_style.text.font = &lv_font_dejavu_20;
+	char_block_style.text.color = LV_COLOR_BLACK;
 
 	// text
 	lv_obj_t *display_title = lv_label_create(scr, NULL);
 	lv_obj_set_style(display_title, &title_style);
-	lv_label_set_text(display_title, "Hard disk failure is imminent");
-	lv_obj_align(display_title, NULL, LV_ALIGN_IN_TOP_LEFT, 0, 0);
+	lv_label_set_text(display_title, "GREETINGS PROFESSOR FALKEN.");
+	lv_obj_align(display_title, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 10);
 
-	// /*Describe the color for the needles*/
-	// static lv_color_t needle_colors[1];
-	// needle_colors[0] = LV_COLOR_RED;
+	lv_obj_t *display_title2 = lv_label_create(scr, NULL);
+	lv_obj_set_style(display_title2, &title_style);
+	lv_label_set_text(display_title2, "SHALL WE PLAY A GAME?");
+	lv_obj_align(display_title2, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 35);
 
-	// /*Create a gauge*/
-	// lv_obj_t *gauge1 = lv_gauge_create(lv_scr_act(), NULL);
-	// lv_gauge_set_needle_count(gauge1, 1, needle_colors);
-	// lv_obj_set_size(gauge1, 200, 200);
-	// lv_obj_align(gauge1, NULL, LV_ALIGN_CENTER, 0, 0);
-	// lv_gauge_set_range(gauge1, 0, 10);
-	// lv_gauge_set_critical_value(gauge1, 4.5);
+	// lv_obj_t *display_title3 = lv_label_create(scr, NULL);
+	// lv_obj_set_style(display_title3, &title_style);
+	// lv_label_set_text(display_title3, "[Y]/[N]");
+	// lv_obj_align(display_title3, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 60);
 
-	// lv_gauge_set_value(gauge1, 0, 15);
-
-	// while (true) {
-	// 	lv_label_set_text(display_title, "Connection Pending");
-	// 	lv_label_set_text(display_title, "Connection Pending.");
-	// 	lv_label_set_text(display_title, "Connection Pending..");
-	// 	lv_label_set_text(display_title, "Connection Pending...");
-	// 	pros::delay(20);
-	// }
+	// while (true)
+	// {
+	// 	lv_obj_set_style(display_title3, &title_style);
+	// 	lv_obj_set_style(display_title3, &char_block_style);
+	// };
 }
