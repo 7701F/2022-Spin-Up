@@ -8,8 +8,8 @@
 
 // Driving Motors
 pros::Motor leftMtr(1, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
-pros::Motor rightMtr(10, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
-pros::Motor leftMtrR(11, MOTOR_GEARSET_18, true, MOTOR_ENCODER_ROTATIONS);
+pros::Motor rightMtr(10, MOTOR_GEARSET_18, true, MOTOR_ENCODER_DEGREES);
+pros::Motor leftMtrR(11, MOTOR_GEARSET_18, false, MOTOR_ENCODER_ROTATIONS);
 pros::Motor rightMtrR(20, MOTOR_GEARSET_18, true, MOTOR_ENCODER_ROTATIONS);
 
 // // Intake Motors
