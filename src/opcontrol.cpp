@@ -6,7 +6,7 @@
 
 #include "main.h"
 
-bool pbrake = true;
+bool pbrake = false;
 /**
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -56,18 +56,29 @@ void opcontrol()
 
 		if (pbrake == true)
 		{
-			leftMtr.move(20);
-			rightMtr.move(20);
-			leftMtrR.move(-20);
-			rightMtrR.move(-20);
+			if (leftMtr.get_actual_velocity() >= 0 || leftMtr.get_actual_velocity() <= 0)
+			{
+				leftMtr.move(leftMtr.get_actual_velocity() * -1);
+				rightMtr.move(rightMtr.get_actual_velocity() * -1);
+				leftMtrR.move(leftMtrR.get_actual_velocity() * -1);
+				rightMtrR.move(rightMtrR.get_actual_velocity() * -1);
+			}
+			// leftMtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+			// rightMtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+			// leftMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+			// rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		}
 
 		// if (pbrake == false)
 		// {
-		// 	leftMtr.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
-		// 	rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
-		// 	leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
-		// 	rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
+		// 	// leftMtr.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
+		// 	// rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
+		// 	// leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
+		// 	// rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
+		// 	leftMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+		// 	rightMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+		// 	leftMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+		// 	rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 		// }
 
 		// Lastly, delay
