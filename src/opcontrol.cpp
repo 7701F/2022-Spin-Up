@@ -56,7 +56,7 @@ void opcontrol()
 
 		if (pbrake == true)
 		{
-			if (leftMtr.get_actual_velocity() >= 0 || leftMtr.get_actual_velocity() <= 0)
+			if (leftMtr.get_actual_velocity() != 0)
 			{
 				leftMtr.move(leftMtr.get_actual_velocity() * -1);
 				rightMtr.move(rightMtr.get_actual_velocity() * -1);
