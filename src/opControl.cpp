@@ -9,7 +9,7 @@
 
 bool pbrake = false;
 
-/**
+/*
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
  * the Field Management System or the VEX Competition Switch in the operator
@@ -32,10 +32,14 @@ void opcontrol()
 	while (true)
 	{
 
-		// Move the steering motors
+		/*
+			Move the steering motors
+			Comment out whichever drive type you don't want to use
+		*/
 		tankDrive();
+		// arcadeDrive();
 
-		//
+		// toggle brake systems
 		if (master.get_digital(DIGITAL_A) == 1)
 		{
 			pbrake = true;
