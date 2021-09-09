@@ -6,11 +6,10 @@
 
 #include "main.h"
 
-// void null;
+pros::Controller master(pros::E_CONTROLLER_MASTER);
+
 void tankDrive()
 {
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-
 	leftMtr.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
 	rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
 	leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
@@ -19,10 +18,10 @@ void tankDrive()
 
 void arcadeDrive()
 {
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-
 	int forward_backward = master.get_analog(ANALOG_LEFT_Y);
-	int left_right = master.get_analog(ANALOG_LEFT_X);
+	int left_right = master.get_analog(ANALOG_RIGHT_X);
 	leftMtr.move(forward_backward + left_right);
 	rightMtr.move(forward_backward - left_right);
+	leftMtrR.move(forward_backward + left_right);
+	rightMtrR.move(forward_backward - left_right);
 }
