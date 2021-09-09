@@ -7,8 +7,6 @@
 #include "main.h"
 #include "opfunctions.h"
 
-bool pbrake = false;
-
 /*
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -39,43 +37,20 @@ void opcontrol()
 		tankDrive();
 		// arcadeDrive();
 
-		// toggle brake systems
+		/*
+			Brake System Selector
+			Uses basic logic for toggle and is able to use a custom homemade brake or the PROS control for the built in motor breaks.
+		*/
 		if (master.get_digital(DIGITAL_A) == 1)
 		{
-			pbrake = true;
+			if (pbrake == true)
+				pbrake = false;
+			if (pbrake == false)
+				pbrake = true;
 		}
-
-		if (master.get_digital(DIGITAL_B) == 1)
-		{
-			pbrake = false;
-		}
-
-		if (pbrake == true)
-		{
-			if (leftMtr.get_actual_velocity() != 0)
-			{
-				leftMtr.move(leftMtr.get_actual_velocity() * -1);
-				rightMtr.move(rightMtr.get_actual_velocity() * -1);
-				leftMtrR.move(leftMtrR.get_actual_velocity() * -1);
-				rightMtrR.move(rightMtrR.get_actual_velocity() * -1);
-			}
-			// leftMtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-			// rightMtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-			// leftMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-			// rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-		}
-
-		// if (pbrake == false)
-		// {
-		// 	// leftMtr.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
-		// 	// rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
-		// 	// leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
-		// 	// rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
-		// 	leftMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-		// 	rightMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-		// 	leftMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-		// 	rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-		// }
+		// Uncomment whichever brake you want to use.
+		customBrake(pbrake);
+		// prosBrake();
 
 		// Lastly, delay
 		pros::delay(1);
