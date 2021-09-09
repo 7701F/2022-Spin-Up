@@ -5,6 +5,7 @@
  */
 
 #include "main.h"
+#include "opfunctions.h"
 
 bool pbrake = false;
 /**
@@ -30,18 +31,8 @@ void opcontrol()
 	while (true)
 	{
 
-		/* // Arcade Steering
-			int forward_backward = master.get_analog(ANALOG_LEFT_Y);
-			int left_right = master.get_analog(ANALOG_LEFT_X);
-			leftMtr.move(forward_backward + left_right);
-			rightMtr.move(forward_backward - left_right);
-		*/
-
 		// Move the steering motors
-		leftMtr.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
-		rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
-		leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
-		rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
+		tankDrive();
 
 		//
 		if (master.get_digital(DIGITAL_A) == 1)
