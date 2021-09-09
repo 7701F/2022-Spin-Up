@@ -9,9 +9,9 @@
 
 #include "main.h"
 
-#include "gif-pros/gifclass.hpp"
+// #include "gif-pros/gifclass.hpp"
 
-extern Gif gif;
+// extern Gif gif;
 
 // Magic beyond my understanding of LVGL
 void display()
@@ -54,15 +54,4 @@ void display()
 	lv_obj_set_style(display_title2, &title_style);
 	lv_label_set_text(display_title2, "SHALL WE PLAY A GAME?");
 	lv_obj_align(display_title2, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 35);
-
-	// lv_obj_t *display_title3 = lv_label_create(scr, NULL);
-	// lv_obj_set_style(display_title3, &title_style);
-	// lv_label_set_text(display_title3, "[Y]/[N]");
-	// lv_obj_align(display_title3, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 60);
-
-	// while (true)
-	// {
-	// 	lv_obj_set_style(display_title3, &title_style);
-	// 	lv_obj_set_style(display_title3, &char_block_style);
-	// };
 }
