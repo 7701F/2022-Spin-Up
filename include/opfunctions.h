@@ -11,7 +11,7 @@
 #define OPFUNC_H_
 
 // Declare drive system variables.
-bool pbrake = false;
+bool pbrake = true;
 
 // Declare driver functions
 void tankDrive();

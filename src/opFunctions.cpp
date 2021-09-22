@@ -11,12 +11,33 @@
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
+std::int32_t speed;
+
 void tankDrive()
 {
-	leftMtr.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
-	rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
-	leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_X));
-	rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
+	// leftMtr.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_Y));
+	// leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_Y));
+	// rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
+	// rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
+
+	if(master.get_digital(DIGITAL_R2)) {
+		speed = 4;
+	} else speed = 2.12;
+
+	leftMtr.move_velocity(master.get_analog(ANALOG_LEFT_Y) * speed);
+	leftMtrR.move_velocity(master.get_analog(ANALOG_LEFT_Y) * speed);
+	rightMtr.move_velocity(master.get_analog(ANALOG_RIGHT_Y) * speed);
+	rightMtrR.move_velocity(master.get_analog(ANALOG_RIGHT_Y) * speed);
+
+	// static lv_style_t title_style;
+	// lv_style_copy(&title_style, &lv_style_plain);
+	// title_style.text.font = &lv_font_dejavu_20;
+	// title_style.text.color = LV_COLOR_GREEN;
+
+	// lv_obj_t *display_title3 = lv_label_create(scr, NULL);
+	// lv_obj_set_style(display_title3, &title_style);
+	// lv_label_set_text(display_title3, "SHALL WE PLAY A GAME?");
+	// lv_obj_align(display_title3, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 60);
 }
 
 void arcadeDrive()
