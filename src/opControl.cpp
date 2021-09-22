@@ -44,16 +44,20 @@ void opcontrol()
 			Brake System Selector
 			Uses basic logic for toggle and is able to use a custom homemade brake or the PROS control for the built in motor breaks.
 		*/
-		if (master.get_digital(DIGITAL_A) == 1)
+		if (master.get_digital_new_press(DIGITAL_A) == 1)
 		{
 			if (pbrake == true)
+			{
 				pbrake = false;
-			if (pbrake == false)
+			}
+			else if (pbrake == false) {
 				pbrake = true;
+			}
+
 		}
 		// Uncomment whichever brake you want to use.
-		customBrake(pbrake);
-		// prosBrake();
+		// customBrake(pbrake);
+		prosBrake(pbrake);
 
 		// Lastly, delay
 		pros::delay(1);

@@ -39,11 +39,6 @@ void display()
 	title_style.text.font = &lv_font_dejavu_20;
 	title_style.text.color = LV_COLOR_GREEN;
 
-	static lv_style_t char_block_style;
-	lv_style_copy(&char_block_style, &lv_style_plain);
-	char_block_style.text.font = &lv_font_dejavu_20;
-	char_block_style.text.color = LV_COLOR_BLACK;
-
 	// text
 	lv_obj_t *display_title = lv_label_create(scr, NULL);
 	lv_obj_set_style(display_title, &title_style);
