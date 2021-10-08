@@ -20,14 +20,14 @@ void tankDrive()
 	// rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
 	// rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
 
-	if(master.get_digital(DIGITAL_R2)) {
-		speed = 4;
-	} else speed = 2.12;
+	if (master.get_digital(DIGITAL_R2) == true) {
+		speed = 1;
+	} else speed = 1.5;
 
-	leftMtr.move_velocity(master.get_analog(ANALOG_LEFT_Y) * speed);
-	leftMtrR.move_velocity(master.get_analog(ANALOG_LEFT_Y) * speed);
-	rightMtr.move_velocity(master.get_analog(ANALOG_RIGHT_Y) * speed);
-	rightMtrR.move_velocity(master.get_analog(ANALOG_RIGHT_Y) * speed);
+	leftMtr.move(master.get_analog(ANALOG_LEFT_Y) * speed);
+	leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) * speed);
+	rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) * speed);
+	rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) * speed);
 
 	// static lv_style_t title_style;
 	// lv_style_copy(&title_style, &lv_style_plain);
@@ -44,6 +44,7 @@ void arcadeDrive()
 {
 	int forward_backward = master.get_analog(ANALOG_LEFT_Y);
 	int left_right = master.get_analog(ANALOG_RIGHT_X);
+
 	leftMtr.move(forward_backward + left_right);
 	rightMtr.move(forward_backward - left_right);
 	leftMtrR.move(forward_backward + left_right);
