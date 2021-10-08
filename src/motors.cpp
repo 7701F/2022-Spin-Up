@@ -10,10 +10,10 @@
 #include "main.h"
 
 // Driving Motors
-pros::Motor leftMtr(1, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
-pros::Motor rightMtr(10, MOTOR_GEARSET_36, true, MOTOR_ENCODER_DEGREES);
-pros::Motor leftMtrR(11, MOTOR_GEARSET_36, false, MOTOR_ENCODER_ROTATIONS);
-pros::Motor rightMtrR(20, MOTOR_GEARSET_36, true, MOTOR_ENCODER_ROTATIONS);
+pros::Motor leftMtr(20, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
+pros::Motor rightMtr(11, MOTOR_GEARSET_18, true, MOTOR_ENCODER_DEGREES);
+pros::Motor leftMtrR(19, MOTOR_GEARSET_18, false, MOTOR_ENCODER_ROTATIONS);
+pros::Motor rightMtrR(12, MOTOR_GEARSET_18, true, MOTOR_ENCODER_ROTATIONS);
 
 // // Intake Motors
 // // Left Intake
