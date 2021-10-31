@@ -5,7 +5,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
-*/
+ */
 
 #include "main.h"
 
@@ -20,24 +20,35 @@ void tankDrive()
 	// rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
 	// rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
 
-	if (master.get_digital(DIGITAL_R2) == true) {
+	if (master.get_digital(DIGITAL_R2) == true)
+	{
 		speed = 1;
-	} else speed = 1.5;
+	}
+	else
+		speed = 1.5;
 
 	leftMtr.move(master.get_analog(ANALOG_LEFT_Y) * speed);
 	leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) * speed);
 	rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) * speed);
 	rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) * speed);
 
-	// static lv_style_t title_style;
-	// lv_style_copy(&title_style, &lv_style_plain);
-	// title_style.text.font = &lv_font_dejavu_20;
-	// title_style.text.color = LV_COLOR_GREEN;
+	// Test Copied Code
+	// float axis_4 = master.get_analog(ANALOG_LEFT_X); //left side
+	// float axis_3 = master.get_analog(ANALOG_LEFT_Y); //left up
+	// float axis_2 = master.get_analog(ANALOG_RIGHT_Y); //right up
+	// float axis_1 = master.get_analog(ANALOG_RIGHT_X); //right side
 
-	// lv_obj_t *display_title3 = lv_label_create(scr, NULL);
-	// lv_obj_set_style(display_title3, &title_style);
-	// lv_label_set_text(display_title3, "SHALL WE PLAY A GAME?");
-	// lv_obj_align(display_title3, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 60);
+	// //tank controls
+	// //x axis controls strafing
+	// float f_lb = (axis_3 + (axis_4))/(2*127);
+	// float f_lf = (axis_3 + (-axis_4))/(2*127);
+	// float f_rb = (axis_2 + (-axis_1))/(2*127);
+	// float f_rf = (axis_2 + axis_1)/(2*127);
+
+	// leftMtr.move(f_lf);
+	// leftMtrR.move(f_lb);
+	// rightMtr.move(f_rf);
+	// rightMtrR.move(f_rb);
 }
 
 void arcadeDrive()
@@ -80,5 +91,31 @@ void prosBrake(bool pbrake)
 		rightMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 		leftMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 		rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+	}
+}
+
+void liftControls()
+{
+	if (master.get_digital(DIGITAL_L2) == 1)
+	{
+		// if (rightLift.get_position() > -216 || leftLift.get_position() < 217)
+		// {
+			rightLift.move_relative(20, 200);
+			leftLift.move_relative(20, 200);
+			// rightLift.move(0);
+			// leftLift.move(0);
+		// }
+		// rightLift.move_absolute(20, 200);
+	}
+	if (master.get_digital(DIGITAL_L1) == 1)
+	{
+		// if (rightLift.get_position() > 0 || leftLift.get_position() < 0)
+		// {
+			rightLift.move_relative(-20, 200);
+			leftLift.move_relative(-20, 200);
+			// rightLift.move(0);
+			// leftLift.move(0);
+		// }
+		// rightLift.move_absolute(0, 200);
 	}
 }
