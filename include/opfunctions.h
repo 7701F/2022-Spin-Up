@@ -18,5 +18,6 @@ void tankDrive();
 void arcadeDrive();
 void customBrake(bool pbrake);
 void prosBrake(bool pbrake);
+void liftControls();
 
 #endif
