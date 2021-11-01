@@ -10,6 +10,8 @@
 #include "main.h"
 #include "opfunctions.h"
 
+#define PISTON_A_PORT 'A'
+
 /*
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -23,37 +25,61 @@
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() {
+void opcontrol()
+{
 
-  // Controller
-  pros::Controller master(pros::E_CONTROLLER_MASTER);
+	// Controller
+	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-  // Run Loop
-  while (true) {
-    /*
+	// Run Loop
+	while (true)
+	{
+		/*
         Move the steering motors
         Comment out whichever drive type you don't want to use
-    */
-    tankDrive();
-    // arcadeDrive();
+    	*/
+		tankDrive();
+		// arcadeDrive();
 
-    /*
+		/*
         Brake System Selector
     	Uses basic logic for toggle and is able to use a custom homemade
     	brake or the PROS control for the built in motor breaks.
     */
-    if (master.get_digital_new_press(DIGITAL_A) == 1) {
-      if (pbrake == true) {
-        pbrake = false;
-      } else {
-        pbrake = true;
-      }
-    }
-    // Uncomment whichever brake you want to use.
-    // customBrake(pbrake);
-    prosBrake(pbrake);
+		if (master.get_digital_new_press(DIGITAL_A) == 1)
+		{
+			if (pbrake == true)
+			{
+				pbrake = false;
+			}
+			else
+			{
+				pbrake = true;
+			}
+		}
 
-    // Lastly, delay
-    pros::delay(1);
-  }
+		// Uncomment whichever brake you want to use.
+		// customBrake(pbrake);
+		prosBrake(pbrake);
+
+		// Piston Testing
+		pros::ADIDigitalOut piston(PISTON_A_PORT);
+
+		if (master.get_digital(DIGITAL_Y) == 1)
+		{
+			piston.set_value(true);
+			pros::delay(1000);
+		}
+		if (master.get_digital(DIGITAL_X) == 1)
+		{
+			piston.set_value(false);
+			pros::delay(1000);
+		}
+
+		// Lift Controls
+		liftControls();
+
+		// Lastly, delay
+		pros::delay(1);
+	}
 }

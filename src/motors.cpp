@@ -12,22 +12,9 @@
 // Driving Motors
 pros::Motor leftMtr(20, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
 pros::Motor rightMtr(11, MOTOR_GEARSET_18, true, MOTOR_ENCODER_DEGREES);
-pros::Motor leftMtrR(19, MOTOR_GEARSET_18, false, MOTOR_ENCODER_ROTATIONS);
-pros::Motor rightMtrR(12, MOTOR_GEARSET_18, true, MOTOR_ENCODER_ROTATIONS);
+pros::Motor leftMtrR(19, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
+pros::Motor rightMtrR(12, MOTOR_GEARSET_18, true, MOTOR_ENCODER_DEGREES);
 
-// // Intake Motors
-// // Left Intake
-// pros::Motor intake_mtr(6, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
-// // Right Intake
-// pros::Motor intake1_mtr(7, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
-// // Front Elevator
-// pros::Motor elevator_mtr(9, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
-// // Rear Elevator
-// pros::Motor elevator1_mtr(10, MOTOR_GEARSET_06, false, MOTOR_ENCODER_DEGREES);
-
-// // Intake Arm Motors
-// pros::Motor intakearm_mtr(6,MOTOR_GEARSET_36,false,MOTOR_ENCODER_DEGREES);
-// pros::Motor intakearm1_mtr(5,MOTOR_GEARSET_36,true,MOTOR_ENCODER_DEGREES);
-
-// // Angle Motor
-// pros::Motor angler_mtr(1,MOTOR_GEARSET_36,false,MOTOR_ENCODER_ROTATIONS);
+// Lift Motors
+pros::Motor rightLift(8, MOTOR_GEARSET_18, true, MOTOR_ENCODER_DEGREES);
+pros::Motor leftLift(9, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
