@@ -17,6 +17,13 @@
 void initialize()
 {
 	display();
+	rightLift.move_velocity(-200);
+	leftLift.move_velocity(-200);
+	pros::delay(100);
+	// rightLift.move_velocity(0);
+	// leftLift.move_velocity(0);
+	rightLift.set_zero_position(rightLift.get_position());
+	leftLift.set_zero_position(leftLift.get_position());
 }
 
 /**
