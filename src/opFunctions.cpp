@@ -31,24 +31,6 @@ void tankDrive()
 	leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) * speed);
 	rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) * speed);
 	rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) * speed);
-
-	// Test Copied Code
-	// float axis_4 = master.get_analog(ANALOG_LEFT_X); //left side
-	// float axis_3 = master.get_analog(ANALOG_LEFT_Y); //left up
-	// float axis_2 = master.get_analog(ANALOG_RIGHT_Y); //right up
-	// float axis_1 = master.get_analog(ANALOG_RIGHT_X); //right side
-
-	// //tank controls
-	// //x axis controls strafing
-	// float f_lb = (axis_3 + (axis_4))/(2*127);
-	// float f_lf = (axis_3 + (-axis_4))/(2*127);
-	// float f_rb = (axis_2 + (-axis_1))/(2*127);
-	// float f_rf = (axis_2 + axis_1)/(2*127);
-
-	// leftMtr.move(f_lf);
-	// leftMtrR.move(f_lb);
-	// rightMtr.move(f_rf);
-	// rightMtrR.move(f_rb);
 }
 
 void arcadeDrive()
