@@ -96,26 +96,33 @@ void prosBrake(bool pbrake)
 
 void liftControls()
 {
-	if (master.get_digital(DIGITAL_L2) == 1)
+	if (master.get_digital(DIGITAL_L1) == 1)
 	{
 		// if (rightLift.get_position() > -216 || leftLift.get_position() < 217)
 		// {
-			rightLift.move_relative(20, 200);
-			leftLift.move_relative(20, 200);
-			// rightLift.move(0);
-			// leftLift.move(0);
+		rightLift.move_velocity(75);
+		leftLift.move_velocity(75);
+		// pros::delay(10);
+		// rightLift.move_velocity(0);
+		// leftLift.move_velocity(0);
 		// }
 		// rightLift.move_absolute(20, 200);
 	}
-	if (master.get_digital(DIGITAL_L1) == 1)
+	else if (master.get_digital(DIGITAL_L2) == 1)
 	{
 		// if (rightLift.get_position() > 0 || leftLift.get_position() < 0)
 		// {
-			rightLift.move_relative(-20, 200);
-			leftLift.move_relative(-20, 200);
-			// rightLift.move(0);
-			// leftLift.move(0);
+		rightLift.move_velocity(-75);
+		leftLift.move_velocity(-75);
+		// pros::delay(10);
+		// rightLift.move_velocity(0);
+		// leftLift.move_velocity(0);
 		// }
 		// rightLift.move_absolute(0, 200);
+	}
+	else
+	{
+		rightLift.move_velocity(0);
+		leftLift.move_velocity(0);
 	}
 }
