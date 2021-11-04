@@ -17,17 +17,11 @@
 void initialize()
 {
 	display();
+	rightLift.move_velocity(100);
+	leftLift.move_velocity(100);
+	pros::delay(450);
 	rightLift.move_velocity(200);
 	leftLift.move_velocity(200);
-	pros::delay(150);
-	rightLift.move_velocity(-200);
-	leftLift.move_velocity(-200);
-	pros::delay(150);
-	rightLift.move_velocity(200);
-	leftLift.move_velocity(200);
-	pros::delay(150);
-	rightLift.move_velocity(-200);
-	leftLift.move_velocity(-200);
 	pros::delay(150);
 	// rightLift.move_velocity(0);
 	// leftLift.move_velocity(0);
