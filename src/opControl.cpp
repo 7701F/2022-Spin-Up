@@ -35,17 +35,17 @@ void opcontrol()
 	while (true)
 	{
 		/*
-        Move the steering motors
-        Comment out whichever drive type you don't want to use
-    	*/
+			Move the steering motors
+			Comment out whichever drive type you don't want to use
+		*/
 		tankDrive();
 		// arcadeDrive();
 
 		/*
-        Brake System Selector
-    	Uses basic logic for toggle and is able to use a custom homemade
-    	brake or the PROS control for the built in motor breaks.
-    */
+			Brake System Selector
+			Uses basic logic for toggle and is able to use a custom homemade
+			brake or the PROS control for the built in motor breaks.
+		*/
 		if (master.get_digital_new_press(DIGITAL_A) == 1)
 		{
 			if (pbrake == true)

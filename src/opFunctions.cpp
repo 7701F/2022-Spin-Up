@@ -82,8 +82,8 @@ void liftControls()
 	{
 		// if (rightLift.get_position() > -216 || leftLift.get_position() < 217)
 		// {
-		rightLift.move_velocity(75);
-		leftLift.move_velocity(75);
+		rightLift.move_velocity(65);
+		leftLift.move_velocity(65);
 		// pros::delay(10);
 		// rightLift.move_velocity(0);
 		// leftLift.move_velocity(0);
@@ -94,8 +94,8 @@ void liftControls()
 	{
 		// if (rightLift.get_position() > 0 || leftLift.get_position() < 0)
 		// {
-		rightLift.move_velocity(-75);
-		leftLift.move_velocity(-75);
+		rightLift.move_velocity(-65);
+		leftLift.move_velocity(-65);
 		// pros::delay(10);
 		// rightLift.move_velocity(0);
 		// leftLift.move_velocity(0);
