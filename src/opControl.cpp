@@ -11,6 +11,7 @@
 #include "opfunctions.h"
 
 #define PISTON_A_PORT 'A'
+bool piston_exten = false;
 
 /*
  * Runs the operator control code. This function will be started in its own task
@@ -63,18 +64,27 @@ void opcontrol()
 		prosBrake(pbrake);
 
 		// Piston Testing
-		pros::ADIDigitalOut piston(PISTON_A_PORT);
+		// pros::ADIDigitalOut piston(PISTON_A_PORT);
 
-		if (master.get_digital(DIGITAL_Y) == 1)
-		{
-			piston.set_value(true);
-			pros::delay(1000);
-		}
-		if (master.get_digital(DIGITAL_X) == 1)
-		{
-			piston.set_value(false);
-			pros::delay(1000);
-		}
+		// if (master.get_digital_new_press(DIGITAL_Y) == 1)
+		// {
+		// 	if (piston_exten == true)
+		// 	{
+		// 		piston_exten = false;
+		// 	}
+		// 	else
+		// 	{
+		// 		piston_exten = true;
+		// 	}
+		// }
+
+		// if (piston_exten == true) {
+		// 	piston.set_value(true);
+		// 	pros::delay(150);
+		// 	// piston.set_value(false);
+		// } else if(piston_exten == false) {
+		// 	piston.set_value(false);
+		// }
 
 		// Lift Controls
 		liftControls();

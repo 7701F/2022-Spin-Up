@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "main.h"
+#define PISTON_A_PORT 'A'
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -16,18 +17,19 @@
  */
 void initialize()
 {
+	pros::ADIDigitalOut piston(PISTON_A_PORT);
+
+	piston.set_value(false);
+
 	display();
-	rightLift.move_velocity(100);
-	leftLift.move_velocity(100);
-	pros::delay(450);
-	rightLift.move_velocity(200);
-	leftLift.move_velocity(200);
-	pros::delay(150);
+	// rightLift.move_velocity(-100);
+	// leftLift.move_velocity(-100);
+	// pros::delay(200);
 	// rightLift.move_velocity(0);
 	// leftLift.move_velocity(0);
 	rightLift.set_zero_position(rightLift.get_position());
 	leftLift.set_zero_position(leftLift.get_position());
-	pros::delay(500);
+	// pros::delay(500);
 	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	leftLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
@@ -59,8 +61,12 @@ void autonomous()
 		turn(-360,100,1000);
 	*/
 
-	drive(60, 200, 50);
-	turn(50, 75, 50);
+	// drive(150, 200, 50);
+	// turn(100, 75, 50);
+	leftMtr.move_relative(250, 75);
+	leftMtrR.move_relative(250, 75);
+	rightMtr.move_relative(250, 75);
+	rightMtrR.move_relative(250, 75);
 
 	pros::delay(500);
 }

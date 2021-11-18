@@ -18,3 +18,6 @@ pros::Motor rightMtrR(12, MOTOR_GEARSET_18, true, MOTOR_ENCODER_DEGREES);
 // Lift Motors
 pros::Motor rightLift(8, MOTOR_GEARSET_18, true, MOTOR_ENCODER_DEGREES);
 pros::Motor leftLift(9, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
+
+// Claw Motor
+pros::Motor clawM(13, MOTOR_GEARSET_6, false, MOTOR_ENCODER_DEGREES);
