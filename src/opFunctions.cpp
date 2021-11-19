@@ -76,6 +76,7 @@ void prosBrake(bool pbrake)
 	}
 }
 
+// Combined Claw and Lift control function
 void liftControls()
 {
 	// Lift Controls
