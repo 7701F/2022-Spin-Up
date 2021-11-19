@@ -17,5 +17,6 @@ extern pros::Motor leftMtrR;
 extern pros::Motor rightMtrR;
 extern pros::Motor rightLift;
 extern pros::Motor leftLift;
+extern pros::Motor clawM;
 
 #endif
