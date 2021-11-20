@@ -56,20 +56,15 @@ void autonomous()
 	rightMtr.move_relative(300, 75);
 	rightMtrR.move_relative(300, 75);
 	pros::delay(300);
-	clawM.move_relative(1200, 600);
-	rightLift.move_relative(62, 100);
-	leftLift.move_relative(62, 100);
+	clawM.move_relative(1200, 450);
+	rightLift.move_relative(30, 100);
+	leftLift.move_relative(30, 100);
 	pros::delay(300);
 	leftMtr.move_relative(-600, -75);
 	leftMtrR.move_relative(-600, -75);
 	rightMtr.move_relative(-600, -75);
 	rightMtrR.move_relative(-600, -75);
 	pros::delay(600);
-	leftMtr.move_relative(-360, -150);
-	leftMtrR.move_relative(-360, -150);
-	rightMtr.move_relative(360, 150);
-	rightMtrR.move_relative(360, 150);
-	pros::delay(600);
-	clawM.move_relative(-1200, -600);
+	clawM.move_relative(-1200, -450);
 	pros::delay(500);
 }
