@@ -51,10 +51,18 @@ void autonomous()
 
 	// drive(150, 200, 50);
 	// turn(100, 75, 50);
-	leftMtr.move_relative(250, 75);
-	leftMtrR.move_relative(250, 75);
-	rightMtr.move_relative(250, 75);
-	rightMtrR.move_relative(250, 75);
+	leftMtr.move_relative(300, 75);
+	leftMtrR.move_relative(300, 75);
+	rightMtr.move_relative(300, 75);
+	rightMtrR.move_relative(300, 75);
+	pros::delay(300);
+	clawM.move_relative(150, 100);
+	clawM.move_relative(150, 100);
+	pros::delay(300);
+	leftMtr.move_relative(-300, -75);
+	leftMtrR.move_relative(-300, -75);
+	rightMtr.move_relative(-300, -75);
+	rightMtrR.move_relative(-300, -75);
 
 	pros::delay(500);
 }
