@@ -57,8 +57,8 @@ void autonomous()
 	rightMtrR.move_relative(300, 75);
 	pros::delay(300);
 	clawM.move_relative(1200, 600);
-	rightLift.move_relative(62, -65);
-	leftLift.move_relative(62, 65);
+	rightLift.move_relative(62, 100);
+	leftLift.move_relative(62, 100);
 	pros::delay(300);
 	leftMtr.move_relative(-600, -75);
 	leftMtrR.move_relative(-600, -75);
