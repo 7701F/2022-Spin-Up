@@ -36,7 +36,7 @@ void drive(double distance, int speed, int wait)
 // Degrees of turn.  Speed is RPM, Wait is milliseconds
 void turn(double degrees, int speed, int wait)
 {
-	double one_rotation_turn_degrees = 115;
+	double one_rotation_turn_degrees = 90;
 	// customize to your robot
 	double rotations = degrees / one_rotation_turn_degrees;
 	leftMtr.move_relative(rotations, speed);
