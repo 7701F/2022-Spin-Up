@@ -32,6 +32,7 @@ void initialize()
 	// pros::delay(500);
 	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	leftLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	clawM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
 
 /**

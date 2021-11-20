@@ -20,7 +20,7 @@ void tankDrive()
 	// rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
 	// rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
 
-	if (master.get_digital(DIGITAL_R2) == true)
+	if (master.get_digital(DIGITAL_Y) == true)
 	{
 		speed = 1;
 	}
@@ -98,11 +98,11 @@ void liftControls()
 	// Claw Controls
 	if (master.get_digital(DIGITAL_R1) == 1)
 	{
-		clawM.move_velocity(65);
+		clawM.move_velocity(100);
 	}
 	else if (master.get_digital(DIGITAL_R2) == 1)
 	{
-		clawM.move_velocity(-65);
+		clawM.move_velocity(-100);
 	}
 	else
 	{
