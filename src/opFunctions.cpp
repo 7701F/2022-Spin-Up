@@ -82,8 +82,8 @@ void liftControls()
 	// Lift Controls
 	if (master.get_digital(DIGITAL_L1) == 1)
 	{
-		rightLift.move_velocity(100);
-		leftLift.move_velocity(100);
+		rightLift.move_velocity(65);
+		leftLift.move_velocity(65);
 	}
 	else if (master.get_digital(DIGITAL_L2) == 1)
 	{
