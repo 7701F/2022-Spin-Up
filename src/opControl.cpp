@@ -59,32 +59,9 @@ void opcontrol()
 			}
 		}
 
-		// Uncomment whichever brake you want to use.
+		// Uncomment whichever brake/lift you want to use.
 		// customBrake(pbrake);
 		prosBrake(pbrake);
-
-		// Piston Testing
-		// pros::ADIDigitalOut piston(PISTON_A_PORT);
-
-		// if (master.get_digital_new_press(DIGITAL_Y) == 1)
-		// {
-		// 	if (piston_exten == true)
-		// 	{
-		// 		piston_exten = false;
-		// 	}
-		// 	else
-		// 	{
-		// 		piston_exten = true;
-		// 	}
-		// }
-
-		// if (piston_exten == true) {
-		// 	piston.set_value(true);
-		// 	pros::delay(150);
-		// 	// piston.set_value(false);
-		// } else if(piston_exten == false) {
-		// 	piston.set_value(false);
-		// }
 
 		// Lift Controls
 		liftControls();
