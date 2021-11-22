@@ -104,11 +104,11 @@ void liftControls()
 	// Claw Controls
 	if (master.get_digital(DIGITAL_R1) == 1)
 	{
-		clawM.move_velocity(100);
+		clawM.move_velocity(50);
 	}
 	else if (master.get_digital(DIGITAL_R2) == 1)
 	{
-		clawM.move_velocity(-100);
+		clawM.move_velocity(-50);
 	}
 	else
 	{
