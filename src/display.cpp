@@ -9,10 +9,6 @@
 
 #include "main.h"
 
-// #include "gif-pros/gifclass.hpp"
-
-// extern Gif gif;
-
 // Magic beyond my understanding of LVGL
 void display()
 {
@@ -24,14 +20,6 @@ void display()
 	lv_obj_t *scr = lv_obj_create(NULL, NULL);
 	lv_obj_set_style(scr, &background_style);
 	lv_scr_load(scr);
-
-	lv_obj_t *obj = lv_obj_create(lv_scr_act(), NULL);
-	// lv_obj_set_size(obj, 282, 209);
-	lv_obj_set_size(obj, 50, 40);
-	lv_obj_set_style(obj, &lv_style_transp);
-	lv_obj_align(obj, NULL, LV_ALIGN_CENTER, 0, 0);
-
-	// Gif *gif = new Gif("/usd/image.gif", obj);
 
 	// styles
 	static lv_style_t title_style;
