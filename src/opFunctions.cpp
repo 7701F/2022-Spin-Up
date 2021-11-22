@@ -5,7 +5,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
+*/
 
 #include "main.h"
 
@@ -13,6 +13,7 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 std::int32_t speed;
 
+// Each stick controls a side of the wheels
 void tankDrive()
 {
 	// leftMtr.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_Y));
@@ -20,6 +21,7 @@ void tankDrive()
 	// rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
 	// rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
 
+	// By default it multiples the anolog input by 1.5 to make it go slightly faster
 	if (master.get_digital(DIGITAL_Y) == true)
 	{
 		speed = 1;
@@ -33,31 +35,34 @@ void tankDrive()
 	rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) * speed);
 }
 
+// Right stick controls turning and left controls acceleration
 void arcadeDrive()
 {
 	int forward_backward = master.get_analog(ANALOG_LEFT_Y);
 	int left_right = master.get_analog(ANALOG_RIGHT_X);
 
 	leftMtr.move(forward_backward + left_right);
-	rightMtr.move(forward_backward - left_right);
 	leftMtrR.move(forward_backward + left_right);
+	rightMtr.move(forward_backward - left_right);
 	rightMtrR.move(forward_backward - left_right);
 }
 
+// Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity
 void customBrake(bool pbrake)
 {
 	if (pbrake == true)
 	{
-		if (leftMtr.get_actual_velocity() != 0)
+		if (leftMtr.get_actual_velocity() != 0 || rightMtr.get_actual_velocity() != 0 || leftMtrR.get_actual_velocity() != 0 || rightMtrR.get_actual_velocity() != 0)
 		{
-			leftMtr.move(leftMtr.get_actual_velocity() * -1);
-			rightMtr.move(rightMtr.get_actual_velocity() * -1);
-			leftMtrR.move(leftMtrR.get_actual_velocity() * -1);
-			rightMtrR.move(rightMtrR.get_actual_velocity() * -1);
+			leftMtr.move_velocity(leftMtr.get_actual_velocity() * -1);
+			rightMtr.move_velocity(rightMtr.get_actual_velocity() * -1);
+			leftMtrR.move_velocity(leftMtrR.get_actual_velocity() * -1);
+			rightMtrR.move_velocity(rightMtrR.get_actual_velocity() * -1);
 		}
 	}
 }
 
+// Smart boy motor brake solution
 void prosBrake(bool pbrake)
 {
 	if (pbrake == true)

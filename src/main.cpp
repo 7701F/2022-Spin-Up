@@ -5,7 +5,8 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
+*/
+
 #include "main.h"
 
 /**
@@ -13,7 +14,7 @@
  *
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
- */
+*/
 void initialize()
 {
 	display();
@@ -26,7 +27,7 @@ void initialize()
  * Runs while the robot is in the disabled state of Field Management System or
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
- */
+*/
 void disabled()
 {
 }
@@ -39,7 +40,7 @@ void disabled()
  *
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
- */
+*/
 void competition_initialize() {}
 
 void autonomous()
