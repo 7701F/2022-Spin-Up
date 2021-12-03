@@ -4,7 +4,7 @@ Code for Vex Robotics Competition 2021-2022 Tipping Point for 7701F
 
 # Dependancies
 
-[gif-pros](https://github.com/theol0403/gif-pros)
+[gif-pros](https://github.com/theol0403/gif-pros) Currently removed
 
 # Building & Uploading
 
