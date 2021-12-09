@@ -36,8 +36,8 @@ void opcontrol()
 			Move the steering motors
 			Comment out whichever drive type you don't want to use
 		*/
-		tankDrive();
-		// arcadeDrive();
+		// tankDrive();
+		arcadeDrive();
 
 		/*
 			Brake System Selector
@@ -54,6 +54,11 @@ void opcontrol()
 			{
 				pbrake = true;
 			}
+		}
+
+		if (master.get_digital_new_press(DIGITAL_RIGHT) == 1)
+		{
+			autonomous();
 		}
 
 		// Uncomment whichever brake/lift you want to use.
