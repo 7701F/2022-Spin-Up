@@ -42,30 +42,3 @@ void disabled()
  * starts.
 */
 void competition_initialize() {}
-
-void autonomous()
-{
-	/* Templates
-		drive(60,100,1000);
-		turn(-360,100,1000);
-	*/
-
-	// drive(150, 200, 50);
-	// turn(100, 75, 50);
-	leftMtr.move_relative(300, 75);
-	leftMtrR.move_relative(300, 75);
-	rightMtr.move_relative(300, 75);
-	rightMtrR.move_relative(300, 75);
-	pros::delay(300);
-	clawM.move_relative(1200, 450);
-	rightLift.move_relative(30, 100);
-	leftLift.move_relative(30, 100);
-	pros::delay(300);
-	leftMtr.move_relative(-600, -75);
-	leftMtrR.move_relative(-600, -75);
-	rightMtr.move_relative(-600, -75);
-	rightMtrR.move_relative(-600, -75);
-	pros::delay(600);
-	clawM.move_relative(-1200, -450);
-	pros::delay(500);
-}
