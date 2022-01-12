@@ -36,7 +36,7 @@ void opcontrol()
 			Move the steering motors
 			Comment out whichever drive type you don't want to use
 		*/
-		 tankDrive();
+		tankDrive();
 		// arcadeDrive();
 
 		/*
