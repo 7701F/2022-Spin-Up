@@ -48,7 +48,7 @@ void game_autonomous()
 	rightMtr.move_relative(300, 75);
 	rightMtrR.move_relative(300, 75);
 	pros::delay(300);
-	clawM.move_relative(1200, 450);
+	clawM.move_relative(1200, 50);
 	rightLift.move_relative(30, 100);
 	leftLift.move_relative(30, 100);
 	pros::delay(300);
@@ -57,6 +57,6 @@ void game_autonomous()
 	rightMtr.move_relative(-600, -75);
 	rightMtrR.move_relative(-600, -75);
 	pros::delay(600);
-	clawM.move_relative(-1200, -450);
+	clawM.move_relative(-1200, -50);
 	pros::delay(500);
 }
