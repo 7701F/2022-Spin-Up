@@ -19,15 +19,15 @@
  * If the robot is disabled or communications is lost, the autonomous task
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
- */
+*/
 void autonomous()
 {
-    /* Templates
+	/* Templates
 		drive(60,100,1000);
 		turn(-360,100,1000);
 	*/
 
-    // drive(38,200,1000);
+	// drive(38,200,1000);
 	leftMtr.move_absolute(2850, 200);
 	leftMtrR.move_absolute(1800, 200);
 	rightMtr.move_absolute(2850, 200);
