@@ -19,4 +19,7 @@ extern pros::Motor rightLift;
 extern pros::Motor leftLift;
 extern pros::Motor clawM;
 
+// Not technically a motor :shrug:
+extern pros::Imu imu_sensor;
+
 #endif

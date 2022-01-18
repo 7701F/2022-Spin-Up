@@ -11,5 +11,6 @@
 #define DISPLAY_H_
 
 void display();
+void displayUpdate();
 
 #endif
