@@ -78,3 +78,13 @@ void imuDisplay()
 		lv_label_set_text(display_title3, ss.str().c_str());
 	}
 }
+
+	if (imu_sensor.is_calibrating() == false)
+	{
+		std::ostringstream ss;
+		ss << "IMU calibrated: (" << iter - time << " ms)";
+		// std::string("IMU calibrated ").c_str() + txt.c_str() + std::string(" ms)").c_str()
+		// std::string txt = std::to_string(iter - time);
+		lv_label_set_text(display_title3, ss.str().c_str());
+	}
+}
