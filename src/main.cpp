@@ -19,7 +19,6 @@ void initialize()
 {
 	// Set display and start display update task
 	display();
-	pros::Task displayUpdateTask(displayUpdate);
 
 	// Reset IMU
 	imu_sensor.reset();
