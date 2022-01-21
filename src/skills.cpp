@@ -6,7 +6,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #include "main.h"
 
 /**
@@ -21,7 +20,7 @@
  * from where it left off.
 */
 
-// Drives forward
+// Drive forward auton
 void autonomous()
 {
 	/* Templates
@@ -36,7 +35,7 @@ void autonomous()
 	rightMtrR.move_absolute(1800, 200);
 }
 
-// Drive forward and pull tower auton
+// Drive forward AND grab and pull tower auton
 void game_autonomous()
 {
 	/* Templates
