@@ -6,7 +6,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #include "main.h"
 #include "opfunctions.h"
 
@@ -22,7 +21,7 @@
  * If the robot is disabled or communications is lost, the
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
- */
+*/
 void opcontrol()
 {
 
@@ -32,18 +31,14 @@ void opcontrol()
 	// Run Loop
 	while (true)
 	{
-		/*
-			Move the steering motors
-			Comment out whichever drive type you don't want to use
-		*/
+		// Move the steering motors
+		// Comment out whichever drive type you don't want to use
 		tankDrive();
 		// arcadeDrive();
 
-		/*
-			Brake System Selector
-			Uses basic logic for toggle and is able to use a custom homemade
-			brake or the PROS control for the built in motor breaks.
-		*/
+		// Brake System Selector
+		// Uses basic logic for toggle and is able to use a custom homemade
+		// brake or the PROS control for the built in motor breaks.
 		if (master.get_digital_new_press(DIGITAL_A) == 1)
 		{
 			if (pbrake == true)
