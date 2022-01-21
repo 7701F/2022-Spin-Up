@@ -20,6 +20,8 @@
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
 */
+
+// Drives forward
 void autonomous()
 {
 	/* Templates
@@ -34,6 +36,7 @@ void autonomous()
 	rightMtrR.move_absolute(1800, 200);
 }
 
+// Drive forward and pull tower auton
 void game_autonomous()
 {
 	/* Templates
