@@ -67,10 +67,21 @@ void imuDisplay()
 		pros::delay(10);
 	}
 
-	if (imu_sensor.is_calibrating() == false)
-	{
-		std::ostringstream ss;
-		ss << "IMU calibrated: (" << iter - time << " ms)";
-		lv_label_set_text(display_title3, ss.str().c_str());
-	}
+	std::ostringstream ss;
+	ss << "IMU calibrated: (" << iter - time << " ms)";
+	lv_label_set_text(display_title3, ss.str().c_str())
+}
+
+void displayUpdate()
+{
+
+	// styles
+	static lv_style_t title_style;
+	lv_style_copy(&title_style, &lv_style_plain);
+	title_style.text.font = &lv_font_dejavu_20;
+	title_style.text.color = LV_COLOR_GREEN;
+	lv_obj_t *display_title4 = lv_label_create(scr, NULL);
+	lv_obj_set_style(display_title4, &title_style);
+	lv_label_set_text(display_title4, "IMU STATUS: UNINITIALIZED");
+	lv_obj_align(display_title4, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 110);
 }
