@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021, Michael Gummere.
+ * Copyright (c) 2019-2022, Michael Gummere.
  * All rights reserved.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
