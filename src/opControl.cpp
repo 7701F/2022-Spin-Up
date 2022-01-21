@@ -56,11 +56,6 @@ void opcontrol()
 			}
 		}
 
-		if (master.get_digital_new_press(DIGITAL_RIGHT) == 1)
-		{
-			autonomous();
-		}
-
 		// Uncomment whichever brake/lift you want to use.
 		// customBrake(pbrake);
 		prosBrake(pbrake);
