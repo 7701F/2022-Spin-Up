@@ -69,7 +69,7 @@ void imuDisplay()
 
 	std::ostringstream ss;
 	ss << "IMU calibrated: (" << iter - time << " ms)";
-	lv_label_set_text(display_title3, ss.str().c_str())
+	lv_label_set_text(display_title3, ss.str().c_str());
 }
 
 void displayUpdate()
