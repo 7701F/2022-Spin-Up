@@ -19,7 +19,7 @@ pros::Motor rightLift(8, MOTOR_GEARSET_36, true, MOTOR_ENCODER_DEGREES);
 pros::Motor leftLift(9, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
 
 // Claw Motor
-pros::Motor clawM(14, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
+pros::Motor clawM(16, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
 
 // Inertial Sensor
 pros::Imu imu_sensor(1);
