@@ -6,7 +6,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
-
 #include "main.h"
 
 /**
@@ -20,7 +19,9 @@
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
 */
-void game_autonomous()
+
+// Drive forward auton
+void autonomous()
 {
 	/* Templates
 		drive(60,100,1000);
@@ -34,6 +35,7 @@ void game_autonomous()
 	rightMtrR.move_absolute(1800, 200);
 }
 
+// Drive forward AND grab and pull tower auton
 void game_autonomous()
 {
 	/* Templates
