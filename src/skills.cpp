@@ -20,7 +20,7 @@
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
 */
-void autonomous()
+void game_autonomous()
 {
 	/* Templates
 		drive(60,100,1000);
@@ -34,7 +34,7 @@ void autonomous()
 	rightMtrR.move_absolute(1800, 200);
 }
 
-void game_autonomous()
+void autonomous()
 {
 	/* Templates
 		drive(60,100,1000);
