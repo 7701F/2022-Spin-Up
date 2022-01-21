@@ -11,5 +11,7 @@
 #define DISPLAY_H_
 
 void display();
+void imuDisplay();
+void displayUpdate();
 
 #endif
