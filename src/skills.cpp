@@ -34,7 +34,7 @@ void game_autonomous()
 	rightMtrR.move_absolute(1800, 200);
 }
 
-void autonomous()
+void game_autonomous()
 {
 	/* Templates
 		drive(60,100,1000);
