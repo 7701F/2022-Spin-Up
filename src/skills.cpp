@@ -65,16 +65,27 @@ void game_autonomous()
 // Auton Selector Logic
 void autonomous()
 {
-	if (auton == false)
+	switch (auton)
 	{
+	case 1:
 		game_autonomous();
-	}
-	else if (auton == true)
-	{
+		break;
+	case 2:
 		skills_auton();
+		break;
+	default:
+		break;
 	}
-	else
-	{
-		return;
-	}
+	// if (auton == false)
+	// {
+	// 	game_autonomous();
+	// }
+	// else if (auton == true)
+	// {
+	// 	skills_auton();
+	// }
+	// else
+	// {
+	// 	return;
+	// }
 }

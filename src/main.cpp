@@ -23,12 +23,13 @@ void initialize()
 	// Reset IMU and start display update task
 	imuDisplay();
 	imu_sensor.reset();
-	pros::Task displayUpdateTask(displayUpdate, (void*)speed, "My Task Name");
+	pros::Task displayUpdateTask(displayUpdate);
 
 	// Set brakes on to active bold
 	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	leftLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	clawM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	winchM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
 
 /**

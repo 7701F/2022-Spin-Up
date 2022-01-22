@@ -12,6 +12,6 @@
 
 void display();
 void imuDisplay();
-void displayUpdate(void* param);
+void displayUpdate();
 
 #endif
