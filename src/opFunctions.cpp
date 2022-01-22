@@ -10,10 +10,11 @@
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-std::int32_t speed;
+// Drive System Variables
+
 
 // Each stick controls a side of the wheels
-void tankDrive()
+void tankDrive(std::int32_t speed)
 {
 	// leftMtr.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_Y));
 	// leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_Y));
@@ -21,12 +22,12 @@ void tankDrive()
 	// rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
 
 	// By default it multiples the anolog input by 1.5 to make it go slightly faster
-	if (master.get_digital(DIGITAL_Y) == true)
-	{
-		speed = 1;
-	}
-	else
-		speed = 1.5;
+	// if (master.get_digital(DIGITAL_Y) == true)
+	// {
+	// 	speed = 1;
+	// }
+	// else
+	// 	speed = 1.5;
 
 	leftMtr.move(master.get_analog(ANALOG_LEFT_Y) * speed);
 	leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) * speed);

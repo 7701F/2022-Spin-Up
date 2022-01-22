@@ -11,10 +11,11 @@
 #define OPFUNC_H_
 
 // Declare drive system variables.
-bool pbrake = true;
+inline bool pbrake = false;
+inline std::int32_t speed = 1;
 
 // Declare driver functions
-void tankDrive();
+void tankDrive(std::int32_t speed);
 void arcadeDrive();
 void customBrake(bool pbrake);
 void prosBrake(bool pbrake);

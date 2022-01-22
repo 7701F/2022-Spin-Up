@@ -7,11 +7,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-#ifndef DISPLAY_H_
-#define DISPLAY_H_
+#ifndef ACTRL_H_
+#define ACTRL_H_
 
-void display();
-void imuDisplay();
-void displayUpdate(void* param);
+// Declare auton system variables.
+inline bool auton = false;
+
 
 #endif
