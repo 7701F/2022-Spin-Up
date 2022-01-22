@@ -19,15 +19,15 @@ lv_obj_t *alabel = lv_label_create(scr, NULL);
 static lv_res_t btn_click_action(lv_obj_t *btn)
 {
 	uint8_t id = lv_obj_get_free_num(btn);
-	if (auton == true)
+	if (auton == 1)
 	{
-		auton = false;
-		lv_label_set_text(alabel, "Auton Selected: Game Auton");
+		auton = 2;
+		if(auton = 2) lv_label_set_text(alabel, "Auton Selected: Game Auton");
 	}
 	else
 	{
-		auton = true;
-		lv_label_set_text(alabel, "Auton Selected: Skills Auton");
+		auton = 1;
+		if(auton = 2) lv_label_set_text(alabel, "Auton Selected: Skills Auton");
 	}
 
 	/* The button is released.
@@ -112,7 +112,7 @@ void imuDisplay()
 		ss << "IMU calibrating... (" << iter << " ms)";
 		lv_label_set_text(display_title3, ss.str().c_str());
 		iter += 10;
-		pros::delay(10);
+		pros::delay(1);
 	}
 
 	std::ostringstream ss;
@@ -120,9 +120,9 @@ void imuDisplay()
 	lv_label_set_text(display_title3, ss.str().c_str());
 }
 
-void displayUpdate(void *param)
+void displayUpdate(/*void *param*/)
 {
 	std::ostringstream ss;
-	ss << "Speed: " << param << " ";
+	ss << "Speed: " << imu_sensor.get_accel().y << " ";
 	lv_label_set_text(display_title4, ss.str().c_str());
 }

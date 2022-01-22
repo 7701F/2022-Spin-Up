@@ -33,8 +33,8 @@ void opcontrol()
 	{
 		// Move the steering motors
 		// Comment out whichever drive type you don't want to use
-		tankDrive(speed);
-		// arcadeDrive();
+		// tankDrive(speed);
+		arcadeDrive();
 
 		// Brake System Selector
 		// Uses basic logic for toggle and is able to use a custom homemade
@@ -66,16 +66,20 @@ void opcontrol()
 		}
 
 		// Speed Control
-		if (master.get_digital_new_press(DIGITAL_Y) == 1)
+		if (master.get_digital(DIGITAL_Y) == 1)
 		{
-			if (speed == 1)
-			{
-				speed = 1.5;
-			}
-			else
+			if (speed == 1.5)
 			{
 				speed = 1;
 			}
+			else
+			{
+				speed = 1.5;
+			}
+		}
+
+		if (master.get_digital_new_press(DIGITAL_X) == 1) {
+			autonomous();
 		}
 
 		// Uncomment whichever brake/lift you want to use.
