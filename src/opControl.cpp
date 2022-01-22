@@ -33,7 +33,7 @@ void opcontrol()
 	{
 		// Move the steering motors
 		// Comment out whichever drive type you don't want to use
-		tankDrive();
+		tankDrive(speed);
 		// arcadeDrive();
 
 		// Brake System Selector
@@ -48,6 +48,33 @@ void opcontrol()
 			else
 			{
 				pbrake = true;
+			}
+		}
+
+		// Winch Control
+		if (master.get_digital(DIGITAL_UP) == 1)
+		{
+			winchM.move_velocity(100);
+		}
+		else if (master.get_digital(DIGITAL_DOWN) == 1)
+		{
+			winchM.move_velocity(-100);
+		}
+		else
+		{
+			winchM.move_velocity(0);
+		}
+
+		// Speed Control
+		if (master.get_digital_new_press(DIGITAL_Y) == 1)
+		{
+			if (speed == 1)
+			{
+				speed = 1.5;
+			}
+			else
+			{
+				speed = 1;
 			}
 		}
 

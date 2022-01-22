@@ -21,5 +21,8 @@ pros::Motor leftLift(9, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
 // Claw Motor
 pros::Motor clawM(16, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
 
+// Winch Motor
+pros::Motor winchM(15, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
+
 // Inertial Sensor
 pros::Imu imu_sensor(1);

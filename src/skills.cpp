@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #include "main.h"
+#include "autoncontrol.h"
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -20,9 +21,7 @@
  * from where it left off.
 */
 
-// Drive forward auton
-void autonomous()
-{
+void skills_auton() {
 	/* Templates
 		drive(60,100,1000);
 		turn(-360,100,1000);
@@ -61,4 +60,21 @@ void game_autonomous()
 	pros::delay(600);
 	clawM.move_relative(-1200, -50);
 	pros::delay(500);
+}
+
+// Auton Selector Logic
+void autonomous()
+{
+	if (auton == false)
+	{
+		game_autonomous();
+	}
+	else if (auton == true)
+	{
+		skills_auton();
+	}
+	else
+	{
+		return;
+	}
 }

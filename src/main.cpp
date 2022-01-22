@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #include "main.h"
+#include "opfunctions.h"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -22,7 +23,7 @@ void initialize()
 	// Reset IMU and start display update task
 	imuDisplay();
 	imu_sensor.reset();
-	pros::Task displayUpdateTask(displayUpdate);
+	pros::Task displayUpdateTask(displayUpdate, (void*)speed, "My Task Name");
 
 	// Set brakes on to active bold
 	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
