@@ -7,7 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #include "main.h"
-#include "autoncontrol.h"
+// #include "autoncontrol.h"
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -62,10 +62,14 @@ void game_autonomous()
 	pros::delay(500);
 }
 
+void new_game_auton() {
+
+}
+
 // Auton Selector Logic
 void autonomous()
 {
-	switch (auton)
+	switch (selector::auton)
 	{
 	case 1:
 		game_autonomous();
@@ -73,6 +77,8 @@ void autonomous()
 	case 2:
 		skills_auton();
 		break;
+	case 3:
+		new_game_auton();
 	default:
 		break;
 	}
