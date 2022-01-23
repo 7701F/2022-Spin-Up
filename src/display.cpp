@@ -124,5 +124,6 @@ void displayUpdate(/*void *param*/)
 {
 	std::ostringstream ss;
 	ss << "Speed: " << imu_sensor.get_accel().y << " ";
+	// ss << "Bot Battery Level:" << pros::battery::get_capacity() << " Controller Battery Level:" << master.get_battery_level();
 	lv_label_set_text(display_title4, ss.str().c_str());
 }

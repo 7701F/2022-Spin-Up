@@ -11,7 +11,7 @@
 #define OPFUNC_H_
 
 // Declare drive system variables.
-inline bool pbrake = false;
+inline bool pbrake = true;
 inline std::int32_t speed = 1;
 
 // Declare driver functions
