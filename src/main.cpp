@@ -18,11 +18,10 @@
 void initialize()
 {
 	// Set display
-	// display();
+	display();
 
 	// Reset IMU and start display update task
-	// imuDisplay();
-	selector::init();
+	imuDisplay();
 	imu_sensor.reset();
 	// pros::Task displayUpdateTask(displayUpdate);
 
@@ -49,4 +48,7 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize()
+{
+	selector::init();
+}

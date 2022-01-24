@@ -39,7 +39,6 @@
 // Custom Headers
 #include "display.h"
 #include "motors.h"
-#include "autonfunctions.h"
 
 /**
  * You should add more #includes here

@@ -63,7 +63,16 @@ void game_autonomous()
 }
 
 void new_game_auton() {
-
+	chassis::move(38, 200);
+	chassis::move(10, 50);
+	pros::delay(300);
+	clawM.move_relative(200, 100);
+	pros::delay(300);
+	chassis::move(-46, -200);
+	pros::delay(300);
+	clawM.move_relative(-200, -100);
+	pros::delay(300);
+	chassis::move(-1, -50);
 }
 
 // Auton Selector Logic
