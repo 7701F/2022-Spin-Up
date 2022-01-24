@@ -115,7 +115,7 @@ void imuDisplay()
 	}
 
 	std::ostringstream ss;
-	ss << "IMU calibrated: (" << iter - time << " ms)";
+	ss << "IMU calibrated: (" << time - iter << " ms)";
 	lv_label_set_text(display_title3, ss.str().c_str());
 }
 
@@ -125,4 +125,5 @@ void displayUpdate(/*void *param*/)
 	ss << "Speed: " << imu_sensor.get_accel().y << " ";
 	// ss << "Bot Battery Level:" << pros::battery::get_capacity() << " Controller Battery Level:" << master.get_battery_level();
 	lv_label_set_text(display_title4, ss.str().c_str());
+	pros::delay(1000);
 }
