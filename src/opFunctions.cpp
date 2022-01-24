@@ -5,13 +5,8 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
-*/
+ */
 #include "main.h"
-
-pros::Controller master(pros::E_CONTROLLER_MASTER);
-
-// Drive System Variables
-
 
 // Each stick controls a side of the wheels
 void tankDrive(std::int32_t speed)
@@ -58,6 +53,15 @@ void customBrake(bool pbrake)
 			rightMtr.move_velocity(rightMtr.get_actual_velocity() * -1);
 			leftMtrR.move_velocity(leftMtrR.get_actual_velocity() * -1);
 			rightMtrR.move_velocity(rightMtrR.get_actual_velocity() * -1);
+
+			int count = 0;
+			if (!(count % 25))
+			{
+				// Only print every 50ms, the controller text update rate is slow
+				master.rumble(". - . -");
+			}
+			count++;
+			pros::delay(2);
 		}
 	}
 }

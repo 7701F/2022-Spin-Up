@@ -24,9 +24,6 @@
 */
 void opcontrol()
 {
-	// Controller
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-
 	// Brake
 	chassis::setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 
@@ -45,17 +42,17 @@ void opcontrol()
 		// Brake System Selector
 		// Uses basic logic for toggle and is able to use a custom homemade
 		// brake or the PROS control for the built in motor breaks.
-		// if (master.get_digital_new_press(DIGITAL_A) == 1)
-		// {
-		// 	if (pbrake == true)
-		// 	{
-		// 		pbrake = false;
-		// 	}
-		// 	else
-		// 	{
-		// 		pbrake = true;
-		// 	}
-		// }
+		if (master.get_digital_new_press(DIGITAL_A) == 1)
+		{
+			if (pbrake == true)
+			{
+				pbrake = false;
+			}
+			else
+			{
+				pbrake = true;
+			}
+		}
 
 		// Winch Control
 		if (master.get_digital(DIGITAL_UP) == 1)
@@ -89,7 +86,7 @@ void opcontrol()
 		}
 
 		// Uncomment whichever brake/lift you want to use.
-		// customBrake(pbrake);
+		customBrake(pbrake);
 		// prosBrake(pbrake);
 
 		// Lift Controls
