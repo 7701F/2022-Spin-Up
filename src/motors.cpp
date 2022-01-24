@@ -8,6 +8,9 @@
 */
 #include "main.h"
 
+// Controller
+pros::Controller master(pros::E_CONTROLLER_MASTER);
+
 // Driving Motors
 pros::Motor leftMtr(20, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
 pros::Motor rightMtr(11, MOTOR_GEARSET_18, true, MOTOR_ENCODER_DEGREES);
