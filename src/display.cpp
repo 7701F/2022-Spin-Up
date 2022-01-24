@@ -8,32 +8,31 @@
 */
 #include "main.h"
 #include "opfunctions.h"
-#include "autoncontrol.h"
 
 #include <sstream>
 
 lv_obj_t *scr = lv_obj_create(NULL, NULL);
 lv_obj_t *display_title4 = lv_label_create(scr, NULL);
-lv_obj_t *alabel = lv_label_create(scr, NULL);
+// lv_obj_t *alabel = lv_label_create(scr, NULL);
 
-static lv_res_t btn_click_action(lv_obj_t *btn)
-{
-	uint8_t id = lv_obj_get_free_num(btn);
-	if (auton == 1)
-	{
-		auton = 2;
-		if(auton = 2) lv_label_set_text(alabel, "Auton Selected: Game Auton");
-	}
-	else
-	{
-		auton = 1;
-		if(auton = 2) lv_label_set_text(alabel, "Auton Selected: Skills Auton");
-	}
+// static lv_res_t btn_click_action(lv_obj_t *btn)
+// {
+// 	uint8_t id = lv_obj_get_free_num(btn);
+// 	if (auton == 1)
+// 	{
+// 		auton = 2;
+// 		if(auton = 2) lv_label_set_text(alabel, "Auton Selected: Game Auton");
+// 	}
+// 	else
+// 	{
+// 		auton = 1;
+// 		if(auton = 2) lv_label_set_text(alabel, "Auton Selected: Skills Auton");
+// 	}
 
-	/* The button is released.
-	 * Make something here */
-	return LV_RES_OK; /*Return OK if the button is not deleted*/
-}
+// 	/* The button is released.
+// 	 * Make something here */
+// 	return LV_RES_OK; /*Return OK if the button is not deleted*/
+// }
 
 // Magic beyond my understanding of LVGL
 void display()
@@ -70,23 +69,23 @@ void display()
 
 	// Button Junk
 
-	/*Create a title label*/
-	lv_label_set_text(alabel, "Auton Selected: Game Auton");
-	lv_obj_align(alabel, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 135);
+	// /*Create a title label*/
+	// lv_label_set_text(alabel, "Auton Selected: Game Auton");
+	// lv_obj_align(alabel, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 135);
 
-	/*Create a normal button*/
-	lv_obj_t *btn1 = lv_btn_create(lv_scr_act(), NULL);
-	lv_cont_set_fit(btn1, true, true); /*Enable resizing horizontally and vertically*/
-	lv_obj_align(btn1, NULL, LV_ALIGN_IN_TOP_LEFT, 40, 160);
-	lv_obj_set_free_num(btn1, 1);
-	/*Set a unique number for the button*/
-	lv_btn_set_action(btn1, LV_BTN_ACTION_CLICK, btn_click_action);
-	/*Add a label to the button*/
-	lv_obj_t *ablabel = lv_label_create(btn1, NULL);
-	lv_label_set_text(ablabel, "Auton Switch");
+	// /*Create a normal button*/
+	// lv_obj_t *btn1 = lv_btn_create(lv_scr_act(), NULL);
+	// lv_cont_set_fit(btn1, true, true); /*Enable resizing horizontally and vertically*/
+	// lv_obj_align(btn1, NULL, LV_ALIGN_IN_TOP_LEFT, 40, 160);
+	// lv_obj_set_free_num(btn1, 1);
+	// /*Set a unique number for the button*/
+	// lv_btn_set_action(btn1, LV_BTN_ACTION_CLICK, btn_click_action);
+	// /*Add a label to the button*/
+	// lv_obj_t *ablabel = lv_label_create(btn1, NULL);
+	// lv_label_set_text(ablabel, "Auton Switch");
 
-	lv_obj_set_style(btn1, &title_style);
-	lv_obj_set_style(alabel, &title_style);
+	// lv_obj_set_style(btn1, &title_style);
+	// lv_obj_set_style(alabel, &title_style);
 }
 
 // IMU Status Shenanigans
