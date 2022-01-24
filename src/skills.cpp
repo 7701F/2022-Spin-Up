@@ -21,12 +21,8 @@
  * from where it left off.
 */
 
+/*
 void skills_auton() {
-	/* Templates
-		drive(60,100,1000);
-		turn(-360,100,1000);
-	*/
-
 	// drive(38,200,1000);
 	leftMtr.move_absolute(2850, 200);
 	leftMtrR.move_absolute(1800, 200);
@@ -37,13 +33,6 @@ void skills_auton() {
 // Drive forward AND grab and pull tower auton
 void game_autonomous()
 {
-	/* Templates
-		drive(60,100,1000);
-		turn(-360,100,1000);
-	*/
-
-	// drive(150, 200, 50);
-	// turn(100, 75, 50);
 	leftMtr.move_relative(300, 75);
 	leftMtrR.move_relative(300, 75);
 	rightMtr.move_relative(300, 75);
@@ -61,19 +50,53 @@ void game_autonomous()
 	clawM.move_relative(-1200, -50);
 	pros::delay(500);
 }
+*/
 
-void new_game_auton() {
-	chassis::move(38, 200);
+// Left win point
+void Rauton(){
+  	chassis::move(5, 100);
+	chassis::move(1, 50);
+  	clawM.move_relative(140, 75);
+  	clawM.move_relative(-140, -75);
+	chassis::move(-5, 100);
+	chassis::move(-1, 50);
+}
+
+// Yellow goal
+void Yauton() {
+	chassis::move(38, 100);
 	chassis::move(10, 50);
 	pros::delay(300);
 	clawM.move_relative(200, 100);
 	pros::delay(300);
-	chassis::move(-46, -200);
+	chassis::move(-46, 100);
 	pros::delay(300);
 	clawM.move_relative(-200, -100);
 	pros::delay(300);
-	chassis::move(-1, -50);
+	chassis::move(-1, 50);
 }
+
+// Right win point
+void Lauton(){
+  clawM.move_relative(140, 50);
+  clawM.move_relative(-140, -50);
+}
+
+// void Sauton(){
+//   Drivetrain.driveFor(forward, 42, inches, 75, velocityUnits::pct);
+//   Claw.spinFor(forward, 200, degrees, 50, velocityUnits::pct);
+//   Drivetrain.driveFor(reverse, 44, inches, 75, velocityUnits::pct);
+//   Claw.spinFor(reverse, 200, degrees, 50, velocityUnits::pct);
+//   Drivetrain.driveFor(reverse, 7, inches, 75, velocityUnits::pct);
+//   Drivetrain.turnFor(right, 70, degrees);
+//   Drivetrain.driveFor(forward, 26, inches, 75, velocityUnits::pct);
+//   Claw.spinFor(forward, 200, degrees, 50, velocityUnits::pct);
+//   Drivetrain.turnFor(left, 80, degrees);
+//   Drivetrain.driveFor(forward, 90, inches, 75, velocityUnits::pct);
+//   Claw.spinFor(reverse, 200, degrees, 50, velocityUnits::pct);
+//   Drivetrain.turnFor(right, 70, degrees);
+//   Drivetrain.driveFor(reverse, 90, inches, 75, velocityUnits::pct);
+// }
 
 // Auton Selector Logic
 void autonomous()
@@ -81,13 +104,13 @@ void autonomous()
 	switch (selector::auton)
 	{
 	case 1:
-		game_autonomous();
+		Yauton();
 		break;
 	case 2:
-		skills_auton();
+		Lauton();
 		break;
 	case 3:
-		new_game_auton();
+		Rauton();
 	default:
 		break;
 	}
