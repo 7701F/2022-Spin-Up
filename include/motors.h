@@ -10,6 +10,9 @@
 #ifndef MOTORS_H_
 #define MOTORS_H_
 
+// Declare controller
+extern pros::Controller master;
+
 // Declare motors
 extern pros::Motor leftMtr;
 extern pros::Motor rightMtr;
