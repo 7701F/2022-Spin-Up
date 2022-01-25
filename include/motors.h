@@ -10,6 +10,9 @@
 #ifndef MOTORS_H_
 #define MOTORS_H_
 
+// Declare controller
+extern pros::Controller master;
+
 // Declare motors
 extern pros::Motor leftMtr;
 extern pros::Motor rightMtr;
@@ -18,6 +21,7 @@ extern pros::Motor rightMtrR;
 extern pros::Motor rightLift;
 extern pros::Motor leftLift;
 extern pros::Motor clawM;
+extern pros::Motor winchM;
 
 // Not technically a motor :shrug:
 extern pros::Imu imu_sensor;
