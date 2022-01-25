@@ -21,3 +21,5 @@ temp.errors
 .cache
 docs/
 debug.log
+
+.cache/
