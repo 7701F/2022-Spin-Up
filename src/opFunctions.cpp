@@ -9,8 +9,7 @@
 #include "main.h"
 
 // Each stick controls a side of the wheels
-void tankDrive(std::int32_t speed)
-{
+void tankDrive(double speed) {
 	// leftMtr.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_Y));
 	// leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_Y));
 	// rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
@@ -31,8 +30,7 @@ void tankDrive(std::int32_t speed)
 }
 
 // Right stick controls turning and left controls acceleration
-void arcadeDrive()
-{
+void arcadeDrive() {
 	int forward_backward = master.get_analog(ANALOG_LEFT_Y);
 	int left_right = master.get_analog(ANALOG_RIGHT_X);
 
@@ -43,20 +41,17 @@ void arcadeDrive()
 }
 
 // Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity
-void customBrake(bool pbrake)
-{
-	if (pbrake == true)
-	{
-		if (leftMtr.get_actual_velocity() != 0 || rightMtr.get_actual_velocity() != 0 || leftMtrR.get_actual_velocity() != 0 || rightMtrR.get_actual_velocity() != 0)
-		{
+void customBrake(bool pbrake) {
+	if (pbrake == true) {
+		if (leftMtr.get_actual_velocity() != 0 || rightMtr.get_actual_velocity() != 0 ||
+				leftMtrR.get_actual_velocity() != 0 || rightMtrR.get_actual_velocity() != 0) {
 			leftMtr.move_velocity(leftMtr.get_actual_velocity() * -1);
 			rightMtr.move_velocity(rightMtr.get_actual_velocity() * -1);
 			leftMtrR.move_velocity(leftMtrR.get_actual_velocity() * -1);
 			rightMtrR.move_velocity(rightMtrR.get_actual_velocity() * -1);
 
 			int count = 0;
-			if (!(count % 25))
-			{
+			if (!(count % 25)) {
 				// Only print every 50ms, the controller text update rate is slow
 				master.rumble(". - . -");
 			}
@@ -67,17 +62,14 @@ void customBrake(bool pbrake)
 }
 
 // Smart boy motor brake solution
-void prosBrake(bool pbrake)
-{
-	if (pbrake == true)
-	{
+void prosBrake(bool pbrake) {
+	if (pbrake == true) {
 		leftMtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		rightMtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		leftMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	}
-	if (pbrake == false)
-	{
+	if (pbrake == false) {
 		leftMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 		rightMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 		leftMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
@@ -86,36 +78,25 @@ void prosBrake(bool pbrake)
 }
 
 // Combined Claw and Lift control function
-void liftControls()
-{
+void liftControls() {
 	// Lift Controls
-	if (master.get_digital(DIGITAL_L1) == 1)
-	{
+	if (master.get_digital(DIGITAL_L1) == 1) {
 		rightLift.move_velocity(100);
 		leftLift.move_velocity(100);
-	}
-	else if (master.get_digital(DIGITAL_L2) == 1)
-	{
+	} else if (master.get_digital(DIGITAL_L2) == 1) {
 		rightLift.move_velocity(-100);
 		leftLift.move_velocity(-100);
-	}
-	else
-	{
+	} else {
 		rightLift.move_velocity(0);
 		leftLift.move_velocity(0);
 	}
 
 	// Claw Controls
-	if (master.get_digital(DIGITAL_R1) == 1)
-	{
+	if (master.get_digital(DIGITAL_R1) == 1) {
 		clawM.move_velocity(50);
-	}
-	else if (master.get_digital(DIGITAL_R2) == 1)
-	{
+	} else if (master.get_digital(DIGITAL_R2) == 1) {
 		clawM.move_velocity(-50);
-	}
-	else
-	{
+	} else {
 		clawM.move_velocity(0);
 	}
 }
