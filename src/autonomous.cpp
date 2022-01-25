@@ -5,7 +5,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
-*/
+ */
 #include "main.h"
 // #include "autoncontrol.h"
 
@@ -19,7 +19,7 @@
  * If the robot is disabled or communications is lost, the autonomous task
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
-*/
+ */
 
 /*
 void skills_auton() {
@@ -53,11 +53,11 @@ void game_autonomous()
 */
 
 // Left win point
-void Rauton(){
-  	chassis::move(5, 100);
+void Rauton() {
+	chassis::move(5, 100);
 	chassis::move(1, 50);
-  	clawM.move_relative(140, 75);
-  	clawM.move_relative(-140, -75);
+	clawM.move_relative(140, 75);
+	clawM.move_relative(-140, -75);
 	chassis::move(-5, 100);
 	chassis::move(-1, 50);
 }
@@ -77,42 +77,40 @@ void Yauton() {
 }
 
 // Right win point
-void Lauton(){
-  clawM.move_relative(140, 50);
-  clawM.move_relative(-140, -50);
+void Lauton() {
+	clawM.move_relative(140, 50);
+	clawM.move_relative(-140, -50);
 }
 
-// void Sauton(){
-//   Drivetrain.driveFor(forward, 42, inches, 75, velocityUnits::pct);
-//   Claw.spinFor(forward, 200, degrees, 50, velocityUnits::pct);
-//   Drivetrain.driveFor(reverse, 44, inches, 75, velocityUnits::pct);
-//   Claw.spinFor(reverse, 200, degrees, 50, velocityUnits::pct);
-//   Drivetrain.driveFor(reverse, 7, inches, 75, velocityUnits::pct);
-//   Drivetrain.turnFor(right, 70, degrees);
-//   Drivetrain.driveFor(forward, 26, inches, 75, velocityUnits::pct);
-//   Claw.spinFor(forward, 200, degrees, 50, velocityUnits::pct);
-//   Drivetrain.turnFor(left, 80, degrees);
-//   Drivetrain.driveFor(forward, 90, inches, 75, velocityUnits::pct);
-//   Claw.spinFor(reverse, 200, degrees, 50, velocityUnits::pct);
-//   Drivetrain.turnFor(right, 70, degrees);
-//   Drivetrain.driveFor(reverse, 90, inches, 75, velocityUnits::pct);
+// void Sauton() {
+// 	Drivetrain.driveFor(forward, 42, inches, 75, velocityUnits::pct);
+// 	Claw.spinFor(forward, 200, degrees, 50, velocityUnits::pct);
+// 	Drivetrain.driveFor(reverse, 44, inches, 75, velocityUnits::pct);
+// 	Claw.spinFor(reverse, 200, degrees, 50, velocityUnits::pct);
+// 	Drivetrain.driveFor(reverse, 7, inches, 75, velocityUnits::pct);
+// 	Drivetrain.turnFor(right, 70, degrees);
+// 	Drivetrain.driveFor(forward, 26, inches, 75, velocityUnits::pct);
+// 	Claw.spinFor(forward, 200, degrees, 50, velocityUnits::pct);
+// 	Drivetrain.turnFor(left, 80, degrees);
+// 	Drivetrain.driveFor(forward, 90, inches, 75, velocityUnits::pct);
+// 	Claw.spinFor(reverse, 200, degrees, 50, velocityUnits::pct);
+// 	Drivetrain.turnFor(right, 70, degrees);
+// 	Drivetrain.driveFor(reverse, 90, inches, 75, velocityUnits::pct);
 // }
 
 // Auton Selector Logic
-void autonomous()
-{
-	switch (selector::auton)
-	{
-	case 1:
-		Yauton();
-		break;
-	case 2:
-		Lauton();
-		break;
-	case 3:
-		Rauton();
-	default:
-		break;
+void autonomous() {
+	switch (selector::auton) {
+		case 1:
+			Yauton();
+			break;
+		case 2:
+			Lauton();
+			break;
+		case 3:
+			Rauton();
+		default:
+			break;
 	}
 	// if (auton == false)
 	// {

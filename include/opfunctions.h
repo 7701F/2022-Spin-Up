@@ -12,10 +12,10 @@
 
 // Declare drive system variables.
 inline bool pbrake = true;
-inline std::int32_t speed = 1;
+inline double speed = 1;
 
 // Declare driver functions
-void tankDrive(std::int32_t speed);
+void tankDrive(double speed);
 void arcadeDrive();
 void customBrake(bool pbrake);
 void prosBrake(bool pbrake);

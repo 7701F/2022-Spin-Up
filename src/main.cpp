@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "main.h"
+
 #include "opfunctions.h"
 
 /**
@@ -15,8 +16,7 @@
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize()
-{
+void initialize() {
 	// Set display
 	display();
 
@@ -24,14 +24,13 @@ void initialize()
 	imuDisplay();
 	imu_sensor.reset();
 	pros::Task displayUpdateTask(displayUpdate);
-	pros::Task task{[=]
-					{
-						pros::delay(1000);
-						// std::cout << "Task Called" << std::endl;
-						std::ostringstream ss;
-						ss << "Speed: " << imu_sensor.get_accel().y << " ";
-						master.print(1, 1, ss.str().c_str());
-					}};
+	pros::Task task{[=] {
+		pros::delay(1000);
+		// std::cout << "Task Called" << std::endl;
+		std::ostringstream ss;
+		ss << "Speed: " << imu_sensor.get_accel().y << " ";
+		master.print(1, 1, ss.str().c_str());
+	}};
 
 	// Set brakes on to active bold
 	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -59,7 +58,6 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize()
-{
+void competition_initialize() {
 	selector::init();
 }
