@@ -24,16 +24,18 @@
  */
 void opcontrol() {
 	// Brake
-	chassis::setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+	// chassis::setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 
 	// Run Loop
 	while (true) {
 		// Move the steering motors
-		chassis::arcade(master.get_analog(ANALOG_LEFT_Y) * (double)100.0 / 127,
-										master.get_analog(ANALOG_RIGHT_X) * (double)100.0 / 127);
+		// chassis::arcade(
+		// 	master.get_analog(ANALOG_LEFT_Y) * (double)100.0 / 127,
+		// 	master.get_analog(ANALOG_LEFT_X) * (double)100.0 / 127
+		// );
 		// Comment out whichever drive type you don't want to use
 		// tankDrive(speed);
-		// arcadeDrive();
+		arcadeDrive();
 
 		// Brake System Selector
 		// Uses basic logic for toggle and is able to use a custom homemade
@@ -56,13 +58,13 @@ void opcontrol() {
 		}
 
 		// Speed Control
-		if (master.get_digital(DIGITAL_Y) == 1) {
-			if (speed == 1.5) {
-				speed = 1;
-			} else {
-				speed = 1.5;
-			}
-		}
+		// if (master.get_digital(DIGITAL_Y) == 1) {
+		// 	if (speed == 1.5) {
+		// 		speed = 1;
+		// 	} else {
+		// 		speed = 1.5;
+		// 	}
+		// }
 
 		if (master.get_digital_new_press(DIGITAL_X) == 1) {
 			autonomous();
