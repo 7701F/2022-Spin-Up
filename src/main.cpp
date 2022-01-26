@@ -21,7 +21,6 @@ void initialize() {
 	arms::chassis::init();
 	// Set display
 	display();
-	// arms::selector::init();
 
 	// Reset IMU and start display update task
 	// imuDisplay();
@@ -29,10 +28,9 @@ void initialize() {
 	// pros::Task displayUpdateTask(displayUpdate);
 	pros::Task task{[=] {
 		pros::delay(200);
-		// std::cout << "Task Called" << std::endl;
-		std::ostringstream ss;
-		ss << "Speed: " << imu_sensor.get_accel().y << " ";
-		master.print(1, 1, "Speed: %d", imu_sensor.get_accel().y);
+		// master.print(1, 1, "Speed: %d", imu_sensor.get_accel().y);
+		// ಠ_ಠ
+		master.print(1, 0, "ಠ_ಠ");
 	}};
 
 	// Set brakes on to active bold
@@ -62,4 +60,5 @@ void disabled() {}
  * starts.
  */
 void competition_initialize() {
+	arms::selector::init();
 }
