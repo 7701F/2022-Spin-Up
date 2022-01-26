@@ -54,26 +54,26 @@ void game_autonomous()
 
 // Left win point
 void Rauton() {
-	chassis::move(5, 100);
-	chassis::move(1, 50);
+	arms::chassis::move(5, 100);
+	arms::chassis::move(1, 50);
 	clawM.move_relative(140, 75);
 	clawM.move_relative(-140, -75);
-	chassis::move(-5, 100);
-	chassis::move(-1, 50);
+	arms::chassis::move(-5, 100);
+	arms::chassis::move(-1, 50);
 }
 
 // Yellow goal
 void Yauton() {
-	chassis::move(38, 100);
-	chassis::move(10, 50);
+	arms::chassis::move(38, 100);
+	arms::chassis::move(10, 50);
 	pros::delay(300);
 	clawM.move_relative(200, 100);
 	pros::delay(300);
-	chassis::move(-46, 100);
+	arms::chassis::move(-46, 100);
 	pros::delay(300);
 	clawM.move_relative(-200, -100);
 	pros::delay(300);
-	chassis::move(-1, 50);
+	arms::chassis::move(-1, 50);
 }
 
 // Right win point
@@ -100,7 +100,7 @@ void Lauton() {
 
 // Auton Selector Logic
 void autonomous() {
-	switch (selector::auton) {
+	switch (arms::selector::auton) {
 		case 1:
 			Yauton();
 			break;
