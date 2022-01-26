@@ -71,8 +71,8 @@ void opcontrol() {
 		}
 
 		// Uncomment whichever brake/lift you want to use.
-		customBrake(pbrake);
-		// prosBrake(pbrake);
+		// customBrake(pbrake);
+		prosBrake(pbrake);
 
 		// Lift Controls
 		liftControls();
