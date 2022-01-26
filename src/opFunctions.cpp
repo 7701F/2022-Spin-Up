@@ -16,12 +16,14 @@ void tankDrive(double speed) {
 	// rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
 
 	// By default it multiples the anolog input by 1.5 to make it go slightly faster
-	// if (master.get_digital(DIGITAL_Y) == true)
-	// {
-	// 	speed = 1;
-	// }
-	// else
-	// 	speed = 1.5;
+	// Speed Control
+	if (master.get_digital(DIGITAL_Y) == 1) {
+		if (speed == 1.5) {
+			speed = 1;
+		} else {
+			speed = 1.5;
+		}
+	}
 
 	leftMtr.move(master.get_analog(ANALOG_LEFT_Y) * speed);
 	leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) * speed);
@@ -98,5 +100,14 @@ void liftControls() {
 		clawM.move_velocity(-50);
 	} else {
 		clawM.move_velocity(0);
+	}
+
+	// Winch Control
+	if (master.get_digital(DIGITAL_UP) == 1) {
+		winchM.move_velocity(100);
+	} else if (master.get_digital(DIGITAL_DOWN) == 1) {
+		winchM.move_velocity(-100);
+	} else {
+		winchM.move_velocity(0);
 	}
 }

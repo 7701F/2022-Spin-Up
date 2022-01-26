@@ -4,8 +4,8 @@
 // Drivetrain configuration constants
 namespace arms::chassis {
 // negative numbers mean reversed motor
-#define LEFT_MOTORS 1, 2
-#define RIGHT_MOTORS -3, -4
+#define LEFT_MOTORS -20, -19
+#define RIGHT_MOTORS 12, 11
 #define GEARSET 200 // rpm of chassis motors
 
 #define DISTANCE_CONSTANT 273 // ticks per distance unit
@@ -21,7 +21,7 @@ namespace arms::chassis {
 #define ARC_STEP 2   // acceleration for arcs
 
 // sensors
-#define IMU_PORT 0            // port 0 for disabled
+#define IMU_PORT 1            // port 0 for disabled
 #define ENCODER_PORTS 0, 0, 0 // port 0 for disabled
 #define EXPANDER_PORT 0
 #define JOYSTICK_THRESHOLD 10 // min value needed for joystick to move drive
@@ -65,7 +65,7 @@ namespace arms::pid {
 // Auton selector configuration constants
 namespace arms::selector {
 // Names of autonomi, up to 10
-#define AUTONS "Front", "Back", "Do Nothing"
+#define AUTONS "Yellow Goal", "Right WP", "Left WP", "Do Nothing"
 #define HUE 360   // Color of theme from 0-359(H part of HSV)
 #define DEFAULT 1 // Default auton numbers
 } // namespace arms::selector

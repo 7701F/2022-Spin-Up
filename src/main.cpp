@@ -9,6 +9,7 @@
 #include "main.h"
 
 #include "ARMS/chassis.h"
+#include "ARMS/selector.h"
 #include "opfunctions.h"
 
 /**
@@ -20,6 +21,7 @@
 void initialize() {
 	arms::chassis::init();
 	// Set display
+	// arms::selector::init();
 	display();
 
 	// Reset IMU and start display update task
@@ -28,9 +30,7 @@ void initialize() {
 	// pros::Task displayUpdateTask(displayUpdate);
 	pros::Task task{[=] {
 		pros::delay(200);
-		// master.print(1, 1, "Speed: %d", imu_sensor.get_accel().y);
-		// ಠ_ಠ
-		master.print(1, 0, "ಠ_ಠ");
+		master.print(1, 1, "Speed: %d", imu_sensor.get_accel().y);
 	}};
 
 	// Set brakes on to active bold
