@@ -33,9 +33,17 @@ void opcontrol() {
 		// tankDrive(speed);
 		// arcadeDrive();
 		arms::chassis::arcade(
-			master.get_analog(ANALOG_LEFT_Y) * (double)100.0 / 127,
-			master.get_analog(ANALOG_LEFT_X) * (double)100.0 / 127
+			master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
+			master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127
 		);
+
+		// Uncomment whichever brake/lift you want to use.
+		// customBrake(pbrake);
+		prosBrake(pbrake);
+
+		// Lift Controls
+		liftControls();
+
 		// Brake System Selector
 		// Uses basic logic for toggle and is able to use a custom homemade
 		// brake or the PROS control for the built in motor breaks.
@@ -47,36 +55,9 @@ void opcontrol() {
 			}
 		}
 
-		// Winch Control
-		if (master.get_digital(DIGITAL_UP) == 1) {
-			winchM.move_velocity(100);
-		} else if (master.get_digital(DIGITAL_DOWN) == 1) {
-			winchM.move_velocity(-100);
-		} else {
-			winchM.move_velocity(0);
-		}
-
-		// Speed Control
-		// if (master.get_digital(DIGITAL_Y) == 1) {
-		// 	if (speed == 1.5) {
-		// 		speed = 1;
-		// 	} else {
-		// 		speed = 1.5;
-		// 	}
-		// }
-
-		if (master.get_digital_new_press(DIGITAL_X) == 1) {
-			autonomous();
-		}
-
-		// Uncomment whichever brake/lift you want to use.
-		// customBrake(pbrake);
-		prosBrake(pbrake);
-
-		// Lift Controls
-		liftControls();
+		if (master.get_digital(DIGITAL_X) && !pros::competition::is_connected()) autonomous();
 
 		// Lastly, delay
-		pros::delay(1);
+		pros::delay(10);
 	}
 }

@@ -22,14 +22,6 @@
  */
 
 /*
-void skills_auton() {
-	// drive(38,200,1000);
-	leftMtr.move_absolute(2850, 200);
-	leftMtrR.move_absolute(1800, 200);
-	rightMtr.move_absolute(2850, 200);
-	rightMtrR.move_absolute(1800, 200);
-}
-
 // Drive forward AND grab and pull tower auton
 void game_autonomous()
 {
@@ -82,7 +74,11 @@ void Lauton() {
 	clawM.move_relative(-140, -50);
 }
 
-// void Sauton() {
+void Sauton() {
+	leftMtr.move_absolute(2850, 200);
+	leftMtrR.move_absolute(1800, 200);
+	rightMtr.move_absolute(2850, 200);
+	rightMtrR.move_absolute(1800, 200);
 // 	Drivetrain.driveFor(forward, 42, inches, 75, velocityUnits::pct);
 // 	Claw.spinFor(forward, 200, degrees, 50, velocityUnits::pct);
 // 	Drivetrain.driveFor(reverse, 44, inches, 75, velocityUnits::pct);
@@ -96,11 +92,14 @@ void Lauton() {
 // 	Claw.spinFor(reverse, 200, degrees, 50, velocityUnits::pct);
 // 	Drivetrain.turnFor(right, 70, degrees);
 // 	Drivetrain.driveFor(reverse, 90, inches, 75, velocityUnits::pct);
-// }
+}
 
 // Auton Selector Logic
 void autonomous() {
 	switch (arms::selector::auton) {
+		case 0:
+			Sauton();
+			break;
 		case 1:
 			Yauton();
 			break;
@@ -109,6 +108,9 @@ void autonomous() {
 			break;
 		case 3:
 			Rauton();
+			break;
+		case 4:
+			break;
 		default:
 			break;
 	}
