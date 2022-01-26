@@ -79,19 +79,19 @@ void Sauton() {
 	leftMtrR.move_absolute(1800, 200);
 	rightMtr.move_absolute(2850, 200);
 	rightMtrR.move_absolute(1800, 200);
-// 	Drivetrain.driveFor(forward, 42, inches, 75, velocityUnits::pct);
-// 	Claw.spinFor(forward, 200, degrees, 50, velocityUnits::pct);
-// 	Drivetrain.driveFor(reverse, 44, inches, 75, velocityUnits::pct);
-// 	Claw.spinFor(reverse, 200, degrees, 50, velocityUnits::pct);
-// 	Drivetrain.driveFor(reverse, 7, inches, 75, velocityUnits::pct);
-// 	Drivetrain.turnFor(right, 70, degrees);
-// 	Drivetrain.driveFor(forward, 26, inches, 75, velocityUnits::pct);
-// 	Claw.spinFor(forward, 200, degrees, 50, velocityUnits::pct);
-// 	Drivetrain.turnFor(left, 80, degrees);
-// 	Drivetrain.driveFor(forward, 90, inches, 75, velocityUnits::pct);
-// 	Claw.spinFor(reverse, 200, degrees, 50, velocityUnits::pct);
-// 	Drivetrain.turnFor(right, 70, degrees);
-// 	Drivetrain.driveFor(reverse, 90, inches, 75, velocityUnits::pct);
+	// 	Drivetrain.driveFor(forward, 42, inches, 75, velocityUnits::pct);
+	// 	Claw.spinFor(forward, 200, degrees, 50, velocityUnits::pct);
+	// 	Drivetrain.driveFor(reverse, 44, inches, 75, velocityUnits::pct);
+	// 	Claw.spinFor(reverse, 200, degrees, 50, velocityUnits::pct);
+	// 	Drivetrain.driveFor(reverse, 7, inches, 75, velocityUnits::pct);
+	// 	Drivetrain.turnFor(right, 70, degrees);
+	// 	Drivetrain.driveFor(forward, 26, inches, 75, velocityUnits::pct);
+	// 	Claw.spinFor(forward, 200, degrees, 50, velocityUnits::pct);
+	// 	Drivetrain.turnFor(left, 80, degrees);
+	// 	Drivetrain.driveFor(forward, 90, inches, 75, velocityUnits::pct);
+	// 	Claw.spinFor(reverse, 200, degrees, 50, velocityUnits::pct);
+	// 	Drivetrain.turnFor(right, 70, degrees);
+	// 	Drivetrain.driveFor(reverse, 90, inches, 75, velocityUnits::pct);
 }
 
 // Auton Selector Logic
@@ -114,16 +114,4 @@ void autonomous() {
 		default:
 			break;
 	}
-	// if (auton == false)
-	// {
-	// 	game_autonomous();
-	// }
-	// else if (auton == true)
-	// {
-	// 	skills_auton();
-	// }
-	// else
-	// {
-	// 	return;
-	// }
 }
