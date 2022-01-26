@@ -36,7 +36,6 @@ void opcontrol() {
 			master.get_analog(ANALOG_LEFT_Y) * (double)100.0 / 127,
 			master.get_analog(ANALOG_LEFT_X) * (double)100.0 / 127
 		);
-
 		// Brake System Selector
 		// Uses basic logic for toggle and is able to use a custom homemade
 		// brake or the PROS control for the built in motor breaks.
