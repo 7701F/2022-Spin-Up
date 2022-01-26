@@ -8,6 +8,7 @@
  */
 #include "main.h"
 
+#include "ARMS/chassis.h"
 #include "opfunctions.h"
 
 /**
@@ -17,9 +18,10 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+	arms::chassis::init();
 	// Set display
 	display();
-	// selector::init();
+	// arms::selector::init();
 
 	// Reset IMU and start display update task
 	// imuDisplay();
@@ -40,7 +42,7 @@ void initialize() {
 	winchM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
 	// PID Init
-	pid::init();
+	arms::pid::init();
 }
 
 /**

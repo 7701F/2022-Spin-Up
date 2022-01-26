@@ -1,12 +1,13 @@
-#ifndef _PIDA_H_
-#define _PIDA_H_
+#ifndef _ARMS_PID_H_
+#define _ARMS_PID_H_
 
 #include "ARMS/config.h"
 #include <array>
 
-namespace pid {
+namespace arms::pid {
 
 // pid mode enums
+#define ODOM_THRU 6
 #define ODOM_HOLO_THRU 5
 #define ODOM_HOLO 4
 #define ODOM 3
@@ -25,6 +26,7 @@ extern double arcKP; // needs to be exposed since arcs have not been integrated
                      // into new PID format
 
 extern double difKP; // needs to be exposed for use with chassis::fast
+extern double dif;
 
 std::array<double, 2> linear();
 std::array<double, 2> angular();
@@ -40,8 +42,9 @@ void init(bool debug = PID_DEBUG, double linearKP = LINEAR_KP,
           double angular_pointKP = ANGULAR_POINT_KP,
           double angular_pointKI = ANGULAR_POINT_KI,
           double angular_pointKD = ANGULAR_POINT_KD, double arcKP = ARC_KP,
-          double difKP = DIF_KP, double min_error = MIN_ERROR);
+          double difKP = DIF_KP, double min_error = MIN_ERROR,
+          double difMax = DIF_MAX);
 
-} // namespace pid
+} // namespace arms::pid
 
 #endif

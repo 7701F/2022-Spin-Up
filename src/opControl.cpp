@@ -29,13 +29,13 @@ void opcontrol() {
 	// Run Loop
 	while (true) {
 		// Move the steering motors
-		// chassis::arcade(
-		// 	master.get_analog(ANALOG_LEFT_Y) * (double)100.0 / 127,
-		// 	master.get_analog(ANALOG_LEFT_X) * (double)100.0 / 127
-		// );
+		arms::chassis::arcade(
+			master.get_analog(ANALOG_LEFT_Y) * (double)100.0 / 127,
+			master.get_analog(ANALOG_LEFT_X) * (double)100.0 / 127
+		);
 		// Comment out whichever drive type you don't want to use
 		// tankDrive(speed);
-		arcadeDrive();
+		// arcadeDrive();
 
 		// Brake System Selector
 		// Uses basic logic for toggle and is able to use a custom homemade
