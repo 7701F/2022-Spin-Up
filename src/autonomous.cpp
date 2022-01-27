@@ -94,9 +94,17 @@ void Sauton() {
 	// 	Drivetrain.driveFor(reverse, 90, inches, 75, velocityUnits::pct);
 }
 
+void trollingSkills() {
+	arms::chassis::turn(180, 50);
+	arms::chassis::move(5, 100);
+}
+
 // Auton Selector Logic
 void autonomous() {
 	switch (arms::selector::auton) {
+		case -1:
+			trollingSkills();
+			break;
 		case 0:
 			Sauton();
 			break;

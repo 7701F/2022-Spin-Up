@@ -41,8 +41,8 @@ void opcontrol() {
 		// customBrake(pbrake);
 		prosBrake(pbrake);
 
-		// Lift Controls
-		liftControls();
+		// Game Controls
+		gameSystemControls();
 
 		// Brake System Selector
 		// Uses basic logic for toggle and is able to use a custom homemade

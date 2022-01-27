@@ -4,7 +4,7 @@
 // Drivetrain configuration constants
 namespace arms::chassis {
 // negative numbers mean reversed motor
-#define LEFT_MOTORS -20, -19
+#define LEFT_MOTORS 20, 19
 #define RIGHT_MOTORS 12, 11
 #define GEARSET 200 // rpm of chassis motors
 
