@@ -97,7 +97,6 @@ void trollingSkills() {
 	arms::pid::linear();
 	arms::chassis::turn(180, 50);
 	arms::chassis::move(5, 100);
-	arms::pid::init();
 }
 
 // Auton Selector Logic
