@@ -17,6 +17,9 @@
  */
 void initialize() {
 	arms::chassis::init();
+	arms::odom::init();
+	arms::pid::init();
+
 	// Set display
 	// arms::selector::init();
 	display();
@@ -35,9 +38,6 @@ void initialize() {
 	leftLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	clawM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	winchM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
-	// PID Init
-	arms::pid::init();
 }
 
 /**
