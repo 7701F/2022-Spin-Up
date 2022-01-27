@@ -7,9 +7,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "main.h"
-#include "motors.h"
-#include "pros/misc.h"
-#include "pros/motors.h"
 
 // Each stick controls a side of the wheels
 void tankDrive(double speed) {
