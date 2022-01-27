@@ -7,7 +7,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "main.h"
-// #include "autoncontrol.h"
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
