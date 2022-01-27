@@ -20,3 +20,6 @@ temp.errors
 *.zip
 .cache
 docs/
+debug.log
+
+.cache/
