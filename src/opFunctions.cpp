@@ -78,7 +78,7 @@ void prosBrake(bool pbrake) {
 			rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 		}
 	} else if (pbrake == false) {
-		if(leftMtr.get_brake_mode() != pros::E_MOTOR_BRAKE_COAST) {
+		if (leftMtr.get_brake_mode() != pros::E_MOTOR_BRAKE_COAST) {
 			leftMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 			rightMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 			leftMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
