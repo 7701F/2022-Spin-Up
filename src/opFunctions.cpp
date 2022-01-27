@@ -8,6 +8,9 @@
  */
 #include "main.h"
 
+// Variables
+int count = 0;
+
 // Each stick controls a side of the wheels
 void tankDrive(double speed) {
 	// leftMtr.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_Y));
@@ -53,7 +56,6 @@ void customBrake(bool pbrake) {
 				leftMtrR.move_velocity(leftMtrR.get_actual_velocity() * -2);
 				rightMtrR.move_velocity(rightMtrR.get_actual_velocity() * -2);
 
-				int count = 0;
 				if (!(count % 25)) {
 					// Only print every 50ms, the controller text update rate is slow
 					master.rumble(".... .- .-. -.. . .-.");
