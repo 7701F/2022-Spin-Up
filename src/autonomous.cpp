@@ -6,6 +6,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+#include "ARMS/pid.h"
 #include "main.h"
 
 /**
@@ -97,7 +98,7 @@ void trollingSkills() {
 	arms::pid::linear();
 	arms::chassis::turn(180, 50);
 	arms::chassis::move(5, 100);
-	arms::pid::mode = DISABLE;
+	arms::pid::init();
 }
 
 // Auton Selector Logic
