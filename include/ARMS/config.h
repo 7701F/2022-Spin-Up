@@ -65,7 +65,7 @@ namespace arms::pid {
 // Auton selector configuration constants
 namespace arms::selector {
 // Names of autonomi, up to 10
-#define AUTONS "Yellow Goal", "Right WP", "Left WP", "Do Nothing"
+#define AUTONS "Yellow Goal", "Right WP", "Left WP", "Do Nothing (Drive 1in)"
 #define HUE 360   // Color of theme from 0-359(H part of HSV)
 #define DEFAULT 1 // Default auton numbers
 } // namespace arms::selector
