@@ -20,8 +20,8 @@
  * from where it left off.
  */
 
-/*
 // Drive forward AND grab and pull tower auton
+/*
 void game_autonomous()
 {
 	leftMtr.move_relative(300, 75);
@@ -44,7 +44,7 @@ void game_autonomous()
 */
 
 // Left win point
-void Rauton() {
+void Lauton() {
 	arms::chassis::move(5, 100);
 	arms::chassis::move(1, 50);
 	clawM.move_relative(140, 75);
@@ -66,7 +66,7 @@ void Yauton() {
 }
 
 // Right win point
-void Lauton() {
+void Rauton() {
 	clawM.move_relative(140, 50);
 	clawM.move_relative(-140, -50);
 }
@@ -100,8 +100,17 @@ void trollingSkills() {
 // Auton Selector Logic
 void autonomous() {
 	switch (arms::selector::auton) {
+		case -4:
+			arms::chassis::move(1, 50);
+			break;
+		case -3:
+			Lauton();
+			break;
+		case -2:
+			Rauton();
+			break;
 		case -1:
-			trollingSkills();
+			Yauton();
 			break;
 		case 0:
 			Sauton();
@@ -110,12 +119,13 @@ void autonomous() {
 			Yauton();
 			break;
 		case 2:
-			Lauton();
-			break;
-		case 3:
 			Rauton();
 			break;
+		case 3:
+			Lauton();
+			break;
 		case 4:
+			arms::chassis::move(1, 50);
 			break;
 		default:
 			break;
