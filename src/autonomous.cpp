@@ -55,16 +55,14 @@ void Rauton() {
 
 // Yellow goal
 void Yauton() {
-	arms::chassis::move(38, 100);
-	arms::chassis::move(10, 50);
+	arms::chassis::move(48, 50);
+	clawM.move_relative(180, 100);
 	pros::delay(300);
-	clawM.move_relative(200, 100);
-	pros::delay(300);
-	arms::chassis::move(-46, 100);
-	pros::delay(300);
-	clawM.move_relative(-200, -100);
+	arms::chassis::move(-46, 50);
+	clawM.move_relative(-180, -100);
 	pros::delay(300);
 	arms::chassis::move(-1, 50);
+	// arms::chassis::move(5, 50);
 }
 
 // Right win point

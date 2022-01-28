@@ -8,6 +8,7 @@
  */
 #include "main.h"
 #include "opfunctions.h"
+#include "pros/motors.h"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -17,27 +18,27 @@
  */
 void initialize() {
 	arms::chassis::init();
-	arms::odom::init();
-	arms::pid::init();
+	// arms::odom::init();
+	// arms::pid::init();
 
 	// Set display
-	// arms::selector::init();
-	display();
+	arms::selector::init();
+	// display();
 
 	// Reset IMU and start display update task
-	imuDisplay();
+	// imuDisplay();
 	imu_sensor.reset();
-	pros::Task displayUpdateTask(displayUpdate);
+	// pros::Task displayUpdateTask(displayUpdate);
 	pros::Task task{[=] {
 		pros::delay(200);
-		master.print(1, 1, "Speed: %d", imu_sensor.get_accel().y);
+		master.print(1, 1, "Speed: %d", leftMtr.get_actual_velocity());
 	}};
 
 	// Set brakes on to active bold
-	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	leftLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	clawM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	winchM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	leftLift.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	// clawM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	// winchM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
 
 /**
