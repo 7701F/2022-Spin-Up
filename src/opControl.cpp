@@ -28,25 +28,18 @@ void opcontrol() {
 
 	// Run Loop
 	while (true) {
-		// Move the steering motors
-		// Comment out whichever drive type you don't want to use
-		// tankDrive(speed);
-		// arcadeDrive();
+		// Steering
 		arms::chassis::arcade(
 			master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
 			master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127
 		);
 
-		// Uncomment whichever brake/lift you want to use.
-		// customBrake(pbrake);
-		prosBrake(pbrake);
-
 		// Game Controls
 		gameSystemControls();
 
-		// Brake System Selector
-		// Uses basic logic for toggle and is able to use a custom homemade
-		// brake or the PROS control for the built in motor breaks.
+		// Brake System
+		// Uses basic logic for toggle button
+		prosBrake(pbrake);
 		if (master.get_digital_new_press(DIGITAL_A) == 1) {
 			if (pbrake == true) {
 				pbrake = false;
