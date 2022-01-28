@@ -8,7 +8,6 @@
  */
 #include "main.h"
 #include "opfunctions.h"
-#include "pros/motors.h"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
