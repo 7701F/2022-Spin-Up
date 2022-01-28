@@ -75,14 +75,18 @@ void prosBrake(bool pbrake) {
 			rightMtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 			leftMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 			rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-		}
+
+			printf("BRAKE TOGGLED: HOLD");
+		} else printf("BRAKE ALREADY SET: COAST");
 	} else if (pbrake == false) {
 		if (leftMtr.get_brake_mode() != pros::E_MOTOR_BRAKE_COAST) {
 			leftMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 			rightMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 			leftMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 			rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-		}
+
+			printf("BRAKE TOGGLED: COAST");
+		} else printf("BRAKE ALREADY SET: COAST");
 	}
 }
 
