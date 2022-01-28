@@ -17,9 +17,10 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+	// ARMS init
 	arms::chassis::init();
+	arms::pid::init();
 	// arms::odom::init();
-	// arms::pid::init();
 
 	// Set display
 	arms::selector::init();
