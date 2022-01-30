@@ -7,7 +7,23 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "main.h"
+
 #include "opfunctions.h"
+
+// Controller Auton Indicator
+int scrcount = 1;
+std::string autonst[5] = {"YLW Goal", "R WP", "L WP", "Calibrate Auton"};
+void ctrlrScr() {
+	std::string selAuton = autonst[abs(arms::selector::auton)];
+
+	if (!(scrcount % 25)) {
+		// Only print every 50ms, the controller text update rate is slow
+		master.print(1, 0, "Auton: %s", selAuton.c_str());
+	}
+
+	scrcount++;
+	pros::delay(2);
+}
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -26,13 +42,11 @@ void initialize() {
 	// display();
 
 	// Reset IMU and start display update task
-	// imuDisplay();
+	imuDisplay();
 	imu_sensor.reset();
 	// pros::Task displayUpdateTask(displayUpdate);
-	pros::Task task{[=] {
-		pros::delay(200);
-		master.print(1, 1, "Speed: %d", leftMtr.get_actual_velocity());
-	}};
+
+	pros::Task controllerTask{ctrlrScr, "Controller Display"};
 
 	// Set brakes on to active bold
 	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
