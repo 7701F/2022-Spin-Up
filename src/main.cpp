@@ -12,13 +12,15 @@
 
 // Controller Auton Indicator
 int scrcount = 1;
-std::string autons[5] = {"YLW Goal", "R WP", "L WP", "Calibrate Auton"};
+std::string autons[5] = {"YLW Goal", "R WP", "L WP", "Skls Test", "Do Nothing"};
 void ctrlrScr() {
 	std::string selAuton = autons[abs(arms::selector::auton)];
 
 	if (!(scrcount % 25)) {
 		// Only print every 50ms, the controller text update rate is slow
 		master.print(1, 0, "Auton: %s", selAuton.c_str());
+		pros::delay(200);
+		master.print(1, 0, "Brake: %s", (pbrake ? "ON" : "OFF"));
 	}
 
 	scrcount++;
