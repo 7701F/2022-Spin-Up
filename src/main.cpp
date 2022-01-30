@@ -12,9 +12,9 @@
 
 // Controller Auton Indicator
 int scrcount = 1;
-std::string autonst[5] = {"YLW Goal", "R WP", "L WP", "Calibrate Auton"};
+std::string autons[5] = {"YLW Goal", "R WP", "L WP", "Calibrate Auton"};
 void ctrlrScr() {
-	std::string selAuton = autonst[abs(arms::selector::auton)];
+	std::string selAuton = autons[abs(arms::selector::auton)];
 
 	if (!(scrcount % 25)) {
 		// Only print every 50ms, the controller text update rate is slow
@@ -38,8 +38,8 @@ void initialize() {
 	// arms::odom::init();
 
 	// Set display
-	arms::selector::init();
-	// display();
+	// arms::selector::init();
+	display();
 
 	// Reset IMU and start display update task
 	imuDisplay();
