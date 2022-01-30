@@ -9,6 +9,21 @@
 #include "main.h"
 #include "opfunctions.h"
 
+// Controller Auton Indicator
+int scrcount = 1;
+std::string autons[5] = {"YLW Goal", "R WP", "L WP", "Calibrate Auton"};
+void ctrlrScr() {
+	std::string selAuton = autons[abs(arms::selector::auton)];
+
+	if (!(scrcount % 25)) {
+		// Only print every 50ms, the controller text update rate is slow
+		master.print(1, 0, "Auton: %s", selAuton.c_str());
+	}
+
+	scrcount++;
+	pros::delay(2);
+}
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -22,8 +37,8 @@ void initialize() {
 	// arms::odom::init();
 
 	// Set display
-	arms::selector::init();
-	// display();
+	// arms::selector::init();
+	display();
 
 	// Reset IMU and start display update task
 	// imuDisplay();
