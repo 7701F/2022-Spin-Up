@@ -9,18 +9,6 @@
 #include "main.h"
 #include "motors.h"
 
-/**
- * Runs the user autonomous code. This function will be started in its own task
- * with the default priority and stack size whenever the robot is enabled via
- * the Field Management System or the VEX Competition Switch in the autonomous
- * mode. Alternatively, this function may be called in initialize or opcontrol
- * for non-competition testing purposes.
- *
- * If the robot is disabled or communications is lost, the autonomous task
- * will be stopped. Re-enabling the robot will restart the task, not re-start it
- * from where it left off.
- */
-
 // Drive forward AND grab and pull tower auton
 /*
 void game_autonomous()
@@ -125,14 +113,27 @@ void winchTest() {
 	pros::delay(1000);
 }
 
-std::string autonst[5] = {"YLW Goal", "R WP", "L WP", "Calibrate Auton"};
 
-// Auton Selector Logic
+/**
+ * Runs the user autonomous code. This function will be started in its own task
+ * with the default priority and stack size whenever the robot is enabled via
+ * the Field Management System or the VEX Competition Switch in the autonomous
+ * mode. Alternatively, this function may be called in initialize or opcontrol
+ * for non-competition testing purposes.
+ *
+ * If the robot is disabled or communications is lost, the autonomous task
+ * will be stopped. Re-enabling the robot will restart the task, not re-start it
+ * from where it left off.
+ */
+std::string autonst[5] = {"YLW Goal", "R WP", "L WP", "Calibrate Auton"};
 void autonomous() {
+    // Log which auton we ran to console for debugging
 	std::string selAuton = autonst[abs(arms::selector::auton)];
 
 	// master.print(1, 0, "Auton: %s\n", selAuton.c_str());
 	printf("Auton Int: %d Auton Str: %s\n", arms::selector::auton, selAuton.c_str());
+
+    // Auton Selector Logic
 	switch (arms::selector::auton) {
 		case -4:
 			arms::chassis::move(1, 50);
