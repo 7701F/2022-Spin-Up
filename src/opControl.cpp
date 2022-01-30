@@ -39,7 +39,6 @@ void opcontrol() {
 
 		// Brake System
 		// Uses basic logic for toggle button
-		prosBrake(pbrake);
 		if (master.get_digital_new_press(DIGITAL_A) == 1) {
 			if (pbrake == true) {
 				pbrake = false;
@@ -47,6 +46,7 @@ void opcontrol() {
 				pbrake = true;
 			}
 		}
+		prosBrake(pbrake);
 
 		if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected()) autonomous();
 
