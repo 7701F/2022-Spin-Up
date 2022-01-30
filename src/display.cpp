@@ -100,7 +100,6 @@ void imuDisplay() {
 	lv_obj_set_style(display_title3, &title_style);
 	lv_label_set_text(display_title3, "IMU STATUS: UNINITIALIZED");
 	lv_obj_align(display_title3, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 85);
-	// should print about 2000 ms
 
 	int time = pros::millis();
 	int iter = 0;
@@ -117,12 +116,3 @@ void imuDisplay() {
 	ss << "IMU calibrated: (" << iter - time << " ms)";
 	lv_label_set_text(display_title3, ss.str().c_str());
 }
-
-// void displayUpdate(/*void *param*/) {
-// 	std::ostringstream ss;
-// 	ss << "Speed: " << imu_sensor.get_accel().y << " ";
-// 	// ss << "Bot Battery Level:" << pros::battery::get_capacity() << " Controller
-// 	// Battery Level:" << master.get_battery_level();
-// 	lv_label_set_text(display_title4, ss.str().c_str());
-// 	pros::delay(1000);
-// }
