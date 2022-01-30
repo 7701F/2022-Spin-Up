@@ -32,21 +32,15 @@ void ctrlrScr() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	// ARMS init
+	// ARMS & Controller init and reset IMU sensor
 	arms::chassis::init();
 	arms::pid::init();
-	// arms::odom::init();
+	imu_sensor.reset();
+	pros::Task controllerTask{ctrlrScr, "Controller Display"};
 
 	// Set display
 	// arms::selector::init();
 	display();
-
-	// Reset IMU and start display update task
-	imuDisplay();
-	imu_sensor.reset();
-	// pros::Task displayUpdateTask(displayUpdate);
-
-	pros::Task controllerTask{ctrlrScr, "Controller Display"};
 
 	// Set brakes on to active bold
 	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
