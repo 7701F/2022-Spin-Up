@@ -40,11 +40,7 @@ void opcontrol() {
 		// Brake System
 		// Uses basic logic for toggle button
 		if (master.get_digital_new_press(DIGITAL_A) == 1) {
-			if (pbrake == true) {
-				pbrake = false;
-			} else {
-				pbrake = true;
-			}
+			pbrake = !pbrake;
 		}
 		prosBrake(pbrake);
 
