@@ -11,40 +11,6 @@
 // Variables
 int count = 0;
 
-// Each stick controls a side of the wheels
-void tankDrive(double speed) {
-	// leftMtr.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_Y));
-	// leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_LEFT_Y));
-	// rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
-	// rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) + master.get_analog(ANALOG_RIGHT_Y));
-
-	// By default it multiples the anolog input by 1.5 to make it go slightly faster
-	// Speed Control
-	if (master.get_digital(DIGITAL_Y) == 1) {
-		if (speed == 1.5) {
-			speed = 1;
-		} else {
-			speed = 1.5;
-		}
-	}
-
-	leftMtr.move(master.get_analog(ANALOG_LEFT_Y) * speed);
-	leftMtrR.move(master.get_analog(ANALOG_LEFT_Y) * speed);
-	rightMtr.move(master.get_analog(ANALOG_RIGHT_Y) * speed);
-	rightMtrR.move(master.get_analog(ANALOG_RIGHT_Y) * speed);
-}
-
-// Right stick controls turning and left controls acceleration
-void arcadeDrive() {
-	int forward_backward = master.get_analog(ANALOG_LEFT_Y);
-	int left_right = master.get_analog(ANALOG_RIGHT_X);
-
-	leftMtr.move(forward_backward + left_right);
-	leftMtrR.move(forward_backward + left_right);
-	rightMtr.move(forward_backward - left_right);
-	rightMtrR.move(forward_backward - left_right);
-}
-
 // Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity
 void customBrake(bool pbrake) {
 	if (pbrake == true) {
@@ -77,7 +43,7 @@ void prosBrake(bool pbrake) {
 			rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
 			printf("BRAKE TOGGLED: HOLD\n");
-		}	 // else printf("BRAKE ALREADY SET: COAST");
+		}
 	} else if (pbrake == false) {
 		if (leftMtr.get_brake_mode() != pros::E_MOTOR_BRAKE_COAST) {
 			leftMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
@@ -86,7 +52,7 @@ void prosBrake(bool pbrake) {
 			rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 
 			printf("BRAKE TOGGLED: COAST\n");
-		}	 // else printf("BRAKE ALREADY SET: COAST");
+		}
 	}
 }
 
