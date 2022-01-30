@@ -8,29 +8,6 @@
  */
 #include "main.h"
 
-// Drive forward AND grab and pull tower auton
-/*
-void game_autonomous()
-{
-	leftMtr.move_relative(300, 75);
-	leftMtrR.move_relative(300, 75);
-	rightMtr.move_relative(300, 75);
-	rightMtrR.move_relative(300, 75);
-	pros::delay(300);
-	clawM.move_relative(1200, 50);
-	rightLift.move_relative(30, 100);
-	leftLift.move_relative(30, 100);
-	pros::delay(300);
-	leftMtr.move_relative(-600, -75);
-	leftMtrR.move_relative(-600, -75);
-	rightMtr.move_relative(-600, -75);
-	rightMtrR.move_relative(-600, -75);
-	pros::delay(600);
-	clawM.move_relative(-1200, -50);
-	pros::delay(500);
-}
-*/
-
 // Right win point
 void Rauton() {
 	arms::chassis::move(15, 80);
