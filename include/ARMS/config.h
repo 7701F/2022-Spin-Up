@@ -8,8 +8,8 @@ namespace arms::chassis {
 #define RIGHT_MOTORS 12, 11
 #define GEARSET 200 // rpm of chassis motors
 
-#define DISTANCE_CONSTANT 273 // ticks per distance unit
-#define DEGREE_CONSTANT 2.3   // ticks per degree
+#define DISTANCE_CONSTANT 64 // ticks per distance unit 273
+#define DEGREE_CONSTANT 2.3   // ticks per degree 2.3
 
 // chassis settling constants
 #define SETTLE_TIME 8
@@ -65,7 +65,7 @@ namespace arms::pid {
 // Auton selector configuration constants
 namespace arms::selector {
 // Names of autonomi, up to 10
-#define AUTONS "Yellow Goal", "Right WP", "Left WP", "Do Nothing (Drive 1in)"
+#define AUTONS "YLW Goal", "R WP", "L WP", "Calibrate Auton"
 #define HUE 360   // Color of theme from 0-359(H part of HSV)
 #define DEFAULT 1 // Default auton numbers
 } // namespace arms::selector
