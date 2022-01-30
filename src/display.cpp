@@ -12,7 +12,7 @@
 #include "opfunctions.h"
 
 lv_obj_t* scr = lv_obj_create(NULL, NULL);
-lv_obj_t* display_title4 = lv_label_create(scr, NULL);
+// lv_obj_t* display_title4 = lv_label_create(scr, NULL);
 // lv_obj_t *alabel = lv_label_create(scr, NULL);
 
 // static lv_res_t btn_click_action(lv_obj_t *btn)
@@ -54,8 +54,8 @@ void display() {
 	title_style.text.color = LV_COLOR_GREEN;
 
 	// junk
-	lv_obj_set_style(display_title4, &title_style);
-	lv_obj_align(display_title4, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 110);
+	// lv_obj_set_style(display_title4, &title_style);
+	// lv_obj_align(display_title4, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 110);
 
 	// text
 	lv_obj_t* display_title = lv_label_create(scr, NULL);
@@ -114,15 +114,15 @@ void imuDisplay() {
 	}
 
 	std::ostringstream ss;
-	ss << "IMU calibrated: (" << time - iter << " ms)";
+	ss << "IMU calibrated: (" << iter - time << " ms)";
 	lv_label_set_text(display_title3, ss.str().c_str());
 }
 
-void displayUpdate(/*void *param*/) {
-	std::ostringstream ss;
-	ss << "Speed: " << imu_sensor.get_accel().y << " ";
-	// ss << "Bot Battery Level:" << pros::battery::get_capacity() << " Controller
-	// Battery Level:" << master.get_battery_level();
-	lv_label_set_text(display_title4, ss.str().c_str());
-	pros::delay(1000);
-}
+// void displayUpdate(/*void *param*/) {
+// 	std::ostringstream ss;
+// 	ss << "Speed: " << imu_sensor.get_accel().y << " ";
+// 	// ss << "Bot Battery Level:" << pros::battery::get_capacity() << " Controller
+// 	// Battery Level:" << master.get_battery_level();
+// 	lv_label_set_text(display_title4, ss.str().c_str());
+// 	pros::delay(1000);
+// }
