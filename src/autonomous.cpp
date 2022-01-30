@@ -78,6 +78,7 @@ void Lauton() {
 	arms::chassis::move(-60, 80);
 }
 
+// Programming Skills
 void Sauton() {
 	arms::chassis::move(46, 80);
 	clawM.move_relative(200, 100);
@@ -98,6 +99,7 @@ void Sauton() {
 	arms::chassis::move(-90, 80);
 }
 
+// Old Skills Auton (for testing)
 void trollingSkills() {
 	leftMtr.move_absolute(2850, 200);
 	leftMtrR.move_absolute(1800, 200);
@@ -105,6 +107,7 @@ void trollingSkills() {
 	rightMtrR.move_absolute(1800, 200);
 }
 
+// Winch Skills Test
 void winchTest() {
 	winchM.move_relative(-2091, -100);
 	pros::delay(3250);
@@ -112,7 +115,6 @@ void winchTest() {
 	winchM.move_relative(468, 100);
 	pros::delay(1000);
 }
-
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
