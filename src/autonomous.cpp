@@ -46,10 +46,10 @@ void Rauton() {
 
 // Yellow goal
 void Yauton() {
-	arms::chassis::move(51, 100);
+	arms::chassis::move(54, 100);
 	clawM.move_relative(200, 100);
 	pros::delay(300);
-	arms::chassis::move(-51, 100);
+	arms::chassis::move(-54, 100);
 	// clawM.move_relative(-200, -100);
 	pros::delay(300);
 	arms::chassis::move(-1, 100);
@@ -115,6 +115,34 @@ void winchTest() {
 	pros::delay(1000);
 }
 
+// Left Side Auton 2.0
+void Lauton2() {
+	arms::chassis::move(5, 80);
+	clawM.move_relative(170, 100);
+	pros::delay(300);
+	clawM.move_relative(40, 100);
+	arms::chassis::move(-15, 80);
+	pros::delay(500);
+	clawM.move_relative(-170, -50);
+	pros::delay(300);
+	arms::chassis::move(-6, 80);
+	arms::chassis::turn(-80, 50);
+	arms::chassis::move(60, 80);
+	clawM.move_relative(210, 50);
+	pros::delay(300);
+	rightLift.move_relative(30, 100);
+	leftLift.move_relative(30, 100);
+	pros::delay(500);
+	arms::chassis::move(-60, 80);
+	clawM.move_relative(-210, 50);
+	pros::delay(300);
+	arms::chassis::turn(40, 50);
+	arms::chassis::move(65, 80);
+	clawM.move_relative(210, 50);
+	pros::delay(300);
+	arms::chassis::move(-65, 80);
+}
+
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -126,7 +154,7 @@ void winchTest() {
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-std::string autonst[5] = {"YLW Goal", "R WP", "L WP", "Calibrate Auton"};
+std::string autonst[5] = {"YLW Goal", "R WP", "L WP", "Skls Test", "Do Nothing"};
 void autonomous() {
     // Log which auton we ran to console for debugging
 	std::string selAuton = autonst[abs(arms::selector::auton)];
@@ -136,8 +164,11 @@ void autonomous() {
 
     // Auton Selector Logic
 	switch (arms::selector::auton) {
+		case -5:
+			arms::chassis::move(5, 50);
+			break;
 		case -4:
-			arms::chassis::move(1, 50);
+			Lauton2();
 			break;
 		case -3:
 			Lauton();
@@ -161,8 +192,10 @@ void autonomous() {
 			Lauton();
 			break;
 		case 4:
-			// arms::chassis::turn(90, 50);
-			winchTest();
+			Lauton2();
+			break;
+		case 5:
+			arms::chassis::move(5, 50);
 			break;
 		default:
 			break;
