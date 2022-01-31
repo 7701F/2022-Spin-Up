@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "main.h"
+
 #include "opfunctions.h"
 
 /*
@@ -44,7 +45,11 @@ void opcontrol() {
 		}
 		prosBrake(pbrake);
 
-		if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected()) autonomous();
+		if (!pros::competition::is_connected()) {
+			if (master.get_digital_new_press(DIGITAL_RIGHT) == 1) arms::selector::auton++;
+			if (master.get_digital_new_press(DIGITAL_LEFT) == 1) arms::selector::auton--;
+			if (master.get_digital_new_press(DIGITAL_X)) autonomous();
+		}
 
 		// Lastly, delay
 		pros::delay(10);
