@@ -26,10 +26,10 @@ void Yauton() {
 	arms::chassis::move(54, 100);
 	clawM.move_relative(200, 100);
 	pros::delay(300);
-	arms::chassis::move(-54, 100);
+	arms::chassis::move(-55, 100);
 	// clawM.move_relative(-200, -100);
-	pros::delay(300);
-	arms::chassis::move(-1, 100);
+	// pros::delay(300);
+	// arms::chassis::move(-1, 100);
 	// arms::chassis::move(5, 50);
 }
 
@@ -87,7 +87,7 @@ void trollingSkills() {
 void winchTest() {
 	winchM.move_relative(-2091, -100);
 	pros::delay(3250);
-	arms::chassis::move(-45, 50);
+	arms::chassis::moveAsync(-45, 50);
 	winchM.move_relative(468, 100);
 	pros::delay(1000);
 }
