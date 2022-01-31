@@ -144,6 +144,7 @@ void autonomous() {
 	switch (arms::selector::auton) {
 		case -5:
 			arms::chassis::move(5, 50);
+			arms::chassis::turn(90, 50);
 			break;
 		case -4:
 			Lauton2();
@@ -173,7 +174,7 @@ void autonomous() {
 			Lauton2();
 			break;
 		case 5:
-			arms::chassis::move(5, 50);
+			winchTest();
 			break;
 		default:
 			break;
