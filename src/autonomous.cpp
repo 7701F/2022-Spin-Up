@@ -87,9 +87,10 @@ void trollingSkills() {
 void winchTest() {
 	winchM.move_relative(-2091, -100);
 	pros::delay(3250);
-	arms::chassis::moveAsync(-45, 50);
+	arms::chassis::move(-45, 50); /*Async*/
 	winchM.move_relative(468, 100);
 	pros::delay(1000);
+	arms::chassis::turn(185, 50);
 }
 
 // Left Side Auton 2.0
@@ -133,13 +134,13 @@ void Lauton2() {
  */
 std::string autonst[5] = {"YLW Goal", "R WP", "L WP", "Skls Test", "Do Nothing"};
 void autonomous() {
-    // Log which auton we ran to console for debugging
+	// Log which auton we ran to console for debugging
 	std::string selAuton = autonst[abs(arms::selector::auton)];
 
 	// master.print(1, 0, "Auton: %s\n", selAuton.c_str());
 	printf("Auton Int: %d Auton Str: %s\n", arms::selector::auton, selAuton.c_str());
 
-    // Auton Selector Logic
+	// Auton Selector Logic
 	switch (arms::selector::auton) {
 		case -5:
 			arms::chassis::move(5, 50);
