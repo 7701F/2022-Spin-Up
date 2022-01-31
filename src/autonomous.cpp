@@ -133,13 +133,13 @@ void Lauton2() {
  */
 std::string autonst[5] = {"YLW Goal", "R WP", "L WP", "Skls Test", "Do Nothing"};
 void autonomous() {
-    // Log which auton we ran to console for debugging
+	// Log which auton we ran to console for debugging
 	std::string selAuton = autonst[abs(arms::selector::auton)];
 
 	// master.print(1, 0, "Auton: %s\n", selAuton.c_str());
 	printf("Auton Int: %d Auton Str: %s\n", arms::selector::auton, selAuton.c_str());
 
-    // Auton Selector Logic
+	// Auton Selector Logic
 	switch (arms::selector::auton) {
 		case -5:
 			arms::chassis::move(5, 50);
