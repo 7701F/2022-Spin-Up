@@ -37,15 +37,15 @@
 #include "api.h"
 
 // Custom Headers
+#include "ARMS/api.h"
 #include "display.h"
 #include "motors.h"
-#include "ARMS/api.h"
 
 /**
  * You should add more #includes here
  */
-#include "pros/apix.h"
 #include "okapi/api.hpp"
+#include "pros/apix.h"
 //#include "pros/api_legacy.h"
 
 /**
@@ -84,4 +84,4 @@ void opcontrol(void);
 //#include <iostream>
 #endif
 
-#endif  // _PROS_MAIN_H_
+#endif	// _PROS_MAIN_H_
