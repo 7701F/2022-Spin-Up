@@ -47,7 +47,7 @@ void initialize() {
 
 	// Set display
 	// arms::selector::init();
-	display();
+	if (!pros::competition::is_connected()) display();
 
 	// Set brakes on to active bold
 	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
