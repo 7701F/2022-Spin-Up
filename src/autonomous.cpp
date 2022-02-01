@@ -6,6 +6,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+#include "auton.h"
 #include "main.h"
 
 // Right win point
@@ -132,10 +133,9 @@ void Lauton2() {
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-std::string autonst[5] = {"YLW Goal", "R WP", "L WP", "Skls Test", "Do Nothing"};
 void autonomous() {
 	// Log which auton we ran to console for debugging
-	std::string selAuton = autonst[abs(arms::selector::auton)];
+	std::string selAuton = autons[abs(arms::selector::auton)];
 
 	// master.print(1, 0, "Auton: %s\n", selAuton.c_str());
 	printf("Auton Int: %d Auton Str: %s\n", arms::selector::auton, selAuton.c_str());
