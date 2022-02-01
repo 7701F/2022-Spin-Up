@@ -2,21 +2,19 @@
 
 Code for Vex Robotics Competition 2021-2022 Tipping Point for 7701F
 
-# Dependancies
-
-[gif-pros](https://github.com/theol0403/gif-pros) Currently removed
-
-[ARMS](https://github.com/purduesigbots/ARMS)
-
-[PROS](https://github.com/purduesigbots/pros)
-
-# Building & Uploading
-
 ## Authors
 
 - **Michael Gummere** - [GitHub](https://github.com/Chrono-byte)
 
 See also the list of [contributors](https://github.com/7701F/2021-Tipping-Point/contributors) who participated in this project.
+
+# Dependancies
+
+[PROS](https://github.com/purduesigbots/pros) A lightweight and fast alternative open source operating system for the VEX V5 Brain.
+
+[ARMS](https://github.com/purduesigbots/ARMS) ARMS is a library that makes programming a VEX V5 robot a piece of cake.
+
+[gif-pros](https://github.com/theol0403/gif-pros) Allows GIFS to be displayed on LVGL (Currently removed)
 
 # License
 
