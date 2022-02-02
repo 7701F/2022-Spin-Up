@@ -45,8 +45,8 @@ void opcontrol() {
 		prosBrake(pbrake);
 
 		if (!pros::competition::is_connected()) {
-			if (master.get_digital_new_press(DIGITAL_RIGHT) == 1) arms::selector::auton++;
-			if (master.get_digital_new_press(DIGITAL_LEFT) == 1) arms::selector::auton--;
+			// if (master.get_digital_new_press(DIGITAL_RIGHT) == 1) arms::selector::auton++;
+			// if (master.get_digital_new_press(DIGITAL_LEFT) == 1) arms::selector::auton--;
 			if (master.get_digital_new_press(DIGITAL_X)) autonomous();
 		}
 
