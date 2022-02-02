@@ -6,6 +6,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+#include <array>
+
 #include "auton.h"
 #include "main.h"
 
@@ -45,14 +47,15 @@ void Lauton() {
 	clawM.move_relative(-170, -50);
 	pros::delay(300);
 	arms::chassis::move(-6, 80);
-	arms::chassis::turn(-80, 50);
-	arms::chassis::move(60, 80);
-	clawM.move_relative(210, 50);
+	arms::chassis::turn(-80, 60);
+	arms::chassis::move(50, 100);
+	arms::chassis::move(10, 75);
+	clawM.move_relative(210, 100);
 	pros::delay(300);
-	rightLift.move_relative(30, 100);
-	leftLift.move_relative(30, 100);
+	rightLift.move_relative(30, 75);
+	leftLift.move_relative(30, 75);
 	pros::delay(500);
-	arms::chassis::move(-60, 80);
+	arms::chassis::move(-60, 100);
 }
 
 // Programming Skills
@@ -86,40 +89,42 @@ void trollingSkills() {
 
 // Winch Skills Test
 void winchTest() {
-	winchM.move_relative(-2091, -100);
-	pros::delay(3250);
-	arms::chassis::move(-45, 50); /*Async*/
-	winchM.move_relative(468, 100);
-	pros::delay(1000);
-	arms::chassis::turn(185, 50);
+	arms::odom::init();
+	arms::odom::move({50, 50});
+	// winchM.move_relative(-2091, -100);
+	// pros::delay(3250);
+	// arms::chassis::move(-45, 50); /*Async*/
+	// winchM.move_relative(468, 100);
+	// pros::delay(1000);
+	// arms::chassis::turn(185, 50);
 }
 
 // Left Side Auton 2.0
 void Lauton2() {
-	arms::chassis::move(5, 80);
-	clawM.move_relative(170, 100);
-	pros::delay(300);
-	clawM.move_relative(40, 100);
-	arms::chassis::move(-15, 80);
-	pros::delay(500);
-	clawM.move_relative(-170, -50);
-	pros::delay(300);
-	arms::chassis::move(-6, 80);
-	arms::chassis::turn(-80, 50);
-	arms::chassis::move(60, 80);
-	clawM.move_relative(210, 50);
-	pros::delay(300);
-	rightLift.move_relative(30, 100);
-	leftLift.move_relative(30, 100);
-	pros::delay(500);
-	arms::chassis::move(-60, 80);
-	clawM.move_relative(-210, 50);
-	pros::delay(300);
-	arms::chassis::turn(40, 50);
+	// arms::chassis::move(5, 80);
+	// clawM.move_relative(170, 100);
+	winchM.move_relative(-2065, -100);
+	pros::delay(3250);
+	arms::chassis::move(-30, 50); /*Async*/
+	winchM.move_relative(1070, 100);
+	pros::delay(1250);
+	arms::chassis::move(28, 60);
+	arms::chassis::turn(150, 50);
 	arms::chassis::move(65, 80);
 	clawM.move_relative(210, 50);
+	pros::delay(350);
+	// rightLift.move_relative(30, 75);
+	// leftLift.move_relative(30, 75);
+	pros::delay(500);
+	arms::chassis::move(-60, 80);
+	arms::chassis::turn(45, 50);
+	clawM.move_relative(-210, 50);
 	pros::delay(300);
-	arms::chassis::move(-65, 80);
+	arms::chassis::turn(-85, 50);
+	arms::chassis::move(65, 80);
+	// clawM.move_relative(210, 50);
+	// pros::delay(300);
+	arms::chassis::move(50, 80);
 }
 
 /**
