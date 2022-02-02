@@ -46,7 +46,6 @@ void initialize() {
 	pros::Task controllerTask{ctrlrScr, "Controller Display"};
 
 	// Set display
-	// arms::selector::init();
 	if (!pros::competition::is_connected()) display();
 
 	// Set brakes on to active bold
@@ -62,7 +61,7 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
-	master.print(1, 0, "Robot Disabled");
+	arms::selector::init();
 	printf("Disabled");
 }
 
