@@ -18,7 +18,7 @@ on:
   pull_request:
       branches:
         - testing
-        - main
+        - master
   schedule:
     - cron: '33 17 * * 3'
 
