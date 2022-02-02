@@ -44,9 +44,7 @@ void opcontrol() {
 		}
 		prosBrake(pbrake);
 
-		if (!pros::competition::is_connected()) {
-			if (master.get_digital_new_press(DIGITAL_X)) autonomous();
-		}
+		if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected()) autonomous();
 
 		// Lastly, delay
 		pros::delay(10);
