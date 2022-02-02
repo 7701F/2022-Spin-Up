@@ -13,7 +13,8 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ master, testing ]
+    branches:
+      - testing
   pull_request:
       branches:
         - testing
@@ -70,18 +71,28 @@ jobs:
       uses: fiam/arm-none-eabi-gcc@v1
       with:
         release: '9-2019-q4'
+
     - name: Setup Python
       uses: actions/setup-python@v2
       with:
         python-version: 3.6
+
     - name: PIP Installer
       uses: BSFishy/pip-action@v1
       with:
         packages: https://github.com/purduesigbots/pros-cli/releases/download/3.1.4/pros_cli_v5-3.1.4-py3-none-any.whl
+
     - name: Testing PROS Install
       run: prosv5 --version
+
     - name: Build PROS Project
       run: prosv5 make clean all
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
+
+    - name: Approve Pull Request
+      uses: juliangruber/approve-pull-request-action@v1
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        number: 1

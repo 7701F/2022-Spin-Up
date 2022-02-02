@@ -57,8 +57,8 @@
 #include "pros/misc.h"
 #include "pros/motors.h"
 #include "pros/optical.h"
-#include "pros/rtos.h"
 #include "pros/rotation.h"
+#include "pros/rtos.h"
 #include "pros/screen.h"
 #include "pros/vision.h"
 
@@ -77,4 +77,4 @@
 #include "pros/vision.hpp"
 #endif
 
-#endif  // _PROS_API_H_
+#endif	// _PROS_API_H_
