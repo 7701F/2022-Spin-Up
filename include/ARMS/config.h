@@ -66,8 +66,8 @@ namespace arms::pid {
 namespace arms::selector {
 // Names of autonomi, up to 10
 #define AUTONS "YLW Goal", "R WP", "L WP", "Test Auton", "Do Nothing"
-#define HUE 360   // Color of theme from 0-359(H part of HSV)
-#define DEFAULT 1 // Default auton numbers
+#define HUE 360 // Color of theme from 0-359(H part of HSV)
+#define DEFAULT 3 // Default auton numbers
 } // namespace arms::selector
 
 #endif
