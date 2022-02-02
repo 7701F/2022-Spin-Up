@@ -59,8 +59,28 @@ void Lauton() {
 
 // Programming Skills
 void Sauton() {
-	// arms::chassis::move(5, 80);
-	// clawM.move_relative(170, 100);
+	winchM.move_relative(-2065, -100);
+	pros::delay(3250);
+	arms::chassis::move(-30, 50);
+	winchM.move_relative(1070, 100);
+	pros::delay(1250);
+	arms::chassis::move(28, 60);
+	arms::chassis::turn(150, 50);
+	arms::chassis::move(65, 80);
+	clawM.move_relative(210, 50);
+	pros::delay(350);
+	pros::delay(500);
+	arms::chassis::move(-60, 80);
+	arms::chassis::turn(45, 50);
+	clawM.move_relative(-210, 50);
+	pros::delay(300);
+	arms::chassis::turn(-85, 50);
+	arms::chassis::move(65, 80);
+	arms::chassis::move(50, 80);
+}
+
+// Programming Skills 2.0
+void Sauton2() {
 	winchM.move_relative(-2065, -100);
 	pros::delay(3250);
 	arms::chassis::move(-30, 50); /*Async*/
@@ -70,18 +90,24 @@ void Sauton() {
 	arms::chassis::turn(150, 50);
 	arms::chassis::move(65, 80);
 	clawM.move_relative(210, 50);
-	pros::delay(350);
-	// rightLift.move_relative(30, 75);
-	// leftLift.move_relative(30, 75);
-	pros::delay(500);
+	pros::delay(300);
 	arms::chassis::move(-60, 80);
 	arms::chassis::turn(45, 50);
 	clawM.move_relative(-210, 50);
 	pros::delay(300);
 	arms::chassis::turn(-85, 50);
 	arms::chassis::move(65, 80);
-	// clawM.move_relative(210, 50);
-	// pros::delay(300);
+	clawM.move_relative(210, 50);
+	pros::delay(300);
+	arms::chassis::move(50, 80);
+	clawM.move_relative(-210, 50);
+	pros::delay(300);
+	arms::chassis::move(-50, 80);
+	arms::chassis::turn(-45, 50);
+	arms::chassis::move(50, 80);
+	clawM.move_relative(210, 50);
+	pros::delay(300);
+	arms::chassis::turn(45, 50);
 	arms::chassis::move(50, 80);
 }
 
