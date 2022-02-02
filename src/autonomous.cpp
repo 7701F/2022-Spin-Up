@@ -59,47 +59,6 @@ void Lauton() {
 
 // Programming Skills
 void Sauton() {
-	arms::chassis::move(46, 80);
-	clawM.move_relative(200, 100);
-	pros::delay(300);
-	arms::chassis::move(-46, 80);
-	clawM.move_relative(-200, -50);
-	pros::delay(300);
-	arms::chassis::move(-9, 80);
-	arms::chassis::turn(64, 50);
-	arms::chassis::move(30, 80);
-	clawM.move_relative(200, 100);
-	pros::delay(300);
-	arms::chassis::turn(-70, 50);
-	arms::chassis::move(90, 80);
-	clawM.move_relative(-200, -50);
-	pros::delay(300);
-	arms::chassis::turn(94, 50);
-	arms::chassis::move(-90, 80);
-}
-
-// Old Skills Auton (for testing)
-void trollingSkills() {
-	leftMtr.move_absolute(2850, 200);
-	leftMtrR.move_absolute(1800, 200);
-	rightMtr.move_absolute(2850, 200);
-	rightMtrR.move_absolute(1800, 200);
-}
-
-// Winch Skills Test
-void winchTest() {
-	arms::odom::init();
-	arms::odom::move({50, 50});
-	// winchM.move_relative(-2091, -100);
-	// pros::delay(3250);
-	// arms::chassis::move(-45, 50); /*Async*/
-	// winchM.move_relative(468, 100);
-	// pros::delay(1000);
-	// arms::chassis::turn(185, 50);
-}
-
-// Left Side Auton 2.0
-void Lauton2() {
 	// arms::chassis::move(5, 80);
 	// clawM.move_relative(170, 100);
 	winchM.move_relative(-2065, -100);
@@ -146,12 +105,9 @@ void autonomous() {
 
 	// Auton Selector Logic
 	switch (arms::selector::auton) {
-		case -5:
+		case -4:
 			arms::chassis::move(5, 50);
 			arms::chassis::turn(90, 50);
-			break;
-		case -4:
-			Lauton2();
 			break;
 		case -3:
 			Lauton();
@@ -175,10 +131,8 @@ void autonomous() {
 			Lauton();
 			break;
 		case 4:
-			Lauton2();
-			break;
-		case 5:
-			winchTest();
+			arms::odom::init();
+			arms::odom::move({50, 50});
 			break;
 		default:
 			break;
