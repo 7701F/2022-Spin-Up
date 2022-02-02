@@ -8,14 +8,13 @@
  */
 #include "main.h"
 
-#include "auton.h"
 #include "opfunctions.h"
 
 // Controller Auton Indicator
 int scrcount = 1;
 bool ctrlScrBool = false;
 void ctrlrScr() {
-	std::string selAuton = autons[abs(arms::selector::auton)];
+	std::string selAuton = arms::selector::b[abs(arms::selector::auton)];
 
 	if (!(scrcount % 25)) {
 		// Only print every 50ms, the controller text update rate is slow
