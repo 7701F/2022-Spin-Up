@@ -62,7 +62,6 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
-	arms::selector::init();
 	printf("Disabled");
 }
 
@@ -75,4 +74,6 @@ void disabled() {
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+	arms::selector::init();
+}

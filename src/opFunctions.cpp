@@ -26,6 +26,7 @@ void customBrake(bool pbrake) {
 					// Only print every 50ms, the controller text update rate is slow
 					master.rumble(".");
 				}
+
 				count++;
 				pros::delay(2);
 			}
