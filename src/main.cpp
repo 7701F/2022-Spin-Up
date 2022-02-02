@@ -21,9 +21,11 @@ void ctrlrScr() {
 		// Only print every 50ms, the controller text update rate is slow
 		if (ctrlScrBool == true) {
 			master.print(1, 0, "Auton: %s", selAuton.c_str());
+			printf("auton log");
 			ctrlScrBool = !ctrlScrBool;
 		} else {
 			master.print(1, 0, "Brake: %s", (pbrake ? "ON" : "OFF"));
+			printf("brake log");
 			ctrlScrBool = !ctrlScrBool;
 		}
 	}
