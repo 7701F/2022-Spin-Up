@@ -8,7 +8,6 @@
  */
 #include <array>
 
-#include "auton.h"
 #include "main.h"
 
 // Right win point
@@ -140,7 +139,7 @@ void Lauton2() {
  */
 void autonomous() {
 	// Log which auton we ran to console for debugging
-	std::string selAuton = autons[abs(arms::selector::auton)];
+	std::string selAuton = arms::selector::b[abs(arms::selector::auton)];
 
 	// master.print(1, 0, "Auton: %s\n", selAuton.c_str());
 	printf("Auton Int: %d Auton Str: %s\n", arms::selector::auton, selAuton.c_str());
