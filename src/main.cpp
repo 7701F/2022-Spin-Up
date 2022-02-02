@@ -12,19 +12,25 @@
 
 // Controller Auton Indicator
 int scrcount = 1;
-std::string autons[5] = {"YLW Goal", "R WP", "L WP", "Skls Test", "Do Nothing"};
+bool ctrlScrBool = false;
 void ctrlrScr() {
-	std::string selAuton = autons[abs(arms::selector::auton)];
+	std::string selAuton = arms::selector::b[abs(arms::selector::auton)];
 
 	if (!(scrcount % 25)) {
 		// Only print every 50ms, the controller text update rate is slow
-		master.print(1, 0, "Auton: %s", selAuton.c_str());
-		pros::delay(200);
-		master.print(1, 0, "Brake: %s", (pbrake ? "ON" : "OFF"));
+		if (ctrlScrBool == true) {
+			master.print(1, 0, "Auton: %s", selAuton.c_str());
+			printf("auton log");
+			ctrlScrBool = !ctrlScrBool;
+		} else {
+			master.print(1, 0, "Brake: %s", (pbrake ? "ON" : "OFF"));
+			printf("brake log");
+			ctrlScrBool = !ctrlScrBool;
+		}
 	}
 
 	scrcount++;
-	pros::delay(2);
+	pros::delay(200);
 }
 
 /**
@@ -41,8 +47,7 @@ void initialize() {
 	pros::Task controllerTask{ctrlrScr, "Controller Display"};
 
 	// Set display
-	// arms::selector::init();
-	display();
+	if (!pros::competition::is_connected()) display();
 
 	// Set brakes on to active bold
 	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -57,7 +62,7 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
-	master.print(1, 0, "Robot Disabled");
+	arms::selector::init();
 	printf("Disabled");
 }
 
@@ -70,6 +75,4 @@ void disabled() {
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {
-	arms::selector::init();
-}
+void competition_initialize() {}
