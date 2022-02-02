@@ -145,7 +145,7 @@ void autonomous() {
 			Yauton();
 			break;
 		case 0:
-			Sauton();
+			Sauton2();
 			break;
 		case 1:
 			Yauton();
