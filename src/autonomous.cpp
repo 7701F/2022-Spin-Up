@@ -83,7 +83,7 @@ void Sauton() {
 void Sauton2() {
 	winchM.move_relative(-2065, -100);
 	pros::delay(3250);
-	arms::chassis::move(-30, 50); /*Async*/
+	arms::chassis::move(-30, 50);
 	winchM.move_relative(1070, 100);
 	pros::delay(1250);
 	arms::chassis::move(28, 60);
@@ -107,8 +107,21 @@ void Sauton2() {
 	arms::chassis::move(50, 80);
 	clawM.move_relative(210, 50);
 	pros::delay(300);
-	arms::chassis::turn(45, 50);
-	arms::chassis::move(50, 80);
+	arms::chassis::turn(90, 50);
+	arms::chassis::moveAsync(50, 80);
+	winchM.move_relative(1070, 100);
+	pros::delay(1250);
+	clawM.move_relative(-210, 50);
+	pros::delay(200);
+	arms::chassis::turn(-180, 50);
+	arms::chassis::move(100, 80);
+	arms::chassis::turn(-50, 80);
+	arms::chassis::move(6, 80);
+	clawM.move_relative(-210, 50);
+	pros::delay(200);
+	arms::chassis::move(-6, 80);
+	arms::chassis::turn(-50, 80);
+	arms::chassis::move(100, 80);
 }
 
 /**
@@ -163,4 +176,6 @@ void autonomous() {
 		default:
 			break;
 	}
+
+	printf("Successfully ran auton: %s\n", arms::selector::b[abs(arms::selector::auton)]);
 }
