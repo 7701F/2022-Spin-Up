@@ -13,10 +13,10 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, testing ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ master ]
+    branches: [ master, testing ]
   schedule:
     - cron: '33 17 * * 3'
 
@@ -65,10 +65,22 @@ jobs:
     #- run: |
     #   make bootstrap
     #   make release
-	- name: Install ARM Toolchain
+    - name: Install ARM Toolchain
       uses: fiam/arm-none-eabi-gcc@v1
       with:
         release: '9-2019-q4'
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6
+    - name: PIP Installer
+      uses: BSFishy/pip-action@v1
+      with:
+        packages: https://github.com/purduesigbots/pros-cli/releases/download/3.1.4/pros_cli_v5-3.1.4-py3-none-any.whl
+    - name: Testing PROS Install
+      run: prosv5 --version
+    - name: Build PROS Project
+      run: prosv5 make clean all
 
     - name: Setup Python
       uses: actions/setup-python@v2
