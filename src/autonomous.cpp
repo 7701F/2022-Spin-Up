@@ -140,42 +140,44 @@ void autonomous() {
 	std::string selAuton = arms::selector::b[abs(arms::selector::auton)];
 
 	// master.print(1, 0, "Auton: %s\n", selAuton.c_str());
-	printf("Auton Int: %d Auton Str: %s\n", arms::selector::auton, selAuton.c_str());
+	printf("Auton Int: %d Auton Str: %s\n", arms::selector::auton,
+	       selAuton.c_str());
 
 	// Auton Selector Logic
 	switch (arms::selector::auton) {
-		case -4:
-			arms::chassis::move(5, 50);
-			arms::chassis::turn(90, 50);
-			break;
-		case -3:
-			Lauton();
-			break;
-		case -2:
-			Rauton();
-			break;
-		case -1:
-			Yauton();
-			break;
-		case 0:
-			Sauton2();
-			break;
-		case 1:
-			Yauton();
-			break;
-		case 2:
-			Rauton();
-			break;
-		case 3:
-			Lauton();
-			break;
-		case 4:
-			arms::odom::reset();
-			arms::odom::move({30, 30});
-			break;
-		default:
-			break;
+	case -4:
+		arms::chassis::move(5, 50);
+		arms::chassis::turn(90, 50);
+		break;
+	case -3:
+		Lauton();
+		break;
+	case -2:
+		Rauton();
+		break;
+	case -1:
+		Yauton();
+		break;
+	case 0:
+		Sauton2();
+		break;
+	case 1:
+		Yauton();
+		break;
+	case 2:
+		Rauton();
+		break;
+	case 3:
+		Lauton();
+		break;
+	case 4:
+		arms::odom::reset();
+		arms::odom::move({30, 30});
+		break;
+	default:
+		break;
 	}
 
-	printf("Successfully ran auton: %s\n", arms::selector::b[abs(arms::selector::auton)]);
+	printf("Successfully ran auton: %s\n",
+	       arms::selector::b[abs(arms::selector::auton)]);
 }
