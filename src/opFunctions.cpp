@@ -11,12 +11,16 @@
 // Variables
 int count = 0;
 
-// Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity
+// Honestly my stupidest moment, it stops the robot by driving the motor
+// opposite direction of the current velocity
 void customBrake(bool pbrake) {
 	if (pbrake == true) {
-		if (master.get_analog(ANALOG_LEFT_Y) == 0 || master.get_analog(ANALOG_RIGHT_X) == 0) {
-			if (leftMtr.get_actual_velocity() != 0 || rightMtr.get_actual_velocity() != 0 ||
-					leftMtrR.get_actual_velocity() != 0 || rightMtrR.get_actual_velocity() != 0) {
+		if (master.get_analog(ANALOG_LEFT_Y) == 0 ||
+		    master.get_analog(ANALOG_RIGHT_X) == 0) {
+			if (leftMtr.get_actual_velocity() != 0 ||
+			    rightMtr.get_actual_velocity() != 0 ||
+			    leftMtrR.get_actual_velocity() != 0 ||
+			    rightMtrR.get_actual_velocity() != 0) {
 				leftMtr.move_velocity(leftMtr.get_actual_velocity() * -2);
 				rightMtr.move_velocity(rightMtr.get_actual_velocity() * -2);
 				leftMtrR.move_velocity(leftMtrR.get_actual_velocity() * -2);
