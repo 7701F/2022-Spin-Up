@@ -171,7 +171,8 @@ void autonomous() {
 			break;
 		case 4:
 			arms::odom::init();
-			arms::odom::move({50, 50});
+			arms::odom::reset();
+			arms::odom::move({30, 30});
 			break;
 		default:
 			break;
