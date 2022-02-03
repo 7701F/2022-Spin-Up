@@ -170,7 +170,6 @@ void autonomous() {
 			Lauton();
 			break;
 		case 4:
-			arms::odom::init();
 			arms::odom::reset();
 			arms::odom::move({30, 30});
 			break;
