@@ -121,7 +121,7 @@ void Sauton2() {
 	pros::delay(200);
 	arms::chassis::move(-6, 80);
 	arms::chassis::turn(-50, 80);
-	arms::chassis::move(100, 80);
+	arms::chassis::move(120, 80);
 }
 
 /**
