@@ -13,15 +13,20 @@
 // Declare controller
 extern pros::Controller master;
 
-// Declare motors
+// Declare drive motors
 extern pros::Motor leftMtr;
 extern pros::Motor rightMtr;
 extern pros::Motor leftMtrR;
 extern pros::Motor rightMtrR;
+
+// Declare lift motors
 extern pros::Motor rightLift;
 extern pros::Motor leftLift;
+
+// Declare grabby motors
 extern pros::Motor clawM;
 extern pros::Motor winchM;
+
 
 // Not technically a motor :shrug:
 extern pros::Imu imu_sensor;
