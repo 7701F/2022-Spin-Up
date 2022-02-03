@@ -44,6 +44,7 @@ void ctrlrScr() {
 void initialize() {
 	// ARMS & Controller init and reset IMU sensor
 	arms::chassis::init();
+	arms::odom::init();
 	arms::pid::init();
 	imu_sensor.reset();
 	pros::Task controllerTask{ctrlrScr, "Controller Display"};
