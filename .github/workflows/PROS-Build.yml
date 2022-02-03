@@ -3,12 +3,11 @@ name: Build PROS Project
 on:
   push:
     branches:
-      - testing
+      - develop
   pull_request:
       branches:
-        - testing
+        - develop
         - master
-
   workflow_dispatch:
 
 jobs:
