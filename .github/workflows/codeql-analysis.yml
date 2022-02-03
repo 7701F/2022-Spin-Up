@@ -14,10 +14,10 @@ name: "CodeQL"
 on:
   push:
     branches:
-      - testing
+      - develop
   pull_request:
       branches:
-        - testing
+        - develop
         - master
   schedule:
     - cron: '33 17 * * 3'
@@ -91,8 +91,8 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
 
-    - name: Approve Pull Request
-      uses: juliangruber/approve-pull-request-action@v1
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        number: 1
+    # - name: Approve Pull Request
+    #   uses: juliangruber/approve-pull-request-action@v1
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     number: 1
