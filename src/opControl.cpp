@@ -11,18 +11,24 @@
 
 int matchTimerCount = 0;
 void matchTimer() {
+	printf("Match Timer: %d\n", matchTimerCount);
+	pros::delay(1000);
+
 	while (true) {
-		if (matchTimerCount == 75) {
+		if (matchTimerCount == 104) { // End of match
+			master.rumble("----");
+		} else if (matchTimerCount == 75) { // 75 seconds into Driver Control
 			master.rumble(".-.-.");
-		} else if (matchTimerCount == 60) {
+		} else if (matchTimerCount == 60) { // 60 seconds into Driver Control
 			master.rumble(". .");
-		} else if (matchTimerCount == 45) {
+		} else if (matchTimerCount == 45) { // 45 seconds into Driver Control
 			master.rumble("-");
-		} else if(matchTimerCount == 30) {
+		} else if(matchTimerCount == 30) { // 30 seconds into Driver Control
 			master.rumble(".");
 		}
 
 		matchTimerCount++;
+		printf("Match Timer: %d\n", matchTimerCount);
 		pros::delay(1000);
 	}
 }
