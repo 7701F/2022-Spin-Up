@@ -9,6 +9,22 @@
 #include "main.h"
 #include "opfunctions.h"
 
+int matchTimerCount = 0;
+void matchTimer() {
+	while (true) {
+		if (matchTimerCount == 90) {
+			master.rumble(".-.-.");
+		} else if (matchTimerCount == 75) {
+			master.rumble(". .");
+		} else if (matchTimerCount == 60) {
+			master.rumble(".");
+		}
+
+		matchTimerCount++;
+		pros::delay(1000);
+	}
+}
+
 /*
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via

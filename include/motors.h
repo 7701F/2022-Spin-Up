@@ -27,7 +27,6 @@ extern pros::Motor leftLift;
 extern pros::Motor clawM;
 extern pros::Motor winchM;
 
-
 // Not technically a motor :shrug:
 extern pros::Imu imu_sensor;
 
