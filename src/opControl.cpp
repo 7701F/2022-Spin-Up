@@ -43,7 +43,7 @@ void matchTimer() {
 void opcontrol() {
 	// Brake
 	// chassis::setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
-	if (!pros::competition::is_connected()) {
+	if (pros::competition::is_connected()) {
 		pros::Task matchTimerTask(matchTimer);
 	}
 
