@@ -12,11 +12,13 @@
 int matchTimerCount = 0;
 void matchTimer() {
 	while (true) {
-		if (matchTimerCount == 90) {
+		if (matchTimerCount == 75) {
 			master.rumble(".-.-.");
-		} else if (matchTimerCount == 75) {
-			master.rumble(". .");
 		} else if (matchTimerCount == 60) {
+			master.rumble(". .");
+		} else if (matchTimerCount == 45) {
+			master.rumble("-");
+		} else if(matchTimerCount == 30) {
 			master.rumble(".");
 		}
 
@@ -41,6 +43,9 @@ void matchTimer() {
 void opcontrol() {
 	// Brake
 	// chassis::setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+	if (!pros::competition::is_connected()) {
+		pros::Task matchTimerTask(matchTimer);
+	}
 
 	// Run Loop
 	while (true) {
