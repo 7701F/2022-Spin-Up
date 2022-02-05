@@ -66,6 +66,7 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
+	// if(pros::)
 	printf("Disabled");
 }
 
