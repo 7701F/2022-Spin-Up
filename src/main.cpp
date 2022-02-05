@@ -134,9 +134,9 @@ void initialize() {
 }
 
 void killTask() {
-	if ( matchTimerTask ) {
+	if (matchTimerTask) {
 		pros::Task(matchTimerTask).remove();
-        matchTimerTask = (pros::task_t)NULL;
+		matchTimerTask = (pros::task_t)NULL;
 	}
 
 	// small delay to allow tasks to be removed from run queue
@@ -149,20 +149,19 @@ void killTask() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
-    static int count = 1;
-    printf("Disabled called %d", count++);
+	static int count = 1;
+	printf("Disabled called %d", count++);
 
-    // kill any tasks we may have started and do not need now
-    killTask();
+	// kill any tasks we may have started and do not need now
+	killTask();
 
-    // disabled is actually a task as well
-    // we can either return or block here doing something useful
-    // the task will be deleted when driver or auton starts
-    while(1) {
-        pros::delay(1000);
-    }
+	// disabled is actually a task as well
+	// we can either return or block here doing something useful
+	// the task will be deleted when driver or auton starts
+	while (1) {
+		pros::delay(1000);
+	}
 }
-
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
