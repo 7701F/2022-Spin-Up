@@ -35,6 +35,79 @@ void ctrlrScr() {
 	pros::delay(200);
 }
 
+pros::task_t matchTimerTask = (pros::task_t)NULL;
+
+// Match Timer Indicator
+int matchTimerCount = 105;
+void matchTimer() {
+	printf("Match Timer: %d\n", matchTimerCount);
+	pros::delay(1000);
+
+	while (true) {
+		if (matchTimerCount == 1) { // End of match
+			master.rumble("----");
+			matchTimerCount = 105;
+		} else if (matchTimerCount == 35) { // 75 seconds into Driver Control
+			master.rumble(".-.-.");
+		} else if (matchTimerCount == 60) { // 60 seconds into Driver Control
+			master.rumble(". .");
+		} else if (matchTimerCount == 75) { // 45 seconds into Driver Control
+			master.rumble("-");
+		}
+
+		matchTimerCount--;
+		printf("Match Timer: %d\n", matchTimerCount);
+		pros::delay(1000);
+	}
+}
+
+/*
+ * Runs the operator control code. This function will be started in its own task
+ * with the default priority and stack size whenever the robot is enabled via
+ * the Field Management System or the VEX Competition Switch in the operator
+ * control mode.
+ *
+ * If no competition control is connected, this function will run immediately
+ * following initialize().
+ *
+ * If the robot is disabled or communications is lost, the
+ * operator control task will be stopped. Re-enabling the robot will restart the
+ * task, not resume it from where it left off.
+ */
+void opcontrol() {
+	// Brake
+	// chassis::setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+	if (pros::competition::is_connected()) {
+		pros::Task matchTimerTask(matchTimer);
+	}
+
+	// Run Loop
+	while (true) {
+		// Steering
+		arms::chassis::arcade(
+			master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
+		    master.get_analog(ANALOG_RIGHT_X) * (double)100 /127
+		);
+
+		// Game Controls
+		gameSystemControls();
+
+		// Brake System
+		// Uses basic logic for toggle button
+		if (master.get_digital_new_press(DIGITAL_A) == 1) {
+			pbrake = !pbrake;
+		}
+		prosBrake(pbrake);
+
+		if (master.get_digital_new_press(DIGITAL_X) &&
+		    !pros::competition::is_connected())
+			autonomous();
+
+		// Lastly, delay
+		pros::delay(10);
+	}
+}
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -47,17 +120,27 @@ void initialize() {
 	arms::odom::init();
 	arms::pid::init();
 	imu_sensor.reset();
-	pros::Task controllerTask{ctrlrScr, "Controller Display"};
+	pros::Task controllerTask(ctrlrScr);
 
 	// Set display
 	if (!pros::competition::is_connected())
 		display();
 
 	// Set brakes on to active bold
-	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	leftLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	leftLift.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	clawM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	winchM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+}
+
+void killTask() {
+	if ( matchTimerTask ) {
+		pros::Task(matchTimerTask).remove();
+        matchTimerTask = (pros::task_t)NULL;
+	}
+
+	// small delay to allow tasks to be removed from run queue
+	pros::delay(10);
 }
 
 /**
@@ -66,9 +149,20 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
-	// if(pros::)
-	printf("Disabled");
+    static int count = 1;
+    pros::lcd::print(5, "Disabled called %d", count++ );
+
+    // kill any tasks we may have started and do not need now
+    killTask();
+
+    // disabled is actually a task as well
+    // we can either return or block here doing something useful
+    // the task will be deleted when driver or auton starts
+    while(1) {
+        pros::delay(1000);
+    }
 }
+
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
