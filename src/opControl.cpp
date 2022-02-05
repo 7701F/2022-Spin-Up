@@ -7,27 +7,27 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "main.h"
+
 #include "opfunctions.h"
 
-int matchTimerCount = 0;
+int matchTimerCount = 105;
 void matchTimer() {
 	printf("Match Timer: %d\n", matchTimerCount);
 	pros::delay(1000);
 
 	while (true) {
-		if (matchTimerCount == 104) { // End of match
+		if (matchTimerCount == 1) { // End of match
 			master.rumble("----");
-		} else if (matchTimerCount == 75) { // 75 seconds into Driver Control
+			matchTimerCount = 105;
+		} else if (matchTimerCount == 35) { // 75 seconds into Driver Control
 			master.rumble(".-.-.");
 		} else if (matchTimerCount == 60) { // 60 seconds into Driver Control
 			master.rumble(". .");
-		} else if (matchTimerCount == 45) { // 45 seconds into Driver Control
+		} else if (matchTimerCount == 75) { // 45 seconds into Driver Control
 			master.rumble("-");
-		} else if(matchTimerCount == 30) { // 30 seconds into Driver Control
-			master.rumble(".");
 		}
 
-		matchTimerCount++;
+		matchTimerCount--;
 		printf("Match Timer: %d\n", matchTimerCount);
 		pros::delay(1000);
 	}
@@ -56,10 +56,9 @@ void opcontrol() {
 	// Run Loop
 	while (true) {
 		// Steering
-		arms::chassis::arcade(
-			master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
-			master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127
-		);
+		arms::chassis::arcade(master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
+		                      master.get_analog(ANALOG_RIGHT_X) * (double)100 /
+		                          127);
 
 		// Game Controls
 		gameSystemControls();
