@@ -46,7 +46,15 @@ void matchTimer() {
 	while (true) {
 		if (matchTimerCount == 1) { // End of match
 			master.rumble("----");
-			matchTimerCount = 105;
+			pros::delay(1);
+			if (matchTimerTask) {
+				pros::Task(matchTimerTask).remove();
+				matchTimerTask = (pros::task_t)NULL;
+
+				matchTimerCount = 105;
+
+				printf("Match Timer Task Removed\n");
+			}
 		} else if (matchTimerCount == 35) { // 75 seconds into Driver Control
 			master.rumble(".-.-.");
 		} else if (matchTimerCount == 60) { // 60 seconds into Driver Control
@@ -75,10 +83,8 @@ void matchTimer() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	// Brake
-	// chassis::setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 	if (pros::competition::is_connected()) {
-		pros::Task matchTimerTask(matchTimer);
+		matchTimerTask = pros::Task(matchTimer);
 	}
 
 	// Run Loop
@@ -89,6 +95,9 @@ void opcontrol() {
 		    master.get_analog(ANALOG_RIGHT_X) * (double)100 /127
 		);
 
+		// Arm
+		rightLift.move_velocity(master.get_analog(ANALOG_RIGHT_Y) * (double)100 / 127);
+		leftLift.move_velocity(master.get_analog(ANALOG_RIGHT_Y) * (double)100 / 127);
 		// Game Controls
 		gameSystemControls();
 
@@ -119,12 +128,18 @@ void initialize() {
 	arms::chassis::init();
 	arms::odom::init();
 	arms::pid::init();
-	imu_sensor.reset();
+	arms::chassis::imu.reset();
+
 	pros::Task controllerTask(ctrlrScr);
+	pros::Task task{[=] {
+		while (true) {
+			printf("Task Count: %3d\n", pros::Task::get_count());
+            pros::delay(1000);
+		}
+    }};
 
 	// Set display
-	if (!pros::competition::is_connected())
-		display();
+	if (!pros::competition::is_connected()) display();
 
 	// Set brakes on to active bold
 	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
@@ -137,6 +152,10 @@ void killTask() {
 	if (matchTimerTask) {
 		pros::Task(matchTimerTask).remove();
 		matchTimerTask = (pros::task_t)NULL;
+
+		matchTimerCount = 105;
+
+		printf("Match Timer Task Removed\n");
 	}
 
 	// small delay to allow tasks to be removed from run queue
@@ -150,7 +169,7 @@ void killTask() {
  */
 void disabled() {
 	static int count = 1;
-	printf("Disabled called %d", count++);
+	printf("Disabled called %d\n", count++);
 
 	// kill any tasks we may have started and do not need now
 	killTask();
@@ -173,5 +192,11 @@ void disabled() {
  * starts.
  */
 void competition_initialize() {
+	static int count = 1;
+    printf("Comp Init called %d", count++);
+
+    // if cable is removed and then attached we may need to
+    killTask();
+
 	arms::selector::init();
 }

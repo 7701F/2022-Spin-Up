@@ -42,20 +42,12 @@ void customBrake(bool pbrake) {
 void prosBrake(bool pbrake) {
 	if (pbrake == true) {
 		if (leftMtr.get_brake_mode() != pros::E_MOTOR_BRAKE_HOLD) {
-			leftMtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-			rightMtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-			leftMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-			rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
+			arms::chassis::setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 			printf("BRAKE TOGGLED: HOLD\n");
 		}
 	} else if (pbrake == false) {
 		if (leftMtr.get_brake_mode() != pros::E_MOTOR_BRAKE_COAST) {
-			leftMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-			rightMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-			leftMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-			rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-
+			arms::chassis::setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
 			printf("BRAKE TOGGLED: COAST\n");
 		}
 	}
@@ -64,16 +56,16 @@ void prosBrake(bool pbrake) {
 // Combined Claw, Lift, and Winch control function
 void gameSystemControls() {
 	// Lift Controls
-	if (master.get_digital(DIGITAL_L1) == 1) {
-		rightLift.move_velocity(100);
-		leftLift.move_velocity(100);
-	} else if (master.get_digital(DIGITAL_L2) == 1) {
-		rightLift.move_velocity(-100);
-		leftLift.move_velocity(-100);
-	} else {
-		rightLift.move_velocity(0);
-		leftLift.move_velocity(0);
-	}
+	// if (master.get_digital(DIGITAL_L1) == 1) {
+	// 	rightLift.move_velocity(100);
+	// 	leftLift.move_velocity(100);
+	// } else if (master.get_digital(DIGITAL_L2) == 1) {
+	// 	rightLift.move_velocity(-100);
+	// 	leftLift.move_velocity(-100);
+	// } else {
+	// 	rightLift.move_velocity(0);
+	// 	leftLift.move_velocity(0);
+	// }
 
 	// Claw Controls
 	if (master.get_digital(DIGITAL_R1) == 1) {
