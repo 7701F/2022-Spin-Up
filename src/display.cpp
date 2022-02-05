@@ -9,6 +9,7 @@
 #include <sstream>
 
 #include "main.h"
+
 #include "opfunctions.h"
 
 lv_obj_t* scr = lv_obj_create(NULL, NULL);
