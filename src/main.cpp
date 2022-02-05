@@ -150,7 +150,7 @@ void killTask() {
  */
 void disabled() {
     static int count = 1;
-    pros::lcd::print(5, "Disabled called %d", count++ );
+    printf("Disabled called %d", count++);
 
     // kill any tasks we may have started and do not need now
     killTask();
