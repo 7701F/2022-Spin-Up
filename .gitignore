@@ -19,7 +19,7 @@ temp.errors
 .zip
 *.zip
 .cache
-docs/
+docs/**/**
 debug.log
 
 .cache/
