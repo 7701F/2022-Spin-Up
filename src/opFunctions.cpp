@@ -23,11 +23,10 @@ void customBrake(bool pbrake) {
 				rightMtrR.move_velocity(rightMtrR.get_actual_velocity() * -2);
 
 				if (!(count % 25)) {
-					// Only print every 50ms, the controller text update rate is slow
+					// Only print every 50ms, the controller update rate is slow
 					master.rumble(".");
 				}
 				count++;
-				pros::delay(2);
 			}
 		}
 	}
