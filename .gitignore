@@ -19,7 +19,8 @@ temp.errors
 .zip
 *.zip
 .cache
-docs/**/**
 debug.log
 
+# Mineish
 .cache/
+docs/ARMS/
