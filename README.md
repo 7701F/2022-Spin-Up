@@ -33,7 +33,7 @@ then you can paste in the addresses from earlier.
 
 Note: You may also need to change `hot.package.elf` to `cold.package.elf` if you get a bunch of question marks. Also if you don't have the hot or cold packages, run with `monolith.elf` instead.
 
- This should give you the location of the line that triggered the exception.
+This should give you the location of the line that triggered the exception.
 
 # License
 
