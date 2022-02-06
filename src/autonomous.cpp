@@ -9,6 +9,7 @@
 #include <array>
 
 #include "main.h"
+#include "opcontrol.h"
 
 // Right win point
 void Rauton() {
@@ -62,15 +63,14 @@ void Sauton() {
 	winchM.move_relative(-2065, -100);
 	pros::delay(3250);
 	arms::chassis::move(-30, 50);
-	winchM.move_relative(1070, 100);
+	winchM.move_relative(1100, 100);
 	pros::delay(1250);
 	arms::chassis::move(28, 60);
 	arms::chassis::turn(150, 50);
-	arms::chassis::move(65, 80);
+	arms::chassis::move(80, 80);
 	clawM.move_relative(210, 50);
-	pros::delay(350);
-	pros::delay(500);
-	arms::chassis::move(-60, 80);
+	pros::delay(850);
+	arms::chassis::move(-80, 80);
 	arms::chassis::turn(45, 50);
 	clawM.move_relative(-210, 50);
 	pros::delay(300);
@@ -132,18 +132,18 @@ void Sauton2() {
  * from where it left off.
  */
 void autonomous() {
-	// Log which auton we ran to console for debugging
-	std::string selAuton = arms::selector::b[abs(arms::selector::auton)];
+	arms::odom::init();
 
-	// master.print(1, 0, "Auton: %s\n", selAuton.c_str());
-	printf("Auton Int: %d Auton Str: %s\n", arms::selector::auton,
-	       selAuton.c_str());
+	killTask();
 
 	// Auton Selector Logic
 	switch (arms::selector::auton) {
 	case -4:
-		arms::chassis::move(5, 50);
-		arms::chassis::turn(90, 50);
+		// arms::chassis::move(5, 50);
+		// arms::chassis::turn(90, 100);
+		arms::chassis::arcRight(1000, 1, 50, 1);
+		arms::chassis::arcLeft(1800, 1, 50, 2);
+		arms::chassis::arcRight(1600, 1, 50, 3);
 		break;
 	case -3:
 		Lauton();
@@ -167,13 +167,12 @@ void autonomous() {
 		Lauton();
 		break;
 	case 4:
-		arms::odom::reset();
-		arms::odom::move({30, 30});
+		// arms::odom::reset();
+		// arms::odom::move({1, 1});
 		break;
 	default:
 		break;
 	}
 
-	printf("Successfully ran auton: %s\n",
-	       arms::selector::b[abs(arms::selector::auton)]);
+	printf("Successfully ran auton: %d\n", arms::selector::auton);
 }
