@@ -170,4 +170,8 @@ void autonomous() {
 	}
 
 	printf("Successfully ran auton: %d\n", arms::selector::auton);
+
+	while (true) {
+		pros::delay(1000);
+	}
 }

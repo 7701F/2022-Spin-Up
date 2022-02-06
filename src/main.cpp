@@ -88,7 +88,7 @@ void disabled() {
 	// disabled is actually a task as well
 	// we can either return or block here doing something useful
 	// the task will be deleted when driver or auton starts
-	while (1) {
+	while (true) {
 		pros::delay(1000);
 	}
 }
