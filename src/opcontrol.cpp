@@ -59,10 +59,10 @@ void opcontrol() {
 	}
 
 	// Initialize the lift motors
-	liftMotors.moveRelative(-50, 50);
-	pros::delay(150);
-	liftMotors.moveRelative(15, 50);
-	pros::delay(200);
+	// liftMotors.moveVelocity(-100);
+	// pros::delay(200);
+	liftMotors.moveRelative(30, 100);
+	pros::delay(56);
 	liftMotors.tarePosition();
 
 	// Run Loop
