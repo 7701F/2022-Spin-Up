@@ -98,8 +98,6 @@ void Sauton2() {
 	pros::delay(300);
 	arms::chassis::turn(90, 50);
 	arms::chassis::move(50, 80);
-	// winchM.move_relative(-1100, 100);
-	// pros::delay(1250);
 	clawM.move_relative(-210, 50);
 	pros::delay(200);
 	arms::chassis::turn(-180, 50);

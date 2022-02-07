@@ -50,16 +50,16 @@ int liftSpeed;
 void gameSystemControls() {
 		// Lift Controls
 		// Analog Lift Controls
-		// liftSpeed = (fabs(master.get_analog(ANALOG_RIGHT_Y)) > 50 ? master.get_analog(ANALOG_RIGHT_Y) : 0);
+		liftSpeed = (fabs(master.get_analog(ANALOG_RIGHT_Y)) > 50 ? master.get_analog(ANALOG_RIGHT_Y) : 0);
 
 		// Digital Lift Controls
-		if (master.get_digital(DIGITAL_L1) == 1) {
-			liftSpeed = 127;
-		} else if (master.get_digital(DIGITAL_L2) == 1) {
-			liftSpeed = -127;
-		} else {
-			liftSpeed = 0;
-		}
+		// if (master.get_digital(DIGITAL_L1) == 1) {
+		// 	liftSpeed = 127;
+		// } else if (master.get_digital(DIGITAL_L2) == 1) {
+		// 	liftSpeed = -127;
+		// } else {
+		// 	liftSpeed = 0;
+		// }
 
 		if(fabs(liftSpeed) >= 50 && liftMotors.getPosition() > 0) {
 			liftMotors.moveVelocity(liftSpeed * (double)100 / 127);
