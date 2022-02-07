@@ -13,15 +13,14 @@
 
 // Right win point
 void Rauton() {
-	arms::chassis::move(15, 80);
+	arms::chassis::move(20, 80);
 	clawM.move_relative(200, 100);
 	pros::delay(300);
 	rightLift.move_relative(30, 100);
 	leftLift.move_relative(30, 100);
 	pros::delay(300);
-	arms::chassis::move(-15, 80);
+	arms::chassis::move(-20, 80);
 	arms::chassis::turn(-60, 80);
-	clawM.move_relative(-200, -75);
 }
 
 // Yellow goal
@@ -30,10 +29,6 @@ void Yauton() {
 	clawM.move_relative(200, 100);
 	pros::delay(300);
 	arms::chassis::move(-55, 100);
-	// clawM.move_relative(-200, -100);
-	// pros::delay(300);
-	// arms::chassis::move(-1, 100);
-	// arms::chassis::move(5, 50);
 }
 
 // Left win point
@@ -175,4 +170,8 @@ void autonomous() {
 	}
 
 	printf("Successfully ran auton: %d\n", arms::selector::auton);
+
+	while (true) {
+		pros::delay(1000);
+	}
 }
