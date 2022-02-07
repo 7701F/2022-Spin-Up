@@ -20,8 +20,9 @@ extern pros::Motor leftMtrR;
 extern pros::Motor rightMtrR;
 
 // Declare lift motors
-extern pros::Motor rightLift;
-extern pros::Motor leftLift;
+extern okapi::Motor rightLift;
+extern okapi::Motor leftLift;
+extern okapi::MotorGroup liftMotors;
 
 // Declare grabby motors
 extern pros::Motor clawM;
