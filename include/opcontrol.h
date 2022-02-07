@@ -14,10 +14,10 @@
 extern pros::task_t matchTimerTask;
 
 inline void killTask() {
-	if( matchTimerTask ) {
-        pros::Task(matchTimerTask).remove();
-        matchTimerTask = (pros::task_t)NULL;
-    }
+	if (matchTimerTask) {
+		pros::Task(matchTimerTask).remove();
+		matchTimerTask = (pros::task_t)NULL;
+	}
 
 	// small delay to allow tasks to be removed from run queue
 	pros::delay(10);
