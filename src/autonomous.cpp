@@ -16,8 +16,7 @@ void Rauton() {
 	arms::chassis::move(20, 80);
 	clawM.move_relative(200, 100);
 	pros::delay(300);
-	rightLift.move_relative(30, 100);
-	leftLift.move_relative(30, 100);
+	liftMotors.moveRelative(30, 100);
 	pros::delay(300);
 	arms::chassis::move(-20, 80);
 	arms::chassis::turn(-60, 80);
@@ -47,8 +46,7 @@ void Lauton() {
 	arms::chassis::moveAsync(5, 75);
 	clawM.move_relative(210, 100);
 	pros::delay(300);
-	rightLift.move_relative(30, 75);
-	leftLift.move_relative(30, 75);
+	liftMotors.moveRelative(30, 75);
 	pros::delay(500);
 	arms::chassis::move(-60, 100);
 }
@@ -100,8 +98,6 @@ void Sauton2() {
 	pros::delay(300);
 	arms::chassis::turn(90, 50);
 	arms::chassis::move(50, 80);
-	// winchM.move_relative(-1100, 100);
-	// pros::delay(1250);
 	clawM.move_relative(-210, 50);
 	pros::delay(200);
 	arms::chassis::turn(-180, 50);
