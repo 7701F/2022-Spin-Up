@@ -67,8 +67,7 @@ void initialize() {
 
 	// Set brakes on to active bold
 	// E_MOTOR_BRAKE_BRAKE
-	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	leftLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	liftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 	clawM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	winchM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
