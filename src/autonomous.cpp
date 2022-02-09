@@ -8,6 +8,7 @@
  */
 #include <array>
 
+#include "autonfunctions.hpp"
 #include "main.h"
 #include "opcontrol.h"
 
@@ -84,28 +85,29 @@ void Sauton2() {
 	arms::chassis::move(7, 80);
 	arms::chassis::turnAbsolute(90, 50);
 	arms::chassis::move(100, 100);
-	pros::delay(310);
+	pros::delay(100);
 	arms::chassis::move(-50, 50);
 	arms::chassis::turnAbsolute(-90, 50);
 	arms::chassis::move(48, 80);
-	arms::chassis::waitUntilSettled();
+	pros::delay(100);
 	clawM.move_relative(210, 80);
 	pros::delay(310);
 	arms::chassis::turnAbsolute(90, 50);
 	arms::chassis::move(20, 80);
-	pros::delay(310);
+	pros::delay(100);
 	liftMotors.moveRelative(380, 80);
-	pros::delay(400);
+	arms::lift::waitUntilSettled();
 	arms::chassis::move(10, 50);
-	pros::delay(250);
+	pros::delay(100);
 	clawM.move_relative(-210, -80);
 	pros::delay(310);
-	liftMotors.moveRelative(380, -80);
+	liftMotors.moveAbsolute(3, -80);
+	arms::lift::waitUntilSettled();
 	arms::chassis::move(-30, 80);
 	arms::chassis::turnAbsolute(-90, 50);
 	arms::chassis::move(50, 80);
 	clawM.move_relative(210, 80);
-	pros::delay(310);
+	pros::delay(400);
 	arms::chassis::turnAbsolute(90, 50);
 	arms::chassis::move(30, 80);
 	clawM.move_relative(-210, -80);
@@ -114,7 +116,7 @@ void Sauton2() {
 	arms::chassis::turnAbsolute(-45, 50);
 	arms::chassis::move(45, 80);
 	clawM.move_relative(210, 80);
-	pros::delay(310);
+	pros::delay(400);
 	arms::chassis::move(-60, 80);
 }
 
@@ -130,6 +132,8 @@ void Sauton2() {
  * from where it left off.
  */
 void autonomous() {
+	arms::chassis::resetAngle();
+	arms::pid::init();
 	// killTask();
 
 	// Auton Selector Logic
@@ -144,13 +148,13 @@ void autonomous() {
 		// arms::chassis::arcRight(1600, 1, 50, 3);
 		break;
 	case -3:
-		Lauton();
+
 		break;
 	case -2:
-		Rauton();
+
 		break;
 	case -1:
-		Yauton();
+
 		break;
 	case 0:
 		Sauton2();

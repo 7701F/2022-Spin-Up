@@ -67,27 +67,52 @@ void opcontrol() {
 
 	// Run Loop
 	while (true) {
-		// Steering
+		/* Steering
+		 * Handled by ARMS logic that has deadzones
+		 */
 		arms::chassis::arcade(
 			master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
-		    master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127
+		    master.get_analog(ANALOG_RIGHT_X) * (double)100 /127
 		);
 
-
-		// Autonomous Manual Trigger, disabled under competition control
+		/* Autonomous Manual Trigger
+		 * If the robot is not connected to competition control
+		 * and the button is pressed, the robot will the autonomous
+		 * routine to allow for easy testing.
+		 */
 		if (master.get_digital_new_press(DIGITAL_X) &&
 		    !pros::competition::is_connected())
 			autonomous();
 
-		// Game Controls
+		/* Lift, Claw, and Winch Controls
+		 * Controls for game specific functions
+		 */
 		gameSystemControls();
 
 		// Brake System
+		// The brake system is a safety feature that prevents the robot from being pushed by other robots.
 		// Uses basic logic for toggle button
 		if (master.get_digital_new_press(DIGITAL_B) == 1) {
 			pbrake = !pbrake;
 		}
 		motorBrake(pbrake);
+
+		/* Puncher
+		 * Puncher is a toggle button, so it will only be activated if the
+		 * button is pressed and the puncher is not already activated.
+		 */
+		/*bool pistonState = false;
+		bool prevPistonState = false;
+		bool mogoState = false;
+
+		void mogoclamp_Toggle() {
+		  pistonState = master.get_digital(DIGITAL_Y);
+		  if (pistonState == true && prevPistonState == false) {
+		    mogoState = !mogoState;
+		    mogoclamp.set_value(mogoState);
+		  }
+		  prevPistonState = pistonState;
+		}*/
 
 		// Lastly, delay
 		pros::delay(2);
