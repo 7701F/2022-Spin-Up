@@ -55,14 +55,14 @@ void matchTimer() {
 void opcontrol() {
 	if (pros::competition::is_connected()) {
 		// matchTimerCount = 105;
-		matchTimerTask = pros::Task(matchTimer);
+		// matchTimerTask = pros::Task(matchTimer);
 	}
 
 	// Initialize the lift motors
-	// liftMotors.moveVelocity(-100);
-	// pros::delay(200);
+	liftMotors.moveVelocity(-100);
+	pros::delay(40);
 	liftMotors.moveRelative(30, 100);
-	pros::delay(56);
+	pros::delay(40);
 	liftMotors.tarePosition();
 
 	// Run Loop
@@ -74,19 +74,20 @@ void opcontrol() {
 		);
 
 
+		// Autonomous Manual Trigger, disabled under competition control
+		if (master.get_digital_new_press(DIGITAL_X) &&
+		    !pros::competition::is_connected())
+			autonomous();
+
 		// Game Controls
 		gameSystemControls();
 
 		// Brake System
 		// Uses basic logic for toggle button
-		if (master.get_digital_new_press(DIGITAL_A) == 1) {
+		if (master.get_digital_new_press(DIGITAL_B) == 1) {
 			pbrake = !pbrake;
 		}
 		motorBrake(pbrake);
-
-		if (master.get_digital_new_press(DIGITAL_X) &&
-		    !pros::competition::is_connected())
-			autonomous();
 
 		// Lastly, delay
 		pros::delay(2);

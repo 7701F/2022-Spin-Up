@@ -76,39 +76,46 @@ void Sauton() {
 void Sauton2() {
 	winchM.move_relative(-2065, -100);
 	pros::delay(3250);
-	arms::chassis::move(-30, 50);
+	arms::chassis::move(-28, 50);
 	winchM.move_relative(1100, 100);
-	pros::delay(1250);
-	arms::chassis::move(28, 50);
-	arms::chassis::turn(150, 50);
-	arms::chassis::move(80, 100);
-	arms::chassis::move(-55, 80);
-	arms::chassis::turn(-50, 50);
-	arms::chassis::move(60, 80);
-	clawM.move_relative(210, 50);
-	pros::delay(300);
-	arms::chassis::turn(50);
-	arms::chassis::move(30, 80);
-	clawM.move_relative(-210, 50);
-	pros::delay(300);
+	pros::delay(1400);
+	arms::chassis::move(30, 50);
+	arms::chassis::turnAbsolute(45, 50);
+	arms::chassis::move(7, 80);
+	arms::chassis::turnAbsolute(90, 50);
+	arms::chassis::move(100, 100);
+	pros::delay(310);
+	arms::chassis::move(-50, 50);
+	arms::chassis::turnAbsolute(-90, 50);
+	arms::chassis::move(48, 80);
+	arms::chassis::waitUntilSettled();
+	clawM.move_relative(210, 80);
+	pros::delay(310);
+	arms::chassis::turnAbsolute(90, 50);
+	arms::chassis::move(20, 80);
+	pros::delay(310);
+	liftMotors.moveRelative(380, 80);
+	pros::delay(400);
+	arms::chassis::move(10, 50);
+	pros::delay(250);
+	clawM.move_relative(-210, -80);
+	pros::delay(310);
+	liftMotors.moveRelative(380, -80);
 	arms::chassis::move(-30, 80);
-	arms::chassis::turn(-50, 50);
+	arms::chassis::turnAbsolute(-90, 50);
 	arms::chassis::move(50, 80);
-	clawM.move_relative(210, 50);
-	pros::delay(300);
-	arms::chassis::turn(90, 50);
-	arms::chassis::move(50, 80);
-	clawM.move_relative(-210, 50);
-	pros::delay(200);
-	arms::chassis::turn(-180, 50);
-	arms::chassis::move(100, 80);
-	arms::chassis::turn(-50, 80);
-	arms::chassis::move(10, 80);
-	clawM.move_relative(-210, 50);
-	pros::delay(200);
-	arms::chassis::move(-6, 80);
-	arms::chassis::turn(-50, 80);
-	arms::chassis::move(120, 80);
+	clawM.move_relative(210, 80);
+	pros::delay(310);
+	arms::chassis::turnAbsolute(90, 50);
+	arms::chassis::move(30, 80);
+	clawM.move_relative(-210, -80);
+	pros::delay(210);
+	arms::chassis::move(-30, 80);
+	arms::chassis::turnAbsolute(-45, 50);
+	arms::chassis::move(45, 80);
+	clawM.move_relative(210, 80);
+	pros::delay(310);
+	arms::chassis::move(-60, 80);
 }
 
 /**
@@ -123,18 +130,18 @@ void Sauton2() {
  * from where it left off.
  */
 void autonomous() {
-	arms::odom::init();
-
-	killTask();
+	// killTask();
 
 	// Auton Selector Logic
 	switch (arms::selector::auton) {
 	case -4:
-		// arms::chassis::move(5, 50);
-		// arms::chassis::turn(90, 100);
-		arms::chassis::arcRight(1000, 1, 50, 1);
-		arms::chassis::arcLeft(1800, 1, 50, 2);
-		arms::chassis::arcRight(1600, 1, 50, 3);
+		arms::odom::init();
+		arms::odom::reset({0, 0}, 0);
+
+		arms::odom::move({10, 0});
+		// arms::chassis::arcRight(1000, 1, 50, 1);
+		// arms::chassis::arcLeft(1800, 1, 50, 2);
+		// arms::chassis::arcRight(1600, 1, 50, 3);
 		break;
 	case -3:
 		Lauton();

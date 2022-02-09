@@ -50,16 +50,16 @@ int liftSpeed;
 void gameSystemControls() {
 		// Lift Controls
 		// Analog Lift Controls
-		liftSpeed = (fabs(master.get_analog(ANALOG_RIGHT_Y)) > 50 ? master.get_analog(ANALOG_RIGHT_Y) : 0);
+		// liftSpeed = (fabs(master.get_analog(ANALOG_RIGHT_Y)) > 50 ? master.get_analog(ANALOG_RIGHT_Y) : 0);
 
 		// Digital Lift Controls
-		// if (master.get_digital(DIGITAL_L1) == 1) {
-		// 	liftSpeed = 127;
-		// } else if (master.get_digital(DIGITAL_L2) == 1) {
-		// 	liftSpeed = -127;
-		// } else {
-		// 	liftSpeed = 0;
-		// }
+		if (master.get_digital(DIGITAL_L1) == 1) {
+			liftSpeed = 127;
+		} else if (master.get_digital(DIGITAL_L2) == 1) {
+			liftSpeed = -127;
+		} else {
+			liftSpeed = 0;
+		}
 
 		if(fabs(liftSpeed) >= 50 && liftMotors.getPosition() > 0) {
 			liftMotors.moveVelocity(liftSpeed * (double)100 / 127);
@@ -69,7 +69,7 @@ void gameSystemControls() {
 			liftMotors.moveAbsolute(11, 10);
 		}
 
-		// Claw
+		// Claw Control
 		if (master.get_digital(DIGITAL_R1) == 1) {
 			clawM.move_velocity(50);
 		} else if (master.get_digital(DIGITAL_R2) == 1) {
@@ -79,7 +79,7 @@ void gameSystemControls() {
 		}
 
 		// Winch Control
-		if (master.get_digital(DIGITAL_UP) == 1) {
+		if (master.get_digital(DIGITAL_RIGHT) == 1) {
 			winchM.move_velocity(100);
 		} else if (master.get_digital(DIGITAL_DOWN) == 1) {
 			winchM.move_velocity(-100);

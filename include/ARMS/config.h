@@ -39,7 +39,7 @@ namespace arms::odom {
 } // namespace arms::odom
 
 namespace arms::pid {
-#define PID_DEBUG false
+#define PID_DEBUG true
 
 // normal pid constants
 #define LINEAR_KP .3
