@@ -13,6 +13,7 @@
 // Task
 extern pros::task_t matchTimerTask;
 
+// Kills Match Timer Task
 inline void killTask() {
 	if (matchTimerTask) {
 		pros::Task(matchTimerTask).remove();

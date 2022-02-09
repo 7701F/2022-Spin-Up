@@ -24,8 +24,10 @@ std::string selAuton;
 void initialize() {
 	// ARMS & Controller init and reset IMU sensor
 	arms::chassis::init();
+	arms::chassis::resetAngle();
 	arms::pid::init();
 
+	// Controller Status Display
 	pros::Task controllerTask{[=] {
 		master.clear();
 
@@ -53,20 +55,11 @@ void initialize() {
 		}
 	}};
 
-	// Task counter Task
-	// pros::Task taskTask{[=] {
-	// 	// while (true) {
-	// 	// 	printf("Task Count: %d\n", pros::Task::get_count());
-	// 	// 	pros::delay(2000);
-	// 	// }
-	// }};
-
 	// Set display
 	// if (!pros::competition::is_connected()) display();
 	arms::selector::init();
 
 	// Set brakes on to active bold
-	// E_MOTOR_BRAKE_BRAKE
 	liftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 	clawM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	winchM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -81,8 +74,8 @@ void disabled() {
 	static int count = 1;
 	printf("Disabled called %d\n", count++);
 
-	// kill any tasks we may have started and do not need now
-	// killTask();
+	// kill the match timer task we do not need now
+	killTask();
 
 	// disabled is actually a task as well
 	// we can either return or block here doing something useful
