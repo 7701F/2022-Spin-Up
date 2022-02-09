@@ -11,6 +11,7 @@
 #define MOTORS_H_
 
 // Declare controller
+#include "pros/adi.hpp"
 extern pros::Controller master;
 
 // Declare drive motors
@@ -28,5 +29,7 @@ extern pros::Motor winchM;
 
 // Not technically a motor :shrug:
 extern pros::Imu imu_sensor;
+
+extern pros::ADIDigitalOut puncher;
 
 #endif

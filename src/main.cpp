@@ -24,8 +24,6 @@ std::string selAuton;
 void initialize() {
 	// ARMS & Controller init and reset IMU sensor
 	arms::chassis::init();
-	arms::chassis::resetAngle();
-	arms::pid::init();
 
 	// Controller Status Display
 	pros::Task controllerTask{[=] {
