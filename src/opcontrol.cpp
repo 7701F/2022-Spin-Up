@@ -71,15 +71,13 @@ void opcontrol() {
 		/* Steering
 		 * Handled by ARMS logic that has deadzones
 		 */
-		if(arms::chassis::imu->get_gyro_rate().y != 0 && balancingBool == true) {
+		if (arms::chassis::imu->get_gyro_rate().y != 0 && balancingBool == true) {
 			liftMotors.moveAbsolute(3, 100);
 		} else {
 			arms::chassis::arcade(
-				master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
-		   		master.get_analog(ANALOG_RIGHT_X) * (double)100 /127
-			);
+			    master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
+			    master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127);
 		}
-
 
 		/* Autonomous Manual Trigger
 		 * If the robot is not connected to competition control
@@ -96,8 +94,8 @@ void opcontrol() {
 		gameSystemControls();
 
 		// Brake System
-		// The brake system is a safety feature that prevents the robot from being pushed by other robots.
-		// Uses basic logic for toggle button
+		// The brake system is a safety feature that prevents the robot from being
+		// pushed by other robots. Uses basic logic for toggle button
 		if (master.get_digital_new_press(DIGITAL_B) == 1) {
 			pbrake = !pbrake;
 		}

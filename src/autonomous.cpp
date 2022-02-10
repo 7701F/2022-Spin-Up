@@ -74,14 +74,14 @@ void Sauton() {
 }
 
 /*
-	arms::chassis::resetAngle();
-	while (arms::chassis::imu->get_rotation() != 0) {
-		if (arms::chassis::imu->get_rotation() > 0) {
-			arms::chassis::turn(-1, 50);
-		} else {
-			arms::chassis::turn(1, 50);
-		}
-	}
+  arms::chassis::resetAngle();
+  while (arms::chassis::imu->get_rotation() != 0) {
+    if (arms::chassis::imu->get_rotation() > 0) {
+      arms::chassis::turn(-1, 50);
+    } else {
+      arms::chassis::turn(1, 50);
+    }
+  }
 */
 
 // Programming Skills 2.0
@@ -92,6 +92,7 @@ void Sauton2() {
 	arms::chassis::move(-28, 50);
 	winchM.move_relative(1100, 100);
 	pros::delay(1400);
+	// Move forward to turn
 	arms::chassis::move(30, 50);
 	arms::chassis::turnAbsolute(45, 50);
 	arms::chassis::move(7, 80);
