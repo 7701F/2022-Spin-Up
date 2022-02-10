@@ -18,12 +18,8 @@ pros::Motor rightMtr(11, MOTOR_GEARSET_18, true, MOTOR_ENCODER_DEGREES);
 pros::Motor rightMtrR(12, MOTOR_GEARSET_18, true, MOTOR_ENCODER_DEGREES);
 
 // Lift Motors
-// pros::Motor rightLift(8, MOTOR_GEARSET_36, true, MOTOR_ENCODER_DEGREES);
-// pros::Motor leftLift(9, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
-okapi::Motor rightLift(8, true, okapi::AbstractMotor::gearset::red,
-                       okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor leftLift(9, false, okapi::AbstractMotor::gearset::red,
-                      okapi::AbstractMotor::encoderUnits::degrees);
+okapi::Motor rightLift(8, true, okapi::AbstractMotor::gearset::red, okapi::AbstractMotor::encoderUnits::degrees);
+okapi::Motor leftLift(9, false, okapi::AbstractMotor::gearset::red, okapi::AbstractMotor::encoderUnits::degrees);
 okapi::MotorGroup liftMotors({rightLift, leftLift});
 
 // Claw Motor
