@@ -10,7 +10,7 @@
 #ifndef AUTOFUNC_H_
 #define AUTOFUNC_H_
 
-// AUTO FUNCTIONS
+// AUTO LIFT FUNCTIONS
 namespace arms::lift {
 int wheelMoving(double sv, double* psv);
 
@@ -20,5 +20,14 @@ void waitUntilSettled();
 
 void resetLift();
 } // namespace arms::lift
+
+// AUTO CLAW FUNCTIONS
+namespace arms::claw {
+int wheelMoving(double sv, double* psv);
+
+bool settled();
+
+void waitUntilSettled();
+} // namespace arms::claw
 
 #endif

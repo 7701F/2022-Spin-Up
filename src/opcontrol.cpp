@@ -13,8 +13,8 @@
 
 pros::task_t matchTimerTask = (pros::task_t)NULL;
 
-// Match Timer Indicator
 int matchTimerCount = 105;
+// Match Timer Indicator
 void matchTimer() {
 	printf("Match Timer: %d\n", matchTimerCount);
 	pros::delay(1000);
@@ -39,6 +39,7 @@ void matchTimer() {
 	}
 }
 
+bool balancingBool = false;
 /*
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -70,10 +71,15 @@ void opcontrol() {
 		/* Steering
 		 * Handled by ARMS logic that has deadzones
 		 */
-		arms::chassis::arcade(
-			master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
-		    master.get_analog(ANALOG_RIGHT_X) * (double)100 /127
-		);
+		if(arms::chassis::imu->get_gyro_rate().y != 0 && balancingBool == true) {
+			liftMotors.moveAbsolute(3, 100);
+		} else {
+			arms::chassis::arcade(
+				master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
+		   		master.get_analog(ANALOG_RIGHT_X) * (double)100 /127
+			);
+		}
+
 
 		/* Autonomous Manual Trigger
 		 * If the robot is not connected to competition control
@@ -96,23 +102,6 @@ void opcontrol() {
 			pbrake = !pbrake;
 		}
 		motorBrake(pbrake);
-
-		/* Puncher
-		 * Puncher is a toggle button, so it will only be activated if the
-		 * button is pressed and the puncher is not already activated.
-		 */
-		/*bool pistonState = false;
-		bool prevPistonState = false;
-		bool mogoState = false;
-
-		void mogoclamp_Toggle() {
-		  pistonState = master.get_digital(DIGITAL_Y);
-		  if (pistonState == true && prevPistonState == false) {
-		    mogoState = !mogoState;
-		    mogoclamp.set_value(mogoState);
-		  }
-		  prevPistonState = pistonState;
-		}*/
 
 		// Lastly, delay
 		pros::delay(2);
