@@ -107,4 +107,4 @@ void waitUntilSettled() {
 		pros::delay(1);
 }
 
-} // namespace arms::lift
+} // namespace arms::claw
