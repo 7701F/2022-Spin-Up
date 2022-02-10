@@ -86,6 +86,7 @@ void Sauton() {
 
 // Programming Skills 2.0
 void Sauton2() {
+	// Fetch blue start MOGO
 	winchM.move_relative(-2065, -100);
 	pros::delay(3250);
 	arms::chassis::move(-28, 50);
@@ -94,60 +95,89 @@ void Sauton2() {
 	arms::chassis::move(30, 50);
 	arms::chassis::turnAbsolute(45, 50);
 	arms::chassis::move(7, 80);
+	// Turn to face yellow right MOGO
 	arms::chassis::turnAbsolute(90, 50);
 	arms::chassis::move(90, 100);
+	// Grab yellow right MOGO
 	clawM.move_relative(210, 50);
-	pros::delay(310);
+	arms::claw::waitUntilSettled();
 	arms::chassis::turnAbsolute(-90, 50);
 	arms::chassis::move(15, 80);
 	arms::chassis::turnAbsolute(90, 50);
 	liftMotors.moveRelative(380, 100);
-	arms::lift::waitUntilSettled();
 	arms::chassis::move(10, 80);
+	// Place yellow MOGO on balance board
 	clawM.move_relative(-210, -50);
-	pros::delay(310);
+	arms::claw::waitUntilSettled();
+	// Move back to face yellow middle MOGO
 	arms::chassis::move(-10, 10);
 	arms::chassis::turnAbsoluteAsync(180, 50);
 	liftMotors.moveRelative(-380, -100);
 	arms::lift::waitUntilSettled();
 	arms::chassis::move(50, 50);
+	// Grab yellow middle MOGO
 	clawM.move_relative(210, 80);
-	pros::delay(310);
+	arms::claw::waitUntilSettled();
+	// Turn around to face the balance board
 	arms::chassis::move(4, 50);
 	arms::chassis::turnAbsolute(180, 50);
 	arms::chassis::moveAsync(60, 80);
-	liftMotors.moveRelative(380, 100);
-	arms::lift::waitUntilSettled();
-	arms::chassis::move(10, 50);
-	clawM.move_relative(-210, -80);
-	pros::delay(310);
-	arms::chassis::move(-10, 50);
-	arms::chassis::turnAbsolute(-180, 50);
-	arms::chassis::move(20, 80);
-	pros::delay(100);
 	liftMotors.moveRelative(380, 80);
 	arms::lift::waitUntilSettled();
 	arms::chassis::move(10, 50);
-	pros::delay(100);
+	// Drop the mogo and move back to face the balance board
 	clawM.move_relative(-210, -80);
-	pros::delay(310);
+	arms::claw::waitUntilSettled();
+	// Move back to face the yellow left MOGO
+	arms::chassis::move(-10, 50);
+	arms::chassis::turnAbsolute(-180, 50);
+	arms::chassis::move(20, 80);
+	liftMotors.moveRelative(-380, -80);
+	arms::lift::waitUntilSettled();
+	arms::chassis::move(10, 50);
 	liftMotors.moveAbsolute(3, -80);
 	arms::lift::waitUntilSettled();
-	arms::chassis::move(-30, 80);
-	arms::chassis::turnAbsolute(-90, 50);
-	arms::chassis::move(50, 80);
-	clawM.move_relative(210, 80);
-	pros::delay(400);
-	arms::chassis::turnAbsolute(90, 50);
 	arms::chassis::move(30, 80);
-	clawM.move_relative(-210, -80);
-	pros::delay(210);
-	arms::chassis::move(-30, 80);
-	arms::chassis::turnAbsolute(-45, 50);
-	arms::chassis::move(45, 80);
+	arms::chassis::turnAbsolute(90, 50);
+	// Grab the yellow left MOGO
 	clawM.move_relative(210, 80);
-	pros::delay(400);
-	arms::chassis::move(-60, 80);
+	arms::claw::waitUntilSettled();
+	// Turn torwards the balance board
+	arms::chassis::turnAbsolute(90, 50);
+	// Drive to it
+	arms::chassis::move(30, 80);
+	// Get to the right spot on the balance board
+	arms::chassis::turnAbsolute(90, 80);
+	arms::chassis::move(20, 80);
+	arms::chassis::turnAbsolute(-90, 80);
+	// Put up lift
+	liftMotors.moveRelative(380, 80);
+	arms::lift::waitUntilSettled();
+	arms::chassis::move(10, 50);
+	// Drop the MOGO
+	clawM.move_relative(-210, -80);
+	arms::claw::waitUntilSettled();
+	// Move back
+	arms::chassis::move(-30, 80);
+	liftMotors.moveAbsolute(3, 80);
+	arms::lift::waitUntilSettled();
+	// Turn to face the red MOGO
+	arms::chassis::turnAbsolute(-90, 50);
+	pros::delay(70);
+	arms::chassis::turnAbsolute(-30, 50);
+	arms::chassis::move(50, 80);
+	// Grab it
+	clawM.move_relative(210, 80);
+	arms::claw::waitUntilSettled();
+	arms::chassis::move(-10, 50);
+	arms::chassis::turnAbsolute(-15, 50);
+	// Move it to the red side
+	arms::chassis::move(50, 80);
+	// Drop it
+	clawM.move_relative(-210, -80);
+	arms::claw::waitUntilSettled();
+	// Move back to our side
+	arms::chassis::move(-70, 100);
 }
 
 /**
