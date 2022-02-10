@@ -25,7 +25,7 @@ void matchTimer() {
 		if (matchTimerCount == 1) { // End of match
 			master.rumble("----");
 			matchTimerCount = 105;
-			killTask();
+			// killTask();
 		} else if (matchTimerCount == 35) { // 75 seconds into Driver Control
 			master.rumble(".-.-.");
 		} else if (matchTimerCount == 60) { // 60 seconds into Driver Control
@@ -55,8 +55,8 @@ bool balancingBool = false;
  */
 void opcontrol() {
 	if (pros::competition::is_connected()) {
-		// matchTimerCount = 105;
-		// matchTimerTask = pros::Task(matchTimer);
+		matchTimerCount = 105;
+		matchTimerTask = pros::Task(matchTimer);
 	}
 
 	// Initialize the lift motors
