@@ -73,6 +73,17 @@ void Sauton() {
 	arms::chassis::move(50, 80);
 }
 
+/*
+	arms::chassis::resetAngle();
+	while (arms::chassis::imu->get_rotation() != 0) {
+		if (arms::chassis::imu->get_rotation() > 0) {
+			arms::chassis::turn(-1, 50);
+		} else {
+			arms::chassis::turn(1, 50);
+		}
+	}
+*/
+
 // Programming Skills 2.0
 void Sauton2() {
 	winchM.move_relative(-2065, -100);
@@ -84,15 +95,34 @@ void Sauton2() {
 	arms::chassis::turnAbsolute(45, 50);
 	arms::chassis::move(7, 80);
 	arms::chassis::turnAbsolute(90, 50);
-	arms::chassis::move(100, 100);
-	pros::delay(100);
-	arms::chassis::move(-50, 50);
+	arms::chassis::move(90, 100);
+	clawM.move_relative(210, 50);
+	pros::delay(310);
 	arms::chassis::turnAbsolute(-90, 50);
-	arms::chassis::move(48, 80);
-	pros::delay(100);
+	arms::chassis::move(15, 80);
+	arms::chassis::turnAbsolute(90, 50);
+	liftMotors.moveRelative(380, 100);
+	arms::lift::waitUntilSettled();
+	arms::chassis::move(10, 80);
+	clawM.move_relative(-210, -50);
+	pros::delay(310);
+	arms::chassis::move(-10, 10);
+	arms::chassis::turnAbsoluteAsync(180, 50);
+	liftMotors.moveRelative(-380, -100);
+	arms::lift::waitUntilSettled();
+	arms::chassis::move(50, 50);
 	clawM.move_relative(210, 80);
 	pros::delay(310);
-	arms::chassis::turnAbsolute(90, 50);
+	arms::chassis::move(4, 50);
+	arms::chassis::turnAbsolute(180, 50);
+	arms::chassis::moveAsync(60, 80);
+	liftMotors.moveRelative(380, 100);
+	arms::lift::waitUntilSettled();
+	arms::chassis::move(10, 50);
+	clawM.move_relative(-210, -80);
+	pros::delay(310);
+	arms::chassis::move(-10, 50);
+	arms::chassis::turnAbsolute(-180, 50);
 	arms::chassis::move(20, 80);
 	pros::delay(100);
 	liftMotors.moveRelative(380, 80);
