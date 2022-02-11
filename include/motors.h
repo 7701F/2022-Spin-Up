@@ -11,7 +11,6 @@
 #define MOTORS_H_
 
 // Declare controller
-#include "pros/adi.hpp"
 extern pros::Controller master;
 
 // Declare drive motors
@@ -27,9 +26,16 @@ extern okapi::MotorGroup liftMotors;
 extern pros::Motor clawM;
 extern pros::Motor winchM;
 
-// Not technically a motor :shrug:
+// Inertial Sensor
 extern pros::Imu imu_sensor;
 
+// Vision Sensor
+extern pros::Vision vision_sensor;
+extern pros::vision_signature_s_t RED_SIG;
+extern pros::vision_signature_s_t BLU_SIG;
+extern pros::vision_signature_s_t YLW_SIG;
+
+// Pneumatics
 extern pros::ADIDigitalOut puncher;
 
 #endif
