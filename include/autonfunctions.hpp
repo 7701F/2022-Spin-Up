@@ -28,6 +28,12 @@ int wheelMoving(double sv, double* psv);
 bool settled();
 
 void waitUntilSettled();
+
+void toggleClaw(bool drop);
 } // namespace arms::claw
+
+namespace vision {
+void redLocate();
+} // namespace vision
 
 #endif

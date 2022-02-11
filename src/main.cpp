@@ -9,8 +9,6 @@
 #include <sstream>
 
 #include "main.h"
-#include "opcontrol.h"
-#include "opfunctions.h"
 
 // Controller Auton Indicator
 std::string selAuton;
@@ -24,6 +22,11 @@ std::string selAuton;
 void initialize() {
 	// ARMS & Controller init and reset IMU sensor
 	arms::chassis::init();
+	if (pros::competition::is_connected()) {
+		vision_sensor.set_wifi_mode(0);
+	} else {
+		vision_sensor.set_wifi_mode(1);
+	}
 
 	// Controller Status Display
 	pros::Task controllerTask{[=] {

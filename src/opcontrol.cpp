@@ -56,36 +56,29 @@ bool balancingBool = false;
 void opcontrol() {
 	if (pros::competition::is_connected()) {
 		matchTimerCount = 105;
-		matchTimerTask = pros::Task(matchTimer);
+		// matchTimerTask = pros::Task(matchTimer);
 	}
 
 	// Initialize the lift motors
-	liftMotors.moveVelocity(-100);
-	pros::delay(40);
+	// liftMotors.moveVelocity(-100);
+	// pros::delay(310);
 	liftMotors.moveRelative(30, 100);
-	pros::delay(40);
-	liftMotors.tarePosition();
+	arms::lift::waitUntilSettled();
+	// liftMotors.tarePosition();
 
 	// Run Loop
 	while (true) {
 		/* Steering
 		 * Handled by ARMS logic that has deadzones
 		 */
-		if (arms::chassis::imu->get_gyro_rate().y != 0 && balancingBool == true) {
-			liftMotors.moveAbsolute(3, 100);
-		} else {
-			arms::chassis::arcade(
-			    master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
-			    master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127);
-		}
-
+		arms::chassis::arcade(master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
+		                      master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127);
 		/* Autonomous Manual Trigger
 		 * If the robot is not connected to competition control
 		 * and the button is pressed, the robot will the autonomous
 		 * routine to allow for easy testing.
 		 */
-		if (master.get_digital_new_press(DIGITAL_X) &&
-		    !pros::competition::is_connected())
+		if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
 			autonomous();
 
 		/* Lift, Claw, and Winch Controls

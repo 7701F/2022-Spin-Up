@@ -33,5 +33,14 @@ pros::Motor winchM(15, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
 // Inertial Sensor
 pros::Imu imu_sensor(1);
 
+// Vision
+pros::vision_signature_s_t RED_SIG =
+    pros::Vision::signature_from_utility(1, 6255, 7309, 6782, -325, 223, -52, 3.000, 0);
+pros::vision_signature_s_t YLW_SIG = pros::Vision::signature_from_utility(
+    2, 351, 1099, 724, -3479, -2631, -3054, 3.000, 0);
+pros::vision_signature_s_t BLU_SIG = pros::Vision::signature_from_utility(
+    3, -3073, -2047, -2560, 7899, 12545, 10222, 3.000, 0);
+pros::Vision vision_sensor(10, pros::E_VISION_ZERO_CENTER);
+
 // AWP
 pros::ADIDigitalOut puncher('A');
