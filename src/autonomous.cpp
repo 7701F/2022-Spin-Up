@@ -6,9 +6,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#include "autonfunctions.hpp"
 #include "main.h"
 #include <array>
+
+std::int32_t mmToInch() {
+	return (distanceR.get() / 25.4) + 3;
+}
 
 // Right win point
 void Rauton() {
@@ -25,10 +28,12 @@ void Rauton() {
 
 // Yellow goal
 void Yauton() {
-	arms::chassis::move(60, 100);
-	arms::claw::toggleClaw(false);
-	pros::delay(30);
-	arms::chassis::move(-55, 100);
+	arms::chassis::move(50, 80);
+	arms::chassis::moveAsync(10);
+	clawM.move_relative(210, 100);
+	arms::claw::waitUntilSettled();
+	pros::delay(200);
+	arms::chassis::move(-50, 100);
 }
 
 // Left win point
@@ -54,58 +59,59 @@ void Lauton() {
 
 // Programming Skills
 void Sauton() {
-	winchM.move_relative(-2065, -100);
-	pros::delay(3250);
-	arms::chassis::move(-30, 50);
-	winchM.move_relative(1100, 100);
-	pros::delay(1250);
-	arms::chassis::move(28, 60);
-	arms::chassis::turn(150, 50);
-	arms::chassis::move(80, 80);
-	clawM.move_relative(210, 50);
-	pros::delay(850);
-	arms::chassis::move(-80, 80);
-	arms::chassis::turn(45, 50);
-	clawM.move_relative(-210, 50);
-	pros::delay(300);
-	arms::chassis::turn(-85, 50);
-	arms::chassis::move(65, 80);
-	arms::chassis::move(50, 80);
+	// winchM.move_relative(-2065, -100);
+	// pros::delay(3250);
+	// arms::chassis::move(-30, 50);
+	// winchM.move_relative(1100, 100);
+	// pros::delay(1250);
+	// arms::chassis::move(28, 60);
+	// arms::chassis::turn(150, 50);
+	// arms::chassis::move(80, 80);
+	// clawM.move_relative(210, 50);
+	// pros::delay(850);
+	// arms::chassis::move(-80, 80);
+	// arms::chassis::turn(45, 50);
+	// clawM.move_relative(-210, 50);
+	// pros::delay(300);
+	// arms::chassis::turn(-85, 50);
+	// arms::chassis::move(65, 80);
+	// arms::chassis::move(50, 80);
+	arms::chassis::move(80);
+
 }
 
 // Programming Skills 2.0
 void Sauton2() {
+	// arms::chassis::resetAngle();
+	// std::int32_t dist = mmToInch();
 	// Fetch blue start MOGO
-	arms::chassis::move(23, 50);
-	arms::chassis::move(3, 20);
-	arms::claw::toggleClaw(true);
-	arms::chassis::move(-28, 50);
-	arms::chassis::turn(190, 50);
-	winchM.move_relative(-2065, -100);
-	pros::delay(3250);
-	arms::chassis::move(-28, 50);
-	winchM.move_relative(1100, 100);
-	pros::delay(1400);
+	arms::chassis::move(8, 50);
+	// arms::chassis::turnAbsolute(180, 50);
+	// winchM.move_relative(-2065, -100);
+	// pros::delay(3250);
+	// arms::chassis::move(dist * -1, 50);
+	// winchM.move_relative(1100, 100);
+	// pros::delay(1400);
+	arms::chassis::move(60, 80);
 	// Move forward to turn
-	arms::chassis::move(30, 50);
-	arms::chassis::turn(-45, 50);
-	arms::chassis::move(10, 80);
-	arms::chassis::resetAngle();
+	arms::chassis::move(-24, 50);
+	arms::chassis::turn(-90, 50);
 	// Turn to face yellow right MOGO
-	arms::chassis::turnAbsolute(180, 50);
-	arms::chassis::move(90, 100);
+	arms::chassis::move(20, 100);
 	// Grab yellow right MOGO
 	arms::claw::toggleClaw(false);
-	arms::chassis::turnAbsolute(-90, 50);
+	arms::chassis::turn(90, 50);
 	arms::chassis::move(15, 80);
-	arms::chassis::turnAbsolute(90, 50);
+	arms::chassis::turn(-90, 50);
 	liftMotors.moveRelative(380, 100);
 	arms::chassis::move(10, 80);
+	arms::chassis::turnAbsolute(0);
+	arms::chassis::move(10);
 	// Place yellow MOGO on balance board
 	arms::claw::toggleClaw(false);
 	// Move back to face yellow middle MOGO
 	arms::chassis::move(-10, 10);
-	arms::chassis::turnAbsoluteAsync(180, 50);
+	arms::chassis::turnAsync(180, 50);
 	liftMotors.moveRelative(-380, -100);
 	arms::lift::waitUntilSettled();
 	arms::chassis::move(50, 50);
@@ -113,7 +119,7 @@ void Sauton2() {
 	arms::claw::toggleClaw(false);
 	// Turn around to face the balance board
 	arms::chassis::move(4, 50);
-	arms::chassis::turnAbsolute(180, 50);
+	arms::chassis::turnAbsolute(0, 50);
 	arms::chassis::moveAsync(60, 80);
 	liftMotors.moveRelative(380, 80);
 	arms::lift::waitUntilSettled();
@@ -122,7 +128,7 @@ void Sauton2() {
 	arms::claw::toggleClaw(false);
 	// Move back to face the yellow left MOGO
 	arms::chassis::move(-10, 50);
-	arms::chassis::turnAbsolute(-180, 50);
+	arms::chassis::turn(-180, 50);
 	arms::chassis::move(20, 80);
 	liftMotors.moveRelative(-380, -80);
 	arms::lift::waitUntilSettled();
@@ -169,6 +175,41 @@ void Sauton2() {
 	arms::chassis::move(-70, 100);
 }
 
+void Sauton3() {
+	arms::chassis::move(5, 50);
+	clawM.move_relative(170, 100);
+	pros::delay(300);
+	clawM.move_relative(40, 100);
+	arms::chassis::move(-15, 80);
+	pros::delay(300);
+	arms::chassis::move(-6, 80);
+	arms::chassis::turn(-80, 60);
+	arms::chassis::move(60, 100);
+	arms::chassis::moveAsync(5, 75);
+	clawM.move_relative(210, 100);
+	pros::delay(300);
+	liftMotors.moveRelative(30, 75);
+	pros::delay(500);
+	arms::chassis::move(-60, 100);
+}
+
+void locate() {
+	char* str;
+	vision_sensor.set_signature(1, &BLU_SIG);
+	pros::vision_object_s_t mogo = vision_sensor.get_by_sig(0, 1);
+	printf("%d\n", mogo.x_middle_coord);
+	while (mogo.x_middle_coord != 0) {
+		if (mogo.x_middle_coord > 5) {
+			arms::chassis::turn(.5, 50);
+		}
+		if (mogo.x_middle_coord < -5) {
+			arms::chassis::turn(.5, 50);
+		}
+		printf("%d\n", mogo.x_middle_coord);
+		pros::delay(20);
+	}
+}
+
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -197,13 +238,18 @@ void autonomous() {
 		// arms::chassis::arcRight(1600, 1, 50, 3);
 		break;
 	case -3:
-
+		locate();
 		break;
 	case -2:
 
 		break;
 	case -1:
-
+		arms::chassis::move(65, 80);
+		arms::chassis::moveAsync(10);
+		clawM.move_relative(210, 100);
+		arms::claw::waitUntilSettled();
+		pros::delay(200);
+		arms::chassis::move(-50, 100);
 		break;
 	case 0:
 		Sauton2();

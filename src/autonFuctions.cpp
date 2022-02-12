@@ -109,9 +109,10 @@ void waitUntilSettled() {
 
 void toggleClaw(bool drop) {
 	if (drop == true) {
-		clawM.move_relative(200, 100);
-		waitUntilSettled();
+		clawM.move_relative(170, 100);
+		pros::delay(210);
 		clawM.move_absolute(0, 100);
+		waitUntilSettled();
 	}
 	if (clawM.get_position() == 210)
 		clawM.move_absolute(0, 80);
@@ -126,20 +127,20 @@ void toggleClaw(bool drop) {
 
 namespace vision {
 void redLocate() {
-	vision_sensor.set_signature(1, &BLU_SIG);
-	pros::vision_object_s_t rtn = vision_sensor.get_by_sig(0, 1);
-	// if(rtn)
-	printf("rtn.x_middle_coord");
-	while (rtn.x_middle_coord > 5 && rtn.x_middle_coord < -5) {
-		if (rtn.x_middle_coord > 5) {
-			arms::chassis::turn(.5, 20);
-			printf("turning right\n");
-		}
-		if (rtn.x_middle_coord < -5) {
-			arms::chassis::turn(-0.5, 20);
-			printf("turning left\n");
-		}
-		pros::delay(20);
-	}
+	// vision_sensor.set_signature(1, &BLU_SIG);
+	// pros::vision_object_s_t rtn = vision_sensor.get_by_sig(0, 1);
+	// // if(rtn)
+	// printf("rtn.x_middle_coord");
+	// while (rtn.x_middle_coord > 5 && rtn.x_middle_coord < -5) {
+	// 	if (rtn.x_middle_coord > 5) {
+	// 		arms::chassis::turn(.5, 20);
+	// 		printf("turning right\n");
+	// 	}
+	// 	if (rtn.x_middle_coord < -5) {
+	// 		arms::chassis::turn(-0.5, 20);
+	// 		printf("turning left\n");
+	// 	}
+	// 	pros::delay(20);
+	// }
 }
 } // namespace vision
