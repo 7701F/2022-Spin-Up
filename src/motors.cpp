@@ -32,6 +32,7 @@ pros::Motor winchM(15, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
 
 // Inertial Sensor
 pros::Imu imu_sensor(1);
+pros::Distance distanceR(21);
 
 // Vision
 pros::vision_signature_s_t RED_SIG =

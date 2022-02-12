@@ -28,6 +28,7 @@ extern pros::Motor winchM;
 
 // Inertial Sensor
 extern pros::Imu imu_sensor;
+extern pros::Distance distanceR;
 
 // Vision Sensor
 extern pros::Vision vision_sensor;

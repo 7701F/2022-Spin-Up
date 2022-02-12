@@ -22,11 +22,6 @@ std::string selAuton;
 void initialize() {
 	// ARMS & Controller init and reset IMU sensor
 	arms::chassis::init();
-	if (pros::competition::is_connected()) {
-		vision_sensor.set_wifi_mode(0);
-	} else {
-		vision_sensor.set_wifi_mode(1);
-	}
 
 	// Controller Status Display
 	pros::Task controllerTask{[=] {
@@ -46,10 +41,13 @@ void initialize() {
 			master.print(1, 0, brakestr.str().c_str());
 			pros::delay(50);
 			if (pros::competition::is_connected()) {
-				master.print(2, 0, "Match Timer: %d\r", matchTimerCount);
+				// master.print(2, 0, "Match Timer: %d\r", matchTimerCount);
 			} else {
 				// master.print(2, 0, "Task Count: %d\r", pros::Task::get_count());
-				master.print(2, 0, "Gyro: %f\r", imu_sensor.get_heading());
+				master.print(2, 0, "Distance: %d", distanceR.get());
+				// master.print(2, 0, "Gyro: %f\r", imu_sensor.get_heading());
+				printf("Distance: %f\n", distanceR.get());
+				pros::delay(200);
 			}
 
 			pros::delay(50);
