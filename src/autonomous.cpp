@@ -28,8 +28,8 @@ void Rauton() {
 
 // Yellow goal
 void Yauton() {
-	arms::chassis::move(50, 80);
-	arms::chassis::moveAsync(10);
+	arms::chassis::move(53, 80);
+	arms::chassis::moveAsync(11);
 	clawM.move_relative(210, 100);
 	arms::claw::waitUntilSettled();
 	pros::delay(200);
@@ -59,24 +59,23 @@ void Lauton() {
 
 // Programming Skills
 void Sauton() {
-	// winchM.move_relative(-2065, -100);
-	// pros::delay(3250);
-	// arms::chassis::move(-30, 50);
-	// winchM.move_relative(1100, 100);
-	// pros::delay(1250);
-	// arms::chassis::move(28, 60);
-	// arms::chassis::turn(150, 50);
-	// arms::chassis::move(80, 80);
-	// clawM.move_relative(210, 50);
-	// pros::delay(850);
-	// arms::chassis::move(-80, 80);
-	// arms::chassis::turn(45, 50);
-	// clawM.move_relative(-210, 50);
-	// pros::delay(300);
-	// arms::chassis::turn(-85, 50);
-	// arms::chassis::move(65, 80);
-	// arms::chassis::move(50, 80);
-	arms::chassis::move(80);
+	winchM.move_relative(-2065, -100);
+	pros::delay(3250);
+	arms::chassis::move(-30, 50);
+	winchM.move_relative(1100, 100);
+	pros::delay(1250);
+	arms::chassis::move(28, 60);
+	arms::chassis::turn(150, 50);
+	arms::chassis::move(80, 80);
+	clawM.move_relative(210, 50);
+	pros::delay(850);
+	arms::chassis::move(-80, 80);
+	arms::chassis::turn(45, 50);
+	clawM.move_relative(-210, 50);
+	pros::delay(300);
+	arms::chassis::turn(-85, 50);
+	arms::chassis::move(65, 80);
+	arms::chassis::move(50, 80);
 
 }
 
@@ -92,12 +91,12 @@ void Sauton2() {
 	// arms::chassis::move(dist * -1, 50);
 	// winchM.move_relative(1100, 100);
 	// pros::delay(1400);
-	arms::chassis::move(60, 80);
+	arms::chassis::move(70, 80);
 	// Move forward to turn
-	arms::chassis::move(-24, 50);
+	arms::chassis::move(-25, 50);
 	arms::chassis::turn(-90, 50);
 	// Turn to face yellow right MOGO
-	arms::chassis::move(20, 100);
+	arms::chassis::move(25, 100);
 	// Grab yellow right MOGO
 	arms::claw::toggleClaw(false);
 	arms::chassis::turn(90, 50);
