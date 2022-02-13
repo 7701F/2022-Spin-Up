@@ -14,7 +14,9 @@ See also the list of [contributors](https://github.com/7701F/2021-Tipping-Point/
 
 [ARMS](https://github.com/purduesigbots/ARMS) ARMS is a library that makes programming a VEX V5 robot a piece of cake.
 
-[gif-pros](https://github.com/theol0403/gif-pros) Allows GIFS to be displayed on LVGL (Currently removed)
+<!-- [EZ-Template](https://github.com/EZ-Robotics/EZ-Template): 2.1.0 -->
+
+<!-- [gif-pros](https://github.com/theol0403/gif-pros) Allows GIFS to be displayed on LVGL (Currently removed) -->
 
  This should give you the location of the line that triggered the exception.
 # Debugging Guide
