@@ -8,8 +8,7 @@
  */
 #include "main.h"
 
-// Honestly my stupidest moment, it stops the robot by driving the motor
-// opposite direction of the current velocity
+// Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity.
 void customBrake(bool pbrake) {
 	if (pbrake == true) {
 		if (master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0) {
@@ -24,7 +23,7 @@ void customBrake(bool pbrake) {
 	}
 }
 
-// Smart boy motor brake solution
+// Toggles the motor brake mode.
 void motorBrake(bool pbrake) {
 	if (pbrake == true) {
 		if (arms::chassis::leftMotors->getBrakeMode() !=

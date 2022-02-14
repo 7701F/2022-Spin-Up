@@ -6,8 +6,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#include <sstream>
 #include "main.h"
+#include <sstream>
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -20,10 +20,10 @@ void initialize() {
 	arms::chassis::init();
 
 	// Controller Status Display
-	std::string selAuton;
 	pros::Task controllerTask{[=] {
 		master.clear();
 
+		std::string selAuton;
 		while (true) {
 			// Only print every 50ms, the controller text update rate is slow
 			selAuton = arms::selector::b[abs(arms::selector::auton)];
@@ -43,7 +43,7 @@ void initialize() {
 				// master.print(2, 0, "Task Count: %d\r", pros::Task::get_count());
 				master.print(2, 0, "Distance: %d", distanceR.get());
 				// master.print(2, 0, "Gyro: %f\r", imu_sensor.get_heading());
-				printf("Distance: %f\n", distanceR.get());
+				printf("Distance: %d\n", distanceR.get());
 				pros::delay(200);
 			}
 
@@ -69,9 +69,6 @@ void disabled() {
 	static int count = 1;
 	printf("Disabled called %d\n", count++);
 
-	// disabled is actually a task as well
-	// we can either return or block here doing something useful
-	// the task will be deleted when driver or auton starts
 	while (true) {
 		pros::delay(1000);
 	}
