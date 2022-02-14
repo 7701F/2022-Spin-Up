@@ -8,7 +8,8 @@
  */
 #include "main.h"
 
-// Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity.
+// Honestly my stupidest moment, it stops the robot by driving the motor opposite
+// direction of the current velocity.
 void customBrake(bool pbrake) {
 	if (pbrake == true) {
 		if (master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0) {
@@ -76,26 +77,26 @@ void gameSystemControls() {
 	// Claw Control
 	/* Motor Claw
 	if (master.get_digital(DIGITAL_R1) == 1) {
-		clawM.move_velocity(50);
+	  clawM.move_velocity(50);
 	} else if (master.get_digital(DIGITAL_R2) == 1) {
-		clawM.move_velocity(-50);
+	  clawM.move_velocity(-50);
 	} else {
-		clawM.move_velocity(0);
+	  clawM.move_velocity(0);
 	} */
 	// Pneumatic Claw Control
 	pistonState = master.get_digital(DIGITAL_R2);
-	if(pistonState == true && prevPistonState == false){
+	if (pistonState == true && prevPistonState == false) {
 		mogoState = !mogoState;
 		clawP.set_value(mogoState);
 	}
-    prevPistonState = pistonState;
+	prevPistonState = pistonState;
 
 	// Ring Lift Control
-	if(master.get_digital(DIGITAL_R1)) {
+	if (master.get_digital(DIGITAL_R1)) {
 		ringState = !ringState;
 	}
 
-	if(ringState) {
+	if (ringState) {
 		ringM.move_velocity(600);
 	} else {
 		ringM.move_velocity(0);

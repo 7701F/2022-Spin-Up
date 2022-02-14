@@ -121,7 +121,7 @@ void toggleClaw(bool drop) {
 	waitUntilSettled();
 }
 
-void mogoclamp (bool clamp) {
+void mogoclamp(bool clamp) {
 	clawP.set_value(clamp);
 }
 } // namespace arms::claw
@@ -129,5 +129,4 @@ void mogoclamp (bool clamp) {
 // pros::vision_signature_s_t RED_SIG = pros::Vision::signature_from_utility(
 //     1, 8973, 11143, 10058, -2119, -1053, -1586, 5.4, 0);
 
-namespace vision {
-} // namespace vision
+namespace vision {} // namespace vision

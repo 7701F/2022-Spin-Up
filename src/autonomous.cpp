@@ -75,7 +75,6 @@ void Sauton() {
 	arms::chassis::turn(-85, 50);
 	arms::chassis::move(65, 80);
 	arms::chassis::move(50, 80);
-
 }
 
 // Programming Skills 2.0
@@ -191,36 +190,36 @@ void autonomous() {
 
 	// Auton Selector Logic
 	switch (arms::selector::auton) {
-		case -4:
-			break;
-		case -3:
-			break;
-		case -2:
-			break;
-		case -1:
-			arms::chassis::move(65, 80);
-			arms::chassis::moveAsync(10);
-			clawM.move_relative(210, 100);
-			arms::claw::waitUntilSettled();
-			pros::delay(200);
-			arms::chassis::move(-50, 100);
-			break;
-		case 0:
-			Sauton2();
-			break;
-		case 1:
-			Yauton();
-			break;
-		case 2:
-			Rauton();
-			break;
-		case 3:
-			Lauton();
-			break;
-		case 4:
-			break;
-		default:
-			break;
+	case -4:
+		break;
+	case -3:
+		break;
+	case -2:
+		break;
+	case -1:
+		arms::chassis::move(65, 80);
+		arms::chassis::moveAsync(10);
+		clawM.move_relative(210, 100);
+		arms::claw::waitUntilSettled();
+		pros::delay(200);
+		arms::chassis::move(-50, 100);
+		break;
+	case 0:
+		Sauton2();
+		break;
+	case 1:
+		Yauton();
+		break;
+	case 2:
+		Rauton();
+		break;
+	case 3:
+		Lauton();
+		break;
+	case 4:
+		break;
+	default:
+		break;
 	}
 
 	printf("Successfully ran auton: %d\n", arms::selector::auton);

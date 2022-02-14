@@ -34,7 +34,6 @@ void toggleClaw(bool drop);
 void mogoclamp(bool clamp);
 } // namespace arms::claw
 
-namespace vision {
-} // namespace vision
+namespace vision {} // namespace vision
 
 #endif
