@@ -38,7 +38,7 @@
 
 // Custom Headers
 #include "ARMS/api.h"
-#include "autonfunctions.hpp"
+#include "autonfunctions.h"
 #include "motors.h"
 #include "opfunctions.h"
 

@@ -7,6 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "main.h"
+
 #include <sstream>
 
 /**
@@ -25,7 +26,8 @@ void initialize() {
 
 		std::string selAuton;
 		while (true) {
-			// Only print every 50ms, the controller text update rate is slow
+			// Only print every 50ms, the controller text update rate
+			// is slow
 			selAuton = arms::selector::b[abs(arms::selector::auton)];
 
 			std::stringstream autonstr;
@@ -38,11 +40,14 @@ void initialize() {
 			master.print(1, 0, brakestr.str().c_str());
 			pros::delay(50);
 			if (pros::competition::is_connected()) {
-				// master.print(2, 0, "Match Timer: %d\r", matchTimerCount);
+				// master.print(2, 0, "Match Timer: %d\r",
+				// matchTimerCount);
 			} else {
-				// master.print(2, 0, "Task Count: %d\r", pros::Task::get_count());
+				// master.print(2, 0, "Task Count: %d\r",
+				// pros::Task::get_count());
 				master.print(2, 0, "Distance: %d", distanceR.get());
-				// master.print(2, 0, "Gyro: %f\r", imu_sensor.get_heading());
+				// master.print(2, 0, "Gyro: %f\r",
+				// imu_sensor.get_heading());
 				printf("Distance: %d\n", distanceR.get());
 				pros::delay(200);
 			}

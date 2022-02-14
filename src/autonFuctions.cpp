@@ -49,8 +49,7 @@ bool settled() {
 }
 
 void waitUntilSettled() {
-	while (!settled())
-		pros::delay(1);
+	while (!settled()) pros::delay(1);
 }
 
 void resetLift() {
@@ -103,8 +102,7 @@ bool settled() {
 }
 
 void waitUntilSettled() {
-	while (!settled())
-		pros::delay(1);
+	while (!settled()) pros::delay(1);
 }
 
 void toggleClaw(bool drop) {

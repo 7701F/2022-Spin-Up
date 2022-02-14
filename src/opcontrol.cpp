@@ -32,8 +32,12 @@ void opcontrol() {
 		/* Steering
 		 * Handled by ARMS logic that has deadzones
 		 */
-		arms::chassis::arcade(master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
-		                      master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127);
+		// clang-format off
+		arms::chassis::arcade (
+			master.get_analog (ANALOG_LEFT_Y) * (double)100 / 127,
+		    master.get_analog (ANALOG_RIGHT_X) * (double)100 / 127
+		);
+		// clang-format on
 		/* Autonomous Manual Trigger
 		 * If the robot is not connected to competition control
 		 * and the button is pressed, the robot will the autonomous

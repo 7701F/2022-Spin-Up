@@ -53,11 +53,6 @@ bool ringState = false;
 // Combined Claw, Lift, Winch, and Ringlift control function
 void gameSystemControls() {
 	// Lift Controls
-	// Analog Lift Controls
-	// liftSpeed = (fabs(master.get_analog(ANALOG_RIGHT_Y)) > 50 ?
-	// master.get_analog(ANALOG_RIGHT_Y) : 0);
-
-	// Digital Lift Controls
 	if (master.get_digital(DIGITAL_L1) == 1) {
 		liftSpeed = 127;
 	} else if (master.get_digital(DIGITAL_L2) == 1) {
