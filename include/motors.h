@@ -6,7 +6,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
 #ifndef MOTORS_H_
 #define MOTORS_H_
 
@@ -24,9 +23,12 @@ extern okapi::MotorGroup liftMotors;
 
 // Declare grabby motors
 extern pros::Motor clawM;
+extern pros::Motor ringM;
+
+// Declare winch motors
 extern pros::Motor winchM;
 
-// Inertial Sensor
+// Sensors Sensor
 extern pros::Imu imu_sensor;
 extern pros::Distance distanceR;
 
@@ -37,6 +39,7 @@ extern pros::vision_signature_s_t BLU_SIG;
 extern pros::vision_signature_s_t YLW_SIG;
 
 // Pneumatics
-extern pros::ADIDigitalOut puncher;
+extern pros::ADIDigitalOut clawP;
+extern pros::ADIDigitalOut AWP;
 
 #endif

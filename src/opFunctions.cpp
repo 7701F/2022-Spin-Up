@@ -8,9 +8,6 @@
  */
 #include "main.h"
 
-// Variables
-int count = 0;
-
 // Honestly my stupidest moment, it stops the robot by driving the motor
 // opposite direction of the current velocity
 void customBrake(bool pbrake) {
@@ -49,7 +46,11 @@ void motorBrake(bool pbrake) {
 }
 
 int liftSpeed;
-// Combined Claw, Lift, and Winch control function
+bool pistonState = false;
+bool prevPistonState = false;
+bool mogoState = false;
+bool ringState = false;
+// Combined Claw, Lift, Winch, and Ringlift control function
 void gameSystemControls() {
 	// Lift Controls
 	// Analog Lift Controls
@@ -74,12 +75,31 @@ void gameSystemControls() {
 	}
 
 	// Claw Control
+	/* Motor Claw
 	if (master.get_digital(DIGITAL_R1) == 1) {
 		clawM.move_velocity(50);
 	} else if (master.get_digital(DIGITAL_R2) == 1) {
 		clawM.move_velocity(-50);
 	} else {
 		clawM.move_velocity(0);
+	} */
+	// Pneumatic Claw Control
+	pistonState = master.get_digital(DIGITAL_R2);
+	if(pistonState == true && prevPistonState == false){
+		mogoState = !mogoState;
+		clawP.set_value(mogoState);
+	}
+    prevPistonState = pistonState;
+
+	// Ring Lift Control
+	if(master.get_digital(DIGITAL_R1)) {
+		ringState = !ringState;
+	}
+
+	if(ringState) {
+		ringM.move_velocity(600);
+	} else {
+		ringM.move_velocity(0);
 	}
 
 	// Winch Control

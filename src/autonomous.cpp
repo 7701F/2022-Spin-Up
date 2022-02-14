@@ -7,7 +7,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include "main.h"
-#include <array>
 
 std::int32_t mmToInch() {
 	return (distanceR.get() / 25.4) + 3;
@@ -174,41 +173,6 @@ void Sauton2() {
 	arms::chassis::move(-70, 100);
 }
 
-void Sauton3() {
-	arms::chassis::move(5, 50);
-	clawM.move_relative(170, 100);
-	pros::delay(300);
-	clawM.move_relative(40, 100);
-	arms::chassis::move(-15, 80);
-	pros::delay(300);
-	arms::chassis::move(-6, 80);
-	arms::chassis::turn(-80, 60);
-	arms::chassis::move(60, 100);
-	arms::chassis::moveAsync(5, 75);
-	clawM.move_relative(210, 100);
-	pros::delay(300);
-	liftMotors.moveRelative(30, 75);
-	pros::delay(500);
-	arms::chassis::move(-60, 100);
-}
-
-void locate() {
-	char* str;
-	vision_sensor.set_signature(1, &BLU_SIG);
-	pros::vision_object_s_t mogo = vision_sensor.get_by_sig(0, 1);
-	printf("%d\n", mogo.x_middle_coord);
-	while (mogo.x_middle_coord != 0) {
-		if (mogo.x_middle_coord > 5) {
-			arms::chassis::turn(.5, 50);
-		}
-		if (mogo.x_middle_coord < -5) {
-			arms::chassis::turn(.5, 50);
-		}
-		printf("%d\n", mogo.x_middle_coord);
-		pros::delay(20);
-	}
-}
-
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -227,47 +191,36 @@ void autonomous() {
 
 	// Auton Selector Logic
 	switch (arms::selector::auton) {
-	case -4:
-		arms::odom::init();
-		arms::odom::reset({0, 0}, 0);
-
-		arms::odom::move({10, 0});
-		// arms::chassis::arcRight(1000, 1, 50, 1);
-		// arms::chassis::arcLeft(1800, 1, 50, 2);
-		// arms::chassis::arcRight(1600, 1, 50, 3);
-		break;
-	case -3:
-		locate();
-		break;
-	case -2:
-
-		break;
-	case -1:
-		arms::chassis::move(65, 80);
-		arms::chassis::moveAsync(10);
-		clawM.move_relative(210, 100);
-		arms::claw::waitUntilSettled();
-		pros::delay(200);
-		arms::chassis::move(-50, 100);
-		break;
-	case 0:
-		Sauton2();
-		break;
-	case 1:
-		Yauton();
-		break;
-	case 2:
-		Rauton();
-		break;
-	case 3:
-		Lauton();
-		break;
-	case 4:
-		// arms::odom::reset();
-		// arms::odom::move({1, 1});
-		break;
-	default:
-		break;
+		case -4:
+			break;
+		case -3:
+			break;
+		case -2:
+			break;
+		case -1:
+			arms::chassis::move(65, 80);
+			arms::chassis::moveAsync(10);
+			clawM.move_relative(210, 100);
+			arms::claw::waitUntilSettled();
+			pros::delay(200);
+			arms::chassis::move(-50, 100);
+			break;
+		case 0:
+			Sauton2();
+			break;
+		case 1:
+			Yauton();
+			break;
+		case 2:
+			Rauton();
+			break;
+		case 3:
+			Lauton();
+			break;
+		case 4:
+			break;
+		default:
+			break;
 	}
 
 	printf("Successfully ran auton: %d\n", arms::selector::auton);

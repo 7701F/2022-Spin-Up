@@ -24,13 +24,14 @@ okapi::Motor leftLift(9, false, okapi::AbstractMotor::gearset::red,
                       okapi::AbstractMotor::encoderUnits::degrees);
 okapi::MotorGroup liftMotors({rightLift, leftLift});
 
-// Claw Motor
+// Claw & Ring Motor
 pros::Motor clawM(6, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
+pros::Motor ringM(6, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
 
 // Winch Motor
 pros::Motor winchM(15, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
 
-// Inertial Sensor
+// Sensors
 pros::Imu imu_sensor(1);
 pros::Distance distanceR(21);
 
@@ -43,5 +44,6 @@ pros::vision_signature_s_t BLU_SIG = pros::Vision::signature_from_utility(
     3, -3073, -2047, -2560, 7899, 12545, 10222, 3.000, 0);
 pros::Vision vision_sensor(10, pros::E_VISION_ZERO_CENTER);
 
-// AWP
-pros::ADIDigitalOut puncher('A');
+// Pneumatics
+pros::ADIDigitalOut clawP('A');
+pros::ADIDigitalOut AWP('B');

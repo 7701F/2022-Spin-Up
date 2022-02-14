@@ -120,27 +120,14 @@ void toggleClaw(bool drop) {
 		clawM.move_absolute(210, 80);
 	waitUntilSettled();
 }
+
+void mogoclamp (bool clamp) {
+	clawP.set_value(clamp);
+}
 } // namespace arms::claw
 
 // pros::vision_signature_s_t RED_SIG = pros::Vision::signature_from_utility(
 //     1, 8973, 11143, 10058, -2119, -1053, -1586, 5.4, 0);
 
 namespace vision {
-void redLocate() {
-	// vision_sensor.set_signature(1, &BLU_SIG);
-	// pros::vision_object_s_t rtn = vision_sensor.get_by_sig(0, 1);
-	// // if(rtn)
-	// printf("rtn.x_middle_coord");
-	// while (rtn.x_middle_coord > 5 && rtn.x_middle_coord < -5) {
-	// 	if (rtn.x_middle_coord > 5) {
-	// 		arms::chassis::turn(.5, 20);
-	// 		printf("turning right\n");
-	// 	}
-	// 	if (rtn.x_middle_coord < -5) {
-	// 		arms::chassis::turn(-0.5, 20);
-	// 		printf("turning left\n");
-	// 	}
-	// 	pros::delay(20);
-	// }
-}
 } // namespace vision
