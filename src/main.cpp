@@ -7,11 +7,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 #include <sstream>
-
 #include "main.h"
-
-// Controller Auton Indicator
-std::string selAuton;
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -24,6 +20,7 @@ void initialize() {
 	arms::chassis::init();
 
 	// Controller Status Display
+	std::string selAuton;
 	pros::Task controllerTask{[=] {
 		master.clear();
 
@@ -54,8 +51,7 @@ void initialize() {
 		}
 	}};
 
-	// Set display
-	// if (!pros::competition::is_connected()) display();
+	// ARMS Auton Selector
 	arms::selector::init();
 
 	// Set brakes on to active bold
@@ -72,9 +68,6 @@ void initialize() {
 void disabled() {
 	static int count = 1;
 	printf("Disabled called %d\n", count++);
-
-	// kill the match timer task we do not need now
-	killTask();
 
 	// disabled is actually a task as well
 	// we can either return or block here doing something useful
@@ -96,7 +89,4 @@ void disabled() {
 void competition_initialize() {
 	static int count = 1;
 	printf("Comp Init called %d\n", count++);
-
-	// if cable is removed and then attached we may need to
-	killTask();
 }

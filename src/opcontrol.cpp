@@ -8,38 +8,6 @@
  */
 #include "main.h"
 
-#include "opcontrol.h"
-#include "opfunctions.h"
-
-pros::task_t matchTimerTask = (pros::task_t)NULL;
-
-int matchTimerCount = 105;
-// Match Timer Indicator
-void matchTimer() {
-	printf("Match Timer: %d\n", matchTimerCount);
-	pros::delay(1000);
-
-	while (matchTimerCount > 0) {
-		printf("Match Timer: %d\n", matchTimerCount);
-
-		if (matchTimerCount == 1) { // End of match
-			master.rumble("----");
-			matchTimerCount = 105;
-			// killTask();
-		} else if (matchTimerCount == 35) { // 75 seconds into Driver Control
-			master.rumble(".-.-.");
-		} else if (matchTimerCount == 60) { // 60 seconds into Driver Control
-			master.rumble(". .");
-		} else if (matchTimerCount == 75) { // 45 seconds into Driver Control
-			master.rumble("-");
-		}
-
-		matchTimerCount--;
-		pros::delay(1000);
-	}
-}
-
-bool balancingBool = false;
 /*
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -54,17 +22,10 @@ bool balancingBool = false;
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	if (pros::competition::is_connected()) {
-		matchTimerCount = 105;
-		// matchTimerTask = pros::Task(matchTimer);
-	}
-
-	// Initialize the lift motors
-	// liftMotors.moveVelocity(-100);
-	// pros::delay(310);
 	liftMotors.moveRelative(30, 100);
 	arms::lift::waitUntilSettled();
-	// liftMotors.tarePosition();
+	liftMotors.tarePosition();
+	liftMotors.moveRelative(30, 100);
 
 	// Run Loop
 	while (true) {

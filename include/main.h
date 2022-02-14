@@ -40,7 +40,6 @@
 #include "ARMS/api.h"
 #include "autonfunctions.hpp"
 #include "motors.h"
-#include "opcontrol.h"
 #include "opfunctions.h"
 
 /**
