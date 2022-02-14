@@ -1,13 +1,13 @@
-BasedOnStyle: LLVM
+BasedOnStyle: Google
 AlignAfterOpenBracket: Align
 AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: false
 BraceWrapping:
   BeforeElse: true
-BreakBeforeBraces: Always
+BreakBeforeBraces: Attach
 ColumnLimit: 90
 DerivePointerAlignment: false
-IndentCaseLabels: false
+IndentCaseLabels: true
 IndentWidth: 2
 Language: Cpp
 PointerAlignment: Left
