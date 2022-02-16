@@ -69,52 +69,18 @@ double csettle_threshold_angular;
 // AUTO CLAW FUNCTIONS
 bool clawState = false;
 namespace arms::claw {
-int wheelMoving(double sv, double* psv) {
-	int isMoving = 0;
-	double thresh = csettle_threshold_linear;
 
-	if (fabs(sv - *psv) > thresh)
-		isMoving = 1;
-
-	*psv = sv;
-
-	return isMoving;
+void toggleClaw() {
+	if (clawState == false) {
+		clawP.set_value(true);
+		clawState = true;
+	} else {
+		clawP.set_value(false);
+		clawState = false;
+	}
 }
 
-bool settled() {
-	static double psv_left = 0;
-	static double psv_right = 0;
-	static double psv_middle = 0;
-
-	int wheelMovingCount = 0;
-
-	wheelMovingCount += wheelMoving(clawM.get_position(), &psv_left);
-
-	if (wheelMovingCount == 0)
-		csettle_count++;
-	else
-		csettle_count = 0;
-
-	// not driving if we haven't moved
-	if (csettle_count > csettle_time)
-		return true;
-	else
-		return false;
-}
-
-void waitUntilSettled() {
-	while (!settled()) pros::delay(1);
-}
-
-void toggleClaw(bool drop) {
-	if (clawP.)
-		clawM.move_absolute(0, 80);
-	else
-		clawM.move_absolute(210, 80);
-	waitUntilSettled();
-}
-
-void puncher (bool clamp) {
+void puncher() {
 	AWP.set_value(true);
 	pros::delay(200);
 	AWP.set_value(false);

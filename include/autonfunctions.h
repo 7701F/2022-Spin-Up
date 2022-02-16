@@ -23,15 +23,9 @@ void resetLift();
 
 // AUTO CLAW FUNCTIONS
 namespace arms::claw {
-int wheelMoving(double sv, double* psv);
+void toggleClaw();
 
-bool settled();
-
-void waitUntilSettled();
-
-void toggleClaw(bool drop);
-
-void mogoclamp(bool clamp);
+void puncher();
 } // namespace arms::claw
 
 namespace vision {} // namespace vision
