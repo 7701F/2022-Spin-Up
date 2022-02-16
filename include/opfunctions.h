@@ -21,4 +21,8 @@ void customBrake(bool pbrake);
 void motorBrake(bool pbrake);
 void gameSystemControls();
 
+// Declare Ring PID Task
+void ringPID();
+inline pros::task_t ringTask = (pros::task_t)NULL;
+
 #endif

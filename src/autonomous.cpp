@@ -12,6 +12,79 @@ std::int32_t mmToInch() {
 	return (distanceR.get() / 25.4) + 3;
 }
 
+/* Test
+ */
+void turnImuPID(int turnToHeading, double power) {
+	float kp = .1;   // proportional konstant
+	float ki = .32;  // konstant of integration
+	float kd = .026; // konstant of derivation
+
+	float current = 0;            // value to be sent to shooter motors
+	float integralActiveZone = 2; // zone of error values in which the total error for the
+	                              // integral term accumulates
+	float errorT;                 // total error accumulated
+	float lastError;              // last error recorded by the controller
+	float proportion;             // the proportional term
+	float integral;               // the integral term
+	float derivative;             // the derivative term
+	/*/////////////////////////////////////////////
+	NOTE:
+	Error is a float declared at global level, it represents the difference between target
+	velocity and current velocity
+
+	power is a float declared at global level, it represents target velocity
+
+	velocity is a float declared at global level, it is the current measured velocity of the
+	shooter wheels
+	/////////////////////////////////////////////*/
+
+	// convert from absolute to relative set point
+	turnToHeading = turnToHeading - (int)arms::chassis::angle() % 360;
+
+	// make sure all turns take most efficient route
+	if (turnToHeading > 180)
+		turnToHeading -= 360;
+	else if (turnToHeading < -180)
+		turnToHeading += 360;
+
+	while (imu_sensor.get_heading() != turnToHeading) {
+		double velocity =
+		    (arms::chassis::rightMotors->getActualVelocity() + arms::chassis::leftMotors->getActualVelocity()) /
+		    2;
+		float error = power - velocity; // calculates difference between current velocity and target velocity
+
+		if (error < integralActiveZone && error != 0) // total error only accumulates where /
+		                                              // //there is error, and when the error
+		                                              // is within the integral active zone
+		{
+			errorT += error; // adds error to the total each time through the loop
+		} else {
+			errorT = 0; // if error = zero or error is not withing the active zone, total /
+			            // //error is set to zero
+		}
+
+		if (errorT > 50 / ki) // caps total error at 50
+		{
+			errorT = 50 / ki;
+		}
+		if (error == 0) {
+			derivative = 0; // if error is zero derivative term is zero
+		}
+		proportion = error * kp;               // sets proportion term
+		integral = errorT * ki;                // sets integral term
+		derivative = (error - lastError) * kd; // sets derivative term
+
+		lastError = error; // sets the last error to current error so we can use it in the next loop
+
+		current = proportion + integral + derivative; // sets value current as total of all terms
+
+		arms::chassis::rightMotors->moveVoltage(current);
+		arms::chassis::leftMotors->moveVoltage(-current);
+
+		pros::delay(20); // waits so we dont hog all our CPU power or cause loop instability
+	}
+}
+
 // Right win point
 void Rauton() {
 	arms::chassis::move(20, 80);
@@ -177,9 +250,10 @@ void Sauton3() {
 	winchM.move_relative(1100, 100);
 	pros::delay(1400);
 	arms::chassis::turn(90, 50);
-	ringM.move_velocity(600);
+	ringTask = pros::Task(ringPID);
 	arms::chassis::move(50);
-	ringM.move_velocity(0);
+	pros::Task(ringTask).remove();
+	ringTask = (pros::task_t)NULL;
 	arms::chassis::move(30);
 	arms::claw::toggleClaw();
 	arms::chassis::turn(-90);

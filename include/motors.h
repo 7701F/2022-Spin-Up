@@ -24,8 +24,7 @@ extern pros::Motor rightMtrR;
 extern okapi::MotorGroup liftMotors;
 
 // Declare grabby motors
-// extern pros::Motor clawM;
-extern pros::Motor ringM;
+extern okapi::Motor ringM;
 
 // Declare winch motors
 extern pros::Motor winchM;
