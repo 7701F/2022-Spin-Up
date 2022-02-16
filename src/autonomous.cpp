@@ -217,7 +217,7 @@ void autonomous() {
 			arms::chassis::move(-50, 100);
 			break;
 		case 0:
-			Sauton2();
+			Sauton3();
 			break;
 		case 1:
 			Yauton();
