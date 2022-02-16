@@ -69,16 +69,7 @@ void gameSystemControls() {
 		liftMotors.moveAbsolute(11, 10);
 	}
 
-	// Claw Control
-	/* Motor Claw
-	if (master.get_digital(DIGITAL_R1) == 1) {
-	  clawM.move_velocity(50);
-	} else if (master.get_digital(DIGITAL_R2) == 1) {
-	  clawM.move_velocity(-50);
-	} else {
-	  clawM.move_velocity(0);
-	} */
-	// Pneumatic Claw Control
+	// Claw Controls
 	pistonState = master.get_digital(DIGITAL_R2);
 	if (pistonState == true && prevPistonState == false) {
 		mogoState = !mogoState;
@@ -86,7 +77,7 @@ void gameSystemControls() {
 	}
 	prevPistonState = pistonState;
 
-	// Ring Lift Control
+	// Ring Lift Controls
 	if (master.get_digital(DIGITAL_R1)) {
 		ringState = !ringState;
 	}

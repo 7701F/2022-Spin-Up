@@ -29,10 +29,10 @@ void opcontrol() {
 
 	// Run Loop
 	while (true) {
+		// clang-format off
 		/* Steering
 		 * Handled by ARMS logic that has deadzones
 		 */
-		// clang-format off
 		arms::chassis::arcade (
 			master.get_analog (ANALOG_LEFT_Y) * (double)100 / 127,
 		    master.get_analog (ANALOG_RIGHT_X) * (double)100 / 127
@@ -52,9 +52,10 @@ void opcontrol() {
 		 */
 		gameSystemControls();
 
-		// Brake System
-		// The brake system is a safety feature that prevents the robot from being
-		// pushed by other robots. Uses basic logic for toggle button
+		/* Brake System
+		 * The brake system is a safety feature that prevents the robot from being
+		 * pushed by other robots. Uses basic logic for toggle button
+		 */
 		if (master.get_digital_new_press(DIGITAL_B) == 1) {
 			pbrake = !pbrake;
 		}
