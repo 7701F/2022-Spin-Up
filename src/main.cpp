@@ -39,20 +39,11 @@ void initialize() {
 			pros::delay(50);
 			master.print(1, 0, brakestr.str().c_str());
 			pros::delay(50);
-			if (pros::competition::is_connected()) {
-				// master.print(2, 0, "Match Timer: %d\r",
-				// matchTimerCount);
-			} else {
-				// master.print(2, 0, "Task Count: %d\r",
-				// pros::Task::get_count());
-				master.print(2, 0, "Distance: %d", distanceR.get());
-				// master.print(2, 0, "Gyro: %f\r",
-				// imu_sensor.get_heading());
-				printf("Distance: %d\n", distanceR.get());
-				pros::delay(200);
-			}
-
-			pros::delay(50);
+			master.print(2, 0, "Distance: %d", distanceR.get());
+			// master.print(2, 0, "Gyro: %f\r",
+			// imu_sensor.get_heading());
+			printf("Distance: %d\n", distanceR.get());
+			pros::delay(200);
 		}
 	}};
 
