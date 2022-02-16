@@ -97,15 +97,11 @@ void gameSystemControls() {
 
 	switch (winchState) {
 		case 1:
-			if (winchM.get_position() == winchKey::upPos) {
-				NULL;
-			} else if (winchM.get_position() == winchKey::downPos) {
+			if (winchM.get_position() == winchKey::downPos) {
 				winchM.move_absolute(winchKey::upPos, 100);
 			}
 		case 2:
-			if (winchM.get_position() == winchKey::downPos) {
-				NULL;
-			} else if (winchM.get_position() == winchKey::upPos) {
+			if (winchM.get_position() == winchKey::upPos) {
 				winchM.move_absolute(winchKey::downPos, 100);
 			}
 	}
