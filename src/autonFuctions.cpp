@@ -67,6 +67,7 @@ double csettle_threshold_linear;
 double csettle_threshold_angular;
 
 // AUTO CLAW FUNCTIONS
+bool clawState = false;
 namespace arms::claw {
 int wheelMoving(double sv, double* psv) {
 	int isMoving = 0;
@@ -106,21 +107,17 @@ void waitUntilSettled() {
 }
 
 void toggleClaw(bool drop) {
-	if (drop == true) {
-		clawM.move_relative(170, 100);
-		pros::delay(210);
-		clawM.move_absolute(0, 100);
-		waitUntilSettled();
-	}
-	if (clawM.get_position() == 210)
+	if (clawP.)
 		clawM.move_absolute(0, 80);
 	else
 		clawM.move_absolute(210, 80);
 	waitUntilSettled();
 }
 
-void mogoclamp(bool clamp) {
-	clawP.set_value(clamp);
+void puncher (bool clamp) {
+	AWP.set_value(true);
+	pros::delay(200);
+	AWP.set_value(false);
 }
 } // namespace arms::claw
 

@@ -25,7 +25,7 @@ okapi::Motor leftLift(9, false, okapi::AbstractMotor::gearset::red,
 okapi::MotorGroup liftMotors({rightLift, leftLift});
 
 // Claw & Ring Motor
-pros::Motor clawM(6, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
+// pros::Motor clawM(6, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
 pros::Motor ringM(6, MOTOR_GEARSET_06, true, MOTOR_ENCODER_DEGREES);
 
 // Winch Motor
