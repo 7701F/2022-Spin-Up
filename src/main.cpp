@@ -64,6 +64,11 @@ void disabled() {
 	static int count = 1;
 	printf("Disabled called %d\n", count++);
 
+	if (ringTask) {
+		pros::Task(ringTask).remove();
+		ringTask = (pros::task_t)NULL;
+	}
+
 	while (true) {
 		pros::delay(1000);
 	}

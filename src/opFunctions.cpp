@@ -27,21 +27,75 @@ void customBrake(bool pbrake) {
 // Toggles the motor brake mode.
 void motorBrake(bool pbrake) {
 	if (pbrake == true) {
-		if (arms::chassis::leftMotors->getBrakeMode() !=
-		        okapi::AbstractMotor::brakeMode::hold ||
-		    arms::chassis::rightMotors->getBrakeMode() !=
-		        okapi::AbstractMotor::brakeMode::hold) {
+		if (arms::chassis::leftMotors->getBrakeMode() != okapi::AbstractMotor::brakeMode::hold ||
+		    arms::chassis::rightMotors->getBrakeMode() != okapi::AbstractMotor::brakeMode::hold) {
 			arms::chassis::setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 			printf("BRAKE TOGGLED: HOLD\n");
 		}
 	} else if (pbrake == false) {
-		if (arms::chassis::leftMotors->getBrakeMode() !=
-		        okapi::AbstractMotor::brakeMode::coast ||
-		    arms::chassis::rightMotors->getBrakeMode() !=
-		        okapi::AbstractMotor::brakeMode::coast) {
+		if (arms::chassis::leftMotors->getBrakeMode() != okapi::AbstractMotor::brakeMode::coast ||
+		    arms::chassis::rightMotors->getBrakeMode() != okapi::AbstractMotor::brakeMode::coast) {
 			arms::chassis::setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
 			printf("BRAKE TOGGLED: COAST\n");
 		}
+	}
+}
+
+// Ring PID
+double power = 600;
+void ringPID() {
+	float kp = .1;   // proportional konstant
+	float ki = .32;  // konstant of integration
+	float kd = .026; // konstant of derivation
+
+	float current = 0;            // value to be sent to shooter motors
+	float integralActiveZone = 2; // zone of error values in which the total error for the
+	                              // integral term accumulates
+	float errorT;                 // total error accumulated
+	float lastError;              // last error recorded by the controller
+	float proportion;             // the proportional term
+	float integral;               // the integral term
+	float derivative;             // the derivative term
+	/*//////////////////////////////////////////////
+	NOTE:
+	Error is a float declared at global level, it represents the difference between target
+	velocity and current velocity
+
+	power is a float declared at global level, it represents target velocity
+
+	velocity is a float declared at global level, it is the current measured velocity of the
+	shooter wheels
+	/////////////////////////////////////////////*/
+	while (true) {
+		float error = power - ringM.getActualVelocity(); // calculates difference between current
+		                                                 // velocity and target velocity
+
+		if (error < integralActiveZone && error != 0) // total error only accumulates where / there is error, and
+		                                              // when the error is within the integral active zone
+		{
+			errorT += error; // adds error to the total each time through the loop
+		} else {
+			errorT = 0; // if error = zero or error is not withing the active zone, total / error is set to zero
+		}
+
+		if (errorT > 50 / ki) // caps total error at 50
+		{
+			errorT = 50 / ki;
+		}
+		if (error == 0) {
+			derivative = 0; // if error is zero derivative term is zero
+		}
+		proportion = error * kp;               // sets proportion term
+		integral = errorT * ki;                // sets integral term
+		derivative = (error - lastError) * kd; // sets derivative term
+
+		lastError = error; // sets the last error to current error so we can use it in the next loop
+
+		current = proportion + integral + derivative; // sets value current as total of all terms
+
+		ringM.moveVoltage(current); // sets motors to the calculated value
+
+		pros::delay(20); // waits so we dont hog all our CPU power or cause loop instability
 	}
 }
 
@@ -85,9 +139,12 @@ void gameSystemControls() {
 	}
 
 	if (ringState) {
-		ringM.move_velocity(600);
+		ringTask = pros::Task(ringPID);
 	} else {
-		ringM.move_velocity(0);
+		if (ringTask) {
+			pros::Task(ringTask).remove();
+			ringTask = (pros::task_t)NULL;
+		}
 	}
 
 	// Winch Automated Control
@@ -98,11 +155,13 @@ void gameSystemControls() {
 	switch (winchState) {
 		case 1:
 			if (winchM.get_position() == winchKey::downPos) {
-				winchM.move_absolute(winchKey::upPos, 100);
+				winchM.move_absolute(winchKey::upPos, 75);
 			}
 		case 2:
-			if (winchM.get_position() == winchKey::upPos) {
-				winchM.move_absolute(winchKey::downPos, 100);
+			if (winchM.get_position() == winchKey::startPos) {
+				winchM.move_absolute(winchKey::downPos, 75);
+			} else if (winchM.get_position() == winchKey::upPos) {
+				winchM.move_absolute(winchKey::downPos, 75);
 			}
 	}
 }
