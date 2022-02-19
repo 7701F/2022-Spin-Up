@@ -11,7 +11,7 @@
 #define AUTOFUNC_H_
 
 // AUTO LIFT FUNCTIONS
-namespace arms::lift {
+namespace deFenestration::lift {
 int wheelMoving(double sv, double* psv);
 
 bool settled();
@@ -19,15 +19,22 @@ bool settled();
 void waitUntilSettled();
 
 void resetLift();
-} // namespace arms::lift
+} // namespace deFenestration::lift
 
 // AUTO CLAW FUNCTIONS
-namespace arms::claw {
+namespace deFenestration::claw {
 void toggleClaw();
 
 void puncher();
-} // namespace arms::claw
+} // namespace deFenestration::claw
 
-namespace vision {} // namespace vision
+namespace deFenestration::vision {
+/** Align the robot to the goal
+ * color = 1 for blue, 2 for red, 3 for yellow
+ * return 1 if the robot is aligned, 2 if it is not aligned
+ * \param color The color code of the goal
+ */
+int alignRobot(int color);
+} // namespace deFenestration::vision
 
 #endif
