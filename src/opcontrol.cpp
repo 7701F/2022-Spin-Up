@@ -23,7 +23,7 @@
  */
 void opcontrol() {
 	liftMotors.moveRelative(30, 100);
-	arms::lift::waitUntilSettled();
+	deFenestration::lift::waitUntilSettled();
 	liftMotors.tarePosition();
 	liftMotors.moveRelative(30, 100);
 
