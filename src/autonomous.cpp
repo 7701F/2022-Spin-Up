@@ -101,7 +101,7 @@ void Rauton() {
 void Yauton() {
 	arms::chassis::move(64, 80);
 	deFenestration::claw::toggleClaw();
-	pros::delay(200);
+	pros::delay(250);
 	arms::chassis::move(-50, 100);
 	deFenestration::claw::toggleClaw();
 }
@@ -266,49 +266,29 @@ void Sauton4() {
 	arms::chassis::move(80, 100);
 
 	arms::chassis::turn(-135, 50);
-	// deFenestration::vision::alignRobot(3);
 
-	arms::chassis::move(70, 80);
+	arms::chassis::move(93, 80);
 
 	arms::chassis::turn(135, 50);
-	// deFenestration::vision::alignRobot(3);
 
-	arms::chassis::move(72, 80);
+	arms::chassis::move(93, 80);
 
 	arms::chassis::turn(-135, 50);
-	// deFenestration::vision::alignRobot(3);
 
-	arms::chassis::move(72, 80);
+	arms::chassis::move(93, 80);
 
 	arms::chassis::turn(135, 50);
-	// deFenestration::vision::alignRobot(1);
 
-	arms::chassis::move(80, 80);
+	arms::chassis::move(93, 80);
 
+	arms::chassis::turnAbsolute(0);
+
+	arms::chassis::move(66);
+	pros::delay(100);
 	deFenestration::claw::toggleClaw();
-	liftMotors.moveRelative(30, 100);
-	while (!deFenestration::lift::settled()) {
-		pros::delay(10);
-	}
+	pros::delay(100);
 
-	arms::chassis::move(-50, 80);
-
-	arms::chassis::turn(90, 50);
-
-	arms::chassis::move(30, 60);
-
-	arms::chassis::turn(90, 50);
-	liftMotors.moveRelative(220, 100);
-	while (!deFenestration::lift::settled()) {
-		pros::delay(10);
-	}
-
-	while (mmToInch() > 7) {
-		arms::chassis::move(1, 10);
-	}
-
-	deFenestration::claw::toggleClaw();
-	arms::chassis::move(-20, 80);
+	arms::chassis::move(-110);
 }
 
 /**
@@ -338,7 +318,7 @@ void autonomous() {
 			arms::chassis::move(65, 80);
 			arms::chassis::moveAsync(10);
 			deFenestration::claw::toggleClaw();
-			pros::delay(200);
+			pros::delay(250);
 			arms::chassis::move(-50, 100);
 			break;
 		case 0:

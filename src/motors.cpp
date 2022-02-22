@@ -41,7 +41,7 @@ pros::vision_signature_s_t YLW_SIG =
     pros::Vision::signature_from_utility(2, 351, 1099, 724, -3479, -2631, -3054, 3.000, 0);
 pros::vision_signature_s_t BLU_SIG =
     pros::Vision::signature_from_utility(3, -3073, -2047, -2560, 7899, 12545, 10222, 3.000, 0);
-pros::Vision vision_sensor(10, pros::E_VISION_ZERO_CENTER);
+pros::Vision vision_sensor(7, pros::E_VISION_ZERO_CENTER);
 
 // Pneumatics
 pros::ADIDigitalOut clawP('A');

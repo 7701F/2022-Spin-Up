@@ -49,7 +49,7 @@ bool settled() {
 }
 
 void waitUntilSettled() {
-	while (!settled()) pros::delay(1);
+	while (!settled()) pros::delay(10);
 }
 
 void resetLift() {
@@ -75,6 +75,7 @@ void toggleClaw() {
 		clawP.set_value(false);
 		clawState = false;
 	}
+	pros::delay(210);
 }
 
 void puncher() {
