@@ -22,6 +22,8 @@
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+	liftMotors.moveAbsolute(0, 100);
+	deFenestration::lift::waitUntilSettled();
 	liftMotors.moveRelative(30, 100);
 	deFenestration::lift::waitUntilSettled();
 	liftMotors.tarePosition();
