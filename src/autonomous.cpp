@@ -260,7 +260,6 @@ void Sauton3() {
 	arms::chassis::move(96);
 }
 
-
 // Programming Skills 4.0
 void Sauton4() {
 	arms::chassis::move(80, 100);
