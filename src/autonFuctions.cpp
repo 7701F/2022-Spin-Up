@@ -62,7 +62,7 @@ void resetLift() {
 } // namespace deFenestration::lift
 
 // AUTO CLAW FUNCTIONS
-bool clawState = false;
+bool clawState = true;
 namespace deFenestration::claw {
 
 void toggleClaw() {
