@@ -28,7 +28,7 @@ okapi::MotorGroup liftMotors({rightLift, leftLift});
 okapi::Motor ringM(6, true, okapi::AbstractMotor::gearset::blue, okapi::AbstractMotor::encoderUnits::degrees);
 
 // Winch Motor
-pros::Motor winchM(15, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
+pros::Motor winchM(10, MOTOR_GEARSET_36, false, MOTOR_ENCODER_DEGREES);
 
 // Sensors
 pros::Imu imu_sensor(1);
