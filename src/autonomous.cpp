@@ -101,11 +101,16 @@ void Rauton() {
 // Yellow goal
 void Yauton() {
 	deFenestration::claw::toggleClaw();
-	arms::chassis::move(64, 100);
+	// arms::chassis::move(64, 100);
+	arms::chassis::move(62, 100);
+	arms::chassis::moveAsync(2, 100);
 	deFenestration::claw::toggleClaw();
 	pros::delay(250);
-	arms::chassis::move(-50, 100);
-	deFenestration::claw::toggleClaw();
+	liftMotors.moveVelocity(100);
+	arms::chassis::rightMotors->moveVelocity(-200);
+	arms::chassis::leftMotors->moveVelocity(-20 - 0);
+	// arms::chassis::move(-50, 100);
+	// deFenestration::claw::toggleClaw();
 }
 
 // Left win point
@@ -263,7 +268,6 @@ void Sauton3() {
   arms::chassis::move(96);
 }
 */
-
 // Programming Skills 4.0
 void Sauton4() {
 	// Prime Claw
@@ -271,68 +275,117 @@ void Sauton4() {
 
 	// First Push
 	arms::chassis::move(93, 100);
-	deFenestration::claw::toggleClaw();
+	arms::chassis::move(-5, 100);
 
 	// Turn to first yellow and push
-	arms::chassis::turn(-135, 50);
-	liftMotors.moveAbsolute(280, 80);
-	arms::chassis::move(93, 80);
-
-	// Stack it
-	while (mmToInch() > 0) {
-		arms::chassis::rightMotors->moveVelocity(80);
-		arms::chassis::leftMotors->moveVelocity(80);
-	}
-	deFenestration::claw::toggleClaw();
-	arms::chassis::rightMotors->moveVelocity(0);
-	arms::chassis::leftMotors->moveVelocity(0);
+	arms::chassis::turn(-140, 50);
+	arms::chassis::move(94, 80);
 
 	// Move back
-	arms::chassis::move(-5, 80);
-	liftMotors.moveAbsolute(5, 80);
+	arms::chassis::turn(30, 50);
+	arms::chassis::move(-10, 100);
 
 	// Turn around
 	// arms::chassis::turn(135, 50);
-	arms::chassis::turnAbsolute(0);
+	arms::chassis::turn(145, 50);
 
 	// Push it
-	arms::chassis::move(50, 80);
+	arms::chassis::move(50, 100);
 	deFenestration::claw::toggleClaw();
 	pros::delay(100);
-	arms::chassis::move(43, 80);
 	liftMotors.moveAbsolute(280, 80);
+	arms::chassis::move(43, 100);
+	arms::chassis::move(10);
 	// arms::chassis::move(93, 80);
 
 	// Stack big yellow
-	while (mmToInch() > 0) {
-		arms::chassis::rightMotors->moveVelocity(80);
-		arms::chassis::leftMotors->moveVelocity(80);
-	}
 	deFenestration::claw::toggleClaw();
-	arms::chassis::rightMotors->moveVelocity(0);
-	arms::chassis::leftMotors->moveVelocity(0);
+	arms::chassis::move(-10);
 
 	// Move back
 	arms::chassis::move(-5, 80);
 	// Turn around
-	arms::chassis::turn(-135, 50);
+	arms::chassis::turn(90, 50);
+	winchM.move_relative(-2100, 100);
+	pros::delay(1200);
+	// arms::chassis::turn(-135, 50);
 	liftMotors.moveAbsolute(5, 80);
 
-	//  Push yellow
+	arms::chassis::move(-80, 80);
+	winchM.move_relative(1100, 100);
+	pros::delay(1200);
+	arms::chassis::move(30, 80);
+
+	arms::chassis::turn(90, 50);
+
 	arms::chassis::move(93, 80);
+}
 
-	arms::chassis::turn(135, 50);
-
-	arms::chassis::move(93, 80);
-
-	arms::chassis::turnAbsolute(0);
-
-	arms::chassis::move(66);
-	pros::delay(100);
+void Sauton5() {
+	winchM.move_relative(-2100, 100);
+	pros::delay(3250);
+	arms::chassis::move(-20, 100);
+	winchM.move_relative(1100, 100);
+	pros::delay(1250);
+	arms::chassis::move(20, 80);
+	arms::chassis::resetAngle();
+	arms::chassis::turnAbsolute(115, 80);
 	deFenestration::claw::toggleClaw();
-	pros::delay(100);
-
-	arms::chassis::move(-115);
+	// arms::chassis::move(64, 100);
+	arms::chassis::move(62, 100);
+	arms::chassis::moveAsync(2, 100);
+	deFenestration::claw::toggleClaw();
+	pros::delay(250);
+	arms::chassis::move(60, 100);
+	arms::chassis::turn(90);
+	arms::chassis::move(30);
+	liftMotors.moveAbsolute(310, 100);
+	pros::delay(120);
+	arms::chassis::turn(-90);
+	arms::chassis::move(10, 80);
+	deFenestration::claw::toggleClaw();
+	pros::delay(120);
+	arms::chassis::move(-10, 100);
+	liftMotors.moveAbsolute(5, 100);
+	arms::chassis::resetAngle();
+	arms::chassis::turnAbsolute(270, 80);
+	arms::chassis::move(60, 100);
+	deFenestration::claw::toggleClaw();
+	pros::delay(150);
+	arms::chassis::move(-70, 100);
+	arms::chassis::turn(90);
+	arms::chassis::move(-60, 100);
+	// arms::chassis::turn(-110, 80);
+	arms::chassis::turn(-90);
+	arms::chassis::arcLeft(14, 8, 80, 3);
+	liftMotors.moveAbsolute(310, 100);
+	arms::chassis::move(13, 100);
+	// arms::chassis::move(80, 100);
+	deFenestration::claw::toggleClaw();
+	arms::chassis::moveAsync(-30, 100);
+	liftMotors.moveAbsolute(5, 100);
+	arms::chassis::waitUntilSettled();
+	arms::chassis::turn(-35, 50);
+	arms::chassis::move(80, 100);
+	deFenestration::claw::toggleClaw();
+	pros::delay(125);
+	;
+	arms::chassis::turn(-65, 100);
+	arms::chassis::moveAsync(30, 100);
+	liftMotors.moveAbsolute(310, 100);
+	arms::chassis::move(40, 100);
+	deFenestration::claw::toggleClaw();
+	arms::chassis::move(-15, 100);
+	arms::chassis::resetAngle();
+	arms::chassis::turnAbsolute(140);
+	arms::chassis::move(120, 100);
+	deFenestration::claw::toggleClaw();
+	pros::delay(125);
+	arms::chassis::move(-110, 100);
+	arms::chassis::turnAbsolute(0);
+	arms::chassis::move(10);
+	deFenestration::claw::toggleClaw();
+	arms::chassis::move(-10);
 }
 
 /**
@@ -360,6 +413,7 @@ void autonomous() {
 			deFenestration::vision::alignRobot(2);
 			break;
 		case -1:
+			deFenestration::claw::toggleClaw();
 			arms::chassis::move(65, 80);
 			arms::chassis::moveAsync(10);
 			deFenestration::claw::toggleClaw();
@@ -367,7 +421,7 @@ void autonomous() {
 			arms::chassis::move(-50, 100);
 			break;
 		case 0:
-			Sauton4();
+			Sauton5();
 			break;
 		case 1:
 			Yauton();
