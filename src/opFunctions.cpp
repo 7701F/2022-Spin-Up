@@ -115,13 +115,13 @@ void gameSystemControls() {
 		liftSpeed = 0;
 	}
 
-	if (fabs(liftSpeed) >= 50 && liftMotors.getPosition() > 0) {
+	if (fabs(liftSpeed) >= 50 /*&& liftMotors.getPosition() > 0*/) {
 		liftMotors.moveVelocity(liftSpeed * (double)100 / 127);
 	} else if (liftSpeed == 0) {
 		liftMotors.moveVelocity(0);
-	} else if (liftMotors.getPosition() < 0) {
-		liftMotors.moveAbsolute(11, 10);
-	}
+	} // else if (liftMotors.getPosition() < 0) {
+	  // liftMotors.moveAbsolute(11, 10);
+	// }
 
 	// Claw Controls
 	pistonState = master.get_digital(DIGITAL_R2);
