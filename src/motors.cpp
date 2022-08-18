@@ -11,11 +11,26 @@
 // Controller
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-// Driving Motors
-pros::Motor leftMtr(20, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
-pros::Motor leftMtrR(19, MOTOR_GEARSET_18, false, MOTOR_ENCODER_DEGREES);
-pros::Motor rightMtr(11, MOTOR_GEARSET_18, true, MOTOR_ENCODER_DEGREES);
-pros::Motor rightMtrR(12, MOTOR_GEARSET_18, true, MOTOR_ENCODER_DEGREES);
+// Drive Motors
+okapi::Motor rightMtr(20, true, okapi::AbstractMotor::gearset::green,
+                       okapi::AbstractMotor::encoderUnits::degrees);
+okapi::Motor leftMtr(19, true, okapi::AbstractMotor::gearset::green,
+                       okapi::AbstractMotor::encoderUnits::degrees);
+okapi::Motor rightMtrR(18, true, okapi::AbstractMotor::gearset::green,
+                       okapi::AbstractMotor::encoderUnits::degrees);
+okapi::Motor leftMtrR(17, true, okapi::AbstractMotor::gearset::green,
+                       okapi::AbstractMotor::encoderUnits::degrees);
 
-// Inertial Sensor
+// Drive Motor Groups
+okapi::MotorGroup rightMotors({rightMtr, rightMtrR});
+okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
+
+// Sensors
 pros::Imu imu_sensor(1);
+
+// Vision
+pros::Vision vision_sensor(7, pros::E_VISION_ZERO_CENTER);
+
+// Pneumatics
+// pros::ADIDigitalOut clawP('A');
+// pros::ADIDigitalOut AWP('B');

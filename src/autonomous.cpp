@@ -12,124 +12,16 @@ std::int32_t mmToInch() {
 	return (distanceR.get() / 25.4) + 4;
 }
 
-/* Test
- */
-void turnImuPID(int turnToHeading, double power) {
-	float kp = .1;   // proportional konstant
-	float ki = .32;  // konstant of integration
-	float kd = .026; // konstant of derivation
-
-	float current = 0;            // value to be sent to shooter motors
-	float integralActiveZone = 2; // zone of error values in which the total error for the
-	                              // integral term accumulates
-	float errorT;                 // total error accumulated
-	float lastError;              // last error recorded by the controller
-	float proportion;             // the proportional term
-	float integral;               // the integral term
-	float derivative;             // the derivative term
-	/*/////////////////////////////////////////////
-	NOTE:
-	Error is a float declared at global level, it represents the difference between target
-	velocity and current velocity
-
-	power is a float declared at global level, it represents target velocity
-
-	velocity is a float declared at global level, it is the current measured velocity of the
-	shooter wheels
-	/////////////////////////////////////////////*/
-
-	// convert from absolute to relative set point
-	turnToHeading = turnToHeading - (int)arms::chassis::angle() % 360;
-
-	// make sure all turns take most efficient route
-	if (turnToHeading > 180)
-		turnToHeading -= 360;
-	else if (turnToHeading < -180)
-		turnToHeading += 360;
-
-	while (imu_sensor.get_heading() != turnToHeading) {
-		double velocity =
-		    (arms::chassis::rightMotors->getActualVelocity() + arms::chassis::leftMotors->getActualVelocity()) /
-		    2;
-		float error = power - velocity; // calculates difference between current velocity and target velocity
-
-		if (error < integralActiveZone && error != 0) // total error only accumulates where /
-		                                              // //there is error, and when the error
-		                                              // is within the integral active zone
-		{
-			errorT += error; // adds error to the total each time through the loop
-		} else {
-			errorT = 0; // if error = zero or error is not withing the active zone, total /
-			            // //error is set to zero
-		}
-
-		if (errorT > 50 / ki) // caps total error at 50
-		{
-			errorT = 50 / ki;
-		}
-		if (error == 0) {
-			derivative = 0; // if error is zero derivative term is zero
-		}
-		proportion = error * kp;               // sets proportion term
-		integral = errorT * ki;                // sets integral term
-		derivative = (error - lastError) * kd; // sets derivative term
-
-		lastError = error; // sets the last error to current error so we can use it in the next loop
-
-		current = proportion + integral + derivative; // sets value current as total of all terms
-
-		arms::chassis::rightMotors->moveVoltage(current);
-		arms::chassis::leftMotors->moveVoltage(-current);
-
-		pros::delay(20); // waits so we dont hog all our CPU power or cause loop instability
-	}
-}
-
 // Right win point
 void Rauton() {
-	deFenestration::claw::toggleClaw();
-	arms::chassis::move(20, 80);
-	deFenestration::claw::toggleClaw();
-	liftMotors.moveRelative(30, 100);
-	pros::delay(300);
-	arms::chassis::turnAsync(-60, 80);
-	arms::chassis::move(-20, 80);
-	deFenestration::claw::toggleClaw();
-	pros::delay(30);
 }
 
 // Yellow goal
 void Yauton() {
-	deFenestration::claw::toggleClaw();
-	// arms::chassis::move(64, 100);
-	arms::chassis::move(62, 100);
-	arms::chassis::moveAsync(2, 100);
-	deFenestration::claw::toggleClaw();
-	pros::delay(250);
-	liftMotors.moveVelocity(100);
-	arms::chassis::rightMotors->moveVelocity(-200);
-	arms::chassis::leftMotors->moveVelocity(-20 - 0);
-	// arms::chassis::move(-50, 100);
-	// deFenestration::claw::toggleClaw();
 }
 
 // Left win point
 void Lauton() {
-	// deFenestration::claw::puncher();
-	// arms::chassis::turn(90, 80);
-	arms::chassis::move(5, 50);
-	deFenestration::claw::toggleClaw();
-	arms::chassis::move(-15, 80);
-	pros::delay(500);
-	arms::chassis::move(-6, 80);
-	arms::chassis::turn(-80, 60);
-	arms::chassis::move(60, 100);
-	arms::chassis::moveAsync(5, 75);
-	deFenestration::claw::toggleClaw();
-	pros::delay(300);
-	liftMotors.moveRelative(30, 75);
-	pros::delay(500);
-	arms::chassis::move(-60, 100);
 }
 
 /*
@@ -269,123 +161,8 @@ void Sauton3() {
 }
 */
 // Programming Skills 4.0
-void Sauton4() {
-	// Prime Claw
-	deFenestration::claw::toggleClaw();
+void Sauton() {
 
-	// First Push
-	arms::chassis::move(93, 100);
-	arms::chassis::move(-5, 100);
-
-	// Turn to first yellow and push
-	arms::chassis::turn(-140, 50);
-	arms::chassis::move(94, 80);
-
-	// Move back
-	arms::chassis::turn(30, 50);
-	arms::chassis::move(-10, 100);
-
-	// Turn around
-	// arms::chassis::turn(135, 50);
-	arms::chassis::turn(145, 50);
-
-	// Push it
-	arms::chassis::move(50, 100);
-	deFenestration::claw::toggleClaw();
-	pros::delay(100);
-	liftMotors.moveAbsolute(280, 80);
-	arms::chassis::move(43, 100);
-	arms::chassis::move(10);
-	// arms::chassis::move(93, 80);
-
-	// Stack big yellow
-	deFenestration::claw::toggleClaw();
-	arms::chassis::move(-10);
-
-	// Move back
-	arms::chassis::move(-5, 80);
-	// Turn around
-	arms::chassis::turn(90, 50);
-	winchM.move_relative(-2100, 100);
-	pros::delay(1200);
-	// arms::chassis::turn(-135, 50);
-	liftMotors.moveAbsolute(5, 80);
-
-	arms::chassis::move(-80, 80);
-	winchM.move_relative(1100, 100);
-	pros::delay(1200);
-	arms::chassis::move(30, 80);
-
-	arms::chassis::turn(90, 50);
-
-	arms::chassis::move(93, 80);
-}
-
-void Sauton5() {
-	winchM.move_relative(-2100, 100);
-	pros::delay(3250);
-	arms::chassis::move(-20, 100);
-	winchM.move_relative(1100, 100);
-	pros::delay(1250);
-	arms::chassis::move(20, 80);
-	arms::chassis::resetAngle();
-	arms::chassis::turnAbsolute(115, 80);
-	deFenestration::claw::toggleClaw();
-	// arms::chassis::move(64, 100);
-	arms::chassis::move(62, 100);
-	arms::chassis::moveAsync(2, 100);
-	deFenestration::claw::toggleClaw();
-	pros::delay(250);
-	arms::chassis::move(60, 100);
-	arms::chassis::turn(90);
-	arms::chassis::move(30);
-	liftMotors.moveAbsolute(310, 100);
-	pros::delay(120);
-	arms::chassis::turn(-90);
-	arms::chassis::move(10, 80);
-	deFenestration::claw::toggleClaw();
-	pros::delay(120);
-	arms::chassis::move(-10, 100);
-	liftMotors.moveAbsolute(5, 100);
-	arms::chassis::resetAngle();
-	arms::chassis::turnAbsolute(270, 80);
-	arms::chassis::move(60, 100);
-	deFenestration::claw::toggleClaw();
-	pros::delay(150);
-	arms::chassis::move(-70, 100);
-	arms::chassis::turn(90);
-	arms::chassis::move(-60, 100);
-	// arms::chassis::turn(-110, 80);
-	arms::chassis::turn(-90);
-	arms::chassis::arcLeft(14, 8, 80, 3);
-	liftMotors.moveAbsolute(310, 100);
-	arms::chassis::move(13, 100);
-	// arms::chassis::move(80, 100);
-	deFenestration::claw::toggleClaw();
-	arms::chassis::moveAsync(-30, 100);
-	liftMotors.moveAbsolute(5, 100);
-	arms::chassis::waitUntilSettled();
-	arms::chassis::turn(-35, 50);
-	arms::chassis::move(80, 100);
-	deFenestration::claw::toggleClaw();
-	pros::delay(125);
-	;
-	arms::chassis::turn(-65, 100);
-	arms::chassis::moveAsync(30, 100);
-	liftMotors.moveAbsolute(310, 100);
-	arms::chassis::move(40, 100);
-	deFenestration::claw::toggleClaw();
-	arms::chassis::move(-15, 100);
-	arms::chassis::resetAngle();
-	arms::chassis::turnAbsolute(140);
-	arms::chassis::move(120, 100);
-	deFenestration::claw::toggleClaw();
-	pros::delay(125);
-	arms::chassis::move(-110, 100);
-	arms::chassis::turnAbsolute(0);
-	arms::chassis::move(10);
-	deFenestration::claw::toggleClaw();
-	arms::chassis::move(-10);
 }
 
 /**
@@ -401,7 +178,7 @@ void Sauton5() {
  */
 void autonomous() {
 	arms::chassis::resetAngle();
-	arms::pid::init();
+	arms::pid::init(2.0, 0.04, 0.0, 2.0, 0.04, 0.0, 2.0, 1);
 
 	// Auton Selector Logic
 	switch (arms::selector::auton) {
@@ -410,18 +187,11 @@ void autonomous() {
 		case -3:
 			break;
 		case -2:
-			deFenestration::vision::alignRobot(2);
 			break;
 		case -1:
-			deFenestration::claw::toggleClaw();
-			arms::chassis::move(65, 80);
-			arms::chassis::moveAsync(10);
-			deFenestration::claw::toggleClaw();
-			pros::delay(250);
-			arms::chassis::move(-50, 100);
 			break;
 		case 0:
-			Sauton5();
+			Sauton();
 			break;
 		case 1:
 			Yauton();
