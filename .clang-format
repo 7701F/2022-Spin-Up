@@ -1,38 +1,20 @@
 BasedOnStyle: Google
-TabWidth: 2
-Language: Cpp
-UseTab: Always
+AlignAfterOpenBracket: Align
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: false
+BraceWrapping:
+  BeforeElse: true
 BreakBeforeBraces: Attach
-AlwaysBreakAfterReturnType: None
-ColumnLimit: 120
-Standard: Cpp11
+ColumnLimit: 110
 DerivePointerAlignment: false
+IndentCaseLabels: true
+IndentWidth: 2
+Language: Cpp
 PointerAlignment: Left
-FixNamespaceComments: true
-ReflowComments: true
 SortIncludes: true
-AccessModifierOffset: 0
-AllowShortBlocksOnASingleLine: false
-AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: Empty
-
-# BasedOnStyle: LLVM
-# AlignAfterOpenBracket: Align
-# AllowShortFunctionsOnASingleLine: None
-# AllowShortIfStatementsOnASingleLine: false
-# BraceWrapping:
-#   BeforeElse: true
-# BreakBeforeBraces: Attach
-# ColumnLimit: 80
-# DerivePointerAlignment: false
-# IndentCaseLabels: false
-# IndentWidth: 2
-# Language: Cpp
-# PointerAlignment: Left
-# SortIncludes: true
-# SpaceBeforeAssignmentOperators: true
-# SpaceBeforeParens: ControlStatements
-# SpacesBeforeTrailingComments: 1
-# Standard: Cpp11
-# TabWidth: 2
-# UseTab: ForIndentation
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatements
+SpacesBeforeTrailingComments: 1
+Standard: Cpp11
+TabWidth: 2
+UseTab: ForIndentation
