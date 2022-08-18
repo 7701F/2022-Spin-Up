@@ -1,48 +1,54 @@
 #ifndef _ARMS_ODOM_H_
 #define _ARMS_ODOM_H_
 
-#include "ARMS/config.h"
-#include <array>
+#include "ARMS/point.h"
 
 namespace arms::odom {
 
-extern double global_x;
-extern double global_y;
-extern double heading;
-extern double heading_degrees;
-extern double prev_right_pos;
-extern double prev_left_pos;
-extern double prev_middle_pos;
+enum EncoderType { ENCODER_ADI, ENCODER_ROTATION };
 
-void reset(std::array<double, 2> point = {0, 0});
+// sensors
+extern std::shared_ptr<okapi::ContinuousRotarySensor> leftEncoder;
+extern std::shared_ptr<okapi::ContinuousRotarySensor> rightEncoder;
+extern std::shared_ptr<okapi::ContinuousRotarySensor> middleEncoder;
+extern std::shared_ptr<pros::Imu> imu;
 
-void reset(std::array<double, 2> point, double angle);
+/**
+ * Return the robot position coordinates
+ */
+Point getPosition();
 
-double getAngleError(std::array<double, 2> point);
+/**
+ * Return the robot heading
+ */
+double getHeading(bool radians = false);
 
-double getDistanceError(std::array<double, 2> point);
+/**
+ * Reset the robot position to a desired coordinate
+ */
+void reset(Point point = {0, 0});
 
-void moveAsync(std::array<double, 2> point, double max = 80);
+/**
+ * Reset the robot position and heading to desired values
+ */
+void reset(Point point, double angle);
 
-void holoAsync(std::array<double, 2> point, double angle, double max = 80,
-               double turnMax = 50);
+/**
+ * Return the angle between the robots current heading and a point
+ */
+double getAngleError(Point point);
 
-void move(std::array<double, 2> point, double max = 80, bool settle = true);
+/**
+ * Return the distance between the robot and a point
+ */
+double getDistanceError(Point point);
 
-void moveThru(std::array<double, 2> point, double max = 80);
-
-void holo(std::array<double, 2> point, double angle, double max = 80,
-          double turnMax = 50);
-
-void holoThru(std::array<double, 2> point, double angle, double max = 80,
-              double turnMax = 50);
-
-void init(bool debug = ODOM_DEBUG,
-          double left_right_distance = LEFT_RIGHT_DISTANCE,
-          double middle_distance = MIDDLE_DISTANCE,
-          double left_right_tpi = LEFT_RIGHT_TPI,
-          double middle_tpi = MIDDLE_TPI, bool holonomic = HOLONOMIC,
-          double exit_error = EXIT_ERROR);
+/**
+ * Initialize the odometry
+ */
+void init(bool debug, int encoderType, std::array<int, 3> encoderPorts,
+          int expanderPort, int imuPort, double track_width,
+          double middle_distance, double tpi, double middle_tpi);
 
 } // namespace arms::odom
 

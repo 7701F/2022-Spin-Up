@@ -11,36 +11,28 @@
 #ifndef MOTORS_H_
 #define MOTORS_H_
 
-// Declare controller
-extern pros::Controller master;
+// Controller
+extern pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-// Declare drive motors
-extern pros::Motor leftMtr;
-extern pros::Motor rightMtr;
-extern pros::Motor leftMtrR;
-extern pros::Motor rightMtrR;
+// Drive Motors
+extern okapi::Motor rightMtr(20, true, okapi::AbstractMotor::gearset::green,
+                       okapi::AbstractMotor::encoderUnits::degrees);
+extern okapi::Motor leftMtr(19, true, okapi::AbstractMotor::gearset::green,
+                       okapi::AbstractMotor::encoderUnits::degrees);
+extern okapi::Motor rightMtrR(18, true, okapi::AbstractMotor::gearset::green,
+                       okapi::AbstractMotor::encoderUnits::degrees);
+extern okapi::Motor leftMtrR(17, true, okapi::AbstractMotor::gearset::green,
+                       okapi::AbstractMotor::encoderUnits::degrees);
 
-// Declare lift motors
-extern okapi::MotorGroup liftMotors;
+// Drive Motor Groups
+extern okapi::MotorGroup rightMotors({rightMtr, rightMtrR});
+extern okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
 
-// Declare grabby motors
-extern okapi::Motor ringM;
-
-// Declare winch motors
-extern pros::Motor winchM;
-
-// Sensors Sensor
-extern pros::Imu imu_sensor;
+// Sensors
+extern pros::Imu imu_sensor(1);
 extern pros::Distance distanceR;
 
-// Vision Sensor
+// Vision
 extern pros::Vision vision_sensor;
-extern pros::vision_signature_s_t RED_SIG;
-extern pros::vision_signature_s_t BLU_SIG;
-extern pros::vision_signature_s_t YLW_SIG;
-
-// Pneumatics
-extern pros::ADIDigitalOut clawP;
-extern pros::ADIDigitalOut AWP;
 
 #endif
