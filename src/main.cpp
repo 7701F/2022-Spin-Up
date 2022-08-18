@@ -8,30 +8,7 @@
  */
 #include "main.h"
 
-#include "opfunctions.h"
-
-// Controller Auton Indicator
-int scrcount = 1;
-bool ctrlScrBool = false;
-void ctrlrScr() {
-	std::string selAuton = arms::selector::b[abs(arms::selector::auton)];
-
-	if (!(scrcount % 25)) {
-		// Only print every 50ms, the controller text update rate is slow
-		if (ctrlScrBool == true) {
-			master.print(1, 0, "Auton: %s", selAuton.c_str());
-			printf("auton log");
-			ctrlScrBool = !ctrlScrBool;
-		} else {
-			master.print(1, 0, "Brake: %s", (pbrake ? "ON" : "OFF"));
-			printf("brake log");
-			ctrlScrBool = !ctrlScrBool;
-		}
-	}
-
-	scrcount++;
-	pros::delay(200);
-}
+#include <sstream>
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -42,17 +19,39 @@ void ctrlrScr() {
 void initialize() {
 	// ARMS & Controller init and reset IMU sensor
 	arms::chassis::init();
-	arms::pid::init();
-	imu_sensor.reset();
-	pros::Task controllerTask{ctrlrScr, "Controller Display"};
 
-	// Set display
-	if (!pros::competition::is_connected()) display();
+	// Controller Status Display
+	pros::Task controllerTask{[=] {
+		master.clear();
+
+		std::string selAuton;
+		while (true) {
+			// Only print every 50ms, the controller text update rate
+			// is slow
+			selAuton = arms::selector::b[abs(arms::selector::auton)];
+
+			std::stringstream autonstr;
+			autonstr << "Auton: " << arms::selector::auton << "\r";
+			std::stringstream brakestr;
+			brakestr << "Brake: " << (pbrake ? "ON" : "OFF") << "\r";
+
+			master.print(0, 0, autonstr.str().c_str());
+			pros::delay(50);
+			master.print(1, 0, brakestr.str().c_str());
+			pros::delay(50);
+			master.print(2, 0, "Distance: %d", distanceR.get());
+			// master.print(2, 0, "Gyro: %f\r",
+			// imu_sensor.get_heading());
+			printf("Distance: %d\n", distanceR.get());
+			pros::delay(200);
+		}
+	}};
+
+	// ARMS Auton Selector
+	arms::selector::init();
 
 	// Set brakes on to active bold
-	rightLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	leftLift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	clawM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	liftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 	winchM.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
 
@@ -62,7 +61,17 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
-	printf("Disabled");
+	static int count = 1;
+	printf("Disabled called %d\n", count++);
+
+	if (ringTask) {
+		pros::Task(ringTask).remove();
+		ringTask = (pros::task_t)NULL;
+	}
+
+	while (true) {
+		pros::delay(1000);
+	}
 }
 
 /**
@@ -75,5 +84,6 @@ void disabled() {
  * starts.
  */
 void competition_initialize() {
-	arms::selector::init();
+	static int count = 1;
+	printf("Comp Init called %d\n", count++);
 }
