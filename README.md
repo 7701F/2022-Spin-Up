@@ -1,6 +1,6 @@
 # 7701F
 
-Code for Vex Robotics Competition 2022-2023 ??? for 7701F
+Code for Vex Robotics Competition 2022-2023 Spin Up for 7701F
 
 ## Authors
 
