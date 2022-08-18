@@ -13,13 +13,13 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 // Drive Motors
 okapi::Motor rightMtr(20, true, okapi::AbstractMotor::gearset::green,
-                       okapi::AbstractMotor::encoderUnits::degrees);
+                      okapi::AbstractMotor::encoderUnits::degrees);
 okapi::Motor leftMtr(19, true, okapi::AbstractMotor::gearset::green,
-                       okapi::AbstractMotor::encoderUnits::degrees);
+                     okapi::AbstractMotor::encoderUnits::degrees);
 okapi::Motor rightMtrR(18, true, okapi::AbstractMotor::gearset::green,
                        okapi::AbstractMotor::encoderUnits::degrees);
 okapi::Motor leftMtrR(17, true, okapi::AbstractMotor::gearset::green,
-                       okapi::AbstractMotor::encoderUnits::degrees);
+                      okapi::AbstractMotor::encoderUnits::degrees);
 
 // Drive Motor Groups
 okapi::MotorGroup rightMotors({rightMtr, rightMtrR});

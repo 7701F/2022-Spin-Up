@@ -22,13 +22,6 @@
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	liftMotors.moveAbsolute(0, 100);
-	deFenestration::lift::waitUntilSettled();
-	liftMotors.moveRelative(30, 100);
-	deFenestration::lift::waitUntilSettled();
-	liftMotors.tarePosition();
-	liftMotors.moveRelative(30, 100);
-
 	// Run Loop
 	while (true) {
 		// clang-format off
@@ -56,12 +49,12 @@ void opcontrol() {
 
 		/* Brake System
 		 * The brake system is a safety feature that prevents the robot from being
-		 * pushed by other robots. Uses basic logic for toggle button
+		 * punished by other robots. Uses basic logic for toggle button
 		 */
 		if (master.get_digital_new_press(DIGITAL_B) == 1) {
 			pbrake = !pbrake;
 		}
-		motorBrake(pbrake);
+		prosBrake(pbrake);
 
 		// Lastly, delay
 		pros::delay(2);

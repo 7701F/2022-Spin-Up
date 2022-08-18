@@ -18,7 +18,7 @@ inline double speed = 1;
 void tankDrive(double speed);
 void arcadeDrive();
 void customBrake(bool pbrake);
-void motorBrake(bool pbrake);
+void prosBrake(bool pbrake);
 void gameSystemControls();
 
 // Declare Ring PID Task

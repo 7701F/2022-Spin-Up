@@ -12,25 +12,20 @@
 #define MOTORS_H_
 
 // Controller
-extern pros::Controller master(pros::E_CONTROLLER_MASTER);
+extern pros::Controller master;
 
 // Drive Motors
-extern okapi::Motor rightMtr(20, true, okapi::AbstractMotor::gearset::green,
-                       okapi::AbstractMotor::encoderUnits::degrees);
-extern okapi::Motor leftMtr(19, true, okapi::AbstractMotor::gearset::green,
-                       okapi::AbstractMotor::encoderUnits::degrees);
-extern okapi::Motor rightMtrR(18, true, okapi::AbstractMotor::gearset::green,
-                       okapi::AbstractMotor::encoderUnits::degrees);
-extern okapi::Motor leftMtrR(17, true, okapi::AbstractMotor::gearset::green,
-                       okapi::AbstractMotor::encoderUnits::degrees);
+extern okapi::Motor rightMtr;
+extern okapi::Motor leftMtr;
+extern okapi::Motor rightMtrR;
+extern okapi::Motor leftMtrR;
 
 // Drive Motor Groups
-extern okapi::MotorGroup rightMotors({rightMtr, rightMtrR});
-extern okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
+extern okapi::MotorGroup rightMotors;
+extern okapi::MotorGroup leftMotors;
 
 // Sensors
-extern pros::Imu imu_sensor(1);
-extern pros::Distance distanceR;
+extern pros::Imu imu_sensor;
 
 // Vision
 extern pros::Vision vision_sensor;
