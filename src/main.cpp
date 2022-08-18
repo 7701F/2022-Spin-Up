@@ -28,7 +28,7 @@ void initialize() {
 		while (true) {
 			// Only print every 50ms, the controller text update rate
 			// is slow
-			selAuton = arms::selector::b[abs(arms::selector::auton)];
+			// selAuton = arms::selector::b[abs(arms::selector::auton)];
 
 			std::stringstream autonstr;
 			autonstr << "Auton: " << arms::selector::auton << "\r";
@@ -39,16 +39,12 @@ void initialize() {
 			pros::delay(50);
 			master.print(1, 0, brakestr.str().c_str());
 			pros::delay(50);
-			master.print(2, 0, "Distance: %d", distanceR.get());
-			// master.print(2, 0, "Gyro: %f\r",
-			// imu_sensor.get_heading());
-			printf("Distance: %d\n", distanceR.get());
 			pros::delay(200);
 		}
 	}};
 
 	// ARMS Auton Selector
-	arms::selector::init();
+	// arms::selector::init();
 }
 
 /**

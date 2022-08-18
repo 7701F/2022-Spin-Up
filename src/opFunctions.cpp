@@ -11,16 +11,17 @@
 // Variables
 int count = 0;
 
-// Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity
+// Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current
+// velocity
 void customBrake(bool pbrake) {
 	if (pbrake == true) {
 		if (master.get_analog(ANALOG_LEFT_Y) == 0 || master.get_analog(ANALOG_RIGHT_X) == 0) {
-			if (leftMtr.get_actual_velocity() != 0 || rightMtr.get_actual_velocity() != 0 ||
-					leftMtrR.get_actual_velocity() != 0 || rightMtrR.get_actual_velocity() != 0) {
-				leftMtr.move_velocity(leftMtr.get_actual_velocity() * -2);
-				rightMtr.move_velocity(rightMtr.get_actual_velocity() * -2);
-				leftMtrR.move_velocity(leftMtrR.get_actual_velocity() * -2);
-				rightMtrR.move_velocity(rightMtrR.get_actual_velocity() * -2);
+			if (leftMtr.getActualVelocity() != 0 || rightMtr.getActualVelocity() != 0 ||
+			    leftMtrR.getActualVelocity() != 0 || rightMtrR.getActualVelocity() != 0) {
+				leftMtr.moveVelocity(leftMtr.getActualVelocity() * -2);
+				rightMtr.moveVelocity(rightMtr.getActualVelocity() * -2);
+				leftMtrR.moveVelocity(leftMtrR.getActualVelocity() * -2);
+				rightMtrR.moveVelocity(rightMtrR.getActualVelocity() * -2);
 
 				if (!(count % 25)) {
 					// Only print every 50ms, the controller text update rate is slow
@@ -37,20 +38,20 @@ void customBrake(bool pbrake) {
 // Smart boy motor brake solution
 void prosBrake(bool pbrake) {
 	if (pbrake == true) {
-		if (leftMtr.get_brake_mode() != pros::E_MOTOR_BRAKE_HOLD) {
-			leftMtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-			rightMtr.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-			leftMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-			rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+		if (leftMtr.getBrakeMode() != okapi::AbstractMotor::brakeMode::hold) {
+			leftMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+			rightMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+			leftMtrR.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+			rightMtrR.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 
 			printf("BRAKE TOGGLED: HOLD\n");
 		}
 	} else if (pbrake == false) {
-		if (leftMtr.get_brake_mode() != pros::E_MOTOR_BRAKE_COAST) {
-			leftMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-			rightMtr.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-			leftMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-			rightMtrR.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+		if (leftMtr.getBrakeMode() != okapi::AbstractMotor::brakeMode::coast) {
+			leftMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+			rightMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+			leftMtrR.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+			rightMtrR.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
 
 			printf("BRAKE TOGGLED: COAST\n");
 		}
