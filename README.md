@@ -5,6 +5,7 @@ Code for Vex Robotics Competition 2022-2023 Spin Up for 7701F
 ## Authors
 
 - **Michael Gummere** - [GitHub](https://github.com/Chrono-byte)
+- **Jake S** - [GitHub](https://github.com/Finazon)
 
 See also the list of [contributors](https://github.com/7701F/2022-bot-code/contributors) who participated in this project.
 
