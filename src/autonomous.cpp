@@ -6,7 +6,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#include "ARMS/chassis.h"
 #include "main.h"
 
 // std::int32_t mmToInch() {
@@ -15,8 +14,8 @@
 
 // Programming Skills
 void Sauton() {
-	arms::chassis::motorMove(arms::chassis::rightMotors, 100, false);
-}
+	using namespace arms::chassis;
+	move({{24, 0}}, 50, arms::THRU | arms::ASYNC);}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
