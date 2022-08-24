@@ -20,6 +20,4 @@ temp.errors
 *.zip
 .cache
 debug.log
-
-# Mineish
 .cache/
