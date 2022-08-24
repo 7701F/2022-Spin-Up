@@ -38,8 +38,7 @@ void initialize() {
 			master.print(0, 0, autonstr.str().c_str());
 			pros::delay(50);
 			master.print(1, 0, brakestr.str().c_str());
-			pros::delay(50);
-			pros::delay(200);
+			pros::delay(250);
 		}
 	}};
 
