@@ -14,10 +14,3 @@ temp.log
 temp.errors
 *.ini
 .d/
-.clangd/
-.DS_Store
-.zip
-*.zip
-.cache
-debug.log
-.cache/

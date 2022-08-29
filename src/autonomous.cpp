@@ -15,7 +15,9 @@
 // Programming Skills
 void Sauton() {
 	using namespace arms::chassis;
-	move({{24, 0}}, 50, arms::THRU | arms::ASYNC);}
+	arms::odom::reset({{0, 24}});
+	move({{24, 0}}, 50, arms::THRU | arms::ASYNC);
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -29,7 +31,7 @@ void Sauton() {
  * from where it left off.
  */
 void autonomous() {
-	arms::pid::init(2.0, 0.04, 0.0, 2.0, 0.04, 0.0, 2.0, 1);
+	arms::pid::init(2.0, 0.04, 0.0, 2.0, 0.04, 0.0, 2.0, 0.0, 0.0);
 
 	// Auton Selector Logic
 	switch (arms::selector::auton) {
