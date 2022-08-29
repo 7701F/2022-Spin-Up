@@ -33,13 +33,15 @@ extern Point pointTarget;
 extern bool thru;
 extern bool reverse;
 
+extern bool canReverse;
+
 // pid functions
 std::array<double, 2> translational();
 std::array<double, 2> angular();
 
 // initializer
 void init(double linearKP, double linearKI, double linearKD, double angularKP,
-          double angularKI, double angularKD, double trackingKP, double minError);
+          double angularKI, double angularKD, double trackingKP, double minError, double leadPct);
 
 } // namespace arms::pid
 
