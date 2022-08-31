@@ -25,7 +25,7 @@ void customBrake(bool pbrake) {
 
 				if (!(count % 25)) {
 					// Only print every 50ms, the controller text update rate is slow
-					master.rumble(".");
+					// master.rumble(".");
 				}
 
 				count++;
