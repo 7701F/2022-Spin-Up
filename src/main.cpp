@@ -41,9 +41,6 @@ void initialize() {
 			pros::delay(250);
 		}
 	}};
-
-	// ARMS Auton Selector
-	// arms::selector::init();
 }
 
 /**
