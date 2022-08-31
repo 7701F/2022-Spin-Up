@@ -15,7 +15,8 @@
 // Programming Skills
 void Sauton() {
 	using namespace arms::chassis;
-	move({{24, 0}}, 50, arms::THRU | arms::ASYNC);}
+	move({{24, 0}}, 50, arms::THRU | arms::ASYNC);
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
