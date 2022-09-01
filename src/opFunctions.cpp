@@ -1,27 +1,41 @@
 /*
- * Copyright (c) 2019-2022, Michael Gummere.
- * All rights reserved.
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
+  Copyright (c) 2019-2022, Michael Gummere.
+  All rights reserved.
+
+  This software is provided 'as-is', without any express or implied
+  warranty.  In no event will the authors be held liable for any damages
+  arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated and is required.
+  2. Altered source versions must be plainly marked as such, and must not be
+     misrepresented as being the original software.
+  3. This notice may not be removed or altered from any source distribution.
+*/
+
 #include "main.h"
 
 // Variables
 int count = 0;
+
+std::int32_t mmToInch() {
+	return (distance_sensor.get() / 25.4) + 4;
+}
 
 // Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current
 // velocity
 void customBrake(bool pbrake) {
 	if (pbrake == true) {
 		if (master.get_analog(ANALOG_LEFT_Y) == 0 || master.get_analog(ANALOG_RIGHT_X) == 0) {
-			if (leftMtr.getActualVelocity() != 0 || rightMtr.getActualVelocity() != 0 ||
-			    leftMtrR.getActualVelocity() != 0 || rightMtrR.getActualVelocity() != 0) {
-				leftMtr.moveVelocity(leftMtr.getActualVelocity() * -2);
-				rightMtr.moveVelocity(rightMtr.getActualVelocity() * -2);
-				leftMtrR.moveVelocity(leftMtrR.getActualVelocity() * -2);
-				rightMtrR.moveVelocity(rightMtrR.getActualVelocity() * -2);
+			if (leftMotors.getActualVelocity() != 0 || rightMotors.getActualVelocity() != 0) {
+				leftMotors.moveVelocity(leftMotors.getActualVelocity() * -2);
+				rightMotors.moveVelocity(rightMotors.getActualVelocity() * -2);
 
 				if (!(count % 25)) {
 					// Only print every 50ms, the controller text update rate is slow
@@ -38,34 +52,26 @@ void customBrake(bool pbrake) {
 // Smart boy motor brake solution
 void prosBrake(bool pbrake) {
 	if (pbrake == true) {
-		if (leftMtr.getBrakeMode() != okapi::AbstractMotor::brakeMode::hold) {
-			leftMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
-			rightMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
-			leftMtrR.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
-			rightMtrR.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+		if (rightMotors.getBrakeMode() != okapi::AbstractMotor::brakeMode::hold) {
+			leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+			rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 
 			printf("BRAKE TOGGLED: HOLD\n");
 		}
 	} else if (pbrake == false) {
-		if (leftMtr.getBrakeMode() != okapi::AbstractMotor::brakeMode::coast) {
-			leftMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
-			rightMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
-			leftMtrR.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
-			rightMtrR.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+		if (rightMotors.getBrakeMode() != okapi::AbstractMotor::brakeMode::coast) {
+			leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+			rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
 
 			printf("BRAKE TOGGLED: COAST\n");
 		}
 	}
 }
 
-// Combined Claw, Lift, and Winch control function
 void gameSystemControls() {
-	// Lift Controls
-	if (master.get_digital(DIGITAL_Y) == 1) {
-		// motor.move_velocity(100);
-	} else if (master.get_digital(DIGITAL_A) == 1) {
-		// motor.move_velocity(-100);
-	} else {
-		// motor.move_velocity(0);
+	if (mmToInch() < 1) {
+		intakeM.moveVelocity(100);
+	} else if (mmToInch() > 1) {
+		intakeM.moveVelocity(0);
 	}
 }
