@@ -1,11 +1,24 @@
 /*
- * Copyright (c) 2019-2022, Michael Gummere.
- * All rights reserved.
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
+  Copyright (c) 2019-2022, Michael Gummere.
+  All rights reserved.
+
+  This software is provided 'as-is', without any express or implied
+  warranty.  In no event will the authors be held liable for any damages
+  arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated and is required.
+  2. Altered source versions must be plainly marked as such, and must not be
+     misrepresented as being the original software.
+  3. This notice may not be removed or altered from any source distribution.
+*/
+
 #include "main.h"
 
 /*
@@ -24,13 +37,13 @@
 void opcontrol() {
 	// Run Loop
 	while (true) {
-		// clang-format off
 		/* Steering
 		 * Handled by ARMS logic that has deadzones
 		 */
-		arms::chassis::arcade (
-			master.get_analog (ANALOG_LEFT_Y) * (double)100 / 127,
-		    master.get_analog (ANALOG_RIGHT_X) * (double)100 / 127
+		// clang-format off
+		arms::chassis::arcade(
+			master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
+		    master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127
 		);
 		// clang-format on
 
@@ -42,7 +55,7 @@ void opcontrol() {
 		if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
 			autonomous();
 
-		/* Lift, Claw, and Winch Controls
+		/* Game Related Subsystems
 		 * Controls for game specific functions
 		 */
 		gameSystemControls();
