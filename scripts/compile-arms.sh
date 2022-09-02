@@ -1,5 +1,5 @@
 cd ./ARMS
-git pull
+git pull origin master
 make clean
 make
 cp ./bin/ARMS.a ../firmware/
