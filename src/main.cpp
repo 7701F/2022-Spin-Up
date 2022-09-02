@@ -30,12 +30,8 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	// ARMS & Controller init and reset IMU sensor
+	// ARMS & Controller initialization
 	arms::init();
-	if(pros::competition::is_connected()) {
-		vision_sensor.set_wifi_mode(0);
-		master.print(2, 0, "Vision: DISABLED");
-	}
 
 	// Controller Status Display
 	pros::Task controllerTask{[=] {
@@ -58,6 +54,19 @@ void initialize() {
 			pros::delay(250);
 		}
 	}};
+	if (pros::competition::is_connected())
+		vision_sensor.set_wifi_mode(0);
+	else if (!pros::competition::is_connected())
+		vision_sensor.set_wifi_mode(1);
+
+	pros::delay(50);
+	master.print(2, 0, "Starting 7701F.");
+	pros::delay(50);
+	master.print(2, 0, "Starting 7701F..");
+	pros::delay(50);
+	master.print(2, 0, "Starting 7701F... Ready!");
+	pros::delay(100);
+	master.print(2, 0, "Running...");
 }
 
 /**
