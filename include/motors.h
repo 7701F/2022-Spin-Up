@@ -27,7 +27,8 @@
 // Controller
 extern pros::Controller master;
 
-// Drive Motor Groups
+// Drive Motors
+extern okapi::Motor hMtr;
 extern okapi::MotorGroup rightMotors;
 extern okapi::MotorGroup leftMotors;
 

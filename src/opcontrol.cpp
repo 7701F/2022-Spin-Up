@@ -45,6 +45,11 @@ void opcontrol() {
 			master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
 		    master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127
 		);
+		if((master.get_analog(ANALOG_LEFT_X) * (double)100 / 127) > 10 || (master.get_analog(ANALOG_LEFT_X) * (double)100 / 127) < -10) {
+			hMtr.moveVelocity(master.get_analog(ANALOG_LEFT_X) * (double)100 / 127);
+		} else {
+			hMtr.moveVelocity(0);
+		}
 		// clang-format on
 
 		/* Autonomous Manual Trigger
