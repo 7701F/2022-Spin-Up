@@ -19,4 +19,4 @@ See also the list of [contributors](https://github.com/7701F/2022-Spin-Up/contri
 
 # License
 
-This project is licensed under the terms of [MPL-2.0](https://github.com/7701F/2022-Spin-Up/blob/master/LICENSE)
+This project is licensed under the terms of the [zLib License](https://github.com/7701F/2022-Spin-Up/blob/master/LICENSE)
