@@ -22,6 +22,4 @@
 #include "main.h"
 
 bool initialized = false;
-namespace deFenestration::vision {
-
-} // namespace deFenestration::vision
+namespace deFenestration::vision {} // namespace deFenestration::vision

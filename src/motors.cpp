@@ -34,7 +34,7 @@ okapi::Motor leftMtr(13, true, okapi::AbstractMotor::gearset::green,
 okapi::Motor leftMtrR(12, true, okapi::AbstractMotor::gearset::green,
                       okapi::AbstractMotor::encoderUnits::degrees);
 okapi::Motor hMtr(16, true, okapi::AbstractMotor::gearset::green,
-				  okapi::AbstractMotor::encoderUnits::degrees);
+                  okapi::AbstractMotor::encoderUnits::degrees);
 
 // Drive Motor Groups
 okapi::MotorGroup rightMotors({rightMtr, rightMtrR});
@@ -42,7 +42,7 @@ okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
 
 // Game System Motors
 okapi::Motor intakeM(14, true, okapi::AbstractMotor::gearset::blue,
-					okapi::AbstractMotor::encoderUnits::degrees);
+                     okapi::AbstractMotor::encoderUnits::degrees);
 
 // Sensors
 pros::Imu imu_sensor(1);
