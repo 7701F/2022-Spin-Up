@@ -39,12 +39,12 @@ void opcontrol() {
 	while (true) {
 		/* Steering
 		 * Handled by ARMS
+		 * H-Drive is controlled by the X-axis on the left stick
 		 */
 		// clang-format off
 		arms::chassis::arcade(
 			master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
-		    master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127,
-			true
+		    master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127
 		);
 		if((master.get_analog(ANALOG_LEFT_X) * (double)200 / 127) > 10 || (master.get_analog(ANALOG_LEFT_X) * (double)200 / 127) < -10) {
 			hMtr.moveVelocity(master.get_analog(ANALOG_LEFT_X) * (double)200 / 127);
@@ -55,8 +55,8 @@ void opcontrol() {
 
 		/* Autonomous Manual Trigger
 		 * If the robot is not connected to competition control
-		 * and the button is pressed, the robot will the autonomous
-		 * routine to allow for easy testing.
+		 * and the button is pressed, the robot will begin the
+		 * autonomous routine to allow for easy testing.
 		 */
 		if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
 			autonomous();

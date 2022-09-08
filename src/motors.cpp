@@ -41,15 +41,11 @@ okapi::MotorGroup rightMotors({rightMtr, rightMtrR});
 okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
 
 // Game System Motors
-okapi::Motor intakeM(14, true, okapi::AbstractMotor::gearset::blue,
-                     okapi::AbstractMotor::encoderUnits::degrees);
 
 // Sensors
 pros::Imu imu_sensor(1);
-
-// Vision
-pros::Vision vision_sensor(7, pros::E_VISION_ZERO_CENTER);
 pros::Distance distance_sensor(8);
+pros::Distance distance_sensor1(9);
 
 // Pneumatics
 // pros::ADIDigitalOut clawP('A');

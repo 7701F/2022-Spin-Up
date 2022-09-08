@@ -38,9 +38,9 @@
 
 // Custom Headers
 #include "ARMS/api.h"
-#include "autonfunctions.h"
 #include "motors.h"
 #include "opfunctions.h"
+#include "visiondetect/api.h"
 
 /**
  * You should add more #includes here
