@@ -36,37 +36,31 @@ void initialize() {
 	// Controller Status Display
 	pros::Task controllerTask{[=] {
 		master.clear();
+		master.print(2, 0, "Starting 7701F.");
+		pros::delay(50);
+		master.print(2, 0, "Starting 7701F..");
+		pros::delay(50);
+		master.print(2, 0, "Starting 7701F... Ready!");
+		pros::delay(100);
+		master.print(2, 0, "Running...");
 
-		std::string selAuton;
+		int count;
 		while (true) {
-			// Only print every 50ms, the controller text update rate
-			// is slow
-			// selAuton = arms::selector::b[abs(arms::selector::auton)];
+			if (count == 100) {
+				std::stringstream autonstr;
+				autonstr << "Auton: " << arms::selector::auton << "\r";
+				master.print(0, 0, autonstr.str().c_str());
+			} else if (count == 50) {
+				std::stringstream brakestr;
+				brakestr << "Brake: " << (pbrake ? "ON" : "OFF") << "\r";
+				master.print(1, 0, brakestr.str().c_str());
+			}
 
-			std::stringstream autonstr;
-			autonstr << "Auton: " << arms::selector::auton << "\r";
-			std::stringstream brakestr;
-			brakestr << "Brake: " << (pbrake ? "ON" : "OFF") << "\r";
-
-			master.print(0, 0, autonstr.str().c_str());
-			pros::delay(50);
-			master.print(1, 0, brakestr.str().c_str());
-			pros::delay(250);
+			count++;
+			count %= 150;
+			pros::delay(1);
 		}
 	}};
-	if (pros::competition::is_connected())
-		vision_sensor.set_wifi_mode(0);
-	else if (!pros::competition::is_connected())
-		vision_sensor.set_wifi_mode(1);
-
-	pros::delay(50);
-	master.print(2, 0, "Starting 7701F.");
-	pros::delay(50);
-	master.print(2, 0, "Starting 7701F..");
-	pros::delay(50);
-	master.print(2, 0, "Starting 7701F... Ready!");
-	pros::delay(100);
-	master.print(2, 0, "Running...");
 }
 
 /**

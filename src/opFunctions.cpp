@@ -20,29 +20,17 @@
 */
 
 #include "main.h"
-
-// Variables
-int count = 0;
-
-std::int32_t mmToInch() {
-	return (distance_sensor.get() / 25.4) + 4;
-}
+#include "pros/misc.h"
 
 // Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current
 // velocity
 void customBrake(bool pbrake) {
 	if (pbrake == true) {
-		if (master.get_analog(ANALOG_LEFT_Y) == 0 || master.get_analog(ANALOG_RIGHT_X) == 0) {
+		if (master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0 &&
+		    master.get_analog(ANALOG_LEFT_X) == 0) {
 			if (leftMotors.getActualVelocity() != 0 || rightMotors.getActualVelocity() != 0) {
 				leftMotors.moveVelocity(leftMotors.getActualVelocity() * -2);
 				rightMotors.moveVelocity(rightMotors.getActualVelocity() * -2);
-
-				if (!(count % 25)) {
-					// Only print every 50ms, the controller text update rate is slow
-					// master.rumble(".");
-				}
-
-				count++;
 				pros::delay(2);
 			}
 		}
@@ -69,9 +57,4 @@ void prosBrake(bool pbrake) {
 }
 
 void gameSystemControls() {
-	if (mmToInch() < 1) {
-		intakeM.moveVelocity(100);
-	} else if (mmToInch() > 1) {
-		intakeM.moveVelocity(0);
-	}
 }

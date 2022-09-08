@@ -19,7 +19,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "main.h"
+#include "api.h"
+#include "okapi/api.hpp"
 
 #ifndef MOTORS_H_
 #define MOTORS_H_
@@ -33,13 +34,10 @@ extern okapi::MotorGroup rightMotors;
 extern okapi::MotorGroup leftMotors;
 
 // Game System Motors
-extern okapi::Motor intakeM;
 
 // Sensors
 extern pros::Imu imu_sensor;
 extern pros::Distance distance_sensor;
-
-// Vision
-extern pros::Vision vision_sensor;
+extern pros::Distance distance_sensor1;
 
 #endif
