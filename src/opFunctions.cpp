@@ -18,11 +18,14 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "main.h"
-#include "pros/misc.h"
+#include <cstdio>
+#include <sstream>
 
-// Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current
-// velocity
+#include "main.h"
+
+/* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current
+ * velocity
+ */
 void customBrake(bool pbrake) {
 	if (pbrake == true) {
 		if (master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0 &&
@@ -36,24 +39,40 @@ void customBrake(bool pbrake) {
 	}
 }
 
-// Smart boy motor brake solution
+/* Smart boy motor brake solution */
 void prosBrake(bool pbrake) {
 	if (pbrake == true) {
 		if (rightMotors.getBrakeMode() != okapi::AbstractMotor::brakeMode::hold) {
 			leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 			rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
-
-			printf("BRAKE TOGGLED: HOLD\n");
+			hMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 		}
 	} else if (pbrake == false) {
 		if (rightMotors.getBrakeMode() != okapi::AbstractMotor::brakeMode::coast) {
 			leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
 			rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
-
-			printf("BRAKE TOGGLED: COAST\n");
+			hMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
 		}
 	}
 }
 
+bool outakeState = false;
 void gameSystemControls() {
+	// Disk Launcher
+	outakeState = master.get_digital_new_press(DIGITAL_L2);
+	outtake.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+	if (outakeState == true) {
+		outtake.moveVelocity(600);
+	} else {
+		outtake.moveVelocity(0);
+	}
+
+	// Disk Intake
+	if (master.get_digital(DIGITAL_L1)) {
+		intake.moveVelocity(600);
+	} else {
+		intake.moveVelocity(0);
+	}
+
+	// Disk Selector
 }
