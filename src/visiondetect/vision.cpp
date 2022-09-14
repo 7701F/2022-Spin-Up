@@ -8,8 +8,7 @@
 #include "main.h"
 #include "pros/vision.hpp"
 
-visiondetect::Vision::Vision(int port, int n_samples, int n_retries, int screen_padding,
-                             bool predict_offscreen) {
+visiondetect::Vision::Vision(int port, int n_samples, int n_retries, int screen_padding, bool predict_offscreen) {
 	this->screen_padding = screen_padding;
 	this->port = port;
 	this->n_samples = n_samples;
@@ -33,14 +32,11 @@ void visiondetect::Vision::insert_sort_samples(uint16_t* arr, uint16_t val, int 
 	}
 }
 
-bool visiondetect::Vision::validate_object(visiondetect::Object obj,
-                                           visiondetect::detected_object_s_t detected_object) {
+bool visiondetect::Vision::validate_object(visiondetect::Object obj, visiondetect::detected_object_s_t detected_object) {
 	if (this->predict_offscreen) {
 		// if edge of object is >= the edge of the padding
-		bool xedge =
-		    (abs(detected_object.x_px) + (detected_object.width / 2.0) >= (VISION_FOV_WIDTH - screen_padding));
-		bool yedge =
-		    (abs(detected_object.y_px) + (detected_object.height / 2.0) >= (VISION_FOV_HEIGHT - screen_padding));
+		bool xedge = (abs(detected_object.x_px) + (detected_object.width / 2.0) >= (VISION_FOV_WIDTH - screen_padding));
+		bool yedge = (abs(detected_object.y_px) + (detected_object.height / 2.0) >= (VISION_FOV_HEIGHT - screen_padding));
 		// check if object is within corner and screen padding
 		if (xedge && yedge) {
 			detected_object.x_px = ((detected_object.x_px > 0) - (detected_object.x_px < 0)) * VISION_FOV_WIDTH;
@@ -53,14 +49,12 @@ bool visiondetect::Vision::validate_object(visiondetect::Object obj,
 			detected_object.x_px = ((detected_object.x_px > 0) - (detected_object.x_px < 0)) * VISION_FOV_WIDTH;
 			// if the object is along the x edge, check if it's current visible ratio is less than the maximum
 			// ratio.
-			return (((double)detected_object.width / (double)detected_object.height) <=
-			        (obj.ratio * (1 + obj.ratio_range))) &&
+			return (((double)detected_object.width / (double)detected_object.height) <= (obj.ratio * (1 + obj.ratio_range))) &&
 			       (detected_object.height * detected_object.height * obj.ratio > obj.min_area);
 		} else if (yedge) {
 			detected_object.y_px = ((detected_object.y_px > 0) - (detected_object.y_px < 0)) * VISION_FOV_HEIGHT;
 			// read the if statment block above
-			return (((double)detected_object.width / (double)detected_object.height) >=
-			        (obj.ratio * (1 - obj.ratio_range))) &&
+			return (((double)detected_object.width / (double)detected_object.height) >= (obj.ratio * (1 - obj.ratio_range))) &&
 			       (detected_object.width * detected_object.width / obj.ratio > obj.min_area);
 		}
 		// do extra stuff to calculate object size and coordinates if offscreen
@@ -69,8 +63,8 @@ bool visiondetect::Vision::validate_object(visiondetect::Object obj,
 	double detected_ratio = (double)detected_object.width / (double)detected_object.height;
 	printf("detected ratio: %lf\n", detected_ratio);
 
-	return (detected_ratio > (obj.ratio * (1 - obj.ratio_range))) &&
-	       (detected_ratio < (obj.ratio * (1 + obj.ratio_range))) && (detected_object.area > obj.min_area);
+	return (detected_ratio > (obj.ratio * (1 - obj.ratio_range))) && (detected_ratio < (obj.ratio * (1 + obj.ratio_range))) &&
+	       (detected_object.area > obj.min_area);
 }
 
 visiondetect::detected_object_s_t visiondetect::Vision::find_object(visiondetect::Object obj) {
@@ -117,8 +111,7 @@ visiondetect::detected_object_s_t visiondetect::Vision::find_object(visiondetect
 		free(y_samples);
 
 		// check if detected is valid
-		printf("Detected stats: %d, %d, %d, %d, %d\n", detected.height, detected.width, detected.x_px,
-		       detected.y_px, detected.area);
+		printf("Detected stats: %d, %d, %d, %d, %d\n", detected.height, detected.width, detected.x_px, detected.y_px, detected.area);
 		detected.valid = validate_object(obj, detected);
 		// increment size_search
 		size_search++;

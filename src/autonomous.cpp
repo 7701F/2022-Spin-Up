@@ -22,14 +22,11 @@
 
 bool initialized = false;
 visiondetect::Object shirt = visiondetect::Object(
-    pros::Vision::signature_from_utility(1, 7695, 9019, 8357, -4133, -2679, -3406, 3.000, 0), 1.05, 5, 31, 50,
-    0.15);
+    pros::Vision::signature_from_utility(1, 7695, 9019, 8357, -4133, -2679, -3406, 3.000, 0), 1.05, 5, 31, 50, 0.15);
 visiondetect::Object disk = visiondetect::Object(
-    pros::Vision::signature_from_utility(1, 7657, 8273, 7966, -2251, -1733, -1992, 3.000, 0), 1.05, 5, 31, 50,
-    0.15);
+    pros::Vision::signature_from_utility(1, 7657, 8273, 7966, -2251, -1733, -1992, 3.000, 0), 1.05, 5, 31, 50, 0.15);
 visiondetect::Object card = visiondetect::Object(
-    pros::Vision::signature_from_utility(2, -129, 417, 144, -4459, -3907, -4182, 3.000, 0), 1.05, 5, 31, 50,
-    0.15);
+    pros::Vision::signature_from_utility(2, -129, 417, 144, -4459, -3907, -4182, 3.000, 0), 1.05, 5, 31, 50, 0.15);
 
 /* Vision Sensor */
 visiondetect::Vision advanced_vision = visiondetect::Vision(7);
