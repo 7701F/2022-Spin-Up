@@ -34,6 +34,10 @@
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+	leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+	rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+	hMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+
 	// Run Loop
 	while (true) {
 		/* Steering
@@ -45,12 +49,12 @@ void opcontrol() {
 			master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
 		    master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127
 		);
-		if((master.get_analog(ANALOG_LEFT_X) * (double)200 / 127) > 10 || (master.get_analog(ANALOG_LEFT_X) * (double)200 / 127) < -10) {
+		// clang-format on
+		if (abs(master.get_analog(ANALOG_LEFT_X) * (double)200 / 127) > 100) {
 			hMtr.moveVelocity(master.get_analog(ANALOG_LEFT_X) * (double)200 / 127);
 		} else {
 			hMtr.moveVelocity(0);
 		}
-		// clang-format on
 
 		/* Autonomous Manual Trigger
 		 * If the robot is not connected to competition control

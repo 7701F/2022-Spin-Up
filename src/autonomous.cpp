@@ -20,11 +20,70 @@
 
 #include "main.h"
 
-// std::int32_t mmToInch() {
-// 	return (distanceR.get() / 25.4) + 4;
-// }
+bool initialized = false;
+visiondetect::Object shirt = visiondetect::Object(
+    pros::Vision::signature_from_utility(1, 7695, 9019, 8357, -4133, -2679, -3406, 3.000, 0), 1.05, 5, 31, 50,
+    0.15);
+visiondetect::Object disk = visiondetect::Object(
+    pros::Vision::signature_from_utility(1, 7657, 8273, 7966, -2251, -1733, -1992, 3.000, 0), 1.05, 5, 31, 50,
+    0.15);
+visiondetect::Object card = visiondetect::Object(
+    pros::Vision::signature_from_utility(2, -129, 417, 144, -4459, -3907, -4182, 3.000, 0), 1.05, 5, 31, 50,
+    0.15);
 
-// Programming Skills
+/* Vision Sensor */
+visiondetect::Vision advanced_vision = visiondetect::Vision(7);
+
+/* Color Signatures */
+auto test_sig = 1;
+namespace deFenestration::auton {
+void init() {
+	if (initialized) {
+		return;
+	}
+
+	/* Disable Wi-Fi */
+	bool c = pros::competition::is_connected();
+	if (c == true)
+		advanced_vision.sensor->set_wifi_mode(0);
+	else if (c == false)
+		advanced_vision.sensor->set_wifi_mode(1);
+
+	initialized = true;
+}
+
+void align() {
+	if (initialized != true) {
+		init();
+	}
+
+	visiondetect::detected_object_s_t found;
+	found = advanced_vision.detect_object(disk);
+	bool turning;
+	bool going;
+
+	going = true;
+	while (going) {
+		while (turning) {
+			if (found.x_px > 0) {
+				arms::chassis::turn(1, 100);
+			} else if (found.x_px < 0) {
+				arms::chassis::turn(-1, 100);
+			} else if (found.x_px == 0) {
+				turning = false;
+			}
+		}
+		if (turning == false) {
+			while (mmToInch() >= 4) {
+				arms::chassis::move(found.apprx_distance, 100);
+			}
+			going = false;
+		}
+	}
+}
+} // namespace deFenestration::auton
+
+/* Programming Skills */
 void Sauton() {
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 24}});
@@ -43,9 +102,7 @@ void Sauton() {
  * from where it left off.
  */
 void autonomous() {
-	arms::pid::init(2.0, 0.04, 0.0, 2.0, 0.04, 0.0, 2.0, 0.0, 0.0);
-
-	// Auton Selector Logic
+	/* Auton Selector Logic */
 	switch (arms::selector::auton) {
 		case -3:
 			break;

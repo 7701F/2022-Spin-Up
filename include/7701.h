@@ -18,25 +18,34 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "api.h"
-#include "okapi/api.hpp"
+#include "main.h"
 
-#ifndef MOTORS_H_
-#define MOTORS_H_
+// Declare drive system variables.
+inline bool pbrake = true;
 
-// Controller
+// Declare driver functions
+void customBrake(bool pbrake);
+void prosBrake(bool pbrake);
+void gameSystemControls();
+
+/* Controller */
 extern pros::Controller master;
 
-// Drive Motors
+/* Drive Motors */
 extern okapi::Motor hMtr;
+
+/* Drive Motor Groups */
 extern okapi::MotorGroup rightMotors;
 extern okapi::MotorGroup leftMotors;
 
-// Game System Motors
+/* Game System Motors */
 
-// Sensors
+/* Disk Launcher Motors */
+extern okapi::MotorGroup outtake;
+
+/* Disk Intake Motors */
+extern okapi::Motor intake;
+
+/* Sensors */
 extern pros::Imu imu_sensor;
 extern pros::Distance distance_sensor;
-extern pros::Distance distance_sensor1;
-
-#endif

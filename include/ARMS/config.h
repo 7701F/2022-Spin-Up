@@ -24,7 +24,7 @@ namespace arms {
 
 // Sensors
 #define IMU_PORT 1                           // Port 0 for disabled
-#define ENCODER_PORTS 0, 0, 0                // Port 0 for disabled,
+#define ENCODER_PORTS 16, 0, 0                // Port 0 for disabled,
 #define EXPANDER_PORT 0                      // Port 0 for disabled
 #define ENCODER_TYPE arms::odom::ENCODER_ADI // The type of encoders
 

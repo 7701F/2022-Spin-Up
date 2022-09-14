@@ -20,10 +20,10 @@
 
 #include "main.h"
 
-// Controller
+/* Controller */
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-// Drive Motors
+/* Drive Motors */
 okapi::Motor rightMtr(20, false, okapi::AbstractMotor::gearset::green,
                       okapi::AbstractMotor::encoderUnits::degrees);
 okapi::Motor rightMtrR(19, false, okapi::AbstractMotor::gearset::green,
@@ -35,17 +35,19 @@ okapi::Motor leftMtrR(12, true, okapi::AbstractMotor::gearset::green,
 okapi::Motor hMtr(16, true, okapi::AbstractMotor::gearset::green,
                   okapi::AbstractMotor::encoderUnits::degrees);
 
-// Drive Motor Groups
+/* Drive Motor Groups */
 okapi::MotorGroup rightMotors({rightMtr, rightMtrR});
 okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
 
-// Game System Motors
+/* Game System Motors */
+okapi::Motor outtake1(3, true, okapi::AbstractMotor::gearset::blue,
+                      okapi::AbstractMotor::encoderUnits::degrees);
+okapi::Motor outtake2(4, false, okapi::AbstractMotor::gearset::blue,
+                      okapi::AbstractMotor::encoderUnits::degrees);
+okapi::MotorGroup outtake({outtake1, outtake2});
 
-// Sensors
+okapi::Motor intake(5, true, okapi::AbstractMotor::gearset::blue,
+                    okapi::AbstractMotor::encoderUnits::degrees);
+/* Sensors */
 pros::Imu imu_sensor(1);
 pros::Distance distance_sensor(8);
-pros::Distance distance_sensor1(9);
-
-// Pneumatics
-// pros::ADIDigitalOut clawP('A');
-// pros::ADIDigitalOut AWP('B');

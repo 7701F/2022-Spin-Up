@@ -20,6 +20,7 @@
 
 #include "main.h"
 
+#include <cmath>
 #include <sstream>
 
 /**
@@ -29,10 +30,10 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	// ARMS & Controller initialization
+	/* ARMS & Controller initialization */
 	arms::init();
 
-	// Controller Status Display
+	/* Controller Status Display */
 	pros::Task controllerTask{[=] {
 		master.clear();
 		master.print(2, 0, "Starting 7701F.");
@@ -41,8 +42,13 @@ void initialize() {
 		pros::delay(50);
 		master.print(2, 0, "Starting 7701F... Ready!");
 		pros::delay(100);
-		master.print(2, 0, "Running...");
+		master.print(2, 0, "Running...              ");
+		pros::delay(500);
 
+		/**
+		 * Only print every 50ms, the controller text update rate is slow.
+		 * Any input faster than this will be dropped.
+		 */
 		int count;
 		while (true) {
 			if (count == 100) {
@@ -56,7 +62,7 @@ void initialize() {
 			}
 
 			count++;
-			count %= 150;
+			count %= 200;
 			pros::delay(1);
 		}
 	}};
