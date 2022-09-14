@@ -5,7 +5,7 @@ AllowShortIfStatementsOnASingleLine: false
 BraceWrapping:
   BeforeElse: true
 BreakBeforeBraces: Attach
-ColumnLimit: 110
+ColumnLimit: 130
 DerivePointerAlignment: false
 IndentCaseLabels: true
 IndentWidth: 2
