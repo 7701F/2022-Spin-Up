@@ -7,7 +7,6 @@
 
 #include "main.h"
 #include "pros/vision.hpp"
-#include "visiondetect/api.h"
 
 visiondetect::Vision::Vision(int port, int n_samples, int n_retries, int screen_padding,
                              bool predict_offscreen) {
