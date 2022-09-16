@@ -20,6 +20,7 @@
 #include <sstream>
 
 #include "main.h"
+#include "7701.h"
 
 /* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current
  * velocity

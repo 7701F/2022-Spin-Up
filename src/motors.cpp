@@ -19,6 +19,7 @@
 */
 
 #include "main.h"
+#include "7701.h"
 
 /* Controller */
 pros::Controller master(pros::E_CONTROLLER_MASTER);
