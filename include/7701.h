@@ -19,6 +19,7 @@
 */
 
 #include "main.h"
+#include "okapi/impl/device/rotarysensor/IMU.hpp"
 
 // Declare drive system variables.
 inline bool pbrake = true;
@@ -47,5 +48,5 @@ extern okapi::MotorGroup outtake;
 extern okapi::Motor intake;
 
 /* Sensors */
-extern pros::Imu imu_sensor;
-extern pros::Distance distance_sensor;
+extern okapi::IMU imu_sensor;
+extern okapi::DistanceSensor distance_sensor;
