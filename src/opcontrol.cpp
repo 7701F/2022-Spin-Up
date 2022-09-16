@@ -17,8 +17,63 @@
       misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
+#include <sstream>
 
 #include "main.h"
+
+/* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current
+ * velocity
+ */
+void customBrake(bool pbrake) {
+	if (pbrake == true) {
+		if (master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0 &&
+		    master.get_analog(ANALOG_LEFT_X) == 0) {
+			if (leftMotors.getActualVelocity() != 0 || rightMotors.getActualVelocity() != 0) {
+				leftMotors.moveVelocity(leftMotors.getActualVelocity() * -2);
+				rightMotors.moveVelocity(rightMotors.getActualVelocity() * -2);
+				pros::delay(2);
+			}
+		}
+	}
+}
+
+/* Smart boy motor brake solution */
+void prosBrake(bool pbrake) {
+	if (pbrake == true) {
+		if (rightMotors.getBrakeMode() != okapi::AbstractMotor::brakeMode::hold) {
+			leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+			rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+			hMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+		}
+	} else if (pbrake == false) {
+		if (rightMotors.getBrakeMode() != okapi::AbstractMotor::brakeMode::coast) {
+			leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+			rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+			hMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+		}
+	}
+}
+
+bool outakeState = false;
+void gameSystemControls() {
+	// Disk Launcher
+	outakeState = master.get_digital_new_press(DIGITAL_L2);
+	outtake.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+	if (outakeState == true) {
+		outtake.moveVelocity(600);
+	} else {
+		outtake.moveVelocity(0);
+	}
+
+	// Disk Intake
+	if (master.get_digital(DIGITAL_L1)) {
+		intake.moveVelocity(600);
+	} else {
+		intake.moveVelocity(0);
+	}
+
+	// Disk Selector
+}
 
 /*
  * Runs the operator control code. This function will be started in its own task
