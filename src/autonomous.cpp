@@ -28,7 +28,11 @@ visiondetect::Object disk = visiondetect::Object(
 visiondetect::Object card = visiondetect::Object(
     pros::Vision::signature_from_utility(2, -129, 417, 144, -4459, -3907, -4182, 3.000, 0), 1.05, 5, 31, 50, 0.15);
 
-/* Vision Sensor */
+/* Distance Logic */
+std::int32_t mmToInch() {
+	return (distance_sensor.get() / 25.4) + 4;
+}
+
 visiondetect::Vision advanced_vision = visiondetect::Vision(7);
 
 /* Color Signatures */

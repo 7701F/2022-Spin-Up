@@ -20,7 +20,6 @@
 
 #include "main.h"
 
-#include <cmath>
 #include <sstream>
 
 /**

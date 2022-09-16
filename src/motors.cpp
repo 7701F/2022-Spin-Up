@@ -41,5 +41,5 @@ okapi::MotorGroup outtake({outtake1, outtake2});
 
 okapi::Motor intake(5, true, okapi::AbstractMotor::gearset::blue, okapi::AbstractMotor::encoderUnits::degrees);
 /* Sensors */
-pros::Imu imu_sensor(1);
-pros::Distance distance_sensor(8);
+okapi::IMU imu_sensor(1);
+okapi::DistanceSensor distance_sensor(8);
