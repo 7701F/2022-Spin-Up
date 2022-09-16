@@ -19,6 +19,7 @@
 */
 
 #include "main.h"
+#include "7701.h"
 
 bool initialized = false;
 visiondetect::Object shirt = visiondetect::Object(

@@ -42,7 +42,6 @@
 #include "okapi/api.hpp"
 #include "pros/apix.h"
 // Custom Headers
-#include "7701.h"
 #include "ARMS/api.h"
 #include "visiondetect/api.h"
 //#include "pros/api_legacy.h"

@@ -19,7 +19,6 @@
 */
 
 #include "main.h"
-#include "okapi/impl/device/rotarysensor/IMU.hpp"
 
 // Declare drive system variables.
 inline bool pbrake = true;
