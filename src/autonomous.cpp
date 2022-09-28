@@ -29,16 +29,15 @@ visiondetect::Object disk = visiondetect::Object(
 visiondetect::Object card = visiondetect::Object(
     pros::Vision::signature_from_utility(2, -129, 417, 144, -4459, -3907, -4182, 3.000, 0), 1.05, 5, 31, 50, 0.15);
 
-/* Distance Logic */
-std::int32_t mmToInch() {
-	return (distance_sensor.get() / 25.4) + 4;
-}
-
 visiondetect::Vision advanced_vision = visiondetect::Vision(7);
 
 /* Color Signatures */
 auto test_sig = 1;
-namespace deFenestration::auton {
+namespace deFenestration::Vision {
+/*
+ * Initialize Vision Sensor
+ * Turns off Wi-Fi because it's illegal in competition.
+ */
 void init() {
 	if (initialized) {
 		return;
@@ -46,14 +45,24 @@ void init() {
 
 	/* Disable Wi-Fi */
 	bool c = pros::competition::is_connected();
-	if (c == true)
+	if (c == true) {
 		advanced_vision.sensor->set_wifi_mode(0);
-	else if (c == false)
+		advanced_vision.sensor->set_led(COLOR_GREEN);
+	}
+	else if (c == false) {
 		advanced_vision.sensor->set_wifi_mode(1);
+		advanced_vision.sensor->set_led(COLOR_RED);
+	}
+
+	/* Set Color Signatures */
+
+	/* Set Objects */
 
 	initialized = true;
 }
-
+/*
+ * Aligns the robot to the target object.
+ */
 void align() {
 	if (initialized != true) {
 		init();
@@ -76,12 +85,19 @@ void align() {
 			}
 		}
 		if (turning == false) {
-			while (mmToInch() >= 4) {
-				arms::chassis::move(found.apprx_distance, 100);
+			while (deFenestration::Vision::mmToInch() >= 4) {
+				arms::chassis::move(0.1, 100);
 			}
 			going = false;
 		}
 	}
+}
+
+/*
+ * Distance Logic
+ */
+std::int32_t mmToInch() {
+	return (distance_sensor.get() / 25.4) + 4;
 }
 } // namespace deFenestration::auton
 
@@ -116,6 +132,7 @@ void autonomous() {
 			Sauton();
 			break;
 		case 1:
+			deFenestration::Vision::align();
 			break;
 		case 2:
 			break;

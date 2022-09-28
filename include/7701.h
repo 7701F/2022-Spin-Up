@@ -20,6 +20,15 @@
 
 #include "main.h"
 
+// deFenestration Auton System
+namespace deFenestration::Vision {
+void init();
+
+void align();
+
+void mmToInch();
+}
+
 // Declare drive system variables.
 inline bool pbrake = true;
 
