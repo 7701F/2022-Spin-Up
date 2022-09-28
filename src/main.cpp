@@ -30,8 +30,9 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	/* ARMS & Controller initialization */
+	/* ARMS & Vision™ initialization */
 	arms::init();
+	deFenestration::Vision::init();
 
 	/* Controller Status Display */
 	pros::Task controllerTask{[=] {
@@ -62,7 +63,7 @@ void initialize() {
 			}
 
 			count++;
-			count %= 200;
+			count %= 150;
 			pros::delay(1);
 		}
 	}};
