@@ -3,4 +3,4 @@
 	url = git@github.com:purduesigbots/ARMS.git
 [submodule "vision-detection"]
 	path = vision-detection
-	url = git@github.com:purduesigbots/vision-detection.git
+	url = https://github.com/purduesigbots/vision-detection.git
