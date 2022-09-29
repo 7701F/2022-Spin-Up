@@ -35,6 +35,15 @@ void initialize() {
 	/* ARMS & Vision™ initialization */
 	arms::init();
 	deFenestration::Vision::init();
+	pros::Vision vision_sensor = pros::Vision(7);
+	bool c = pros::competition::is_connected();
+	if (c == true) {
+		vision_sensor.set_wifi_mode(0);
+		vision_sensor.set_led(COLOR_GREEN);
+	} else if (c == false) {
+		vision_sensor.set_wifi_mode(1);
+		vision_sensor.set_led(COLOR_RED);
+	}
 
 	/* Controller Status Display */
 	pros::Task controllerTask{[=] {
