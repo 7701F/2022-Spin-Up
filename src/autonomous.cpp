@@ -23,14 +23,11 @@
 #include "main.h"
 
 bool initialized = false;
-visiondetect::Object shirt = visiondetect::Object(
-    pros::Vision::signature_from_utility(1, 7695, 9019, 8357, -4133, -2679, -3406, 3.000, 0), 1.05, 5, 31, 50, 0.15);
-visiondetect::Object disk = visiondetect::Object(
-    pros::Vision::signature_from_utility(1, 7657, 8273, 7966, -2251, -1733, -1992, 3.000, 0), 1.05, 5, 31, 50, 0.15);
-visiondetect::Object card = visiondetect::Object(
-    pros::Vision::signature_from_utility(2, -129, 417, 144, -4459, -3907, -4182, 3.000, 0), 1.05, 5, 31, 50, 0.15);
+auto shirt = pros::Vision::signature_from_utility(1, 7695, 9019, 8357, -4133, -2679, -3406, 3.000, 0);
+auto disk = pros::Vision::signature_from_utility(1, 7657, 8273, 7966, -2251, -1733, -1992, 3.000, 0);
+auto card = pros::Vision::signature_from_utility(2, -129, 417, 144, -4459, -3907, -4182, 3.000, 0);
 
-visiondetect::Vision advanced_vision = visiondetect::Vision(7);
+pros::Vision vision_sensor = pros::Vision(7);
 
 /* Color Signatures */
 auto test_sig = 1;
@@ -47,11 +44,11 @@ void init() {
 	/* Disable Wi-Fi */
 	bool c = pros::competition::is_connected();
 	if (c == true) {
-		advanced_vision.sensor->set_wifi_mode(0);
-		advanced_vision.sensor->set_led(COLOR_GREEN);
+		vision_sensor.set_wifi_mode(0);
+		vision_sensor.set_led(COLOR_GREEN);
 	} else if (c == false) {
-		advanced_vision.sensor->set_wifi_mode(1);
-		advanced_vision.sensor->set_led(COLOR_RED);
+		vision_sensor.set_wifi_mode(1);
+		vision_sensor.set_led(COLOR_RED);
 	}
 
 	/* Set Color Signatures */
@@ -60,44 +57,13 @@ void init() {
 
 	initialized = true;
 }
-/*
- * Aligns the robot to the target object.
- */
-void align() {
-	if (initialized != true) {
-		init();
-	}
-
-	visiondetect::detected_object_s_t found;
-	found = advanced_vision.detect_object(disk);
-	bool turning;
-	bool going;
-
-	going = true;
-	while (going) {
-		while (turning) {
-			if (found.x_px > 0) {
-				arms::chassis::turn(1, 100);
-			} else if (found.x_px < 0) {
-				arms::chassis::turn(-1, 100);
-			} else if (found.x_px == 0) {
-				turning = false;
-			}
-		}
-		if (turning == false) {
-			while (deFenestration::Vision::mmToInch() >= 4) {
-				arms::chassis::move(0.1, 100);
-			}
-			going = false;
-		}
-	}
-}
 
 /*
  * Distance Logic
  */
-std::int32_t mmToInch() {
-	return (distance_sensor.get() / 25.4) + 4;
+int32_t mmToInch() {
+	int32_t x = (distance_sensor.get() / 25.4) + 4;
+	return x;
 }
 } // namespace deFenestration::Vision
 
@@ -132,7 +98,6 @@ void autonomous() {
 			Sauton();
 			break;
 		case 1:
-			deFenestration::Vision::align();
 			break;
 		case 2:
 			break;

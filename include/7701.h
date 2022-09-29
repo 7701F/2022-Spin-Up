@@ -25,9 +25,7 @@
 namespace deFenestration::Vision {
 void init();
 
-void align();
-
-void mmToInch();
+int32_t mmToInch();
 } // namespace deFenestration::Vision
 
 // Declare drive system variables.
