@@ -34,7 +34,7 @@ inline bool pbrake = true;
 // Declare driver functions
 void customBrake(bool pbrake);
 void prosBrake(bool pbrake);
-void gameSystemControls();
+void FwControlTask();
 
 /* Controller */
 extern pros::Controller master;
