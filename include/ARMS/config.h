@@ -23,7 +23,7 @@ namespace arms {
 #define MIDDLE_DISTANCE 0     // Distance from middle wheel to the robot turning center
 
 // Sensors
-#define IMU_PORT 0                           // Port 0 for disabled
+#define IMU_PORT 1                           // Port 0 for disabled
 #define ENCODER_PORTS 0, 0, 0                // Port 0 for disabled,
 #define EXPANDER_PORT 0                      // Port 0 for disabled
 #define ENCODER_TYPE arms::odom::ENCODER_ADI // The type of encoders

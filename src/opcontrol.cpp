@@ -24,9 +24,173 @@
 #include "7701.h"
 #include "main.h"
 
-/* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current
- * velocity
- */
+/* Flywheel */
+// Update inteval (in mS) for the flywheel control loop
+#define FW_LOOP_SPEED 20
+
+// Maximum power we want to send to the flywheel motors
+#define FW_MAX_POWER 600
+
+// encoder tick per revolution
+float ticks_per_rev; ///< encoder ticks per revolution
+
+// Encoder
+long encoder_counts;      ///< current encoder count
+long encoder_counts_last; ///< current encoder count
+
+// velocity measurement
+float motor_velocity; ///< current velocity in rpm
+long nSysTime_last;   ///< Time of last velocity calculation
+
+// TBH control algorithm variables
+long target_velocity; ///< target_velocity velocity
+float current_error;  ///< error between actual and target_velocity velocities
+float last_error;     ///< error last time update called
+float gain;           ///< gain
+float drive;          ///< final drive out of TBH (0.0 to 1.0)
+float drive_at_zero;  ///< drive at last zero crossing
+long first_cross;     ///< flag indicating first zero crossing
+float drive_approx;   ///< estimated open loop drive
+
+// final motor drive
+long motor_drive; ///< final motor control value
+
+/*-----------------------------------------------------------------------------*/
+/** @brief      Set the flywheen motors                                        */
+/** @param[in]  value motor control value                                      */
+/*-----------------------------------------------------------------------------*/
+void FwMotorSet(int value) {
+	int x;
+	x = (value*12000)/600;
+	flywheel.moveVoltage(x);
+}
+
+/*-----------------------------------------------------------------------------*/
+/** @brief      Get the flywheen motor encoder count                           */
+/*-----------------------------------------------------------------------------*/
+double FwMotorEncoderGet() {
+	return flywheel.getPosition();
+}
+
+/*-----------------------------------------------------------------------------*/
+/** @brief      Set the controller position                                    */
+/** @param[in]  desired velocity                                               */
+/** @param[in]  predicted_drive estimated open loop motor drive                */
+/*-----------------------------------------------------------------------------*/
+void FwVelocitySet(int velocity, float predicted_drive) {
+	// set target_velocity velocity (motor rpm)
+	target_velocity = velocity;
+
+	// Set error so zero crossing is correctly detected
+	current_error = target_velocity - motor_velocity;
+	last_error = current_error;
+
+	// Set predicted open loop drive value
+	drive_approx = predicted_drive;
+	// Set flag to detect first zero crossing
+	first_cross = 1;
+	// clear tbh variable
+	drive_at_zero = 0;
+}
+
+/*-----------------------------------------------------------------------------*/
+/** @brief      Calculate the current flywheel motor velocity                  */
+/*-----------------------------------------------------------------------------*/
+void FwCalculateSpeed() {
+	int delta_ms;
+	int delta_enc;
+
+	// Get current encoder value
+	encoder_counts = FwMotorEncoderGet();
+
+	// This is just used so we don't need to know how often we are called
+	// how many mS since we were last here
+	delta_ms = pros::millis() - nSysTime_last;
+	nSysTime_last = pros::millis();
+
+	// Change in encoder count
+	delta_enc = (encoder_counts - encoder_counts_last);
+
+	// save last position
+	encoder_counts_last = encoder_counts;
+
+	// Calculate velocity in rpm
+	motor_velocity = (1000.0 / delta_ms) * delta_enc * 60.0 / ticks_per_rev;
+}
+
+/*-----------------------------------------------------------------------------*/
+/** @brief      Update the velocity tbh controller variables                   */
+/*-----------------------------------------------------------------------------*/
+void FwControlUpdateVelocityTbh() {
+	// calculate error in velocity
+	// target_velocity is desired velocity
+	// current is measured velocity
+	current_error = target_velocity - motor_velocity;
+
+	// Calculate new control value
+	drive = drive + (current_error * gain);
+
+	// Clip to the range 0 - 1.
+	// We are only going forwards
+	if (drive > 1)
+		drive = 1;
+	if (drive < 0)
+		drive = 0;
+
+	// Check for zero crossing
+	if (current_error != last_error) {
+		// First zero crossing after a new set velocity command
+		if (first_cross) {
+			// Set drive to the open loop approximation
+			drive = drive_approx;
+			first_cross = 0;
+		} else
+			drive = 0.5 * (drive + drive_at_zero);
+
+		// Save this drive value in the "tbh" variable
+		drive_at_zero = drive;
+	}
+
+	// Save last error
+	last_error = current_error;
+}
+
+/*-----------------------------------------------------------------------------*/
+/** @brief     Task to control the velocity of the flywheel                    */
+/*-----------------------------------------------------------------------------*/
+void FwControlTask() {
+	// Set the gain
+	gain = 0.00025;
+
+	// We are using Speed geared motors
+	// Set the encoder ticks per revolution
+	ticks_per_rev = 360;
+
+	while (1) {
+		// Calculate velocity
+		FwCalculateSpeed();
+
+		// Do the velocity TBH calculations
+		FwControlUpdateVelocityTbh();
+
+		// Scale drive into the range the motors need
+		motor_drive = (drive * FW_MAX_POWER) + 0.5;
+
+		// Final Limit of motor values - don't really need this
+		if (motor_drive > 600)
+			motor_drive = 600;
+		if (motor_drive < -600)
+			motor_drive = -600;
+
+		// and finally set the motor control value
+		FwMotorSet(motor_drive);
+
+		// Run at somewhere between 20 and 50mS
+		pros::delay(FW_LOOP_SPEED);
+	}
+}
+
+/* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity */
 void customBrake(bool pbrake) {
 	if (pbrake == true) {
 		if (master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0 &&
@@ -57,26 +221,8 @@ void prosBrake(bool pbrake) {
 	}
 }
 
-bool outakeState = false;
-void gameSystemControls() {
-	// Disk Launcher
-	outakeState = master.get_digital_new_press(DIGITAL_L2);
-	outtake.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
-	if (outakeState == true) {
-		outtake.moveVelocity(600);
-	} else {
-		outtake.moveVelocity(0);
-	}
-
-	// Disk Intake
-	if (master.get_digital(DIGITAL_L1)) {
-		intake.moveVelocity(600);
-	} else {
-		intake.moveVelocity(0);
-	}
-
-	// Disk Selector
-}
+/* Game System Controls */
+bool flywheelState = false;
 
 /*
  * Runs the operator control code. This function will be started in its own task
@@ -96,6 +242,8 @@ void opcontrol() {
 	rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 	hMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 
+	pros::Task fwTask(FwControlTask);
+
 	// Run Loop
 	while (true) {
 		/* Steering
@@ -108,11 +256,6 @@ void opcontrol() {
 		    master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127
 		);
 		// clang-format on
-		if (abs(master.get_analog(ANALOG_LEFT_X) * (double)200 / 127) > 100) {
-			hMtr.moveVelocity(master.get_analog(ANALOG_LEFT_X) * (double)200 / 127);
-		} else {
-			hMtr.moveVelocity(0);
-		}
 
 		/* Autonomous Manual Trigger
 		 * If the robot is not connected to competition control
@@ -125,7 +268,24 @@ void opcontrol() {
 		/* Game Related Subsystems
 		 * Controls for game specific functions
 		 */
-		gameSystemControls();
+		// Disk Launcher
+		flywheelState = master.get_digital_new_press(DIGITAL_L2);
+		flywheel.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+
+		if (flywheelState == true) {
+			FwVelocitySet(290, 0.2);
+		} else if (flywheelState == false) {
+			FwVelocitySet(0, 0.2);
+		}
+
+		// Disk Intake
+		if (master.get_digital(DIGITAL_L1)) {
+			intake.moveVelocity(600);
+		} else {
+			intake.moveVelocity(0);
+		}
+
+		// Disk Selector
 
 		/* Brake System
 		 * The brake system is a safety feature that prevents the robot from being
