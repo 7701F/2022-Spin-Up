@@ -34,7 +34,8 @@
 void initialize() {
 	/* ARMS & Vision™ initialization */
 	arms::init();
-	deFenestration::Vision::init();
+
+	// Turns off Wi-Fi because it's illegal in competition.
 	pros::Vision vision_sensor = pros::Vision(7);
 	bool c = pros::competition::is_connected();
 	if (c == true) {

@@ -49,7 +49,7 @@ extern okapi::MotorGroup leftMotors;
 /* Game System Motors */
 
 /* Disk Launcher Motors */
-extern okapi::MotorGroup outtake;
+extern okapi::Motor flywheel;
 
 /* Disk Intake Motors */
 extern okapi::Motor intake;
