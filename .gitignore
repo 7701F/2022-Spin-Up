@@ -9,15 +9,10 @@
 # PROS
 bin/
 .vscode/
+.cache/
 compile_commands.json
 temp.log
 temp.errors
 *.ini
 .d/
-.clangd/
-.DS_Store
-.zip
 *.zip
-.cache
-debug.log
-.cache/
