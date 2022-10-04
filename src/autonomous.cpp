@@ -34,21 +34,10 @@ auto test_sig = 1;
 namespace deFenestration::Vision {
 /*
  * Initialize Vision Sensor
- * Turns off Wi-Fi because it's illegal in competition.
  */
 void init() {
 	if (initialized) {
 		return;
-	}
-
-	/* Disable Wi-Fi */
-	bool c = pros::competition::is_connected();
-	if (c == true) {
-		vision_sensor.set_wifi_mode(0);
-		vision_sensor.set_led(COLOR_GREEN);
-	} else if (c == false) {
-		vision_sensor.set_wifi_mode(1);
-		vision_sensor.set_led(COLOR_RED);
 	}
 
 	/* Set Color Signatures */

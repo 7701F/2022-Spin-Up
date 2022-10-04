@@ -37,11 +37,12 @@ okapi::MotorGroup rightMotors({rightMtr, rightMtrR});
 okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
 
 /* Game System Motors */
-okapi::Motor outtake1(3, true, okapi::AbstractMotor::gearset::blue, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor outtake2(4, false, okapi::AbstractMotor::gearset::blue, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::MotorGroup outtake({outtake1, outtake2});
+okapi::Motor flywheel(3, true, okapi::AbstractMotor::gearset::blue, okapi::AbstractMotor::encoderUnits::degrees);
+// okapi::Motor outtake2(4, false, okapi::AbstractMotor::gearset::blue, okapi::AbstractMotor::encoderUnits::degrees);
+// okapi::MotorGroup flywheel({outtake1, outtake2});
 
 okapi::Motor intake(5, true, okapi::AbstractMotor::gearset::blue, okapi::AbstractMotor::encoderUnits::degrees);
+
 /* Sensors */
 okapi::IMU imu_sensor(1);
 okapi::DistanceSensor distance_sensor(8);

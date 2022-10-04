@@ -2,7 +2,7 @@
 #define _ARMS_CONFIG_H_
 
 #include "ARMS/lib.h"
-#include "okapi/api.hpp"
+
 
 namespace arms {
 
@@ -10,9 +10,9 @@ namespace arms {
 #define ODOM_DEBUG 0
 
 // Negative numbers mean reversed motor
-#define LEFT_MOTORS -12, -13
-#define RIGHT_MOTORS 19, 20
-#define GEARSET 200 // RPM of chassis motors
+#define LEFT_MOTORS 17, 18
+#define RIGHT_MOTORS -19, -20
+#define GEARSET pros::E_MOTOR_GEAR_200 // RPM of chassis motors
 
 // Ticks per inch
 #define TPI 1      			  // Encoder ticks per inch of forward robot movement
@@ -23,8 +23,8 @@ namespace arms {
 #define MIDDLE_DISTANCE 0     // Distance from middle wheel to the robot turning center
 
 // Sensors
-#define IMU_PORT 1                           // Port 0 for disabled
-#define ENCODER_PORTS 16, 0, 0                // Port 0 for disabled,
+#define IMU_PORT 0                           // Port 0 for disabled
+#define ENCODER_PORTS 0, 0, 0                // Port 0 for disabled,
 #define EXPANDER_PORT 0                      // Port 0 for disabled
 #define ENCODER_TYPE arms::odom::ENCODER_ADI // The type of encoders
 
