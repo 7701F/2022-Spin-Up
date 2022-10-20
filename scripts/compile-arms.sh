@@ -18,12 +18,16 @@
 # 3. This notice may not be removed or altered from any source distribution.
 
 cd ./ARMS
+
 git pull origin master
+
 make clean
 make
+
 cp ./bin/ARMS.a ../firmware/
 cp ../include/ARMS/config.h ../
 cp ./include/ARMS/** ../include/ARMS/
 rm ../include/ARMS/config.h
 mv ../config.h ../include/ARMS/
+
 cd ..
