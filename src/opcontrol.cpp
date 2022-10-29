@@ -210,13 +210,11 @@ void prosBrake(bool pbrake) {
 		if (rightMotors.getBrakeMode() != okapi::AbstractMotor::brakeMode::hold) {
 			leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 			rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
-			hMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 		}
 	} else if (pbrake == false) {
 		if (rightMotors.getBrakeMode() != okapi::AbstractMotor::brakeMode::coast) {
 			leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
 			rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
-			hMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
 		}
 	}
 }

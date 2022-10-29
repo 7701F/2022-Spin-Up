@@ -30,7 +30,6 @@ okapi::Motor rightMtr(20, false, okapi::AbstractMotor::gearset::green, okapi::Ab
 okapi::Motor rightMtrR(19, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 okapi::Motor leftMtr(13, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 okapi::Motor leftMtrR(12, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor hMtr(16, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 
 /* Drive Motor Groups */
 okapi::MotorGroup rightMotors({rightMtr, rightMtrR});
