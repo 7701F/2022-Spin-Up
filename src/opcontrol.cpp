@@ -193,8 +193,7 @@ void FwControlTask() {
 /* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity */
 void customBrake(bool pbrake) {
 	if (pbrake == true) {
-		if (master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0 &&
-		    master.get_analog(ANALOG_LEFT_X) == 0) {
+		if (master.get_analog(ANALOG_RIGHT_X) == 0 && master.get_analog(ANALOG_LEFT_X) == 0) {
 			if (leftMotors.getActualVelocity() != 0 || rightMotors.getActualVelocity() != 0) {
 				leftMotors.moveVelocity(leftMotors.getActualVelocity() * -2);
 				rightMotors.moveVelocity(rightMotors.getActualVelocity() * -2);
