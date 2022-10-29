@@ -239,6 +239,7 @@ void opcontrol() {
 	rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 
 	pros::Task fwTask(FwControlTask);
+	FwVelocitySet(0, 0.0);
 
 	// Run Loop
 	while (true) {
@@ -264,6 +265,7 @@ void opcontrol() {
 		/* Game Related Subsystems
 		 * Controls for game specific functions
 		 */
+
 		// Disk Launcher
 		flywheelState = master.get_digital_new_press(DIGITAL_L2);
 		flywheel.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
@@ -271,13 +273,12 @@ void opcontrol() {
 		if (flywheelState == true) {
 			FwVelocitySet(96, 0.2);
 		} else if (flywheelState == false) {
-			FwVelocitySet(0, 0.2);
+			FwVelocitySet(0, 0.0);
 		}
+
 		// Disk Conveyor
 		if (master.get_digital(DIGITAL_L1)) {
 			conveyor.moveVelocity(200);
-		} else if (master.get_digital(DIGITAL_L2)) {
-			conveyor.moveVelocity(-200);
 		} else {
 			conveyor.moveVelocity(0);
 		}
