@@ -19,7 +19,7 @@
 
 cd ./ARMS
 
-git pull origin master
+# git pull origin master --force
 
 make clean
 make
