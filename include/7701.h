@@ -39,9 +39,6 @@ void FwControlTask();
 /* Controller */
 extern pros::Controller master;
 
-/* Drive Motors */
-extern okapi::Motor hMtr;
-
 /* Drive Motor Groups */
 extern okapi::MotorGroup rightMotors;
 extern okapi::MotorGroup leftMotors;
