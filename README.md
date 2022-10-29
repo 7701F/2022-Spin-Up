@@ -15,7 +15,7 @@ See also the list of [contributors](https://github.com/7701F/2022-Spin-Up/contri
 
 [ARMS](https://github.com/purduesigbots/ARMS) ARMS is a library that makes programming a VEX V5 robot a piece of cake.
 
-[gif-pros](https://github.com/theol0403/gif-pros) Allows GIFS to be displayed on LVGL (Currently removed)
+[gif-pros](https://github.com/theol0403/gif-pros) Allows GIFS to be displayed on LVGL
 
 # License
 
