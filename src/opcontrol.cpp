@@ -238,7 +238,6 @@ bool flywheelState = false;
 void opcontrol() {
 	leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 	rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
-	hMtr.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 
 	pros::Task fwTask(FwControlTask);
 
