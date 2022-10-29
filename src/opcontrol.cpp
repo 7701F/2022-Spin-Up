@@ -1,22 +1,22 @@
 /*
-	Copyright (c) 2019-2022 7701F
-	
-	This software is provided 'as-is', without any express or implied warranty. In no event will
-	the authors be held liable for any damages arising from the use of this software.
-	
-	Permission is granted to anyone to use this software for any purpose, including commercial
-	applications, and to alter it and redistribute it freely, subject to the following restrictions:
-	
-	1. The origin of this software must not be misrepresented; you must not claim that you wrote the
-	original software. If you use this software in a product, an acknowledgment (see the following)
-	in the product documentation is required.
-	
-	Portions Copyright (c) 2019-2022 7701F
-	
-	2. Altered source versions must be plainly marked as such, and must not be misrepresented as
-	being the original software.
-	
-	3. This notice may not be removed or altered from any source distribution.
+  Copyright (c) 2019-2022 7701F
+
+  This software is provided 'as-is', without any express or implied warranty. In no event will
+  the authors be held liable for any damages arising from the use of this software.
+
+  Permission is granted to anyone to use this software for any purpose, including commercial
+  applications, and to alter it and redistribute it freely, subject to the following restrictions:
+
+  1. The origin of this software must not be misrepresented; you must not claim that you wrote the
+  original software. If you use this software in a product, an acknowledgment (see the following)
+  in the product documentation is required.
+
+  Portions Copyright (c) 2019-2022 7701F
+
+  2. Altered source versions must be plainly marked as such, and must not be misrepresented as
+  being the original software.
+
+  3. This notice may not be removed or altered from any source distribution.
 */
 
 #include <sstream>
@@ -29,7 +29,7 @@
 #define FW_LOOP_SPEED 20
 
 // Maximum power we want to send to the flywheel motors
-#define FW_MAX_POWER 600
+#define FW_MAX_POWER 200
 
 // encoder tick per revolution
 float ticks_per_rev; ///< encoder ticks per revolution
@@ -61,7 +61,7 @@ long motor_drive; ///< final motor control value
 /*-----------------------------------------------------------------------------*/
 void FwMotorSet(int value) {
 	int x;
-	x = (value*12000)/600;
+	x = (value * 12000) / 200;
 	flywheel.moveVoltage(x);
 }
 
@@ -115,7 +115,7 @@ void FwCalculateSpeed() {
 	encoder_counts_last = encoder_counts;
 
 	// Calculate velocity in rpm
-	motor_velocity = (1000.0 / delta_ms) * delta_enc * 60.0 / ticks_per_rev;
+	motor_velocity = flywheel.getActualVelocity();
 }
 
 /*-----------------------------------------------------------------------------*/
@@ -177,10 +177,10 @@ void FwControlTask() {
 		motor_drive = (drive * FW_MAX_POWER) + 0.5;
 
 		// Final Limit of motor values - don't really need this
-		if (motor_drive > 600)
-			motor_drive = 600;
-		if (motor_drive < -600)
-			motor_drive = -600;
+		if (motor_drive > 200)
+			motor_drive = 200;
+		if (motor_drive < -200)
+			motor_drive = -200;
 
 		// and finally set the motor control value
 		FwMotorSet(motor_drive);
@@ -273,19 +273,18 @@ void opcontrol() {
 		flywheel.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
 
 		if (flywheelState == true) {
-			FwVelocitySet(290, 0.2);
+			FwVelocitySet(96, 0.2);
 		} else if (flywheelState == false) {
 			FwVelocitySet(0, 0.2);
 		}
-
-		// Disk Intake
+		// Disk Conveyor
 		if (master.get_digital(DIGITAL_L1)) {
-			intake.moveVelocity(600);
+			conveyor.moveVelocity(200);
+		} else if (master.get_digital(DIGITAL_L2)) {
+			conveyor.moveVelocity(-200);
 		} else {
-			intake.moveVelocity(0);
+			conveyor.moveVelocity(0);
 		}
-
-		// Disk Selector
 
 		/* Brake System
 		 * The brake system is a safety feature that prevents the robot from being
