@@ -50,6 +50,7 @@ extern okapi::MotorGroup leftMotors;
 
 /* Disk Launcher Motors */
 extern okapi::Motor flywheel;
+extern okapi::Motor conveyor;
 
 /* Disk Intake Motors */
 extern okapi::Motor intake;
