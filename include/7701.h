@@ -28,6 +28,21 @@ void init();
 int32_t mmToInch();
 } // namespace deFenestration::Vision
 
+// deFenestration Launcher System
+namespace deFenestration::Flywheel {
+void FwMotorSet(int value);
+
+double FwMotorEncoderGet();
+
+void FwVelocitySet(int velocity, float predicted_drive);
+
+void FwCalculateSpeed();
+
+void FwControlUpdateVelocityTbh();
+
+void FwControlTask();
+} // namespace deFenestration::Launcher
+
 // Declare drive system variables.
 inline bool pbrake = true;
 

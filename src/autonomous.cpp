@@ -56,6 +56,13 @@ int32_t mmToInch() {
 }
 } // namespace deFenestration::Vision
 
+/*
+ * Autonomous 1
+ */
+void Sauton1() {
+	deFenestration::Flywheel::FwVelocitySet(96, 0.2);
+}
+
 /* Programming Skills */
 void Sauton() {
 	using namespace arms::chassis;
@@ -87,6 +94,7 @@ void autonomous() {
 			Sauton();
 			break;
 		case 1:
+			Sauton1();
 			break;
 		case 2:
 			break;

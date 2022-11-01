@@ -32,6 +32,36 @@
 // Maximum power we want to send to the flywheel motors
 #define FW_MAX_POWER 200
 
+/* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity */
+void customBrake(bool pbrake) {
+	if (pbrake == true) {
+		if (master.get_analog(ANALOG_RIGHT_X) == 0 && master.get_analog(ANALOG_LEFT_X) == 0) {
+			if (leftMotors.getActualVelocity() != 0 || rightMotors.getActualVelocity() != 0) {
+				leftMotors.moveVelocity(leftMotors.getActualVelocity() * -2);
+				rightMotors.moveVelocity(rightMotors.getActualVelocity() * -2);
+				pros::delay(2);
+			}
+		}
+	}
+}
+
+/* Smart boy motor brake solution */
+void prosBrake(bool pbrake) {
+	if (pbrake == true) {
+		if (rightMotors.getBrakeMode() != okapi::AbstractMotor::brakeMode::hold) {
+			leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+			rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+		}
+	} else if (pbrake == false) {
+		if (rightMotors.getBrakeMode() != okapi::AbstractMotor::brakeMode::coast) {
+			leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+			rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+		}
+	}
+}
+
+namespace deFenestration::Flywheel {
+
 // encoder tick per revolution
 float ticks_per_rev; ///< encoder ticks per revolution
 
@@ -169,10 +199,10 @@ void FwControlTask() {
 
 	while (1) {
 		// Calculate velocity
-		FwCalculateSpeed();
+		deFenestration::Flywheel::FwCalculateSpeed();
 
 		// Do the velocity TBH calculations
-		FwControlUpdateVelocityTbh();
+		deFenestration::Flywheel::FwControlUpdateVelocityTbh();
 
 		// Scale drive into the range the motors need
 		motor_drive = (drive * FW_MAX_POWER) + 0.5;
@@ -184,43 +214,18 @@ void FwControlTask() {
 			motor_drive = -200;
 
 		// and finally set the motor control value
-		FwMotorSet(motor_drive);
+		deFenestration::Flywheel::FwMotorSet(motor_drive);
 
 		// Run at somewhere between 20 and 50mS
 		pros::delay(FW_LOOP_SPEED);
 	}
 }
 
-/* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity */
-void customBrake(bool pbrake) {
-	if (pbrake == true) {
-		if (master.get_analog(ANALOG_RIGHT_X) == 0 && master.get_analog(ANALOG_LEFT_X) == 0) {
-			if (leftMotors.getActualVelocity() != 0 || rightMotors.getActualVelocity() != 0) {
-				leftMotors.moveVelocity(leftMotors.getActualVelocity() * -2);
-				rightMotors.moveVelocity(rightMotors.getActualVelocity() * -2);
-				pros::delay(2);
-			}
-		}
-	}
-}
-
-/* Smart boy motor brake solution */
-void prosBrake(bool pbrake) {
-	if (pbrake == true) {
-		if (rightMotors.getBrakeMode() != okapi::AbstractMotor::brakeMode::hold) {
-			leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
-			rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
-		}
-	} else if (pbrake == false) {
-		if (rightMotors.getBrakeMode() != okapi::AbstractMotor::brakeMode::coast) {
-			leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
-			rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
-		}
-	}
-}
+} // namespace deFenestration::Launcher
 
 /* Game System Controls */
 bool flywheelState = false;
+pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
 
 /*
  * Runs the operator control code. This function will be started in its own task
@@ -239,8 +244,7 @@ void opcontrol() {
 	leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 	rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 
-	pros::Task fwTask(FwControlTask);
-	FwVelocitySet(0, 0.0);
+	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
 	arms::selector::destroy();
 
@@ -281,16 +285,16 @@ void opcontrol() {
 		flywheel.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
 
 		if (flywheelState == true) {
-			FwVelocitySet(96, 0.2);
+			deFenestration::Flywheel::FwVelocitySet(96, 0.2);
 		} else if (flywheelState == false) {
-			FwVelocitySet(0, 0.0);
+			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 		}
 		// if(flywheelState == true) {
 		// 	flywheel.moveVelocity(290);
 		// } else if(flywheelState == false) {
 		// 	flywheel.moveVelocity(0);
 		// }
-		printf("Flywheel Velocity: %f\r\nFlywheel toggle: %d\r\n", flywheel.getActualVelocity(), flywheelState);
+		printf("Flywheel Velocity: %f\r", flywheel.getActualVelocity());
 
 		// Disk Conveyor
 		if (master.get_digital(DIGITAL_L1)) {
