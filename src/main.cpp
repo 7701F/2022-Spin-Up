@@ -46,6 +46,10 @@ void initialize() {
 		vision_sensor.set_led(COLOR_RED);
 	}
 
+	// Inititalize Flywheel
+	pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
+	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
+
 	/* Controller Status Display */
 	pros::Task controllerTask{[=] {
 		master.clear();
