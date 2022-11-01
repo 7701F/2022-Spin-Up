@@ -28,7 +28,14 @@ void init();
 int32_t mmToInch();
 } // namespace deFenestration::Vision
 
-// deFenestration Launcher System
+/* Flywheel vars */
+// Update inteval (in mS) for the flywheel control loop
+#define FW_LOOP_SPEED 20
+
+// Maximum power we want to send to the flywheel motors
+#define FW_MAX_POWER 200
+
+// deFenestration Flywheel System
 namespace deFenestration::Flywheel {
 void FwMotorSet(int value);
 
