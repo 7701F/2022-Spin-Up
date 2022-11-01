@@ -49,14 +49,8 @@ void initialize() {
 	/* Controller Status Display */
 	pros::Task controllerTask{[=] {
 		master.clear();
-		master.print(2, 0, "Starting 7701F.");
-		pros::delay(50);
-		master.print(2, 0, "Starting 7701F..");
-		pros::delay(50);
-		master.print(2, 0, "Starting 7701F... Ready!");
-		pros::delay(100);
 		master.print(2, 0, "Running...              ");
-		pros::delay(500);
+		pros::delay(150);
 
 		/**
 		 * Only print every 50ms, the controller text update rate is slow.

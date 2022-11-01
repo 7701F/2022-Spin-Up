@@ -98,22 +98,22 @@ void FwVelocitySet(int velocity, float predicted_drive) {
 /** @brief      Calculate the current flywheel motor velocity                  */
 /*-----------------------------------------------------------------------------*/
 void FwCalculateSpeed() {
-	int delta_ms;
-	int delta_enc;
+	// int delta_ms;
+	// int delta_enc;
 
-	// Get current encoder value
-	encoder_counts = FwMotorEncoderGet();
+	// // Get current encoder value
+	// encoder_counts = FwMotorEncoderGet();
 
-	// This is just used so we don't need to know how often we are called
-	// how many mS since we were last here
-	delta_ms = pros::millis() - nSysTime_last;
-	nSysTime_last = pros::millis();
+	// // This is just used so we don't need to know how often we are called
+	// // how many mS since we were last here
+	// delta_ms = pros::millis() - nSysTime_last;
+	// nSysTime_last = pros::millis();
 
-	// Change in encoder count
-	delta_enc = (encoder_counts - encoder_counts_last);
+	// // Change in encoder count
+	// delta_enc = (encoder_counts - encoder_counts_last);
 
-	// save last position
-	encoder_counts_last = encoder_counts;
+	// // save last position
+	// encoder_counts_last = encoder_counts;
 
 	// Calculate velocity in rpm
 	motor_velocity = flywheel.getActualVelocity();
@@ -165,7 +165,7 @@ void FwControlTask() {
 
 	// We are using Speed geared motors
 	// Set the encoder ticks per revolution
-	ticks_per_rev = 360;
+	ticks_per_rev = 20;
 
 	while (1) {
 		// Calculate velocity
@@ -285,6 +285,12 @@ void opcontrol() {
 		} else if (flywheelState == false) {
 			FwVelocitySet(0, 0.0);
 		}
+		// if(flywheelState == true) {
+		// 	flywheel.moveVelocity(290);
+		// } else if(flywheelState == false) {
+		// 	flywheel.moveVelocity(0);
+		// }
+		printf("Flywheel Velocity: %f\r\nFlywheel toggle: %d\r\n", flywheel.getActualVelocity(), flywheelState);
 
 		// Disk Conveyor
 		if (master.get_digital(DIGITAL_L1)) {
