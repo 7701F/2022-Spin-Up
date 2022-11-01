@@ -24,13 +24,6 @@
 #include "7701.h"
 #include "main.h"
 
-/* Flywheel */
-// Update inteval (in mS) for the flywheel control loop
-#define FW_LOOP_SPEED 20
-
-// Maximum power we want to send to the flywheel motors
-#define FW_MAX_POWER 200
-
 /* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity */
 void customBrake(bool pbrake) {
 	if (pbrake == true) {
