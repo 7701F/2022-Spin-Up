@@ -36,24 +36,17 @@ void initialize() {
 
 	// Turns off Wi-Fi because it's illegal in competition.
 	pros::Vision vision_sensor = pros::Vision(7);
-	bool c = pros::competition::is_connected();
-	if (c == true) {
-		vision_sensor.set_wifi_mode(0);
-		vision_sensor.set_led(COLOR_GREEN);
-	} else if (c == false) {
-		vision_sensor.set_wifi_mode(1);
-		vision_sensor.set_led(COLOR_RED);
-	}
 
 	// Inititalize Flywheel
 	pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
-	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
 	/* Controller Status Display */
 	pros::Task controllerTask{[=] {
 		master.clear();
 		master.print(2, 0, "Running...              ");
 		pros::delay(150);
+
+		bool c = pros::competition::is_connected();
 
 		/**
 		 * Only print every 50ms, the controller text update rate is slow.
@@ -70,9 +63,18 @@ void initialize() {
 				brakestr << "Brake: " << (pbrake ? "ON" : "OFF") << "\r";
 				master.print(1, 0, brakestr.str().c_str());
 			}
-
 			count++;
 			count %= 150;
+
+			if (c == true) {
+				vision_sensor.set_wifi_mode(0);
+				vision_sensor.set_led(COLOR_GREEN);
+			} else if (c == false) {
+				vision_sensor.set_wifi_mode(1);
+				vision_sensor.set_led(COLOR_RED);
+			}
+			c = pros::competition::is_connected();
+
 			pros::delay(1);
 		}
 	}};
@@ -88,6 +90,8 @@ void disabled() {
 	printf("Disabled called %d\n", count++);
 
 	while (true) {
+		printf("Disabled loop");
+
 		pros::delay(1000);
 	}
 }

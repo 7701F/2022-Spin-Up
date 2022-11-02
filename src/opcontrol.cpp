@@ -52,7 +52,12 @@ void prosBrake(bool pbrake) {
 	}
 }
 
-namespace deFenestration::Flywheel {
+/* Flywheel vars */
+// Update inteval (in mS) for the flywheel control loop
+#define FW_LOOP_SPEED 20
+
+// Maximum power we want to send to the flywheel motors
+#define FW_MAX_POWER 200
 
 // encoder tick per revolution
 float ticks_per_rev; ///< encoder ticks per revolution
@@ -77,6 +82,8 @@ float drive_approx;   ///< estimated open loop drive
 
 // final motor drive
 long motor_drive; ///< final motor control value
+
+namespace deFenestration::Flywheel {
 
 /*-----------------------------------------------------------------------------*/
 /** @brief      Set the flywheen motors                                        */
@@ -189,9 +196,11 @@ void FwControlTask() {
 	// Set the encoder ticks per revolution
 	ticks_per_rev = 20;
 
+	int count;
 	while (1) {
 		// Calculate velocity
-		deFenestration::Flywheel::FwCalculateSpeed();
+		// deFenestration::Flywheel::FwCalculateSpeed();
+		motor_velocity = flywheel.getActualVelocity();
 
 		// Do the velocity TBH calculations
 		deFenestration::Flywheel::FwControlUpdateVelocityTbh();
@@ -208,16 +217,30 @@ void FwControlTask() {
 		// and finally set the motor control value
 		deFenestration::Flywheel::FwMotorSet(motor_drive);
 
+		// Log
+		if (count % 500)
+			printf("Flywheel Temp: %f\n", flywheel.getTemperature());
+		if (count % 1000)
+			printf("Flywheel Vel: %f\n", flywheel.getActualVelocity());
+		if (count % 1500)
+			printf("Flywheel Efficiency: %f\n", flywheel.getEfficiency());
+		if (count % 2000)
+			printf("Flywheel CDraw: %d\n", flywheel.getCurrentDraw());
+
 		// Run at somewhere between 20 and 50mS
+		count++;
+		count %= 150;
 		pros::delay(FW_LOOP_SPEED);
 	}
 }
 
-} // namespace deFenestration::Launcher
+} // namespace deFenestration::Flywheel
 
 /* Game System Controls */
 bool flywheelState = false;
-pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
+bool flywheelThirdPosState = false;
+bool fwON = false;
+// pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
 
 /*
  * Runs the operator control code. This function will be started in its own task
@@ -235,8 +258,6 @@ pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
 void opcontrol() {
 	leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 	rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
-
-	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
 	// Run Loop
 	while (true) {
@@ -262,22 +283,21 @@ void opcontrol() {
 		/* Game Related Subsystems
 		 * Controls for game specific functions
 		 */
-
-		// Disk Launcher
+		// Disk Launcher/Flywheel
 		flywheelState = master.get_digital_new_press(DIGITAL_L2);
-		flywheel.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
-
 		if (flywheelState == true) {
-			deFenestration::Flywheel::FwVelocitySet(96, 0.2);
-		} else if (flywheelState == false) {
+			fwON = !fwON;
+			deFenestration::Flywheel::FwVelocitySet(155, 1.55);
+		}
+		flywheelThirdPosState = master.get_digital_new_press(DIGITAL_L1);
+		if (flywheelThirdPosState == true) {
+			fwON = !fwON;
+			deFenestration::Flywheel::FwVelocitySet(75, 0.2);
+		}
+
+		if (fwON == false) {
 			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 		}
-		// if(flywheelState == true) {
-		// 	flywheel.moveVelocity(290);
-		// } else if(flywheelState == false) {
-		// 	flywheel.moveVelocity(0);
-		// }
-		printf("Flywheel Velocity: %f\r", flywheel.getActualVelocity());
 
 		// Disk Conveyor
 		if (master.get_digital(DIGITAL_L1)) {

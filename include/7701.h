@@ -28,13 +28,6 @@ void init();
 int32_t mmToInch();
 } // namespace deFenestration::Vision
 
-/* Flywheel vars */
-// Update inteval (in mS) for the flywheel control loop
-#define FW_LOOP_SPEED 20
-
-// Maximum power we want to send to the flywheel motors
-#define FW_MAX_POWER 200
-
 // deFenestration Flywheel System
 namespace deFenestration::Flywheel {
 void FwMotorSet(int value);
@@ -48,7 +41,7 @@ void FwCalculateSpeed();
 void FwControlUpdateVelocityTbh();
 
 void FwControlTask();
-} // namespace deFenestration::Launcher
+} // namespace deFenestration::Flywheel
 
 // Declare drive system variables.
 inline bool pbrake = true;
