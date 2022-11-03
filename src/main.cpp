@@ -43,7 +43,8 @@ void initialize() {
 	/* Controller Status Display */
 	pros::Task controllerTask{[=] {
 		master.clear();
-		master.print(2, 0, "Running...              ");
+		pros::delay(150);
+		master.print(2, 0, "Running...");
 		pros::delay(150);
 
 		bool c = pros::competition::is_connected();
