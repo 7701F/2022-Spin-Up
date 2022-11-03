@@ -64,10 +64,10 @@ void display() {
 
 	while(true) {
 		std::stringstream stats;
-		stats << "Flywheel Temp: " << flywheel.getTemperature() << "\n" << "Flywheel MVel: " << (flywheel.getActualVelocity()) << "\n" << "Flywheel OVel: " << (flywheel.getActualVelocity() * 16.3333) << "\n" << "Flywheel Efficiency: " << flywheel.getEfficiency() << "\n" << "Flywheel CDraw: " << flywheel.getCurrentDraw();
+		stats << "Flywheel Info:\n" <<  "Flywheel Temp: " << flywheel.getTemperature() << "\n" << "Flywheel MVel: " << (flywheel.getActualVelocity()) << "\n" << "Flywheel OVel: " << (flywheel.getActualVelocity() * 16.3333) << "\n" << "Flywheel Efficiency: " << flywheel.getEfficiency() << "\n" << "Flywheel CDraw: " << flywheel.getCurrentDraw();
 
 		lv_label_set_text(statsdisplay, stats.str().c_str());
-		pros::delay(100)
+		pros::delay(20);
 	}
 }
 

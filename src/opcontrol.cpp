@@ -201,14 +201,14 @@ void FwControlTask() {
 		deFenestration::Flywheel::FwMotorSet(motor_drive);
 
 		// Log
-		if (count % 500)
-			printf("Flywheel Temp: %f\n", flywheel.getTemperature());
-		if (count % 1000)
-			printf("Flywheel MVel: %f & Flywheel OVel: %f \n", flywheel.getActualVelocity(), flywheel.getActualVelocity() * 16.3333);
-		if (count % 1500)
-			printf("Flywheel Efficiency: %f\n", flywheel.getEfficiency());
-		if (count % 2000)
-			printf("Flywheel CDraw: %d\n", flywheel.getCurrentDraw());
+		// if (count % 500)
+		// 	printf("Flywheel Temp: %f\n", flywheel.getTemperature());
+		// if (count % 1000)
+		// 	printf("Flywheel MVel: %f & Flywheel OVel: %f \n", flywheel.getActualVelocity(), flywheel.getActualVelocity() * 16.3333);
+		// if (count % 1500)
+		// 	printf("Flywheel Efficiency: %f\n", flywheel.getEfficiency());
+		// if (count % 2000)
+		// 	printf("Flywheel CDraw: %d\n", flywheel.getCurrentDraw());
 
 		// Run at somewhere between 20 and 50mS
 		count++;
