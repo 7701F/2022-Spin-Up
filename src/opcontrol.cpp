@@ -222,7 +222,7 @@ void FwControlTask() {
 		if (count % 500)
 			printf("Flywheel Temp: %f\n", flywheel.getTemperature());
 		if (count % 1000)
-			printf("Flywheel Vel: %f\n", flywheel.getActualVelocity());
+			printf("Flywheel MVel: %f & Flywheel OVel: %f \n", flywheel.getActualVelocity(), flywheel.getActualVelocity() * 16.3333);
 		if (count % 1500)
 			printf("Flywheel Efficiency: %f\n", flywheel.getEfficiency());
 		if (count % 2000)
@@ -304,7 +304,7 @@ void opcontrol() {
 		flywheelThirdPosState = master.get_digital_new_press(DIGITAL_L1);
 		if (flywheelThirdPosState == true) {
 			fwON = !fwON;
-			deFenestration::Flywheel::FwVelocitySet(75, 0.2);
+			deFenestration::Flywheel::FwVelocitySet(120, 0.2);
 		}
 
 		if (fwON == false) {
@@ -312,7 +312,7 @@ void opcontrol() {
 		}
 
 		// Disk Conveyor
-		if (master.get_digital(DIGITAL_L1)) {
+		if (master.get_digital(DIGITAL_R1)) {
 			conveyor.moveVelocity(200);
 		} else {
 			conveyor.moveVelocity(0);
