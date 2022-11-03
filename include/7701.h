@@ -70,3 +70,6 @@ extern okapi::Motor intake;
 /* Sensors */
 extern okapi::IMU imu_sensor;
 extern okapi::DistanceSensor distance_sensor;
+
+/* Display */
+void display();
