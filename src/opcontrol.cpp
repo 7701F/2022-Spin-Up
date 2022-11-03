@@ -22,8 +22,8 @@
 #include <sstream>
 
 #include "7701.h"
-#include "main.h"
 #include "gif-pros/gifclass.hpp"
+#include "main.h"
 
 /* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity */
 void customBrake(bool pbrake) {
@@ -58,7 +58,7 @@ void prosBrake(bool pbrake) {
 #define FW_LOOP_SPEED 20
 
 // Maximum power we want to send to the flywheel motors
-#define FW_MAX_POWER 200
+#define FW_MAX_POWER 210
 
 // encoder tick per revolution
 float ticks_per_rev; ///< encoder ticks per revolution
@@ -128,24 +128,6 @@ void FwVelocitySet(int velocity, float predicted_drive) {
 /** @brief      Calculate the current flywheel motor velocity                  */
 /*-----------------------------------------------------------------------------*/
 void FwCalculateSpeed() {
-	// int delta_ms;
-	// int delta_enc;
-
-	// // Get current encoder value
-	// encoder_counts = FwMotorEncoderGet();
-
-	// // This is just used so we don't need to know how often we are called
-	// // how many mS since we were last here
-	// delta_ms = pros::millis() - nSysTime_last;
-	// nSysTime_last = pros::millis();
-
-	// // Change in encoder count
-	// delta_enc = (encoder_counts - encoder_counts_last);
-
-	// // save last position
-	// encoder_counts_last = encoder_counts;
-
-	// Calculate velocity in rpm
 	motor_velocity = flywheel.getActualVelocity();
 }
 
@@ -263,13 +245,14 @@ void opcontrol() {
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
 	arms::selector::destroy();
+	pros::Task displayTask(display);
 
-	lv_obj_t* obj = lv_obj_create(lv_scr_act(), NULL);
-	lv_obj_set_size(obj, 480, 240);
-	lv_obj_set_style(obj, &lv_style_transp); // make the container invisible
-	lv_obj_align(obj, NULL, LV_ALIGN_CENTER, 0, 0);
+	// lv_obj_t* obj = lv_obj_create(lv_scr_act(), NULL);
+	// lv_obj_set_size(obj, 480, 240);
+	// lv_obj_set_style(obj, &lv_style_transp); // make the container invisible
+	// lv_obj_align(obj, NULL, LV_ALIGN_CENTER, 0, 0);
 
-	Gif gif("/usd/mygif.gif", obj);
+	// Gif gif("/usd/mygif.gif", obj);
 
 	// Run Loop
 	while (true) {
@@ -313,7 +296,7 @@ void opcontrol() {
 
 		// Disk Conveyor
 		if (master.get_digital(DIGITAL_R1)) {
-			conveyor.moveVelocity(200);
+			conveyor.moveVelocity(100);
 		} else {
 			conveyor.moveVelocity(0);
 		}
