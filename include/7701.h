@@ -64,9 +64,6 @@ extern okapi::MotorGroup leftMotors;
 extern okapi::Motor flywheel;
 extern okapi::Motor conveyor;
 
-/* Disk Intake Motors */
-extern okapi::Motor intake;
-
 /* Sensors */
 extern okapi::IMU imu_sensor;
 extern okapi::DistanceSensor distance_sensor;

@@ -39,8 +39,6 @@ okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
 okapi::Motor flywheel(12, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 okapi::Motor conveyor(13, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 
-okapi::Motor intake(5, true, okapi::AbstractMotor::gearset::blue, okapi::AbstractMotor::encoderUnits::degrees);
-
 /* Sensors */
 okapi::IMU imu_sensor(1);
 okapi::DistanceSensor distance_sensor(8);
