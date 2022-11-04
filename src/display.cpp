@@ -60,6 +60,15 @@ void display() {
 	// lv_label_set_text(statsdisplay, stats.str().c_str());
 	lv_obj_align(statsdisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 60);
 
+	// lv_obj_t* obj = lv_obj_create(lv_scr_act(), NULL);
+	// lv_obj_set_size(obj, 480, 240);
+	// lv_obj_set_style(obj, &lv_style_transp); // make the container invisible
+	// lv_obj_align(obj, NULL, LV_ALIGN_CENTER, 0, 0);
+
+	// Gif gif("/usd/mygif.gif", obj);
+
+	// deFenestration Flywheel Stats Display
+	// Runs every 20ms
 	while(true) {
 		std::stringstream stats;
 		stats << "Flywheel Info:\n" <<  "Flywheel Temp: " << flywheel.getTemperature() << "\nFlywheel MVel: " << (flywheel.getActualVelocity()) << "\nFlywheel OVel: " << (flywheel.getActualVelocity() * 16.3333) << "\nFlywheel Efficiency: " << flywheel.getEfficiency() << "\nFlywheel CDraw: " << flywheel.getCurrentDraw();
