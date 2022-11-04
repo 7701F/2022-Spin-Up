@@ -43,7 +43,7 @@ void display() {
 	title_style.text.font = &lv_font_dejavu_20;
 	title_style.text.color = LV_COLOR_GREEN;
 
-	// text
+	// Title
 	lv_obj_t* display_title = lv_label_create(scr, NULL);
 	lv_obj_set_style(display_title, &title_style);
 	lv_label_set_text(display_title, "GREETINGS PROFESSOR FALKEN.");
@@ -54,20 +54,18 @@ void display() {
 	lv_label_set_text(display_title2, "SHALL WE PLAY A GAME?");
 	lv_obj_align(display_title2, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 35);
 
-	std::stringstream stats;
-	stats << "Flywheel Temp: " << flywheel.getTemperature() << "\n" << "Flywheel MVel: " << (flywheel.getActualVelocity()) << "\n" << "Flywheel OVel: " << (flywheel.getActualVelocity() * 16.3333) << "\n" << "Flywheel Efficiency: " << flywheel.getEfficiency() << "\n" << "Flywheel CDraw: " << flywheel.getCurrentDraw();
-
+	// Flywheel Telemetry Display
 	lv_obj_t* statsdisplay = lv_label_create(scr, NULL);
 	lv_obj_set_style(statsdisplay, &title_style);
-	lv_label_set_text(statsdisplay, stats.str().c_str());
+	// lv_label_set_text(statsdisplay, stats.str().c_str());
 	lv_obj_align(statsdisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 60);
 
 	while(true) {
 		std::stringstream stats;
-		stats << "Flywheel Info:\n" <<  "Flywheel Temp: " << flywheel.getTemperature() << "\n" << "Flywheel MVel: " << (flywheel.getActualVelocity()) << "\n" << "Flywheel OVel: " << (flywheel.getActualVelocity() * 16.3333) << "\n" << "Flywheel Efficiency: " << flywheel.getEfficiency() << "\n" << "Flywheel CDraw: " << flywheel.getCurrentDraw();
+		stats << "Flywheel Info:\n" <<  "Flywheel Temp: " << flywheel.getTemperature() << "\nFlywheel MVel: " << (flywheel.getActualVelocity()) << "\nFlywheel OVel: " << (flywheel.getActualVelocity() * 16.3333) << "\nFlywheel Efficiency: " << flywheel.getEfficiency() << "\nFlywheel CDraw: " << flywheel.getCurrentDraw();
 
 		lv_label_set_text(statsdisplay, stats.str().c_str());
-		pros::delay(20);
+		pros::delay(50);
 	}
 }
 
