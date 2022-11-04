@@ -43,17 +43,16 @@ void initialize() {
 	/* Controller Status Display */
 	pros::Task controllerTask{[=] {
 		master.clear();
-		pros::delay(150);
+		pros::delay(50);
 		master.print(2, 0, "Running...");
-		pros::delay(150);
-
-		bool c = pros::competition::is_connected();
+		pros::delay(50);
 
 		/**
 		 * Only print every 50ms, the controller text update rate is slow.
 		 * Any input faster than this will be dropped.
 		 */
 		int count;
+		bool c = pros::competition::is_connected();
 		while (true) {
 			if (count == 100) {
 				std::stringstream autonstr;
