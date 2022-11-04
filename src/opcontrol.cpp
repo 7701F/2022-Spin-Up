@@ -296,7 +296,9 @@ void opcontrol() {
 
 		// Disk Conveyor
 		if (master.get_digital(DIGITAL_R1)) {
-			conveyor.moveVelocity(100);
+			conveyor.moveVelocity(200);
+		} else if (master.get_digital(DIGITAL_R2)) {
+			conveyor.moveVelocity(-200);
 		} else {
 			conveyor.moveVelocity(0);
 		}
