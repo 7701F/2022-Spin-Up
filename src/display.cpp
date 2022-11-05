@@ -29,36 +29,39 @@ lv_obj_t* scr = lv_obj_create(NULL, NULL);
 // Magic beyond my understanding of LVGL
 void display() {
 	// Background Style
-	static lv_style_t background_style;
-	lv_style_copy(&background_style, &lv_style_plain);
-	background_style.body.main_color = LV_COLOR_BLACK;
-	background_style.body.grad_color = LV_COLOR_BLACK;
+	static lv_style_t backgroundStyle;
+	lv_style_copy(&backgroundStyle, &lv_style_plain);
+	backgroundStyle.body.main_color = LV_COLOR_BLACK;
+	backgroundStyle.body.grad_color = LV_COLOR_BLACK;
 
-	lv_obj_set_style(scr, &background_style);
+	lv_obj_set_style(scr, &backgroundStyle);
 	lv_scr_load(scr);
 
 	// styles
-	static lv_style_t title_style;
-	lv_style_copy(&title_style, &lv_style_plain);
-	title_style.text.font = &lv_font_dejavu_20;
-	title_style.text.color = LV_COLOR_GREEN;
+	static lv_style_t titleStyle;
+	lv_style_copy(&titleStyle, &lv_style_plain);
+	titleStyle.text.font = &lv_font_dejavu_20;
+	titleStyle.text.color = LV_COLOR_GREEN;
 
 	// Title
-	lv_obj_t* display_title = lv_label_create(scr, NULL);
-	lv_obj_set_style(display_title, &title_style);
-	lv_label_set_text(display_title, "GREETINGS PROFESSOR FALKEN.");
-	lv_obj_align(display_title, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 10);
+	lv_obj_t* displayTitle = lv_label_create(scr, NULL);
+	lv_obj_set_style(displayTitle, &titleStyle);
+	lv_label_set_text(displayTitle, "GREETINGS PROFESSOR FALKEN.");
+	lv_obj_align(displayTitle, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 10);
 
-	lv_obj_t* display_title2 = lv_label_create(scr, NULL);
-	lv_obj_set_style(display_title2, &title_style);
-	lv_label_set_text(display_title2, "SHALL WE PLAY A GAME?");
-	lv_obj_align(display_title2, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 35);
+	lv_obj_t* displayTitle2 = lv_label_create(scr, NULL);
+	lv_obj_set_style(displayTitle2, &titleStyle);
+	lv_label_set_text(displayTitle2, "SHALL WE PLAY A GAME?");
+	lv_obj_align(displayTitle2, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 35);
 
 	// Flywheel Telemetry Display
-	lv_obj_t* statsdisplay = lv_label_create(scr, NULL);
-	lv_obj_set_style(statsdisplay, &title_style);
-	// lv_label_set_text(statsdisplay, stats.str().c_str());
-	lv_obj_align(statsdisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 60);
+	lv_obj_t* statsDisplay = lv_label_create(scr, NULL);
+	lv_obj_set_style(statsDisplay, &titleStyle);
+	lv_obj_align(statsDisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 60);
+
+	lv_obj_t* odomDisplay = lv_label_create(scr, NULL);
+	lv_obj_set_style(odomDisplay, &titleStyle);
+	lv_obj_align(odomDisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 110);
 
 	// lv_obj_t* obj = lv_obj_create(lv_scr_act(), NULL);
 	// lv_obj_set_size(obj, 480, 240);
@@ -67,13 +70,17 @@ void display() {
 
 	// Gif gif("/usd/mygif.gif", obj);
 
-	// deFenestration Flywheel Stats Display
+	// deFenestration Stats Display
 	// Runs every 20ms
 	while(true) {
 		std::stringstream stats;
-		stats << "Flywheel Info:\n" <<  "Flywheel Temp: " << flywheel.getTemperature() << "\nFlywheel MVel: " << (flywheel.getActualVelocity()) << "\nFlywheel OVel: " << (flywheel.getActualVelocity() * 16.3333) << "\nFlywheel Efficiency: " << flywheel.getEfficiency() << "\nFlywheel CDraw: " << flywheel.getCurrentDraw();
+		stats << "Flywheel Info:\n" <<  "Flywheel Temp: " << flywheel.getTemperature() << "\nFlywheel MVel: " << (flywheel.getActualVelocity()) << " Flywheel OVel: " << (flywheel.getActualVelocity() * 16.3333333334) << "\nFlywheel Efficiency: " << flywheel.getEfficiency() << " Flywheel CDraw: " << flywheel.getCurrentDraw();
 
-		lv_label_set_text(statsdisplay, stats.str().c_str());
+		std::stringstream odomStats;
+		odomStats << "Odom X/Y:(" << arms::odom::getPosition().x << "," << arms::odom::getPosition().y << ") Odom Angle: " << arms::odom::getHeading();
+
+		lv_label_set_text(odomDisplay, odomStats.str().c_str());
+		lv_label_set_text(statsDisplay, stats.str().c_str());
 		pros::delay(50);
 	}
 }

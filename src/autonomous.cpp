@@ -59,7 +59,17 @@ int32_t mmToInch() {
 /*
  * Autonomous 1
  */
-void Sauton1() {
+void redRight() {
+	deFenestration::Flywheel::FwVelocitySet(96, 0.2);
+
+	using namespace arms::chassis;
+	arms::odom::reset({{0, 24}});
+
+	// move(24, 100, arms::RELATIVE);
+
+	turn({24, 24}, 75);
+
+	// move({{24, 0}}, 50, arms::THRU | arms::ASYNC);
 }
 
 /* Programming Skills */
@@ -69,7 +79,11 @@ void Sauton() {
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 24}});
 
-	move({{24, 0}}, 50, arms::THRU | arms::ASYNC);
+	// move(24, 100, arms::RELATIVE);
+
+	turn({24, 24}, 75);
+
+	// move({{24, 0}}, 50, arms::THRU | arms::ASYNC);
 }
 
 /**
@@ -96,7 +110,7 @@ void autonomous() {
 			Sauton();
 			break;
 		case 1:
-			Sauton1();
+			redRight();
 			break;
 		case 2:
 			break;
