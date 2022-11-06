@@ -57,11 +57,11 @@ void display() {
 	// Flywheel Telemetry Display
 	lv_obj_t* statsDisplay = lv_label_create(scr, NULL);
 	lv_obj_set_style(statsDisplay, &titleStyle);
-	lv_obj_align(statsDisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 60);
+	lv_obj_align(statsDisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 85);
 
-	lv_obj_t* odomDisplay = lv_label_create(scr, NULL);
-	lv_obj_set_style(odomDisplay, &titleStyle);
-	lv_obj_align(odomDisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 110);
+	// lv_obj_t* odomDisplay = lv_label_create(scr, NULL);
+	// lv_obj_set_style(odomDisplay, &titleStyle);
+	// lv_obj_align(odomDisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 160);
 
 	// lv_obj_t* obj = lv_obj_create(lv_scr_act(), NULL);
 	// lv_obj_set_size(obj, 480, 240);
@@ -74,41 +74,14 @@ void display() {
 	// Runs every 20ms
 	while(true) {
 		std::stringstream stats;
-		stats << "Flywheel Info:\n" <<  "Flywheel Temp: " << flywheel.getTemperature() << "\nFlywheel MVel: " << (flywheel.getActualVelocity()) << " Flywheel OVel: " << (flywheel.getActualVelocity() * 16.3333333334) << "\nFlywheel Efficiency: " << flywheel.getEfficiency() << " Flywheel CDraw: " << flywheel.getCurrentDraw();
+		stats << "Flywheel Info:\n" <<  "  Flywheel Temp: " << flywheel.getTemperature() << "\n  Flywheel MVel: " << (flywheel.getActualVelocity()) << "\n  Flywheel OVel: " << (flywheel.getActualVelocity() * 16.3333333334) << "\n  Flywheel Efficiency: " << flywheel.getEfficiency(); //<< " Flywheel CDraw: " << flywheel.getCurrentDraw();
 
 		std::stringstream odomStats;
-		odomStats << "Odom X/Y:(" << arms::odom::getPosition().x << "," << arms::odom::getPosition().y << ") Odom Angle: " << arms::odom::getHeading();
+		// odomStats << "Odom X/Y:(" << arms::odom::getPosition().x << "," << arms::odom::getPosition().y << ") Odom Angle: " << arms::odom::getHeading();
+		// odomStats << "Disabled.";
 
-		lv_label_set_text(odomDisplay, odomStats.str().c_str());
+		// lv_label_set_text(odomDisplay, odomStats.str().c_str());
 		lv_label_set_text(statsDisplay, stats.str().c_str());
 		pros::delay(50);
 	}
 }
-
-// // IMU Status Shenanigans
-// void imuDisplay() {
-// 	// styles
-// 	static lv_style_t title_style;
-// 	lv_style_copy(&title_style, &lv_style_plain);
-// 	title_style.text.font = &lv_font_dejavu_20;
-// 	title_style.text.color = LV_COLOR_GREEN;
-// 	lv_obj_t* display_title3 = lv_label_create(scr, NULL);
-// 	lv_obj_set_style(display_title3, &title_style);
-// 	lv_label_set_text(display_title3, "IMU STATUS: UNINITIALIZED");
-// 	lv_obj_align(display_title3, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 85);
-
-// 	int time = pros::millis();
-// 	int iter = 0;
-// 	while (imu_sensor.isCalibrating()) {
-// 		// printf();
-// 		std::ostringstream ss;
-// 		ss << "IMU calibrating... (" << iter << " ms)";
-// 		lv_label_set_text(display_title3, ss.str().c_str());
-// 		iter += 10;
-// 		pros::delay(1);
-// 	}
-
-// 	std::ostringstream ss;
-// 	ss << "IMU calibrated: (" << iter - time << " ms)";
-// 	lv_label_set_text(display_title3, ss.str().c_str());
-// }

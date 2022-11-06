@@ -38,6 +38,7 @@ okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
 /* Game System Motors */
 okapi::Motor flywheel(12, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 okapi::Motor conveyor(13, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+okapi::Motor roller(5, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 
 /* Sensors */
 okapi::IMU imu_sensor(1);

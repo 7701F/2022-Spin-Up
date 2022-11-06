@@ -59,15 +59,17 @@ int32_t mmToInch() {
 /*
  * Autonomous 1
  */
-void redRight() {
+void redFront() {
 	deFenestration::Flywheel::FwVelocitySet(96, 0.2);
 
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 24}});
+	turn({0, 24}, 75);
+	move({{0, 24}}, 200);
 
 	// move(24, 100, arms::RELATIVE);
 
-	turn({24, 24}, 75);
+	// turn({24, 24}, 75);
 
 	// move({{24, 0}}, 50, arms::THRU | arms::ASYNC);
 }
@@ -110,7 +112,7 @@ void autonomous() {
 			Sauton();
 			break;
 		case 1:
-			redRight();
+			// redFront();
 			break;
 		case 2:
 			break;

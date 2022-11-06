@@ -63,6 +63,7 @@ extern okapi::MotorGroup leftMotors;
 /* Disk Launcher Motors */
 extern okapi::Motor flywheel;
 extern okapi::Motor conveyor;
+extern okapi::Motor roller;
 
 /* Sensors */
 extern okapi::IMU imu_sensor;

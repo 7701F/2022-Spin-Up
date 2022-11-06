@@ -223,7 +223,6 @@ void FwControlTask() {
 bool flywheelState = false;
 bool flywheelThirdPosState = false;
 bool fwON = false;
-// pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
 
 /*
  * Runs the operator control code. This function will be started in its own task
@@ -251,12 +250,11 @@ void opcontrol() {
 	while (true) {
 		/* Steering
 		 * Handled by ARMS
-		 * H-Drive is controlled by the X-axis on the left stick
 		 */
 		// clang-format off
 		arms::chassis::arcade(
 			master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
-		    master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127
+		    master.get_analog(ANALOG_RIGHT_X) * (double)-100 / 127
 		);
 		// clang-format on
 
@@ -271,16 +269,16 @@ void opcontrol() {
 		/* Game Related Subsystems
 		 * Controls for game specific functions
 		 */
-		// Disk Launcher/Flywheel
+		// Disk Flywheel
 		flywheelState = master.get_digital_new_press(DIGITAL_L2);
 		if (flywheelState == true) {
 			fwON = !fwON;
-			deFenestration::Flywheel::FwVelocitySet(155, 1.55);
+			deFenestration::Flywheel::FwVelocitySet(200, 1.55);
 		}
 		flywheelThirdPosState = master.get_digital_new_press(DIGITAL_L1);
 		if (flywheelThirdPosState == true) {
 			fwON = !fwON;
-			deFenestration::Flywheel::FwVelocitySet(120, 0.2);
+			deFenestration::Flywheel::FwVelocitySet(120, 0.5);
 		}
 
 		if (fwON == false) {
@@ -289,11 +287,19 @@ void opcontrol() {
 
 		// Disk Conveyor
 		if (master.get_digital(DIGITAL_R1)) {
-			conveyor.moveVelocity(200);
+			conveyor.moveVelocity(67);
 		} else if (master.get_digital(DIGITAL_R2)) {
-			conveyor.moveVelocity(-200);
+			conveyor.moveVelocity(-67);
 		} else {
 			conveyor.moveVelocity(0);
+		}
+		printf("%f\r", conveyor.getActualVelocity());
+
+		// Roller
+		if (master.get_digital(DIGITAL_A)) {
+			roller.moveVelocity(200);
+		} else  {
+			roller.moveVelocity(0);
 		}
 
 		/* Brake System
