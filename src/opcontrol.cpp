@@ -18,11 +18,10 @@
 
   3. This notice may not be removed or altered from any source distribution.
 */
-
-#include <sstream>
-
 #include "7701.h"
 #include "main.h"
+
+#include <sstream>
 
 /* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity */
 void customBrake(bool pbrake) {
