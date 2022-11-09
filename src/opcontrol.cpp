@@ -92,7 +92,7 @@ namespace deFenestration::Flywheel {
 void FwMotorSet(int value) {
 	int x;
 	x = (value * 12000) / 200;
-	flywheel.moveVoltage(x);
+	fw.moveVoltage(x);
 }
 
 /*-----------------------------------------------------------------------------*/
@@ -120,7 +120,7 @@ void FwVelocitySet(int velocity, float predicted_drive) {
 /** @brief      Calculate the current flywheel motor velocity                  */
 /*-----------------------------------------------------------------------------*/
 float FwCalculateSpeed() {
-	encoder_counts = flywheel.getPosition();
+	encoder_counts = fw.getPosition();
 
 	motor_velocity = (encoder_counts - encoder_counts_last) / 20.0;
 
@@ -191,8 +191,8 @@ void FwControlTask() {
 		motor_drive = (drive * FW_MAX_POWER) + 0.5;
 
 		// Final Limit of motor values - don't really need this
-		if (motor_drive > 200)
-			motor_drive = 200;
+		if (motor_drive > 210)
+			motor_drive = 210;
 		if (motor_drive < -200)
 			motor_drive = -200;
 
@@ -234,9 +234,9 @@ void opcontrol() {
 
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
-	if (deFenestration::config::showScreen == true) {
+	if (deFenestration::showScreen == true) {
 		arms::selector::destroy();
-		pros::Task displayTask(display);
+		pros::Task displayTask(deFenestration::display);
 	}
 
 	// Run Loop
@@ -302,15 +302,15 @@ void opcontrol() {
 			pbrake = !pbrake;
 		prosBrake(pbrake);
 
-		if (deFenestration::config::debug == true) {
+		if (deFenestration::debug == true) {
 			if (count % 500)
-				printf("Flywheel on: %i\n", fwON);
+				printf("Fw on: %i\n", fwON);
 			if (count % 1000)
-				printf("Flywheel MVel: %f & Flywheel OVel: %f \n", flywheel.getActualVelocity(), flywheel.getActualVelocity() * 16.3333);
+				printf("Fw MVel: %f & Fw OVel: %f \n", fw.getActualVelocity(), fw.getActualVelocity() * 16.3333);
 			if (count % 1500)
 				printf("Commanded Velocity: %ld\n", motor_drive);
 			if (count % 2000)
-				printf("Flywheel CDraw: %d\n Flywheel Commanded Current: %f\n", flywheel.getCurrentDraw(),
+				printf("Fw CDraw: %d\n Fw Commanded Current: %f\n", fw.getCurrentDraw(),
 				       (motor_velocity * 12000) / 200);
 		}
 

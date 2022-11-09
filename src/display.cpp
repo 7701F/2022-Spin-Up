@@ -28,6 +28,7 @@
 lv_obj_t* scr = lv_obj_create(NULL, NULL);
 
 // Magic beyond my understanding of LVGL
+namespace deFenestration {
 void display() {
 	// Background Style
 	static lv_style_t backgroundStyle;
@@ -76,9 +77,9 @@ void display() {
 	while (true) {
 		std::stringstream stats;
 		stats << "Flywheel Info:\n"
-		      << "  Flywheel Temp: " << flywheel.getTemperature() << "\n  Flywheel MVel: " << (flywheel.getActualVelocity())
-		      << "\n  Flywheel OVel: " << (flywheel.getActualVelocity() * 16.3333333334)
-		      << "\n  Flywheel Efficiency: " << flywheel.getEfficiency(); //<< " Flywheel CDraw: " << flywheel.getCurrentDraw();
+		      << "  Flywheel Temp: " << fw.getTemperature() << "\n  Flywheel MVel: " << (fw.getActualVelocity())
+		      << "\n  Flywheel OVel: " << (fw.getActualVelocity() * 16.3333333334)
+		      << "\n  Flywheel Efficiency: " << fw.getEfficiency(); //<< " Flywheel CDraw: " << flywheel.getCurrentDraw();
 
 		std::stringstream odomStats;
 		odomStats << "Odom X/Y:(" << arms::odom::getPosition().x << "," << arms::odom::getPosition().y
@@ -89,3 +90,5 @@ void display() {
 		pros::delay(50);
 	}
 }
+
+} // namespace deFenestration

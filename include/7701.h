@@ -21,13 +21,16 @@
 
 #include "main.h"
 
-namespace deFenestration::config {
+namespace deFenestration {
+/* Display */
+void display();
+
 /* Config */
 const bool debug = false;
 
 /* Enable Show Screen */
 const bool showScreen = false;
-} // namespace deFenestration::config
+} // namespace deFenestration
 
 // deFenestration Flywheel System
 namespace deFenestration::Flywheel {
@@ -50,7 +53,6 @@ inline bool pbrake = true;
 // Declare driver functions
 void customBrake(bool pbrake);
 void prosBrake(bool pbrake);
-void FwControlTask();
 
 /* Controller */
 extern pros::Controller master;
@@ -62,13 +64,10 @@ extern okapi::MotorGroup leftMotors;
 /* Game System Motors */
 
 /* Disk Launcher Motors */
-extern okapi::Motor flywheel;
+extern okapi::Motor fw;
 extern okapi::Motor conveyor;
 extern okapi::Motor roller;
 
 /* Sensors */
 extern okapi::IMU imu_sensor;
 extern okapi::DistanceSensor distance_sensor;
-
-/* Display */
-void display();
