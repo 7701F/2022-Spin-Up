@@ -22,31 +22,6 @@
 #include "7701.h"
 #include "main.h"
 
-bool initialized = false;
-auto shirt = pros::Vision::signature_from_utility(1, 7695, 9019, 8357, -4133, -2679, -3406, 3.000, 0);
-auto disk = pros::Vision::signature_from_utility(2, 7657, 8273, 7966, -2251, -1733, -1992, 3.000, 0);
-auto card = pros::Vision::signature_from_utility(3, -129, 417, 144, -4459, -3907, -4182, 3.000, 0);
-
-pros::Vision vision_sensor = pros::Vision(7);
-
-/* Color Signatures */
-auto test_sig = 1;
-namespace deFenestration::Vision {
-/*
- * Initialize Vision Sensor
- */
-void init() {
-	if (initialized) {
-		return;
-	}
-
-	/* Set Color Signatures */
-
-	/* Set Objects */
-
-	initialized = true;
-}
-
 /*
  * Distance Logic
  */
@@ -54,7 +29,6 @@ int32_t mmToInch() {
 	int32_t x = (distance_sensor.get() / 25.4) + 4;
 	return x;
 }
-} // namespace deFenestration::Vision
 
 /*
  * Autonomous 1

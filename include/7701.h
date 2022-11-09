@@ -21,12 +21,13 @@
 
 #include "main.h"
 
-// deFenestration Auton System
-namespace deFenestration::Vision {
-void init();
+namespace deFenestration::config {
+/* Config */
+const bool debug = false;
 
-int32_t mmToInch();
-} // namespace deFenestration::Vision
+/* Enable Show Screen */
+const bool showScreen = false;
+} // namespace deFenestration::config
 
 // deFenestration Flywheel System
 namespace deFenestration::Flywheel {
@@ -36,7 +37,7 @@ double FwMotorEncoderGet();
 
 void FwVelocitySet(int velocity, float predicted_drive);
 
-void FwCalculateSpeed();
+float FwCalculateSpeed();
 
 void FwControlUpdateVelocityTbh();
 

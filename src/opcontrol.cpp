@@ -22,7 +22,6 @@
 #include <sstream>
 
 #include "7701.h"
-#include "gif-pros/gifclass.hpp"
 #include "main.h"
 
 /* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity */
@@ -97,13 +96,6 @@ void FwMotorSet(int value) {
 }
 
 /*-----------------------------------------------------------------------------*/
-/** @brief      Get the flywheen motor encoder count                           */
-/*-----------------------------------------------------------------------------*/
-double FwMotorEncoderGet() {
-	return flywheel.getPosition();
-}
-
-/*-----------------------------------------------------------------------------*/
 /** @brief      Set the controller position                                    */
 /** @param[in]  desired velocity                                               */
 /** @param[in]  predicted_drive estimated open loop motor drive                */
@@ -127,8 +119,15 @@ void FwVelocitySet(int velocity, float predicted_drive) {
 /*-----------------------------------------------------------------------------*/
 /** @brief      Calculate the current flywheel motor velocity                  */
 /*-----------------------------------------------------------------------------*/
-void FwCalculateSpeed() {
-	motor_velocity = flywheel.getActualVelocity();
+float FwCalculateSpeed() {
+	encoder_counts = flywheel.getPosition();
+
+	motor_velocity = (encoder_counts - encoder_counts_last) / 20.0;
+
+	encoder_counts_last = encoder_counts;
+	// motor_velocity = flywheel.getActualVelocity();
+
+	return motor_velocity;
 }
 
 /*-----------------------------------------------------------------------------*/
@@ -182,8 +181,8 @@ void FwControlTask() {
 	int count;
 	while (1) {
 		// Calculate velocity
-		// deFenestration::Flywheel::FwCalculateSpeed();
-		motor_velocity = flywheel.getActualVelocity();
+		deFenestration::Flywheel::FwCalculateSpeed();
+		// motor_velocity = flywheel.getActualVelocity();
 
 		// Do the velocity TBH calculations
 		deFenestration::Flywheel::FwControlUpdateVelocityTbh();
@@ -199,16 +198,6 @@ void FwControlTask() {
 
 		// and finally set the motor control value
 		deFenestration::Flywheel::FwMotorSet(motor_drive);
-
-		// Log
-		// if (count % 500)
-		// 	printf("Flywheel Temp: %f\n", flywheel.getTemperature());
-		// if (count % 1000)
-		// 	printf("Flywheel MVel: %f & Flywheel OVel: %f \n", flywheel.getActualVelocity(), flywheel.getActualVelocity() * 16.3333);
-		// if (count % 1500)
-		// 	printf("Flywheel Efficiency: %f\n", flywheel.getEfficiency());
-		// if (count % 2000)
-		// 	printf("Flywheel CDraw: %d\n", flywheel.getCurrentDraw());
 
 		// Run at somewhere between 20 and 50mS
 		count++;
@@ -237,14 +226,18 @@ bool fwON = false;
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+int count;
 void opcontrol() {
+	arms::odom::reset({{0, 24}});
 	leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 	rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
-	arms::selector::destroy();
-	pros::Task displayTask(display);
+	if (deFenestration::config::showScreen == true) {
+		arms::selector::destroy();
+		pros::Task displayTask(display);
+	}
 
 	// Run Loop
 	while (true) {
@@ -287,18 +280,17 @@ void opcontrol() {
 
 		// Disk Conveyor
 		if (master.get_digital(DIGITAL_R1)) {
-			conveyor.moveVelocity(67);
+			conveyor.moveVelocity(200);
 		} else if (master.get_digital(DIGITAL_R2)) {
-			conveyor.moveVelocity(-67);
+			conveyor.moveVelocity(-200);
 		} else {
 			conveyor.moveVelocity(0);
 		}
-		printf("%f\r", conveyor.getActualVelocity());
 
 		// Roller
 		if (master.get_digital(DIGITAL_A)) {
 			roller.moveVelocity(200);
-		} else  {
+		} else {
 			roller.moveVelocity(0);
 		}
 
@@ -306,12 +298,24 @@ void opcontrol() {
 		 * The brake system is a safety feature that prevents the robot from being
 		 * punished by other robots. Uses basic logic for toggle button
 		 */
-		if (master.get_digital_new_press(DIGITAL_B) == 1) {
+		if (master.get_digital_new_press(DIGITAL_B) == 1)
 			pbrake = !pbrake;
-		}
 		prosBrake(pbrake);
 
+		if (deFenestration::config::debug == true) {
+			if (count % 500)
+				printf("Flywheel on: %i\n", fwON);
+			if (count % 1000)
+				printf("Flywheel MVel: %f & Flywheel OVel: %f \n", flywheel.getActualVelocity(), flywheel.getActualVelocity() * 16.3333);
+			if (count % 1500)
+				printf("Commanded Velocity: %ld\n", motor_drive);
+			if (count % 2000)
+				printf("Flywheel CDraw: %d\n Flywheel Commanded Current: %f\n", flywheel.getCurrentDraw(),
+				       (motor_velocity * 12000) / 200);
+		}
+
 		// Lastly, delay
+		count++;
 		pros::delay(2);
 	}
 }

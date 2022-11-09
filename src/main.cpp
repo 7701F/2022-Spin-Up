@@ -19,10 +19,11 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "7701.h"
 #include "main.h"
 
 #include <sstream>
+
+#include "7701.h"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -31,12 +32,8 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	/* ARMS & Vision™ initialization */
+	/* ARMS initialization */
 	arms::init();
-
-
-	// Turns off Wi-Fi because it's illegal in competition.
-	pros::Vision vision_sensor = pros::Vision(7);
 
 	// Inititalize Flywheel
 	pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
@@ -53,7 +50,6 @@ void initialize() {
 		 * Any input faster than this will be dropped.
 		 */
 		int count;
-		bool c = pros::competition::is_connected();
 		while (true) {
 			if (count == 100) {
 				std::stringstream autonstr;
@@ -66,16 +62,6 @@ void initialize() {
 			}
 			count++;
 			count %= 150;
-
-			if (c == true) {
-				vision_sensor.set_wifi_mode(0);
-				vision_sensor.set_led(COLOR_GREEN);
-			} else if (c == false) {
-				vision_sensor.set_wifi_mode(1);
-				vision_sensor.set_led(COLOR_RED);
-			}
-			c = pros::competition::is_connected();
-
 			pros::delay(1);
 		}
 	}};
