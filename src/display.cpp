@@ -18,12 +18,11 @@
 
   3. This notice may not be removed or altered from any source distribution.
 */
+#include <sstream>
+
 #include "7701.h"
 #include "gif-pros/gifclass.hpp"
 #include "main.h"
-
-#include <sstream>
-
 
 lv_obj_t* scr = lv_obj_create(NULL, NULL);
 
@@ -61,9 +60,9 @@ void display() {
 	lv_obj_set_style(statsDisplay, &titleStyle);
 	lv_obj_align(statsDisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 85);
 
-	lv_obj_t* odomDisplay = lv_label_create(scr, NULL);
-	lv_obj_set_style(odomDisplay, &titleStyle);
-	lv_obj_align(odomDisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 160);
+	// lv_obj_t* odomDisplay = lv_label_create(scr, NULL);
+	// lv_obj_set_style(odomDisplay, &titleStyle);
+	// lv_obj_align(odomDisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 200);
 
 	// lv_obj_t* obj = lv_obj_create(lv_scr_act(), NULL);
 	// lv_obj_set_size(obj, 480, 240);
@@ -81,11 +80,11 @@ void display() {
 		      << "\n  Flywheel OVel: " << (fw.getActualVelocity() * 16.3333333334)
 		      << "\n  Flywheel Efficiency: " << fw.getEfficiency(); //<< " Flywheel CDraw: " << flywheel.getCurrentDraw();
 
-		std::stringstream odomStats;
-		odomStats << "Odom X/Y:(" << arms::odom::getPosition().x << "," << arms::odom::getPosition().y
-		          << ") Odom Angle: " << arms::odom::getHeading();
+		// std::stringstream odomStats;
+		// odomStats << "Odom X/Y:(" << arms::odom::getPosition().x << "," << arms::odom::getPosition().y
+		//   << ") Odom Angle: " << arms::odom::getHeading();
 
-		lv_label_set_text(odomDisplay, odomStats.str().c_str());
+		// lv_label_set_text(odomDisplay, odomStats.str().c_str());
 		lv_label_set_text(statsDisplay, stats.str().c_str());
 		pros::delay(50);
 	}

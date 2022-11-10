@@ -18,10 +18,10 @@
 
   3. This notice may not be removed or altered from any source distribution.
 */
+#include <sstream>
+
 #include "7701.h"
 #include "main.h"
-
-#include <sstream>
 
 /* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity */
 void customBrake(bool pbrake) {
@@ -309,8 +309,7 @@ void opcontrol() {
 			if (count % 1500)
 				printf("Commanded Velocity: %ld\n", motor_drive);
 			if (count % 2000)
-				printf("Fw CDraw: %d\n Fw Commanded Current: %f\n", fw.getCurrentDraw(),
-				       (motor_velocity * 12000) / 200);
+				printf("Fw CDraw: %d\n Fw Commanded Current: %f\n", fw.getCurrentDraw(), (motor_velocity * 12000) / 200);
 		}
 
 		// Lastly, delay

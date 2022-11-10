@@ -25,7 +25,10 @@
  * Distance Logic
  */
 int32_t mmToInch() {
-	int32_t x = (distance_sensor.get() / 25.4) + 4;
+	/// Offset from front of robot in inches
+	int32_t offset = 4;
+
+	int32_t x = (distance_sensor.get() / 25.4) + offset;
 	return x;
 }
 
@@ -37,14 +40,9 @@ void redFront() {
 
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 24}});
+
 	turn({0, 24}, 75);
 	move({{0, 24}}, 200);
-
-	// move(24, 100, arms::RELATIVE);
-
-	// turn({24, 24}, 75);
-
-	// move({{24, 0}}, 50, arms::THRU | arms::ASYNC);
 }
 
 /* Programming Skills */
@@ -54,11 +52,7 @@ void Sauton() {
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 24}});
 
-	// move(24, 100, arms::RELATIVE);
-
 	turn({24, 24}, 75);
-
-	// move({{24, 0}}, 50, arms::THRU | arms::ASYNC);
 }
 
 /**
@@ -73,6 +67,8 @@ void Sauton() {
  * from where it left off.
  */
 void autonomous() {
+	deFenestration::IMU imus;
+
 	/* Auton Selector Logic */
 	switch (arms::selector::auton) {
 		case -3:
@@ -90,6 +86,11 @@ void autonomous() {
 		case 2:
 			break;
 		case 3:
+			imus.reset();
+
+			imus.turnToH(90, 100);
+
+			master.print(2, 0, "%f", imus.status());
 			break;
 		default:
 			break;

@@ -22,24 +22,25 @@
 #include "7701.h"
 #include "main.h"
 
-/* Controller */
-pros::Controller master(pros::E_CONTROLLER_MASTER);
+// /* Controller */
+// pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-/* Drive Motors */
-okapi::Motor rightMtr(20, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor rightMtrR(19, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor leftMtr(17, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor leftMtrR(18, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+// /* Drive Motors */
+// okapi::Motor rightMtr(20, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+// okapi::Motor rightMtrR(19, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+// okapi::Motor leftMtr(17, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+// okapi::Motor leftMtrR(18, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 
-/* Drive Motor Groups */
-okapi::MotorGroup rightMotors({rightMtr, rightMtrR});
-okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
+// /* Drive Motor Groups */
+// okapi::MotorGroup rightMotors({rightMtr, rightMtrR});
+// okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
 
-/* Game System Motors */
-okapi::Motor fw(12, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor conveyor(13, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor roller(5, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+// /* Game System Motors */
+// okapi::Motor fw(12, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+// okapi::Motor conveyor(13, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+// okapi::Motor roller(5, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 
-/* Sensors */
-okapi::IMU imu_sensor(1);
-okapi::DistanceSensor distance_sensor(8);
+// /* Sensors */
+// pros::IMU imu_sensor1(1);
+// pros::IMU imu_sensor2(2);
+// okapi::DistanceSensor distance_sensor(8);

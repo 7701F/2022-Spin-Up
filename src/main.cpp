@@ -18,10 +18,11 @@
 
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "7701.h"
 #include "main.h"
 
 #include <sstream>
+
+#include "7701.h"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.

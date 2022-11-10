@@ -28,7 +28,7 @@ void display();
 const bool debug = false;
 
 /* Enable Show Screen */
-const bool showScreen = false;
+const bool showScreen = true;
 } // namespace deFenestration
 
 // deFenestration Flywheel System
@@ -54,19 +54,90 @@ void customBrake(bool pbrake);
 void prosBrake(bool pbrake);
 
 /* Controller */
-extern pros::Controller master;
+inline pros::Controller master(pros::E_CONTROLLER_MASTER);
+
+/* Drive Motors */
+inline okapi::Motor rightMtr(20, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+inline okapi::Motor rightMtrR(19, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+inline okapi::Motor leftMtr(17, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+inline okapi::Motor leftMtrR(18, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 
 /* Drive Motor Groups */
-extern okapi::MotorGroup rightMotors;
-extern okapi::MotorGroup leftMotors;
+inline okapi::MotorGroup rightMotors({rightMtr, rightMtrR});
+inline okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
 
 /* Game System Motors */
-
-/* Disk Launcher Motors */
-extern okapi::Motor fw;
-extern okapi::Motor conveyor;
-extern okapi::Motor roller;
+inline okapi::Motor fw(12, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+inline okapi::Motor conveyor(13, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+inline okapi::Motor roller(5, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 
 /* Sensors */
-extern okapi::IMU imu_sensor;
-extern okapi::DistanceSensor distance_sensor;
+inline pros::IMU imu_sensor1(1);
+inline pros::IMU imu_sensor2(2);
+inline okapi::DistanceSensor distance_sensor(8);
+
+namespace deFenestration {
+class IMU {
+ public:
+	virtual void reset() {
+		imu_sensor1.reset();
+		imu_sensor2.reset();
+
+		while (imu_sensor1.is_calibrating() || imu_sensor2.is_calibrating()) {
+			pros::delay(10);
+		}
+	};
+
+	// Detirmine IMU offset
+	virtual double offset() {
+		int32_t offset = 0;
+		double_t x = (imu_sensor1.get_pitch() - imu_sensor2.get_pitch());
+		return x;
+	};
+
+	virtual double status() {
+		double current_offset = offset();
+		if (current_offset > 0) {
+			return 1;
+		} else if (current_offset < 0) {
+			return -1;
+		} else {
+			return 0;
+		}
+	}
+
+	// Determine IMU angle
+	virtual double getHeading() {
+		return (imu_sensor1.get_heading() + imu_sensor2.get_heading()) / 2;
+	}
+
+	// Turn to a specified angle
+	virtual void turnToH(double target, double speed) {
+		double target_heading = target;
+		double current_heading = (imu_sensor1.get_heading() + imu_sensor2.get_heading()) / 2;
+
+		double difference = abs(target_heading - current_heading);
+
+		if (target_heading > current_heading) {
+			while (target_heading != current_heading) {
+				arms::chassis::turn(difference / 8, speed);
+			}
+		}
+		if (target_heading < current_heading) {
+			while (target_heading != current_heading) {
+				arms::chassis::turn(-difference / 8, speed);
+			}
+		} else {
+			// do nothing
+		}
+	}
+
+	virtual void tare() {
+		imu_sensor1.tare();
+		imu_sensor2.tare();
+	}
+};
+
+using Imu = IMU;
+
+} // namespace deFenestration
