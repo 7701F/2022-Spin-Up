@@ -264,7 +264,7 @@ void opcontrol() {
 		flywheelState = master.get_digital_new_press(DIGITAL_L2);
 		if (flywheelState == true) {
 			fwON = !fwON;
-			deFenestration::Flywheel::FwVelocitySet(200, 1.55);
+			deFenestration::Flywheel::FwVelocitySet(200, .5);
 		}
 		flywheelThirdPosState = master.get_digital_new_press(DIGITAL_L1);
 		if (flywheelThirdPosState == true) {
