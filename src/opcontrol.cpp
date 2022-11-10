@@ -124,7 +124,6 @@ float FwCalculateSpeed() {
 	motor_velocity = (encoder_counts - encoder_counts_last) / 20.0;
 
 	encoder_counts_last = encoder_counts;
-	// motor_velocity = flywheel.getActualVelocity();
 
 	return motor_velocity;
 }
