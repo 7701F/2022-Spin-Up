@@ -20,24 +20,89 @@
 */
 #include "7701.h"
 #include "main.h"
+#include "sylib/sylib.hpp"
 
-/*
- * Distance Logic
- */
-int32_t mmToInch() {
-	/// Offset from front of robot in inches
-	int32_t offset = 4;
+/* Util Functions */
+int getFrisbeesInIntake() {
+	int sensorDistance = distanceFilter.filter(indexerSensor.get());
+	if (sensorDistance > 100) {
+		return 0;
+	} else if (sensorDistance > 55) {
+		return 1;
+	} else if (sensorDistance > 35) {
+		return 2;
+	} else {
+		return 3;
+	}
+}
 
-	int32_t x = (distance_sensor.get() / 25.4) + offset;
-	return x;
+int getRollerColor() {
+	if (rollerSensor.get_proximity() < 200) {
+		return 0;
+	}
+
+	double hue = hueFilter.filter(rollerSensor.get_hue());
+	if (hue < 260 && hue > 230) {
+		return 1; // blue
+	} else if (hue < 30 && hue > 0) {
+		return 2; // red
+	} else {
+		return 3; // lol it doesnt know
+	}
+	return 0;
+}
+
+void setRollerRed() {
+	int rollerStartTime = pros::millis();
+	roller.moveVelocity(100);
+	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
+		pros::delay(10);
+	}
+	roller.moveVelocity(0);
+	pros::delay(50);
+	rollerStartTime = pros::millis();
+	roller.moveVelocity(100);
+	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
+		pros::delay(10);
+	}
+	roller.moveVelocity(50);
+	pros::delay(250);
+	roller.moveVelocity(0);
+}
+
+void setRollerBlue() {
+	int rollerStartTime = pros::millis();
+	roller.moveVelocity(100);
+	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
+		pros::delay(10);
+	}
+	roller.moveVelocity(0);
+	pros::delay(50);
+	rollerStartTime = pros::millis();
+	roller.moveVelocity(100);
+	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
+		pros::delay(10);
+	}
+	roller.moveVelocity(50);
+	pros::delay(250);
+	roller.moveVelocity(0);
 }
 
 /*
  * Autonomous 1
  */
 void redFront() {
-	deFenestration::Flywheel::FwVelocitySet(96, 0.2);
+	using namespace arms::chassis;
+	arms::odom::reset({{0, 24}});
 
+	turn({0, 24}, 75);
+	move({{0, 24}}, 200);
+}
+
+/*
+ * Autonomous 2
+ */
+void redBack() {
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 24}});
 
@@ -52,7 +117,8 @@ void Sauton() {
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 24}});
 
-	turn({24, 24}, 75);
+	turn({0, 24}, 75);
+	move({{0, 24}}, 200);
 }
 
 /**
@@ -84,6 +150,7 @@ void autonomous() {
 			// redFront();
 			break;
 		case 2:
+			redBack();
 			break;
 		case 3:
 			imus.reset();

@@ -72,9 +72,15 @@ inline okapi::Motor conveyor(13, true, okapi::AbstractMotor::gearset::green, oka
 inline okapi::Motor roller(5, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 
 /* Sensors */
+inline pros::Distance indexerSensor(8);
+inline pros::Optical rollerSensor(3);
 inline pros::IMU imu_sensor1(1);
 inline pros::IMU imu_sensor2(2);
-inline okapi::DistanceSensor distance_sensor(8);
+
+inline sylib::MedianFilter hueFilter(5,2,1);
+inline sylib::MedianFilter distanceFilter(5,2,1);
+
+int getFrisbeesInIntake();
 
 namespace deFenestration {
 class IMU {

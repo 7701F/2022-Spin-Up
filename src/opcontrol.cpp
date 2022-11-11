@@ -300,19 +300,20 @@ void opcontrol() {
 			pbrake = !pbrake;
 		prosBrake(pbrake);
 
-		if (deFenestration::debug == true) {
-			if (count % 500)
-				printf("Fw on: %i\n", fwON);
-			if (count % 1000)
-				printf("Fw MVel: %f & Fw OVel: %f \n", fw.getActualVelocity(), fw.getActualVelocity() * 16.3333);
-			if (count % 1500)
-				printf("Commanded Velocity: %ld\n", motor_drive);
-			if (count % 2000)
-				printf("Fw CDraw: %d\n Fw Commanded Current: %f\n", fw.getCurrentDraw(), (motor_velocity * 12000) / 200);
-		}
+		// if (deFenestration::debug == true) {
+		// 	if (count % 500)
+		// 		printf("Fw on: %i\n", fwON);
+		// 	if (count % 1000)
+		// 		printf("Fw MVel: %f & Fw OVel: %f \n", fw.getActualVelocity(), fw.getActualVelocity() * 16.3333);
+		// 	if (count % 1500)
+		// 		printf("Commanded Velocity: %ld\n", motor_drive);
+		// 	if (count % 2000)
+		// 		printf("Fw CDraw: %d\n Fw Commanded Current: %f\n", fw.getCurrentDraw(), (motor_velocity * 12000) / 200);
+		// 	count++;
+		// }
 
 		// Lastly, delay
-		count++;
+		// printf("disks in intake: %f\r", distanceFilter.filter(indexerSensor.get()));
 		pros::delay(2);
 	}
 }

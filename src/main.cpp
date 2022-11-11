@@ -33,6 +33,7 @@
 void initialize() {
 	/* ARMS initialization */
 	arms::init();
+	sylib::initialize();
 
 	// Inititalize Flywheel
 	pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
