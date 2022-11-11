@@ -97,6 +97,7 @@ void redFront() {
 
 	turn({0, 24}, 75);
 	move({{0, 24}}, 200);
+	setRollerRed();
 }
 
 /*
