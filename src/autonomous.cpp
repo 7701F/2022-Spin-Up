@@ -134,7 +134,7 @@ void Sauton() {
  * from where it left off.
  */
 void autonomous() {
-	deFenestration::IMU imus;
+	// deFenestration::IMU imus;
 
 	/* Auton Selector Logic */
 	switch (arms::selector::auton) {
@@ -151,14 +151,14 @@ void autonomous() {
 			// redFront();
 			break;
 		case 2:
-			redBack();
+			// redBack();
 			break;
 		case 3:
-			imus.reset();
+			// imus.reset();
 
-			imus.turnToH(90, 100);
+			// imus.turnToH(90, 100);
 
-			master.print(2, 0, "%f", imus.status());
+			// master.print(2, 0, "%f", imus.status());
 			break;
 		default:
 			break;

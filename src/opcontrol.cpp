@@ -211,6 +211,10 @@ bool flywheelState = false;
 bool flywheelThirdPosState = false;
 bool fwON = false;
 
+bool pistonState = false;
+bool prevPistonState = false;
+bool indexState = false;
+
 /*
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -232,10 +236,10 @@ void opcontrol() {
 
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
-	if (deFenestration::showScreen == true) {
-		arms::selector::destroy();
-		pros::Task displayTask(deFenestration::display);
-	}
+	// if (deFenestration::showScreen == true) {
+	// 	arms::selector::destroy();
+	// 	pros::Task displayTask(deFenestration::display);
+	// }
 
 	// Run Loop
 	while (true) {
@@ -279,7 +283,7 @@ void opcontrol() {
 		// Disk Conveyor
 		if (master.get_digital(DIGITAL_R1)) {
 			conveyor.moveVelocity(200);
-		} else if (master.get_digital(DIGITAL_R2)) {
+		} else if (master.get_digital(DIGITAL_Y)) {
 			conveyor.moveVelocity(-200);
 		} else {
 			conveyor.moveVelocity(0);
@@ -291,6 +295,13 @@ void opcontrol() {
 		} else {
 			roller.moveVelocity(0);
 		}
+
+		pistonState = master.get_digital(DIGITAL_R2);
+		if (pistonState == true && prevPistonState == false) {
+			indexState = !indexState;
+			indexer.set_value(indexState);
+		}
+		prevPistonState = pistonState;
 
 		/* Brake System
 		 * The brake system is a safety feature that prevents the robot from being

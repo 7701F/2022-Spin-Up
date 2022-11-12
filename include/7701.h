@@ -70,80 +70,81 @@ inline okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
 inline okapi::Motor fw(12, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 inline okapi::Motor conveyor(13, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 inline okapi::Motor roller(5, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+inline pros::ADIDigitalOut indexer('A');
 
 /* Sensors */
-inline pros::Distance indexerSensor(8);
+inline pros::Distance indexerSensor(11);
 inline pros::Optical rollerSensor(3);
 inline pros::IMU imu_sensor1(1);
-inline pros::IMU imu_sensor2(2);
+// inline pros::IMU imu_sensor2(2);
 
 inline sylib::MedianFilter hueFilter(5,2,1);
 inline sylib::MedianFilter distanceFilter(5,2,1);
 
 int getFrisbeesInIntake();
 
-namespace deFenestration {
-class IMU {
- public:
-	virtual void reset() {
-		imu_sensor1.reset();
-		imu_sensor2.reset();
+// namespace deFenestration {
+// class IMU {
+//  public:
+// 	virtual void reset() {
+// 		imu_sensor1.reset();
+// 		// imu_sensor2.reset();
 
-		while (imu_sensor1.is_calibrating() || imu_sensor2.is_calibrating()) {
-			pros::delay(10);
-		}
-	};
+// 		while (imu_sensor1.is_calibrating() || imu_sensor2.is_calibrating()) {
+// 			pros::delay(10);
+// 		}
+// 	};
 
-	// Detirmine IMU offset
-	virtual double offset() {
-		int32_t offset = 0;
-		double_t x = (imu_sensor1.get_pitch() - imu_sensor2.get_pitch());
-		return x;
-	};
+// 	// Detirmine IMU offset
+// 	virtual double offset() {
+// 		int32_t offset = 0;
+// 		double_t x = (imu_sensor1.get_pitch() - imu_sensor2.get_pitch());
+// 		return x;
+// 	};
 
-	virtual double status() {
-		double current_offset = offset();
-		if (current_offset > 0) {
-			return 1;
-		} else if (current_offset < 0) {
-			return -1;
-		} else {
-			return 0;
-		}
-	}
+// 	virtual double status() {
+// 		double current_offset = offset();
+// 		if (current_offset > 0) {
+// 			return 1;
+// 		} else if (current_offset < 0) {
+// 			return -1;
+// 		} else {
+// 			return 0;
+// 		}
+// 	}
 
-	// Determine IMU angle
-	virtual double getHeading() {
-		return (imu_sensor1.get_heading() + imu_sensor2.get_heading()) / 2;
-	}
+// 	// Determine IMU angle
+// 	virtual double getHeading() {
+// 		return (imu_sensor1.get_heading() + imu_sensor2.get_heading()) / 2;
+// 	}
 
-	// Turn to a specified angle
-	virtual void turnToH(double target, double speed) {
-		double target_heading = target;
-		double current_heading = (imu_sensor1.get_heading() + imu_sensor2.get_heading()) / 2;
+// 	// Turn to a specified angle
+// 	virtual void turnToH(double target, double speed) {
+// 		double target_heading = target;
+// 		double current_heading = (imu_sensor1.get_heading() + imu_sensor2.get_heading()) / 2;
 
-		double difference = abs(target_heading - current_heading);
+// 		double difference = abs(target_heading - current_heading);
 
-		if (target_heading > current_heading) {
-			while (target_heading != current_heading) {
-				arms::chassis::turn(difference / 8, speed);
-			}
-		}
-		if (target_heading < current_heading) {
-			while (target_heading != current_heading) {
-				arms::chassis::turn(-difference / 8, speed);
-			}
-		} else {
-			// do nothing
-		}
-	}
+// 		if (target_heading > current_heading) {
+// 			while (target_heading != current_heading) {
+// 				arms::chassis::turn(difference / 8, speed);
+// 			}
+// 		}
+// 		if (target_heading < current_heading) {
+// 			while (target_heading != current_heading) {
+// 				arms::chassis::turn(-difference / 8, speed);
+// 			}
+// 		} else {
+// 			// do nothing
+// 		}
+// 	}
 
-	virtual void tare() {
-		imu_sensor1.tare();
-		imu_sensor2.tare();
-	}
-};
+// 	virtual void tare() {
+// 		imu_sensor1.tare();
+// 		imu_sensor2.tare();
+// 	}
+// };
 
-using Imu = IMU;
+// using Imu = IMU;
 
-} // namespace deFenestration
+// } // namespace deFenestration
