@@ -77,5 +77,5 @@ inline pros::IMU imu_sensor1(1);
 inline sylib::MedianFilter hueFilter(5,2,1);
 inline sylib::MedianFilter distanceFilter(5,2,1);
 
-int getFrisbeesInIntake();
+int getFrisbeesInIndexer();
 int getRollerColor();

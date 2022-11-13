@@ -22,7 +22,9 @@
 #include "main.h"
 
 /* Util Functions */
-int getFrisbeesInIntake() {
+
+/* Gets the # of Frisbees in the Indexer*/
+int getFrisbeesInIndexer() {
 	int sensorDistance = distanceFilter.filter(indexerSensor.get());
 	if (sensorDistance > 100) {
 		return 0;
@@ -35,6 +37,7 @@ int getFrisbeesInIntake() {
 	}
 }
 
+/* Get the color of the Roller from the Optical Sensor*/
 int getRollerColor() {
 	if (rollerSensor.get_proximity() < 200) {
 		return 0;
@@ -51,6 +54,7 @@ int getRollerColor() {
 	return 0;
 }
 
+/* Set Roller to Red */
 void setRollerRed() {
 	int rollerStartTime = pros::millis();
 	roller.moveVelocity(100);
@@ -69,6 +73,7 @@ void setRollerRed() {
 	roller.moveVelocity(0);
 }
 
+/* Set Roller to Blue */
 void setRollerBlue() {
 	int rollerStartTime = pros::millis();
 	roller.moveVelocity(100);
@@ -87,9 +92,7 @@ void setRollerBlue() {
 	roller.moveVelocity(0);
 }
 
-/*
- * Autonomous 1
- */
+/* Blue Front Auton*/
 void blueFront() {
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 24}});
@@ -99,9 +102,7 @@ void blueFront() {
 	setRollerRed();
 }
 
-/*
- * Autonomous 2
- */
+/* Blue Back Auton */
 void blueBack() {
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 24}});
@@ -121,9 +122,7 @@ void Sauton() {
 	move({{0, 24}}, 200);
 }
 
-/*
- * Autonomous 1
- */
+/* Red Front Auton */
 void redFront() {
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 24}});
@@ -133,9 +132,7 @@ void redFront() {
 	setRollerRed();
 }
 
-/*
- * Autonomous 2
- */
+/* Red Back Auton */
 void redBack() {
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 24}});
@@ -156,7 +153,6 @@ void redBack() {
  * from where it left off.
  */
 void autonomous() {
-	// deFenestration::IMU imus;
 
 	/* Auton Selector Logic */
 	switch (arms::selector::auton) {
