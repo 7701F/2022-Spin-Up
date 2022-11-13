@@ -39,32 +39,32 @@ void initialize() {
 	pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
 
 	/* Controller Status Display */
-	pros::Task controllerTask{[=] {
-		master.clear();
-		pros::delay(50);
-		master.print(2, 0, "Running...");
-		pros::delay(50);
+	// pros::Task controllerTask{[=] {
+	// 	master.clear();
+	// 	pros::delay(50);
+	// 	master.print(2, 0, "Running...");
+	// 	pros::delay(50);
 
-		/**
-		 * Only print every 50ms, the controller text update rate is slow.
-		 * Any input faster than this will be dropped.
-		 */
-		int count;
-		while (true) {
-			if (count == 100) {
-				std::stringstream autonstr;
-				autonstr << "Auton: " << arms::selector::auton << "\r";
-				master.print(0, 0, autonstr.str().c_str());
-			} else if (count == 50) {
-				std::stringstream brakestr;
-				brakestr << "Brake: " << (pbrake ? "ON" : "OFF") << "\r";
-				master.print(1, 0, brakestr.str().c_str());
-			}
-			count++;
-			count %= 150;
-			pros::delay(1);
-		}
-	}};
+	// 	/**
+	// 	 * Only print every 50ms, the controller text update rate is slow.
+	// 	 * Any input faster than this will be dropped.
+	// 	 */
+	// 	int count;
+	// 	while (true) {
+	// 		if (count == 100) {
+	// 			std::stringstream autonstr;
+	// 			autonstr << "Auton: " << arms::selector::auton << "\r";
+	// 			master.print(0, 0, autonstr.str().c_str());
+	// 		} else if (count == 50) {
+	// 			std::stringstream brakestr;
+	// 			brakestr << "Brake: " << (pbrake ? "ON" : "OFF") << "\r";
+	// 			master.print(1, 0, brakestr.str().c_str());
+	// 		}
+	// 		count++;
+	// 		count %= 150;
+	// 		pros::delay(1);
+	// 	}
+	// }};
 }
 
 /**
