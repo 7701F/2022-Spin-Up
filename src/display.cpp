@@ -46,13 +46,8 @@ void display() {
 	// Title
 	lv_obj_t* displayTitle = lv_label_create(scr, NULL);
 	lv_obj_set_style(displayTitle, &titleStyle);
-	lv_label_set_text(displayTitle, "GREETINGS PROFESSOR FALKEN.");
+	lv_label_set_text(displayTitle, "GREETINGS PROFESSOR FALKEN.\nSHALL WE PLAY A GAME?");
 	lv_obj_align(displayTitle, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 10);
-
-	lv_obj_t* displayTitle2 = lv_label_create(scr, NULL);
-	lv_obj_set_style(displayTitle2, &titleStyle);
-	lv_label_set_text(displayTitle2, "SHALL WE PLAY A GAME?");
-	lv_obj_align(displayTitle2, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 35);
 
 	// Flywheel Telemetry Display
 	lv_obj_t* statsDisplay = lv_label_create(scr, NULL);
