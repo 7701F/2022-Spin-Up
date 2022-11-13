@@ -18,10 +18,10 @@
 
   3. This notice may not be removed or altered from any source distribution.
 */
-#include <sstream>
-
 #include "7701.h"
 #include "main.h"
+
+#include <sstream>
 
 /* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity */
 void customBrake(bool pbrake) {
@@ -230,7 +230,6 @@ bool indexState = false;
  */
 int count;
 void opcontrol() {
-	arms::odom::reset({{0, 24}});
 	leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 	rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
 
@@ -280,7 +279,7 @@ void opcontrol() {
 			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 		}
 
-		// Disk Conveyor
+		// Disk Conveyor / Intake
 		if (master.get_digital(DIGITAL_R1)) {
 			conveyor.moveVelocity(200);
 		} else if (master.get_digital(DIGITAL_Y)) {
@@ -324,7 +323,7 @@ void opcontrol() {
 		// }
 
 		// Lastly, delay
-		// printf("disks in intake: %f\r", distanceFilter.filter(indexerSensor.get()));
+		printf("disks in intake: %f\r", distanceFilter.filter(indexerSensor.get()));
 		pros::delay(2);
 	}
 }

@@ -18,11 +18,10 @@
 
   3. This notice may not be removed or altered from any source distribution.
 */
-#include <sstream>
-
 #include "7701.h"
-#include "gif-pros/gifclass.hpp"
 #include "main.h"
+
+#include <sstream>
 
 lv_obj_t* scr = lv_obj_create(NULL, NULL);
 
@@ -60,31 +59,14 @@ void display() {
 	lv_obj_set_style(statsDisplay, &titleStyle);
 	lv_obj_align(statsDisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 85);
 
-	// lv_obj_t* odomDisplay = lv_label_create(scr, NULL);
-	// lv_obj_set_style(odomDisplay, &titleStyle);
-	// lv_obj_align(odomDisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 200);
-
-	// lv_obj_t* obj = lv_obj_create(lv_scr_act(), NULL);
-	// lv_obj_set_size(obj, 480, 240);
-	// lv_obj_set_style(obj, &lv_style_transp); // make the container invisible
-	// lv_obj_align(obj, NULL, LV_ALIGN_CENTER, 0, 0);
-
-	// Gif gif("/usd/mygif.gif", obj);
-
 	// deFenestration Stats Display
 	// Runs every 20ms
 	while (true) {
 		std::stringstream stats;
 		stats << "Flywheel Info:\n"
-		      << "  Flywheel Temp: " << fw.getTemperature() << "\n  Flywheel MVel: " << (fw.getActualVelocity())
-		      << "\n  Flywheel OVel: " << (fw.getActualVelocity() * 16.3333333334)
-		      << "\n  Flywheel Efficiency: " << fw.getEfficiency(); //<< " Flywheel CDraw: " << flywheel.getCurrentDraw();
-
-		// std::stringstream odomStats;
-		// odomStats << "Odom X/Y:(" << arms::odom::getPosition().x << "," << arms::odom::getPosition().y
-		//   << ") Odom Angle: " << arms::odom::getHeading();
-
-		// lv_label_set_text(odomDisplay, odomStats.str().c_str());
+		      << "  Flywheel Temp: " << fw.getTemperature() << "\n  Flywheel MVel: " << (deFenestration::Flywheel::FwCalculateSpeed())
+		      << "\n  Flywheel OVel: " << (deFenestration::Flywheel::FwCalculateSpeed() * 16.3333333334)
+		      << "\n  Flywheel Efficiency: " << fw.getEfficiency();
 		lv_label_set_text(statsDisplay, stats.str().c_str());
 		pros::delay(50);
 	}

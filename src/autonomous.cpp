@@ -20,7 +20,6 @@
 */
 #include "7701.h"
 #include "main.h"
-#include "sylib/sylib.hpp"
 
 /* Util Functions */
 int getFrisbeesInIntake() {
@@ -91,6 +90,40 @@ void setRollerBlue() {
 /*
  * Autonomous 1
  */
+void blueFront() {
+	using namespace arms::chassis;
+	arms::odom::reset({{0, 24}});
+
+	turn({0, 24}, 75);
+	move({{0, 24}}, 200);
+	setRollerRed();
+}
+
+/*
+ * Autonomous 2
+ */
+void blueBack() {
+	using namespace arms::chassis;
+	arms::odom::reset({{0, 24}});
+
+	turn({0, 24}, 75);
+	move({{0, 24}}, 200);
+}
+
+/* Programming Skills */
+void Sauton() {
+	deFenestration::Flywheel::FwVelocitySet(96, 0.2);
+
+	using namespace arms::chassis;
+	arms::odom::reset({{0, 24}});
+
+	turn({0, 24}, 75);
+	move({{0, 24}}, 200);
+}
+
+/*
+ * Autonomous 1
+ */
 void redFront() {
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 24}});
@@ -104,17 +137,6 @@ void redFront() {
  * Autonomous 2
  */
 void redBack() {
-	using namespace arms::chassis;
-	arms::odom::reset({{0, 24}});
-
-	turn({0, 24}, 75);
-	move({{0, 24}}, 200);
-}
-
-/* Programming Skills */
-void Sauton() {
-	deFenestration::Flywheel::FwVelocitySet(96, 0.2);
-
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 24}});
 
@@ -139,10 +161,13 @@ void autonomous() {
 	/* Auton Selector Logic */
 	switch (arms::selector::auton) {
 		case -3:
+			// Do Nothing.
 			break;
 		case -2:
+			// blueBack();
 			break;
 		case -1:
+			// blueFront();
 			break;
 		case 0:
 			Sauton();
@@ -154,11 +179,7 @@ void autonomous() {
 			// redBack();
 			break;
 		case 3:
-			// imus.reset();
-
-			// imus.turnToH(90, 100);
-
-			// master.print(2, 0, "%f", imus.status());
+			// Do Nothing.
 			break;
 		default:
 			break;
