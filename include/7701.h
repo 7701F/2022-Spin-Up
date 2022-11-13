@@ -24,9 +24,6 @@ namespace deFenestration {
 /* Display */
 void display();
 
-/* Config */
-const bool debug = false;
-
 /* Enable Show Screen */
 const bool showScreen = true;
 } // namespace deFenestration
