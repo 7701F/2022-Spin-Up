@@ -60,14 +60,17 @@ void display() {
 	lv_obj_align(statsDisplay, NULL, LV_ALIGN_IN_TOP_LEFT, 10, 85);
 
 	// deFenestration Stats Display
-	// Runs every 20ms
+	// Runs every 50ms
 	while (true) {
 		std::stringstream stats;
 		stats << "Flywheel Info:\n"
 		      << "  Flywheel Temp: " << fw.getTemperature() << "\n  Flywheel MVel: " << (deFenestration::Flywheel::FwCalculateSpeed())
 		      << "\n  Flywheel OVel: " << (deFenestration::Flywheel::FwCalculateSpeed() * 16.3333333334)
 		      << "\n  Flywheel Efficiency: " << fw.getEfficiency();
+
 		lv_label_set_text(statsDisplay, stats.str().c_str());
+
+		// Lastly, delay
 		pros::delay(50);
 	}
 }
