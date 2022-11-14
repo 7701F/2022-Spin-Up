@@ -66,7 +66,7 @@ long encoder_counts_last; ///< current encoder count
 
 // velocity measurement
 float motor_velocity; ///< current velocity in rpm
-long nSysTime_last;   ///< Time of last velocity calculation
+long millis_last;     ///< Time of last velocity calculation
 
 // TBH control algorithm variables
 long target_velocity; ///< target_velocity velocity
@@ -114,13 +114,16 @@ void FwVelocitySet(int velocity, float predicted_drive) {
 
 /* Calculate the current flywheel motor velocity */
 float FwCalculateSpeed() {
+	int delta_time = pros::millis() - millis_last;
+	int delta_enc;
+
+	millis_last = pros::millis();
+
 	encoder_counts = fw.getPosition();
-
-	motor_velocity = (encoder_counts - encoder_counts_last) / 20.0;
-
+	delta_enc = (encoder_counts - encoder_counts_last);
 	encoder_counts_last = encoder_counts;
 
-	return motor_velocity;
+	return motor_velocity = (1000.0 / delta_time) * delta_enc * 60.0 / ticks_per_rev;
 }
 
 /* Update the velocity tbh controller variables */
@@ -165,7 +168,7 @@ void FwControlTask() {
 
 	// We are using Speed geared motors
 	// Set the encoder ticks per revolution
-	ticks_per_rev = 20;
+	ticks_per_rev = 900;
 
 	while (1) {
 		// Calculate velocity
