@@ -83,21 +83,19 @@ long motor_drive; ///< final motor control value
 
 namespace deFenestration::Flywheel {
 
-/*-----------------------------------------------------------------------------*/
-/** @brief      Set the flywheen motors                                        */
-/** @param[in]  value motor control value                                      */
-/*-----------------------------------------------------------------------------*/
+/* Set motor voltage equal to desired velocity
+ * value: motor control value
+ */
 void FwMotorSet(int value) {
 	int x;
 	x = (value * 12000) / 200;
 	fw.moveVoltage(x);
 }
 
-/*-----------------------------------------------------------------------------*/
-/** @brief      Set the controller position                                    */
-/** @param[in]  desired velocity                                               */
-/** @param[in]  predicted_drive estimated open loop motor drive                */
-/*-----------------------------------------------------------------------------*/
+/* Set motor velocity
+ * velocity: desired velocity
+ * predicted_drive: estimated open loop motor drive
+ */
 void FwVelocitySet(int velocity, float predicted_drive) {
 	// set target_velocity velocity (motor rpm)
 	target_velocity = velocity;
@@ -114,9 +112,7 @@ void FwVelocitySet(int velocity, float predicted_drive) {
 	drive_at_zero = 0;
 }
 
-/*-----------------------------------------------------------------------------*/
-/** @brief      Calculate the current flywheel motor velocity                  */
-/*-----------------------------------------------------------------------------*/
+/* Calculate the current flywheel motor velocity */
 float FwCalculateSpeed() {
 	encoder_counts = fw.getPosition();
 
@@ -127,9 +123,7 @@ float FwCalculateSpeed() {
 	return motor_velocity;
 }
 
-/*-----------------------------------------------------------------------------*/
-/** @brief      Update the velocity tbh controller variables                   */
-/*-----------------------------------------------------------------------------*/
+/* Update the velocity tbh controller variables */
 void FwControlUpdateVelocityTbh() {
 	// calculate error in velocity
 	// target_velocity is desired velocity
@@ -164,9 +158,7 @@ void FwControlUpdateVelocityTbh() {
 	last_error = current_error;
 }
 
-/*-----------------------------------------------------------------------------*/
-/** @brief     Task to control the velocity of the flywheel                    */
-/*-----------------------------------------------------------------------------*/
+/* Task to control the velocity of the flywheel */
 void FwControlTask() {
 	// Set the gain
 	gain = 0.00025;
