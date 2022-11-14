@@ -5,7 +5,7 @@
         "target": "v5",
         "templates": {
             "ARMS": {
-                "location": "/home/chrono/.config/pros/templates/ARMS@3.0.1",
+                "location": "/home/chrono/.config/pros/templates/ARMS@3.1.0",
                 "metadata": {
                     "origin": "local"
                 },
@@ -13,20 +13,19 @@
                 "py/object": "pros.conductor.templates.local_template.LocalTemplate",
                 "supported_kernels": "^3.7.1",
                 "system_files": [
-                    "include/ARMS/lib.h",
-                    "include/ARMS/odom.h",
-                    "include/ARMS/pid.h",
-                    "include/ARMS/selector.h",
-                    "include/ARMS/config.h",
-                    "include/ARMS/api.h",
-                    "include/ARMS/point.h",
-                    "include/ARMS/chassis.h",
-                    "include/ARMS/flags.h",
-                    "firmware/ARMS.a"
+                    "include\\ARMS\\odom.h",
+                    "include\\ARMS\\chassis.h",
+                    "firmware\\ARMS.a",
+                    "include\\ARMS\\config.h",
+                    "include\\ARMS\\point.h",
+                    "include\\ARMS\\selector.h",
+                    "include\\ARMS\\pid.h",
+                    "include\\ARMS\\api.h",
+                    "include\\ARMS\\flags.h"
                 ],
                 "target": "v5",
                 "user_files": [],
-                "version": "3.0.1"
+                "version": "3.1.0"
             },
             "kernel": {
                 "location": "/home/chrono/.config/pros/templates/kernel@3.7.2",
