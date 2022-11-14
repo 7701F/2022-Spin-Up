@@ -29,7 +29,7 @@ void customBrake(bool pbrake) {
 			if (leftMotors.getActualVelocity() != 0 || rightMotors.getActualVelocity() != 0) {
 				leftMotors.moveVelocity(leftMotors.getActualVelocity() * -2);
 				rightMotors.moveVelocity(rightMotors.getActualVelocity() * -2);
-				pros::delay(2);
+				// pros::delay(2);
 			}
 		}
 	}
@@ -175,11 +175,9 @@ void FwControlTask() {
 	// Set the encoder ticks per revolution
 	ticks_per_rev = 20;
 
-	int count;
 	while (1) {
 		// Calculate velocity
 		deFenestration::Flywheel::FwCalculateSpeed();
-		// motor_velocity = flywheel.getActualVelocity();
 
 		// Do the velocity TBH calculations
 		deFenestration::Flywheel::FwControlUpdateVelocityTbh();
@@ -197,8 +195,6 @@ void FwControlTask() {
 		deFenestration::Flywheel::FwMotorSet(motor_drive);
 
 		// Run at somewhere between 20 and 50mS
-		count++;
-		count %= 150;
 		pros::delay(FW_LOOP_SPEED);
 	}
 }
@@ -229,8 +225,7 @@ bool indexState = false;
  */
 int count;
 void opcontrol() {
-	leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
-	rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+	prosBrake(true);
 
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
@@ -262,7 +257,7 @@ void opcontrol() {
 		/* Game Related Subsystems
 		 * Controls for game specific functions
 		 */
-		// Disk Flywheel
+		// Frisbee Shooter Flywheel
 		flywheelState = master.get_digital_new_press(DIGITAL_L2);
 		if (flywheelState == true) {
 			fwON = !fwON;
@@ -278,7 +273,7 @@ void opcontrol() {
 			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 		}
 
-		// Disk Conveyor / Intake
+		// Frisbee Conveyor / Intake
 		if (master.get_digital(DIGITAL_R1)) {
 			conveyor.moveVelocity(200);
 		} else if (master.get_digital(DIGITAL_Y)) {
@@ -294,10 +289,14 @@ void opcontrol() {
 			roller.moveVelocity(0);
 		}
 
+		// Indexer Piston Toggle
+		// Might switch to a single press later
 		pistonState = master.get_digital(DIGITAL_R2);
 		if (pistonState == true && prevPistonState == false) {
-			indexState = !indexState;
-			indexer.set_value(indexState);
+			if (getFrisbeesInIndexer() > 0) {
+				indexState = !indexState;
+				indexer.set_value(indexState);
+			}
 		}
 		prevPistonState = pistonState;
 
@@ -310,7 +309,7 @@ void opcontrol() {
 		prosBrake(pbrake);
 
 		// Lastly, delay
-		printf("disks in intake: %f\r", distanceFilter.filter(indexerSensor.get()));
+		printf("frisbees in intake: %f\r", distanceFilter.filter(indexerSensor.get()));
 		pros::delay(2);
 	}
 }
