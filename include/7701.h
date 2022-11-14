@@ -28,6 +28,29 @@ void display();
 const bool showScreen = true;
 } // namespace deFenestration
 
+// Declarations
+/* Controller */
+extern pros::Controller master;
+
+/* Drive Motor Groups */
+extern okapi::MotorGroup rightMotors;
+extern okapi::MotorGroup leftMotors;
+
+/* Game System Motors */
+extern okapi::Motor fw;
+extern okapi::Motor conveyor;
+extern okapi::Motor roller;
+extern pros::ADIDigitalOut indexer;
+
+/* Sensors */
+extern pros::Distance indexerSensor;
+extern pros::Optical rollerSensor;
+extern pros::IMU imu_sensor1;
+
+/* Filters */
+extern sylib::MedianFilter hueFilter;
+extern sylib::MedianFilter distanceFilter;
+
 // deFenestration Flywheel System
 namespace deFenestration::Flywheel {
 void FwMotorSet(int value);
@@ -46,36 +69,10 @@ void FwControlTask();
 // Declare drive system variables.
 inline bool pbrake = true;
 
-// Declare driver functions
+// Declare driver functions.
 void customBrake(bool pbrake);
 void prosBrake(bool pbrake);
 
-/* Controller */
-inline pros::Controller master(pros::E_CONTROLLER_MASTER);
-
-/* Drive Motors */
-inline okapi::Motor rightMtr(20, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-inline okapi::Motor rightMtrR(19, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-inline okapi::Motor leftMtr(17, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-inline okapi::Motor leftMtrR(18, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-
-/* Drive Motor Groups */
-inline okapi::MotorGroup rightMotors({rightMtr, rightMtrR});
-inline okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
-
-/* Game System Motors */
-inline okapi::Motor fw(12, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-inline okapi::Motor conveyor(13, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-inline okapi::Motor roller(5, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-inline pros::ADIDigitalOut indexer('A');
-
-/* Sensors */
-inline pros::Distance indexerSensor(11);
-inline pros::Optical rollerSensor(3);
-inline pros::IMU imu_sensor1(1);
-
-inline sylib::MedianFilter hueFilter(5,2,1);
-inline sylib::MedianFilter distanceFilter(5,2,1);
-
+// Declare game system functions.
 int getFrisbeesInIndexer();
 int getRollerColor();

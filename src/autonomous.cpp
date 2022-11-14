@@ -19,7 +19,6 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 #include "7701.h"
-#include "main.h"
 
 /* Util Functions */
 
@@ -153,7 +152,6 @@ void redBack() {
  * from where it left off.
  */
 void autonomous() {
-
 	/* Auton Selector Logic */
 	switch (arms::selector::auton) {
 		case -3:
