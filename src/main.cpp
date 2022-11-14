@@ -45,7 +45,11 @@ void initialize() {
 		 */
 		int count;
 		while (true) {
-			if (count == 100) {
+			if (count == 150) {
+				std::stringstream bypassstr;
+				bypassstr << "Bypass: " << (bypass ? "ON" : "OFF") << "\r";
+				master.print(1, 0, bypassstr.str().c_str());
+			} else if (count == 100) {
 				std::stringstream autonstr;
 				autonstr << "Auton: " << arms::selector::auton << "\r";
 				master.print(0, 0, autonstr.str().c_str());
@@ -56,7 +60,7 @@ void initialize() {
 			}
 
 			count++;
-			count %= 150;
+			count %= 200;
 			pros::delay(1);
 		}
 	}};

@@ -206,7 +206,6 @@ bool indexState = false;
  * If bypass is set to true we switch to direct input
  * bypassing the exponential curve
  */
-bool bypass = false;
 std::int32_t exponentialDrive(std::int32_t joyVal) {
 	if (bypass == true) {
 		return joyVal;

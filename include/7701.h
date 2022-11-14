@@ -68,6 +68,7 @@ void FwControlTask();
 
 // Declare drive system variables.
 inline bool pbrake = true;
+inline bool bypass = false;
 
 // Declare driver functions.
 void customBrake(bool pbrake);
