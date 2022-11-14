@@ -17,8 +17,6 @@ See also the list of [contributors](https://github.com/7701F/2022-Spin-Up/contri
 
 [sylib](https://github.com/SylvieMayer/sylib) - sylib.
 
-[gif-pros](https://github.com/theol0403/gif-pros) - Allows GIFS to be displayed on LVGL.
-
 # License
 
 This project is licensed under the terms of the [zlib/libpng License with Acknowledgement](https://github.com/7701F/2022-Spin-Up/blob/master/LICENSE)
