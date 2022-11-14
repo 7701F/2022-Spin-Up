@@ -21,6 +21,8 @@
 #include <sstream>
 
 #include "7701.h"
+#include "ARMS/config.h"
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
