@@ -202,6 +202,19 @@ bool pistonState = false;
 bool prevPistonState = false;
 bool indexState = false;
 
+/* Exponential Drive Control
+ * If bypass is set to true we switch to direct input
+ * bypassing the exponential curve
+ */
+bool bypass = false;
+std::int32_t exponentialDrive(std::int32_t joyVal) {
+	if (bypass == true) {
+		return joyVal;
+	} else {
+		return joyVal ^ 3 / 10000;
+	}
+}
+
 /*
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -233,10 +246,15 @@ void opcontrol() {
 		 */
 		// clang-format off
 		arms::chassis::arcade(
-			master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127,
-		    master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127
+			exponentialDrive(master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127),
+			exponentialDrive(master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127)
 		);
 		// clang-format on
+
+		/* Exponential Bypass Toggle */
+		if (master.get_digital_new_press(DIGITAL_RIGHT)) {
+			bypass = !bypass;
+		}
 
 		/* Autonomous Manual Trigger
 		 * If the robot is not connected to competition control
