@@ -17,6 +17,8 @@ See also the list of [contributors](https://github.com/7701F/2022-Spin-Up/contri
 
 [sylib](https://github.com/SylvieMayer/sylib) - sylib.
 
+[Hard-Copy](https://github.com/Udit8348/Hard-Copy) - Print code to PDF.
+
 # License
 
 This project is licensed under the terms of the [zlib/libpng License with Acknowledgement](https://github.com/7701F/2022-Spin-Up/blob/master/LICENSE)

@@ -59,8 +59,11 @@ def main():
             or ('include' and 'okapi') in components
             or ('include' and 'display') in components
             or ('include' and 'output') in components
+            or ('include' and 'sylib') in components
+            or ('include' and 'ARMS') in components
             or 'cquery_cached_index' in components
             or (not 'include') in components
+            or 'ARMS' in components
             or '.vscode' in components):
                 continue
 
