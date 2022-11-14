@@ -18,9 +18,9 @@
 
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "7701.h"
-
 #include <sstream>
+
+#include "7701.h"
 
 lv_obj_t* scr = lv_obj_create(NULL, NULL);
 

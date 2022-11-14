@@ -1,3 +1,4 @@
+#! /usr/bin/python3
 from pathlib import Path
 import zipfile
 from shutil import copy, rmtree
