@@ -55,7 +55,7 @@ void prosBrake(bool pbrake) {
 #define FW_LOOP_SPEED 20
 
 // Maximum power we want to send to the flywheel motors
-#define FW_MAX_POWER 210
+#define FW_MAX_POWER 200
 
 // encoder tick per revolution
 float ticks_per_rev; ///< encoder ticks per revolution
@@ -186,8 +186,8 @@ void FwControlTask() {
 		motor_drive = (drive * FW_MAX_POWER) + 0.5;
 
 		// Final Limit of motor values - don't really need this
-		if (motor_drive > 210)
-			motor_drive = 210;
+		if (motor_drive > 200)
+			motor_drive = 200;
 		if (motor_drive < -200)
 			motor_drive = -200;
 
