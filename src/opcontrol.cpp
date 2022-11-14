@@ -19,6 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 #include <sstream>
+#include <cmath>
 
 #include "7701.h"
 
@@ -211,7 +212,7 @@ std::int32_t exponentialDrive(std::int32_t joyVal) {
 	if (bypass == true) {
 		return joyVal;
 	} else {
-		return joyVal ^ 3 / 10000;
+		return pow(joyVal, 3) / 10000;
 	}
 }
 
