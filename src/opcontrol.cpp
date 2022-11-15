@@ -166,7 +166,6 @@ void FwControlTask() {
 	// Set the gain
 	gain = 0.00025;
 
-	// We are using Speed geared motors
 	// Set the encoder ticks per revolution
 	ticks_per_rev = 900;
 
