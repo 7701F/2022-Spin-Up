@@ -22,7 +22,7 @@
 
 /* Util Functions */
 
-/* Gets the # of Frisbees in the Indexer*/
+/* Gets the # of Frisbees in the Indexer */
 int getFrisbeesInIndexer() {
 	int sensorDistance = distanceFilter.filter(indexerSensor.get());
 	if (sensorDistance > 100) {
@@ -36,7 +36,7 @@ int getFrisbeesInIndexer() {
 	}
 }
 
-/* Get the color of the Roller from the Optical Sensor*/
+/* Get the color of the Roller from the Optical Sensor */
 int getRollerColor() {
 	if (rollerSensor.get_proximity() < 200) {
 		return 0;

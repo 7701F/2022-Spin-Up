@@ -230,7 +230,6 @@ std::int32_t exponentialDrive(std::int32_t joyVal) {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-int count;
 void opcontrol() {
 	prosBrake(true);
 
