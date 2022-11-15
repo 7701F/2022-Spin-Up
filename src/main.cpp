@@ -39,29 +39,32 @@ void initialize() {
 
 	/* Controller Status Display */
 	pros::Task controllerTask{[=] {
-		/**
+		/*
 		 * Only print every 50ms, the controller text update rate is slow.
 		 * Any input faster than this will be dropped.
 		 */
 		int count;
 		while (true) {
-			if (count == 150) {
+			if (count == 15) {
 				std::stringstream bypassstr;
 				bypassstr << "Bypass: " << (bypass ? "ON" : "OFF") << "\r";
-				master.print(1, 0, bypassstr.str().c_str());
-			} else if (count == 100) {
+				master.print(0, 0, bypassstr.str().c_str());
+			} else if (count == 10) {
 				std::stringstream autonstr;
 				autonstr << "Auton: " << arms::selector::auton << "\r";
-				master.print(0, 0, autonstr.str().c_str());
-			} else if (count == 50) {
+				master.print(1, 0, autonstr.str().c_str());
+			} else if (count == 5) {
 				std::stringstream brakestr;
 				brakestr << "Brake: " << (pbrake ? "ON" : "OFF") << "\r";
-				master.print(1, 0, brakestr.str().c_str());
+				master.print(2, 0, brakestr.str().c_str());
 			}
 
 			count++;
-			count %= 200;
-			pros::delay(1);
+			count %= 20;
+
+
+
+			pros::delay(10);
 		}
 	}};
 }

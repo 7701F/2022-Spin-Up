@@ -269,11 +269,12 @@ void opcontrol() {
 		 */
 		// Frisbee Shooter Flywheel
 		flywheelState = master.get_digital_new_press(DIGITAL_L2);
+		flywheelThirdPosState = master.get_digital_new_press(DIGITAL_L1);
+
 		if (flywheelState == true) {
 			fwON = !fwON;
 			deFenestration::Flywheel::FwVelocitySet(200, .5);
 		}
-		flywheelThirdPosState = master.get_digital_new_press(DIGITAL_L1);
 		if (flywheelThirdPosState == true) {
 			fwON = !fwON;
 			deFenestration::Flywheel::FwVelocitySet(120, 0.5);
@@ -303,7 +304,8 @@ void opcontrol() {
 		// Might switch to a single press later
 		pistonState = master.get_digital(DIGITAL_R2);
 		if (pistonState == true && prevPistonState == false) {
-			if (getFrisbeesInIndexer() > 0) {
+			auto frisbeesInIndexer = 0 < getFrisbeesInIndexer() && getFrisbeesInIndexer() < 3;
+			if (frisbeesInIndexer) {
 				indexState = !indexState;
 				indexer.set_value(indexState);
 			}

@@ -19,6 +19,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 #include "main.h"
+#include "pros/adi.hpp"
 
 /* Controller */
 pros::Controller master(pros::E_CONTROLLER_MASTER);
@@ -42,7 +43,10 @@ pros::ADIDigitalOut indexer('A');
 /* Sensors */
 pros::Distance indexerSensor(11);
 pros::Optical rollerSensor(3);
-pros::IMU imu_sensor1(1);
+pros::IMU imu_sensor(1);
+
+/* LEDs */
+sylib::Addrled indexLights(22, 2, 64);
 
 /* Filters */
 sylib::MedianFilter hueFilter(5, 2, 1);

@@ -45,7 +45,10 @@ extern pros::ADIDigitalOut indexer;
 /* Sensors */
 extern pros::Distance indexerSensor;
 extern pros::Optical rollerSensor;
-extern pros::IMU imu_sensor1;
+extern pros::IMU imu_sensor;
+
+/* LEDs */
+extern sylib::Addrled indexLights;
 
 /* Filters */
 extern sylib::MedianFilter hueFilter;
