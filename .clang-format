@@ -15,6 +15,6 @@ SortIncludes: true
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeParens: ControlStatements
 SpacesBeforeTrailingComments: 1
-Standard: Cpp17
+Standard: c++17
 TabWidth: 2
 UseTab: ForIndentation
