@@ -25,11 +25,11 @@
 /* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity */
 void customBrake(bool pbrake) {
 	if (pbrake == true) {
-		if (master.get_analog(ANALOG_RIGHT_X) == 0 && master.get_analog(ANALOG_LEFT_X) == 0) {
-			if (leftMotors.getActualVelocity() != 0 || rightMotors.getActualVelocity() != 0) {
-				leftMotors.moveVelocity(leftMotors.getActualVelocity() * -2);
-				rightMotors.moveVelocity(rightMotors.getActualVelocity() * -2);
-				// pros::delay(2);
+		if (master.get_analog(ANALOG_RIGHT_X) == 0 && master.get_analog(ANALOG_LEFT_Y) == 0) {
+			if (arms::chassis::leftMotors->get_actual_velocities() != std::vector<double>{0, 0, 0, 0} ||
+			    arms::chassis::rightMotors->get_actual_velocities() != std::vector<double>{0, 0, 0, 0}) {
+				// arms::chassis::leftMotors->move_velocity(arms::chassis::leftMotors->get_actual_velocities()[0] * -2);
+				// arms::chassis::rightMotors->move_velocity(arms::chassis::rightMotors->get_actual_velocities()[0] * -2);
 			}
 		}
 	}
@@ -38,14 +38,14 @@ void customBrake(bool pbrake) {
 /* Smart boy motor brake solution */
 void prosBrake(bool pbrake) {
 	if (pbrake == true) {
-		if (rightMotors.getBrakeMode() != okapi::AbstractMotor::brakeMode::hold) {
-			leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
-			rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_HOLD)) {
+			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
+			arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
 		}
 	} else if (pbrake == false) {
-		if (rightMotors.getBrakeMode() != okapi::AbstractMotor::brakeMode::coast) {
-			leftMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
-			rightMotors.setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
+		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_COAST)) {
+			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
+			arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 		}
 	}
 }
@@ -89,7 +89,7 @@ namespace deFenestration::Flywheel {
 void FwMotorSet(int value) {
 	int x;
 	x = (value * 12000) / 200;
-	fw.moveVoltage(x);
+	fw.move_voltage(x);
 }
 
 /* Set motor velocity
@@ -119,7 +119,7 @@ float FwCalculateSpeed() {
 
 	millis_last = pros::millis();
 
-	encoder_counts = fw.getPosition();
+	encoder_counts = fw.get_position();
 	delta_enc = (encoder_counts - encoder_counts_last);
 	encoder_counts_last = encoder_counts;
 
@@ -290,18 +290,18 @@ void opcontrol() {
 
 		// Frisbee Conveyor / Intake
 		if (master.get_digital(DIGITAL_R1)) {
-			conveyor.moveVelocity(200);
+			conveyor.move_velocity(200);
 		} else if (master.get_digital(DIGITAL_Y)) {
-			conveyor.moveVelocity(-200);
+			conveyor.move_velocity(-200);
 		} else {
-			conveyor.moveVelocity(0);
+			conveyor.move_velocity(0);
 		}
 
 		// Roller
 		if (master.get_digital(DIGITAL_A)) {
-			roller.moveVelocity(200);
+			roller.move_velocity(200);
 		} else {
-			roller.moveVelocity(0);
+			roller.move_velocity(0);
 		}
 
 		// Indexer Piston Toggle
@@ -330,7 +330,7 @@ void opcontrol() {
 		prosBrake(pbrake);
 
 		// Lastly, delay
-		printf("frisbees in intake: %d | raw value: %f | roller color: %f\r", getFrisbeesInIndexer(),
+		printf("frisbees in intake: %d | raw value: %f | roller color: %d\n", getFrisbeesInIndexer(),
 		       distanceFilter.filter(indexerSensor.get()), getRollerColor());
 		pros::delay(2);
 	}

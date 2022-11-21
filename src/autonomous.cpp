@@ -56,23 +56,23 @@ int getRollerColor() {
 /* Set Roller to Red */
 void setRollerRed() {
 	int rollerStartTime = pros::millis();
-	roller.moveVelocity(100);
+	roller.move_velocity(100);
 	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
 		pros::delay(10);
 	}
 	pros::delay(200);
-	roller.moveVelocity(0);
+	roller.move_velocity(0);
 }
 
 /* Set Roller to Blue */
 void setRollerBlue() {
 	int rollerStartTime = pros::millis();
-	roller.moveVelocity(100);
+	roller.move_velocity(100);
 	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
 		pros::delay(10);
 	}
 	pros::delay(200);
-	roller.moveVelocity(0);
+	roller.move_velocity(0);
 }
 
 /* Blue Back Auton */
@@ -83,8 +83,10 @@ void backAuto(int color) {
 	turn(-30);
 	move(-10, arms::REVERSE);
 	move(-10, -100, arms::REVERSE | arms::ASYNC);
-	if(color == 1) setRollerBlue();
-	if(color == 2) setRollerRed();
+	if (color == 1)
+		setRollerBlue();
+	if (color == 2)
+		setRollerRed();
 }
 
 /* Programming Skills */
@@ -103,12 +105,12 @@ void shortAuto() {
 	using namespace arms::chassis;
 
 	move(-120, arms::REVERSE);
-	while(!settled()) {
+	while (!settled()) {
 		pros::delay(10);
 	}
-	roller.moveVelocity(100);
+	roller.move_velocity(100);
 	pros::delay(250);
-	roller.moveVelocity(0);
+	roller.move_velocity(0);
 }
 
 /**

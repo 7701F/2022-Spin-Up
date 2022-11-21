@@ -19,25 +19,22 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 #include "main.h"
-#include "pros/adi.hpp"
 
 /* Controller */
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 /* Drive Motors */
-okapi::Motor rightMtr(20, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor rightMtrR(19, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor leftMtr(17, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor leftMtrR(18, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-
-/* Drive Motor Groups */
-okapi::MotorGroup rightMotors({rightMtr, rightMtrR});
-okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
+pros::Motor rightMtr(20, pros::E_MOTOR_GEAR_GREEN, true, pros::E_MOTOR_ENCODER_DEGREES);
+pros::Motor rightMtrR(19, pros::E_MOTOR_GEAR_GREEN, false, pros::E_MOTOR_ENCODER_DEGREES);
+pros::Motor leftMtr(17, pros::E_MOTOR_GEAR_GREEN, true, pros::E_MOTOR_ENCODER_DEGREES);
+pros::Motor leftMtrR(18, pros::E_MOTOR_GEAR_GREEN, false, pros::E_MOTOR_ENCODER_DEGREES);
 
 /* Game System Motors */
-okapi::Motor fw(12, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor conveyor(13, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor roller(5, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+pros::Motor fw(12, pros::E_MOTOR_GEAR_GREEN, false, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor conveyor(13, pros::E_MOTOR_GEAR_GREEN, false, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor roller(5, pros::E_MOTOR_GEAR_GREEN, false, pros::E_MOTOR_ENCODER_COUNTS);
+
+/* Pistons */
 pros::ADIDigitalOut indexer('G');
 pros::ADIDigitalOut endgame('H');
 

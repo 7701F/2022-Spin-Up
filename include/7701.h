@@ -29,17 +29,21 @@ const bool showScreen = true;
 } // namespace deFenestration
 
 // Declarations
-// /* Controller */
+/* Controller */
 extern pros::Controller master;
 
-// /* Drive Motor Groups */
-extern okapi::MotorGroup rightMotorsI;
-extern okapi::MotorGroup leftMotorsI;
+/* Drive Motors */
+extern pros::Motor rightMtr;
+extern pros::Motor rightMtrR;
+extern pros::Motor leftMtr;
+extern pros::Motor leftMtrR;
 
 /* Game System Motors */
-extern okapi::Motor fw;
-extern okapi::Motor conveyor;
-extern okapi::Motor roller;
+extern pros::Motor fw;
+extern pros::Motor conveyor;
+extern pros::Motor roller;
+
+/* Pistons */
 extern pros::ADIDigitalOut indexer;
 extern pros::ADIDigitalOut endgame;
 
@@ -49,7 +53,7 @@ extern pros::Optical rollerSensor;
 extern pros::IMU imu_sensor;
 
 /* LEDs */
-// extern sylib::Addrled indexLights;
+// extern sylib::Addrled;
 
 /* Filters */
 extern sylib::MedianFilter hueFilter;

@@ -58,9 +58,9 @@ void display() {
 	while (true) {
 		std::stringstream stats;
 		stats << "Flywheel Info:\n"
-		      << "  Flywheel Temp: " << fw.getTemperature() << "\n  Flywheel MVel: " << (deFenestration::Flywheel::FwCalculateSpeed())
+		      << "  Flywheel Temp: " << fw.get_temperature() << "\n  Flywheel MVel: " << (deFenestration::Flywheel::FwCalculateSpeed())
 		      << "\n  Flywheel OVel: " << (deFenestration::Flywheel::FwCalculateSpeed() * 16.3333333334)
-		      << "\n  Flywheel Efficiency: " << fw.getEfficiency();
+		      << "\n  Flywheel Efficiency: " << fw.get_efficiency();
 
 		lv_label_set_text(statsDisplay, stats.str().c_str());
 
