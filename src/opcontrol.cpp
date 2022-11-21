@@ -204,6 +204,10 @@ bool pistonState = false;
 bool prevPistonState = false;
 bool indexState = false;
 
+bool EpistonState = false;
+bool EprevPistonState = false;
+bool endgameState = false;
+
 /* Exponential Drive Control
  * If bypass is set to true we switch to direct input
  * bypassing the exponential curve
@@ -252,7 +256,7 @@ void opcontrol() {
 		// clang-format on
 
 		/* Exponential Bypass Toggle */
-		if (master.get_digital_new_press(DIGITAL_RIGHT)) {
+		if (master.get_digital_new_press(DIGITAL_LEFT)) {
 			bypass = !bypass;
 		}
 
@@ -304,13 +308,18 @@ void opcontrol() {
 		// Might switch to a single press later
 		pistonState = master.get_digital(DIGITAL_R2);
 		if (pistonState == true && prevPistonState == false) {
-			auto frisbeesInIndexer = 0 < getFrisbeesInIndexer() && getFrisbeesInIndexer() < 3;
-			if (frisbeesInIndexer) {
-				indexState = !indexState;
-				indexer.set_value(indexState);
-			}
+			indexState = !indexState;
+			indexer.set_value(indexState);
 		}
 		prevPistonState = pistonState;
+
+		// Endgame Piston
+		EpistonState = (master.get_digital_new_press(DIGITAL_UP) && master.get_digital_new_press(DIGITAL_RIGHT));
+		if (EpistonState == true && EprevPistonState == false) {
+			endgameState = !endgameState;
+			endgame.set_value(endgameState);
+		}
+		EprevPistonState = EpistonState;
 
 		/* Brake System
 		 * The brake system is a safety feature that prevents the robot from being
@@ -321,7 +330,8 @@ void opcontrol() {
 		prosBrake(pbrake);
 
 		// Lastly, delay
-		printf("frisbees in intake: %f\r", distanceFilter.filter(indexerSensor.get()));
+		printf("frisbees in intake: %d | raw value: %f | roller color: %f\r", getFrisbeesInIndexer(),
+		       distanceFilter.filter(indexerSensor.get()), getRollerColor());
 		pros::delay(2);
 	}
 }

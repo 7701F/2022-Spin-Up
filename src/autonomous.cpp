@@ -25,11 +25,11 @@
 /* Gets the # of Frisbees in the Indexer */
 int getFrisbeesInIndexer() {
 	int sensorDistance = distanceFilter.filter(indexerSensor.get());
-	if (sensorDistance > 100) {
+	if (sensorDistance > 105) {
 		return 0;
-	} else if (sensorDistance > 55) {
+	} else if (sensorDistance > 90) {
 		return 1;
-	} else if (sensorDistance > 35) {
+	} else if (sensorDistance > 70) {
 		return 2;
 	} else {
 		return 3;
@@ -57,18 +57,10 @@ int getRollerColor() {
 void setRollerRed() {
 	int rollerStartTime = pros::millis();
 	roller.moveVelocity(100);
-	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
-		pros::delay(10);
-	}
-	roller.moveVelocity(0);
-	pros::delay(50);
-	rollerStartTime = pros::millis();
-	roller.moveVelocity(100);
 	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
 		pros::delay(10);
 	}
-	roller.moveVelocity(50);
-	pros::delay(250);
+	pros::delay(200);
 	roller.moveVelocity(0);
 }
 
@@ -76,38 +68,23 @@ void setRollerRed() {
 void setRollerBlue() {
 	int rollerStartTime = pros::millis();
 	roller.moveVelocity(100);
-	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
-		pros::delay(10);
-	}
-	roller.moveVelocity(0);
-	pros::delay(50);
-	rollerStartTime = pros::millis();
-	roller.moveVelocity(100);
 	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
 		pros::delay(10);
 	}
-	roller.moveVelocity(50);
-	pros::delay(250);
+	pros::delay(200);
 	roller.moveVelocity(0);
 }
 
-/* Blue Front Auton*/
-void blueFront() {
-	using namespace arms::chassis;
-	arms::odom::reset({{0, 24}});
-
-	turn({0, 24}, 75);
-	move({{0, 24}}, 200);
-	setRollerRed();
-}
-
 /* Blue Back Auton */
-void blueBack() {
+void backAuto(int color) {
 	using namespace arms::chassis;
-	arms::odom::reset({{0, 24}});
 
-	turn({0, 24}, 75);
-	move({{0, 24}}, 200);
+	move(6);
+	turn(-30);
+	move(-10, arms::REVERSE);
+	move(-10, -100, arms::REVERSE | arms::ASYNC);
+	if(color == 1) setRollerBlue();
+	if(color == 2) setRollerRed();
 }
 
 /* Programming Skills */
@@ -122,22 +99,16 @@ void Sauton() {
 }
 
 /* Red Front Auton */
-void redFront() {
+void shortAuto() {
 	using namespace arms::chassis;
-	arms::odom::reset({{0, 24}});
 
-	turn({0, 24}, 75);
-	move({{0, 24}}, 200);
-	setRollerRed();
-}
-
-/* Red Back Auton */
-void redBack() {
-	using namespace arms::chassis;
-	arms::odom::reset({{0, 24}});
-
-	turn({0, 24}, 75);
-	move({{0, 24}}, 200);
+	move(-120, arms::REVERSE);
+	while(!settled()) {
+		pros::delay(10);
+	}
+	roller.moveVelocity(100);
+	pros::delay(250);
+	roller.moveVelocity(0);
 }
 
 /**
@@ -153,24 +124,25 @@ void redBack() {
  */
 void autonomous() {
 	/* Auton Selector Logic */
+	// Negative = Blue
+	// Positive = Red
 	switch (arms::selector::auton) {
 		case -3:
 			// Do Nothing.
 			break;
 		case -2:
-			// blueBack();
+			backAuto(1);
 			break;
 		case -1:
-			// blueFront();
+			shortAuto();
 			break;
 		case 0:
-			Sauton();
 			break;
 		case 1:
-			// redFront();
+			backAuto(2);
 			break;
 		case 2:
-			// redBack();
+			shortAuto();
 			break;
 		case 3:
 			// Do Nothing.

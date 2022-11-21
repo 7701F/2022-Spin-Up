@@ -15,7 +15,7 @@ namespace arms {
 #define GEARSET pros::E_MOTOR_GEAR_200 // RPM of chassis motors
 
 // Ticks per inch
-#define TPI 69.27272985     			  // Encoder ticks per inch of forward robot movement
+#define TPI 45//69.27272985     			  // Encoder ticks per inch of forward robot movement
 #define MIDDLE_TPI 1          // Ticks per inch for the middle wheel
 
 // Tracking wheel distances
@@ -48,7 +48,7 @@ namespace arms {
 // Auton selector configuration constants
 #define AUTONS "Front", "Back", "Do Nothing" // Names of autonomi, up to 10
 #define HUE 0     // Color of theme from 0-359(H part of HSV)
-#define DEFAULT 1 // Default auton selected
+#define DEFAULT 0 // Default auton selected
 
 // Initializer
 inline void init() {

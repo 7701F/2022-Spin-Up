@@ -38,15 +38,16 @@ okapi::MotorGroup leftMotors({leftMtr, leftMtrR});
 okapi::Motor fw(12, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 okapi::Motor conveyor(13, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 okapi::Motor roller(5, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-pros::ADIDigitalOut indexer('A');
+pros::ADIDigitalOut indexer('G');
+pros::ADIDigitalOut endgame('H');
 
 /* Sensors */
-pros::Distance indexerSensor(11);
+pros::Distance indexerSensor(2);
 pros::Optical rollerSensor(3);
 pros::IMU imu_sensor(1);
 
 /* LEDs */
-sylib::Addrled indexLights(22, 2, 64);
+// sylib::Addrled indexLights(22, 2, 64);
 
 /* Filters */
 sylib::MedianFilter hueFilter(5, 2, 1);

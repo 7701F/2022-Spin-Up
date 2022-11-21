@@ -62,8 +62,7 @@ void initialize() {
 			count++;
 			count %= 20;
 
-
-
+			// indexLights.set_all(0xE62169);
 			pros::delay(10);
 		}
 	}};
