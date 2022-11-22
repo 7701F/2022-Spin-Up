@@ -19,8 +19,14 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 #include "7701.h"
+#include "ARMS/flags.h"
 
 /* Util Functions */
+namespace COLORS {
+const int RED = 1;
+const int BLUE = 2;
+const int ERROR = 3;
+} // namespace deFenestration
 
 /* Gets the # of Frisbees in the Indexer */
 int getFrisbeesInIndexer() {
@@ -57,7 +63,7 @@ int getRollerColor() {
 void setRollerRed() {
 	int rollerStartTime = pros::millis();
 	roller.move_velocity(100);
-	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
+	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
 		pros::delay(10);
 	}
 	pros::delay(200);
@@ -68,7 +74,7 @@ void setRollerRed() {
 void setRollerBlue() {
 	int rollerStartTime = pros::millis();
 	roller.move_velocity(100);
-	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
+	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
 		pros::delay(10);
 	}
 	pros::delay(200);
@@ -89,6 +95,24 @@ void backAuto(int color) {
 		setRollerRed();
 }
 
+/* Short Side Auton */
+void shortAuto(int color) {
+	using namespace arms::chassis;
+
+	move(-120, arms::REVERSE);
+	while (!settled()) {
+		pros::delay(10);
+	}
+	// roller.move_velocity(100);
+	// pros::delay(250);
+	// roller.move_velocity(0);
+	if (color == 1)
+		setRollerBlue();
+	if (color == 2)
+		setRollerRed();
+}
+
+
 /* Programming Skills */
 void Sauton() {
 	deFenestration::Flywheel::FwVelocitySet(96, 0.2);
@@ -98,19 +122,6 @@ void Sauton() {
 
 	turn({0, 24}, 75);
 	move({{0, 24}}, 200);
-}
-
-/* Red Front Auton */
-void shortAuto() {
-	using namespace arms::chassis;
-
-	move(-120, arms::REVERSE);
-	while (!settled()) {
-		pros::delay(10);
-	}
-	roller.move_velocity(100);
-	pros::delay(250);
-	roller.move_velocity(0);
 }
 
 /**
@@ -133,18 +144,18 @@ void autonomous() {
 			// Do Nothing.
 			break;
 		case -2:
-			backAuto(1);
+			backAuto(COLORS::BLUE);
 			break;
 		case -1:
-			shortAuto();
+			shortAuto(COLORS::BLUE);
 			break;
 		case 0:
 			break;
 		case 1:
-			backAuto(2);
+			backAuto(COLORS::RED);
 			break;
 		case 2:
-			shortAuto();
+			shortAuto(COLORS::RED);
 			break;
 		case 3:
 			// Do Nothing.

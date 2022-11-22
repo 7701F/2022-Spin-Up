@@ -10,8 +10,8 @@ namespace arms {
 #define ODOM_DEBUG 0
 
 // Negative numbers mean reversed motor
-#define LEFT_MOTORS 17, -20
-#define RIGHT_MOTORS -18, 19
+#define LEFT_MOTORS 5, -6
+#define RIGHT_MOTORS -8, 7
 #define GEARSET pros::E_MOTOR_GEAR_200 // RPM of chassis motors
 
 // Ticks per inch
