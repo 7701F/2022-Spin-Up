@@ -23,8 +23,8 @@
 
 /* Util Functions */
 namespace COLORS {
-const int RED = 1;
-const int BLUE = 2;
+const int BLUE = 1;
+const int RED = 2;
 const int ERROR = 3;
 } // namespace deFenestration
 
@@ -63,7 +63,7 @@ int getRollerColor() {
 void setRollerRed() {
 	int rollerStartTime = pros::millis();
 	roller.move_velocity(100);
-	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
+	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
 		pros::delay(10);
 	}
 	pros::delay(200);
@@ -74,7 +74,7 @@ void setRollerRed() {
 void setRollerBlue() {
 	int rollerStartTime = pros::millis();
 	roller.move_velocity(100);
-	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
+	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
 		pros::delay(10);
 	}
 	pros::delay(200);
@@ -99,17 +99,17 @@ void backAuto(int color) {
 void shortAuto(int color) {
 	using namespace arms::chassis;
 
-	move(-120, arms::REVERSE);
+	move(100, arms::ASYNC);
 	while (!settled()) {
 		pros::delay(10);
 	}
-	// roller.move_velocity(100);
-	// pros::delay(250);
-	// roller.move_velocity(0);
-	if (color == 1)
-		setRollerBlue();
-	if (color == 2)
-		setRollerRed();
+	roller.move_velocity(100);
+	pros::delay(250);
+	roller.move_velocity(0);
+	// if (color == 1)
+	// 	setRollerBlue();
+	// if (color == 2)
+	// 	setRollerRed();
 }
 
 
@@ -144,7 +144,7 @@ void autonomous() {
 			// Do Nothing.
 			break;
 		case -2:
-			backAuto(COLORS::BLUE);
+			// backAuto(COLORS::BLUE);
 			break;
 		case -1:
 			shortAuto(COLORS::BLUE);
@@ -152,10 +152,10 @@ void autonomous() {
 		case 0:
 			break;
 		case 1:
-			backAuto(COLORS::RED);
+			shortAuto(COLORS::RED);
 			break;
 		case 2:
-			shortAuto(COLORS::RED);
+			// backAuto(COLORS::RED);
 			break;
 		case 3:
 			// Do Nothing.
