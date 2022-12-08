@@ -264,9 +264,8 @@ void opcontrol() {
 		// clang-format on
 
 		/* Exponential Bypass Toggle */
-		if (master.get_digital_new_press(DIGITAL_LEFT)) {
+		if (master.get_digital_new_press(DIGITAL_LEFT))
 			bypass = !bypass;
-		}
 
 		/* Autonomous Manual Trigger
 		 * If the robot is not connected to competition control
