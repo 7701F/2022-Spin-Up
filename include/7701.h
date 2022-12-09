@@ -67,7 +67,7 @@ double FwMotorEncoderGet();
 
 void FwVelocitySet(int velocity, float predicted_drive);
 
-float FwCalculateSpeed();
+void FwCalculateSpeed();
 
 void FwControlUpdateVelocityTbh();
 

@@ -304,13 +304,6 @@ void opcontrol() {
 			conveyor.move_velocity(0);
 		}
 
-		// Roller
-		if (master.get_digital(DIGITAL_A)) {
-			roller.move_velocity(200);
-		} else {
-			roller.move_velocity(0);
-		}
-
 		// Indexer Piston Toggle
 		// Might switch to a single press later
 		pistonState = master.get_digital(DIGITAL_R2);
