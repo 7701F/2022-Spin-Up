@@ -55,18 +55,19 @@ void display() {
 
 	// deFenestration Stats Display
 	// Runs every 50ms
-	while (true) {
-		std::stringstream stats;
-		stats << "Flywheel Info:\n"
-		      << "  Flywheel Temp: " << fw.get_temperature() << "\n  Flywheel MVel: " << (deFenestration::Flywheel::FwCalculateSpeed())
-		      << "\n  Flywheel OVel: " << (deFenestration::Flywheel::FwCalculateSpeed() * 16.3333333334)
-		      << "\n  Flywheel Efficiency: " << fw.get_efficiency();
+	// while (true) {
+	// 	std::stringstream stats;
+	// 	stats << "Flywheel Info:\n"
+	// 	      << "  Flywheel Temp: " << fw.get_temperature()
+	// 	      << "\n  Flywheel MVel: " << (motor_velocity)
+	// 	      << "\n  Flywheel OVel: " << (motor_velocity * 16.3333333334)
+	// 	      << "\n  Flywheel Efficiency: " << fw.get_efficiency();
 
-		lv_label_set_text(statsDisplay, stats.str().c_str());
+	// 	lv_label_set_text(statsDisplay, stats.str().c_str());
 
-		// Lastly, delay
-		pros::delay(50);
-	}
+	// 	// Lastly, delay
+	// 	pros::delay(50);
+	// }
 }
 
 } // namespace deFenestration

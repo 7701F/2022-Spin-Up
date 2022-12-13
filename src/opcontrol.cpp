@@ -57,8 +57,8 @@ void prosBrake(bool brakeOn) {
 // Maximum power we want to send to the flywheel motors
 #define FW_MAX_POWER 200
 
-// encoder tick per revolution
-float ticks_per_rev; ///< encoder ticks per revolution
+// Set the encoder ticks per revolution
+float ticks_per_rev = 360;
 
 // Encoder
 long encoder_counts;      ///< current encoder count
@@ -80,6 +80,10 @@ float drive_approx;   ///< estimated open loop drive
 
 // final motor drive
 long motor_drive; ///< final motor control value
+
+int current_time;
+float delta_ms;
+int delta_enc;
 
 namespace deFenestration::Flywheel {
 
@@ -113,17 +117,25 @@ void FwVelocitySet(int velocity, float predicted_drive) {
 }
 
 /* Calculate the current flywheel motor velocity */
-float FwCalculateSpeed() {
-	int delta_time = pros::millis() - millis_last;
-	int delta_enc;
-
-	millis_last = pros::millis();
+void FwCalculateSpeed() {
+	current_time = pros::millis();
+	delta_ms = 1000.0 / (current_time - millis_last);
 
 	encoder_counts = fw.get_position();
-	delta_enc = (encoder_counts - encoder_counts_last);
-	encoder_counts_last = encoder_counts;
 
-	return motor_velocity = (1000.0 / delta_time) * delta_enc * 60.0 / ticks_per_rev;
+	// Calculate the change in encoder counts since the last time this function was called
+	delta_enc = (encoder_counts - encoder_counts_last);
+
+	// Calculate the motor velocity in RPM
+	// motor_velocity = delta_ms * delta_enc * 60.0 / ticks_per_rev;
+	// motor_velocity = delta_ms * delta_enc * 60.0 / ticks_per_rev;
+	motor_velocity = (1000.0 / delta_ms) * delta_enc * 60.0 / ticks_per_rev;
+
+	// (1000.0 / 60000) * 360 * 60.0 / 360 =
+	// 1000.0 / 500 = 2
+
+	encoder_counts_last = encoder_counts;
+	millis_last = current_time;
 }
 
 /* Update the velocity tbh controller variables */
@@ -166,9 +178,6 @@ void FwControlTask() {
 	// Set the gain
 	gain = 0.0005;
 
-	// Set the encoder ticks per revolution
-	ticks_per_rev = 350;
-
 	while (1) {
 		// Calculate velocity
 		deFenestration::Flywheel::FwCalculateSpeed();
@@ -187,6 +196,9 @@ void FwControlTask() {
 
 		// and finally set the motor control value
 		deFenestration::Flywheel::FwMotorSet(motor_drive);
+
+		// print fw speed
+		printf("flywheel speed: %f current error: %f\r", motor_velocity, current_error);
 
 		// Run at somewhere between 20 and 50mS
 		pros::delay(FW_LOOP_SPEED);
@@ -306,12 +318,22 @@ void opcontrol() {
 
 		// Indexer Piston Toggle
 		// Might switch to a single press later
-		pistonState = master.get_digital(DIGITAL_R2);
-		if (pistonState == true && prevPistonState == false) {
+		// pistonState = master.get_digital(DIGITAL_R2);
+		// if (pistonState == true && prevPistonState == false) {
+		// 	indexState = !indexState;
+		// 	indexer.set_value(indexState);
+		// }
+		// prevPistonState = pistonState;
+
+		if (master.get_digital_new_press(DIGITAL_R2)) {
+			indexState = !indexState;
+			indexer.set_value(indexState);
+
+			// delay 50 ms then retract
+			pros::delay(50);
 			indexState = !indexState;
 			indexer.set_value(indexState);
 		}
-		prevPistonState = pistonState;
 
 		// Endgame Piston
 		EpistonState = master.get_digital_new_press(DIGITAL_RIGHT);
@@ -330,8 +352,6 @@ void opcontrol() {
 		prosBrake(pbrake);
 
 		// Lastly, delay
-		printf("frisbees in intake: %d | raw value: %f | roller color: %d\n", getFrisbeesInIndexer(),
-		       distanceFilter.filter(indexerSensor.get()), getRollerColor());
 		pros::delay(2);
 	}
 }

@@ -26,7 +26,7 @@ namespace COLORS {
 const int BLUE = 1;
 const int RED = 2;
 const int ERROR = 3;
-} // namespace deFenestration
+} // namespace COLORS
 
 /* Gets the # of Frisbees in the Indexer */
 int getFrisbeesInIndexer() {
@@ -103,15 +103,14 @@ void shortAuto(int color) {
 	while (!settled()) {
 		pros::delay(10);
 	}
-	roller.move_velocity(100);
+	conveyor.move_velocity(100);
 	pros::delay(250);
-	roller.move_velocity(0);
+	conveyor.move_velocity(0);
 	// if (color == 1)
 	// 	setRollerBlue();
 	// if (color == 2)
 	// 	setRollerRed();
 }
-
 
 /* Programming Skills */
 void Sauton() {
