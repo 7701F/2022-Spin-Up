@@ -36,7 +36,7 @@ void customBrake(bool pbrake) {
 }
 
 /* Smart boy motor brake solution */
-void prosBrake(bool pbrake) {
+void prosBrake(bool brakeOn) {
 	if (pbrake == true) {
 		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_HOLD)) {
 			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
@@ -164,10 +164,10 @@ void FwControlUpdateVelocityTbh() {
 /* Task to control the velocity of the flywheel */
 void FwControlTask() {
 	// Set the gain
-	gain = 0.00025;
+	gain = 0.0005;
 
 	// Set the encoder ticks per revolution
-	ticks_per_rev = 900;
+	ticks_per_rev = 350;
 
 	while (1) {
 		// Calculate velocity
@@ -180,8 +180,8 @@ void FwControlTask() {
 		motor_drive = (drive * FW_MAX_POWER) + 0.5;
 
 		// Final Limit of motor values - don't really need this
-		if (motor_drive > 200)
-			motor_drive = 200;
+		if (motor_drive > 210)
+			motor_drive = 210;
 		if (motor_drive < -200)
 			motor_drive = -200;
 
@@ -209,7 +209,7 @@ bool EprevPistonState = false;
 bool endgameState = false;
 
 /* Exponential Drive Control
- * If bypass is set to true we switch to direct input
+ * If bypass is set to true we switch to direct input,
  * bypassing the exponential curve
  */
 std::int32_t exponentialDrive(std::int32_t joyVal) {
@@ -248,10 +248,18 @@ void opcontrol() {
 		/* Steering
 		 * Handled by ARMS
 		 */
+		int leftJoyStick = master.get_analog(ANALOG_LEFT_Y);
+		int rightJoyStick = master.get_analog(ANALOG_RIGHT_X);
+
+		if (abs(leftJoyStick) < 3)
+			leftJoyStick = 0;
+		if (abs(rightJoyStick) < 3)
+			rightJoyStick = 0;
+
 		// clang-format off
 		arms::chassis::arcade(
-			exponentialDrive(master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127),
-			exponentialDrive(master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127)
+			exponentialDrive(leftJoyStick * (double)100 / 127),
+			exponentialDrive(rightJoyStick * (double)100 / 127)
 		);
 		// clang-format on
 
@@ -276,7 +284,7 @@ void opcontrol() {
 
 		if (flywheelState == true) {
 			fwON = !fwON;
-			deFenestration::Flywheel::FwVelocitySet(200, .5);
+			deFenestration::Flywheel::FwVelocitySet(210, 1);
 		}
 		if (flywheelThirdPosState == true) {
 			fwON = !fwON;
@@ -313,7 +321,7 @@ void opcontrol() {
 		prevPistonState = pistonState;
 
 		// Endgame Piston
-		EpistonState = (master.get_digital_new_press(DIGITAL_UP) && master.get_digital_new_press(DIGITAL_RIGHT));
+		EpistonState = master.get_digital_new_press(DIGITAL_RIGHT);
 		if (EpistonState == true && EprevPistonState == false) {
 			endgameState = !endgameState;
 			endgame.set_value(endgameState);
