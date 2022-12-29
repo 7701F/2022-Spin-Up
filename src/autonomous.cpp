@@ -124,6 +124,15 @@ void Sauton() {
 	move({{0, 24}}, 200);
 }
 
+/* Program an autonomous that moves to {{0, 0}} then turns to 90 degrees*/
+void Pauton() {
+	using namespace arms::chassis;
+	arms::odom::reset({{0, 0}});
+
+	turn({0, 0}, 90);
+	move({{0, 0}}, 200);
+}
+
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
