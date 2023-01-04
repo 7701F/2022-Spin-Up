@@ -10,7 +10,7 @@ namespace arms {
 #define ODOM_DEBUG 0
 
 // Negative numbers mean reversed motor
-#define LEFT_MOTORS -5, 6
+#define LEFT_MOTORS -4, 5
 #define RIGHT_MOTORS -8, 7
 #define GEARSET pros::E_MOTOR_GEAR_200 // RPM of chassis motors
 
@@ -24,7 +24,7 @@ namespace arms {
 
 // Sensors
 #define IMU_PORT 1                           // Port 0 for disabled
-#define ENCODER_PORTS 0, 0, 0                // Port 0 for disabled,
+#define ENCODER_PORTS 0, 0, 20                // Port 0 for disabled,
 #define EXPANDER_PORT 0                      // Port 0 for disabled
 #define ENCODER_TYPE arms::odom::ENCODER_ADI // The type of encoders
 

@@ -198,7 +198,10 @@ void FwControlTask() {
 		deFenestration::Flywheel::FwMotorSet(motor_drive);
 
 		// print fw speed
-		printf("flywheel speed: %f current error: %f\r", motor_velocity, current_error);
+		// printf("flywheel speed: %f current error: %f\r", motor_velocity, current_error);
+
+		// log current odometry position and reset line
+		printf("%f, %f\r", arms::odom::getPosition().x, arms::odom::getPosition().y);
 
 		// Run at somewhere between 20 and 50mS
 		pros::delay(FW_LOOP_SPEED);
@@ -224,12 +227,15 @@ bool endgameState = false;
  * If bypass is set to true we switch to direct input,
  * bypassing the exponential curve
  */
-std::int32_t exponentialDrive(std::int32_t joyVal) {
+std::int32_t exponentialDrive(std::int32_t joyVal, bool slow) {
 	if (bypass == true) {
 		return joyVal;
-	} else {
+	} else if (slow == false) {
 		return pow(joyVal, 3) / 10000;
-	}
+	} else if (slow == true) {
+		return (pow(joyVal, 3) * .75) / 10000;
+	} else
+		throw("Invalid curve type");
 }
 
 /*
@@ -268,16 +274,19 @@ void opcontrol() {
 		if (abs(rightJoyStick) < 3)
 			rightJoyStick = 0;
 
-		// clang-format off
-		arms::chassis::arcade(
-			exponentialDrive(leftJoyStick * (double)100 / 127),
-			exponentialDrive(rightJoyStick * (double)100 / 127)
-		);
-		// clang-format on
-
 		/* Exponential Bypass Toggle */
 		if (master.get_digital_new_press(DIGITAL_LEFT))
 			bypass = !bypass;
+
+		if (master.get_digital_new_press(DIGITAL_DOWN))
+			curve2 = !curve2;
+
+		// clang-format off
+		arms::chassis::arcade(
+			exponentialDrive(leftJoyStick * (double)100 / 127, curve2),
+			exponentialDrive(rightJoyStick * (double)100 / 127, curve2)
+		);
+		// clang-format on
 
 		/* Autonomous Manual Trigger
 		 * If the robot is not connected to competition control
@@ -310,10 +319,13 @@ void opcontrol() {
 		// Frisbee Conveyor / Intake
 		if (master.get_digital(DIGITAL_R1)) {
 			conveyor.move_velocity(200);
+			conv2.move_velocity(200);
 		} else if (master.get_digital(DIGITAL_Y)) {
 			conveyor.move_velocity(-200);
+			conv2.move_velocity(-200);
 		} else {
 			conveyor.move_velocity(0);
+			conv2.move_velocity(0);
 		}
 
 		// Indexer Piston Toggle
@@ -342,6 +354,11 @@ void opcontrol() {
 			endgame.set_value(endgameState);
 		}
 		EprevPistonState = EpistonState;
+
+		// reset odom position to 0,0 when up arrow is pressed
+		if (master.get_digital_new_press(DIGITAL_UP)) {
+			arms::odom::reset({0,0}, 0);
+		}
 
 		/* Brake System
 		 * The brake system is a safety feature that prevents the robot from being

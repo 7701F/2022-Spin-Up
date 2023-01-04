@@ -47,7 +47,7 @@ void initialize() {
 		while (true) {
 			if (count == 15) {
 				std::stringstream bypassstr;
-				bypassstr << "Bypass: " << (bypass ? "ON" : "OFF") << "\r";
+				bypassstr << "BYP:" << (bypass ? "Y" : "N") << " CRV:" << (curve2 ? "2" : "1") << "\r";
 				master.print(0, 0, bypassstr.str().c_str());
 			} else if (count == 10) {
 				std::stringstream autonstr;
@@ -61,6 +61,8 @@ void initialize() {
 
 			count++;
 			count %= 20;
+
+			// master.clear();
 
 			// indexLights.set_all(0xE62169);
 			pros::delay(10);

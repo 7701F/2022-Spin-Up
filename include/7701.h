@@ -41,7 +41,7 @@ extern pros::Motor leftMtrR;
 /* Game System Motors */
 extern pros::Motor fw;
 extern pros::Motor conveyor;
-extern pros::Motor roller;
+extern pros::Motor conv2;
 
 /* Pistons */
 extern pros::ADIDigitalOut indexer;
@@ -77,6 +77,7 @@ void FwControlTask();
 // Declare drive system variables.
 inline bool pbrake = true;
 inline bool bypass = false;
+inline bool curve2 = false;
 
 // Declare driver functions.
 void customBrake(bool pbrake);

@@ -32,6 +32,7 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 /* Game System Motors */
 pros::Motor fw(18, pros::E_MOTOR_GEAR_GREEN, false, pros::E_MOTOR_ENCODER_COUNTS);
 pros::Motor conveyor(13, pros::E_MOTOR_GEAR_GREEN, false, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor conv2(10, pros::E_MOTOR_GEAR_GREEN, false, pros::E_MOTOR_ENCODER_COUNTS);
 
 /* Pistons */
 pros::ADIDigitalOut indexer('G');

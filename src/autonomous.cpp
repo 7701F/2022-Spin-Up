@@ -62,23 +62,23 @@ int getRollerColor() {
 /* Set Roller to Red */
 void setRollerRed() {
 	int rollerStartTime = pros::millis();
-	roller.move_velocity(100);
+	conveyor.move_velocity(100);
 	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
 		pros::delay(10);
 	}
 	pros::delay(200);
-	roller.move_velocity(0);
+	conveyor.move_velocity(0);
 }
 
 /* Set Roller to Blue */
 void setRollerBlue() {
 	int rollerStartTime = pros::millis();
-	roller.move_velocity(100);
+	conveyor.move_velocity(100);
 	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
 		pros::delay(10);
 	}
 	pros::delay(200);
-	roller.move_velocity(0);
+	conveyor.move_velocity(0);
 }
 
 /* Blue Back Auton */
