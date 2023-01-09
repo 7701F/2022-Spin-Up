@@ -31,12 +31,7 @@ const bool showScreen = true;
 // Declarations
 /* Controller */
 extern pros::Controller master;
-
-/* Drive Motors */
-extern pros::Motor rightMtr;
-extern pros::Motor rightMtrR;
-extern pros::Motor leftMtr;
-extern pros::Motor leftMtrR;
+extern pros::Controller partner;
 
 /* Game System Motors */
 extern pros::Motor fw;
@@ -60,6 +55,9 @@ extern sylib::MedianFilter hueFilter;
 extern sylib::MedianFilter distanceFilter;
 
 // deFenestration Flywheel System
+
+extern float motor_velocity;
+
 namespace deFenestration::Flywheel {
 void FwMotorSet(int value);
 

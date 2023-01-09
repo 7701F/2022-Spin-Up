@@ -55,7 +55,7 @@ void prosBrake(bool brakeOn) {
 #define FW_LOOP_SPEED 20
 
 // Maximum power we want to send to the flywheel motors
-#define FW_MAX_POWER 200
+#define FW_MAX_POWER 210
 
 // Set the encoder ticks per revolution
 float ticks_per_rev = 360;
@@ -127,12 +127,7 @@ void FwCalculateSpeed() {
 	delta_enc = (encoder_counts - encoder_counts_last);
 
 	// Calculate the motor velocity in RPM
-	// motor_velocity = delta_ms * delta_enc * 60.0 / ticks_per_rev;
-	// motor_velocity = delta_ms * delta_enc * 60.0 / ticks_per_rev;
 	motor_velocity = (1000.0 / delta_ms) * delta_enc * 60.0 / ticks_per_rev;
-
-	// (1000.0 / 60000) * 360 * 60.0 / 360 =
-	// 1000.0 / 500 = 2
 
 	encoder_counts_last = encoder_counts;
 	millis_last = current_time;
@@ -213,6 +208,8 @@ void FwControlTask() {
 /* Game System Controls */
 bool flywheelState = false;
 bool flywheelThirdPosState = false;
+bool flywheel4PosState = false;
+bool flywheelOff = false;
 bool fwON = false;
 
 bool pistonState = false;
@@ -296,53 +293,61 @@ void opcontrol() {
 		if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
 			autonomous();
 
-		/* Game Related Subsystems
-		 * Controls for game specific functions
-		 */
-		// Frisbee Shooter Flywheel
-		flywheelState = master.get_digital_new_press(DIGITAL_L2);
-		flywheelThirdPosState = master.get_digital_new_press(DIGITAL_L1);
+		// Game Related Subsystems
 
-		if (flywheelState == true) {
-			fwON = !fwON;
+		// Frisbee Shooter Flywheel
+		// various bindings for flywheel speed
+		flywheelState = master.get_digital_new_press(DIGITAL_L2);
+		flywheelThirdPosState = partner.get_digital_new_press(DIGITAL_L2);
+		flywheel4PosState = master.get_digital_new_press(DIGITAL_L1);
+		flywheelOff = partner.get_digital_new_press(DIGITAL_B);
+
+		if (flywheelState) {
+			// flywheel max speed
+			fwON = true;
 			deFenestration::Flywheel::FwVelocitySet(210, 1);
 		}
-		if (flywheelThirdPosState == true) {
-			fwON = !fwON;
-			deFenestration::Flywheel::FwVelocitySet(120, 0.5);
+
+		if (flywheel4PosState) {
+			// flywheel 17/21 speed
+			fwON = true;
+			deFenestration::Flywheel::FwVelocitySet(170, 0.5);
 		}
 
-		if (fwON == false) {
+		if (flywheelThirdPosState) {
+			// flywheel 2/3 speed
+			fwON = true;
+			deFenestration::Flywheel::FwVelocitySet(140, 0.5);
+		}
+
+		if (flywheelOff) {
+			// partner controller turns off flywheel
+			fwON = false;
 			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 		}
 
 		// Frisbee Conveyor / Intake
 		if (master.get_digital(DIGITAL_R1)) {
+			// intake
 			conveyor.move_velocity(200);
 			conv2.move_velocity(200);
 		} else if (master.get_digital(DIGITAL_Y)) {
+			// outtake
 			conveyor.move_velocity(-200);
 			conv2.move_velocity(-200);
 		} else {
+			// stop if neither button is pressed
 			conveyor.move_velocity(0);
 			conv2.move_velocity(0);
 		}
 
-		// Indexer Piston Toggle
-		// Might switch to a single press later
-		// pistonState = master.get_digital(DIGITAL_R2);
-		// if (pistonState == true && prevPistonState == false) {
-		// 	indexState = !indexState;
-		// 	indexer.set_value(indexState);
-		// }
-		// prevPistonState = pistonState;
-
-		if (master.get_digital_new_press(DIGITAL_R2)) {
+		if (master.get_digital_new_press(DIGITAL_R2) || partner.get_digital_new_press(DIGITAL_R2)) {
+			// extend piston to fire
 			indexState = !indexState;
 			indexer.set_value(indexState);
 
-			// delay 50 ms then retract
-			pros::delay(50);
+			// delay 100 ms then retract
+			pros::delay(100);
 			indexState = !indexState;
 			indexer.set_value(indexState);
 		}
@@ -356,8 +361,28 @@ void opcontrol() {
 		EprevPistonState = EpistonState;
 
 		// reset odom position to 0,0 when up arrow is pressed
-		if (master.get_digital_new_press(DIGITAL_UP)) {
-			arms::odom::reset({0,0}, 0);
+		if (partner.get_digital_new_press(DIGITAL_R2)) {
+			// on partner controller to prevent accidental resets, plus master is literally out of buttons
+			arms::odom::reset({0, 0}, 0);
+		}
+
+		// steer with left dpad, acceleration is controlled by A and B
+		int accel = 0;\
+		if(partner.get_digital(DIGITAL_A)) {
+			accel = 100;
+		} else if(partner.get_digital(DIGITAL_B)) {
+			accel = -100;
+		}
+
+		// this is mostly a joke, and is not very useful
+		if (partner.get_digital(DIGITAL_UP)) {
+			arms::chassis::arcade(accel, 0);
+		} else if (partner.get_digital(DIGITAL_DOWN)) {
+			arms::chassis::arcade(-accel, 0);
+		} else if (partner.get_digital(DIGITAL_LEFT)) {
+			arms::chassis::arcade(0, -accel);
+		} else if (partner.get_digital(DIGITAL_RIGHT)) {
+			arms::chassis::arcade(0, accel);
 		}
 
 		/* Brake System

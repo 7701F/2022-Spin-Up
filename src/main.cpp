@@ -49,6 +49,9 @@ void initialize() {
 				std::stringstream bypassstr;
 				bypassstr << "BYP:" << (bypass ? "Y" : "N") << " CRV:" << (curve2 ? "2" : "1") << "\r";
 				master.print(0, 0, bypassstr.str().c_str());
+
+				std::stringstream FWstr;
+				FWstr << "FW: " << motor_velocity << "\r";
 			} else if (count == 10) {
 				std::stringstream autonstr;
 				autonstr << "Auton: " << arms::selector::auton << "\r";
