@@ -367,10 +367,10 @@ void opcontrol() {
 		}
 
 		// steer with left dpad, acceleration is controlled by A and B
-		int accel = 0;\
-		if(partner.get_digital(DIGITAL_A)) {
+		int accel = 0;
+		if (partner.get_digital(DIGITAL_A)) {
 			accel = 100;
-		} else if(partner.get_digital(DIGITAL_B)) {
+		} else if (partner.get_digital(DIGITAL_B)) {
 			accel = -100;
 		}
 
