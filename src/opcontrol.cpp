@@ -22,15 +22,17 @@
 
 #include "7701.h"
 
-/* Smart boy motor brake solution */
+/* Smart boy motor brake */
 void prosBrake() {
 	if (pbrake == true) {
 		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_HOLD)) {
-			arms::chassis::setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
+			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
+			arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
 		}
 	} else if (pbrake == false) {
 		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_COAST)) {
-			arms::chassis::setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
+			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
+			arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 		}
 	}
 }
@@ -216,12 +218,11 @@ void opcontrol() {
 		 */
 		if (master.get_digital_new_press(DIGITAL_B) == 1)
 			pbrake = !pbrake;
-		prosBrake();
 
 		// Minor deadzone to account for stick drift
-		if (abs(leftJoyStick) < 2)
+		if (abs(leftJoyStick) < 3)
 			leftJoyStick = 0;
-		if (abs(rightJoyStick) < 2)
+		if (abs(rightJoyStick) < 3)
 			rightJoyStick = 0;
 
 		/* Exponential Bypass Toggle */
@@ -243,7 +244,7 @@ void opcontrol() {
 		 * and the button is pressed, the robot will begin the
 		 * autonomous routine to allow for easy testing.
 		 */
-		if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
+		if (partner.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
 			autonomous();
 
 		// Game Related Subsystems
@@ -257,25 +258,24 @@ void opcontrol() {
 
 		if (flywheelState) {
 			// flywheel max speed
-			fwON = true;
+			fwON = !fwON;
 			deFenestration::Flywheel::FwVelocitySet(210, 1);
 		}
 
-		if (flywheel4PosState) {
+		if (flywheelThirdPosState) {
 			// flywheel 17/21 speed
-			fwON = true;
+			fwON = !fwON;
 			deFenestration::Flywheel::FwVelocitySet(170, 0.5);
 		}
 
-		if (flywheelThirdPosState) {
+		if (flywheel4PosState) {
 			// flywheel 2/3 speed
-			fwON = true;
+			fwON = !fwON;
 			deFenestration::Flywheel::FwVelocitySet(140, 0.5);
 		}
 
-		if (flywheelOff) {
+		if (fwON == false) {
 			// partner controller turns off flywheel
-			fwON = false;
 			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 		}
 
@@ -319,25 +319,7 @@ void opcontrol() {
 			arms::odom::reset({0, 0}, 0);
 		}
 
-		// // steer with left dpad, acceleration is controlled by A and B
-		// int accel = 0;
-		// if (partner.get_digital(DIGITAL_A)) {
-		// 	accel = 100;
-		// } else if (partner.get_digital(DIGITAL_B)) {
-		// 	accel = -100;
-		// }
-
-		// // this is mostly a joke, and is not very useful
-		// if (partner.get_digital(DIGITAL_UP)) {
-		// 	arms::chassis::rightMotors->move_velocity(accel);
-		// 	arms::chassis::leftMotors->move_velocity(accel);
-		// } else if (partner.get_digital(DIGITAL_DOWN)) {
-		// 	arms::chassis::arcade(-accel, 0);
-		// } else if (partner.get_digital(DIGITAL_LEFT)) {
-		// 	arms::chassis::arcade(0, -accel);
-		// } else if (partner.get_digital(DIGITAL_RIGHT)) {
-		// 	arms::chassis::arcade(0, accel);
-		// }
+		prosBrake();
 
 		// Lastly, delay
 		pros::delay(2);
