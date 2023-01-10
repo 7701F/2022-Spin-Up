@@ -70,4 +70,8 @@ void display() {
 	// }
 }
 
+void destroy() {
+	lv_obj_del(scr);
+}
+
 } // namespace deFenestration
