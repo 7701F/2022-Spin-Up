@@ -19,8 +19,8 @@ namespace arms {
 #define MIDDLE_TPI 1          // Ticks per inch for the middle wheel
 
 // Tracking wheel distances
-#define TRACK_WIDTH 0 		  // The distance between left and right wheels (or tracker wheels)
-#define MIDDLE_DISTANCE 0     // Distance from middle wheel to the robot turning center
+#define TRACK_WIDTH 12.9375 		  // The distance between left and right wheels (or tracker wheels)
+#define MIDDLE_DISTANCE 4.125     // Distance from middle wheel to the robot turning center
 
 // Sensors
 #define IMU_PORT 1                           // Port 0 for disabled
@@ -48,7 +48,7 @@ namespace arms {
 #define LEAD_PCT .6			 // Go-to-pose lead distance ratio (0-1)
 
 // Auton selector configuration constants
-#define AUTONS "Short", "Long", "Do Nothing" // Names of autonomi, up to 10
+#define AUTONS "Short", "Long", "Do Nothing", "PID" // Names of autonomi, up to 10
 #define HUE 0     // Color of theme from 0-359(H part of HSV)
 #define DEFAULT 0 // Default auton selected
 
