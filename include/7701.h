@@ -34,10 +34,10 @@ extern pros::Controller master;
 extern pros::Controller partner;
 
 /* Drive Motors*/
-extern pros::Motor rightMtr;
-extern pros::Motor rightMtrR;
-extern pros::Motor leftMtr;
-extern pros::Motor leftMtrR;
+// extern pros::Motor rightMtr;
+// extern pros::Motor rightMtrR;
+// extern pros::Motor leftMtr;
+// extern pros::Motor leftMtrR;
 
 /* Game System Motors */
 extern pros::Motor fw;

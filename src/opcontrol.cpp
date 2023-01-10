@@ -319,24 +319,25 @@ void opcontrol() {
 			arms::odom::reset({0, 0}, 0);
 		}
 
-		// steer with left dpad, acceleration is controlled by A and B
-		int accel = 0;
-		if (partner.get_digital(DIGITAL_A)) {
-			accel = 100;
-		} else if (partner.get_digital(DIGITAL_B)) {
-			accel = -100;
-		}
+		// // steer with left dpad, acceleration is controlled by A and B
+		// int accel = 0;
+		// if (partner.get_digital(DIGITAL_A)) {
+		// 	accel = 100;
+		// } else if (partner.get_digital(DIGITAL_B)) {
+		// 	accel = -100;
+		// }
 
-		// this is mostly a joke, and is not very useful
-		if (partner.get_digital(DIGITAL_UP)) {
-			arms::chassis::arcade(accel, 0);
-		} else if (partner.get_digital(DIGITAL_DOWN)) {
-			arms::chassis::arcade(-accel, 0);
-		} else if (partner.get_digital(DIGITAL_LEFT)) {
-			arms::chassis::arcade(0, -accel);
-		} else if (partner.get_digital(DIGITAL_RIGHT)) {
-			arms::chassis::arcade(0, accel);
-		}
+		// // this is mostly a joke, and is not very useful
+		// if (partner.get_digital(DIGITAL_UP)) {
+		// 	arms::chassis::rightMotors->move_velocity(accel);
+		// 	arms::chassis::leftMotors->move_velocity(accel);
+		// } else if (partner.get_digital(DIGITAL_DOWN)) {
+		// 	arms::chassis::arcade(-accel, 0);
+		// } else if (partner.get_digital(DIGITAL_LEFT)) {
+		// 	arms::chassis::arcade(0, -accel);
+		// } else if (partner.get_digital(DIGITAL_RIGHT)) {
+		// 	arms::chassis::arcade(0, accel);
+		// }
 
 		// Lastly, delay
 		pros::delay(2);
