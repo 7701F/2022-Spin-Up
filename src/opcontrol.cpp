@@ -22,21 +22,8 @@
 
 #include "7701.h"
 
-/* Honestly my stupidest moment, it stops the robot by driving the motor opposite direction of the current velocity */
-void customBrake(bool pbrake) {
-	if (pbrake == true) {
-		if (master.get_analog(ANALOG_RIGHT_X) == 0 && master.get_analog(ANALOG_LEFT_Y) == 0) {
-			if (arms::chassis::leftMotors->get_actual_velocities() != std::vector<double>{0, 0, 0, 0} ||
-			    arms::chassis::rightMotors->get_actual_velocities() != std::vector<double>{0, 0, 0, 0}) {
-				// arms::chassis::leftMotors->move_velocity(arms::chassis::leftMotors->get_actual_velocities()[0] * -2);
-				// arms::chassis::rightMotors->move_velocity(arms::chassis::rightMotors->get_actual_velocities()[0] * -2);
-			}
-		}
-	}
-}
-
-/* Smart boy motor brake solution */
-void prosBrake(bool brakeOn) {
+/* Smart boy motor brake */
+void prosBrake() {
 	if (pbrake == true) {
 		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_HOLD)) {
 			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
@@ -56,34 +43,6 @@ void prosBrake(bool brakeOn) {
 
 // Maximum power we want to send to the flywheel motors
 #define FW_MAX_POWER 210
-
-// Set the encoder ticks per revolution
-float ticks_per_rev = 360;
-
-// Encoder
-long encoder_counts;      ///< current encoder count
-long encoder_counts_last; ///< current encoder count
-
-// velocity measurement
-float motor_velocity; ///< current velocity in rpm
-long millis_last;     ///< Time of last velocity calculation
-
-// TBH control algorithm variables
-long target_velocity; ///< target_velocity velocity
-float current_error;  ///< error between actual and target_velocity velocities
-float last_error;     ///< error last time update called
-float gain;           ///< gain
-float drive;          ///< final drive out of TBH (0.0 to 1.0)
-float drive_at_zero;  ///< drive at last zero crossing
-long first_cross;     ///< flag indicating first zero crossing
-float drive_approx;   ///< estimated open loop drive
-
-// final motor drive
-long motor_drive; ///< final motor control value
-
-int current_time;
-float delta_ms;
-int delta_enc;
 
 namespace deFenestration::Flywheel {
 
@@ -196,7 +155,7 @@ void FwControlTask() {
 		// printf("flywheel speed: %f current error: %f\r", motor_velocity, current_error);
 
 		// log current odometry position and reset line
-		printf("%f, %f\r", arms::odom::getPosition().x, arms::odom::getPosition().y);
+		printf("(%f, %f) %f\r", arms::odom::getPosition().x, arms::odom::getPosition().y, arms::odom::getHeading());
 
 		// Run at somewhere between 20 and 50mS
 		pros::delay(FW_LOOP_SPEED);
@@ -205,24 +164,11 @@ void FwControlTask() {
 
 } // namespace deFenestration::Flywheel
 
-/* Game System Controls */
-bool flywheelState = false;
-bool flywheelThirdPosState = false;
-bool flywheel4PosState = false;
-bool flywheelOff = false;
-bool fwON = false;
-
-bool pistonState = false;
-bool prevPistonState = false;
-bool indexState = false;
-
-bool EpistonState = false;
-bool EprevPistonState = false;
-bool endgameState = false;
-
 /* Exponential Drive Control
  * If bypass is set to true we switch to direct input,
  * bypassing the exponential curve
+ * If slow is set to false we use a faster curve
+ * If slow is set to true we use a slower curve
  */
 std::int32_t exponentialDrive(std::int32_t joyVal, bool slow) {
 	if (bypass == true) {
@@ -249,7 +195,7 @@ std::int32_t exponentialDrive(std::int32_t joyVal, bool slow) {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	prosBrake(true);
+	pbrake = true;
 
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
@@ -266,6 +212,14 @@ void opcontrol() {
 		int leftJoyStick = master.get_analog(ANALOG_LEFT_Y);
 		int rightJoyStick = master.get_analog(ANALOG_RIGHT_X);
 
+		/* Brake System
+		 * The brake system is a safety feature that prevents the robot from being
+		 * punished by other robots. Uses basic logic for toggle button
+		 */
+		if (master.get_digital_new_press(DIGITAL_B) == 1)
+			pbrake = !pbrake;
+
+		// Minor deadzone to account for stick drift
 		if (abs(leftJoyStick) < 3)
 			leftJoyStick = 0;
 		if (abs(rightJoyStick) < 3)
@@ -290,7 +244,7 @@ void opcontrol() {
 		 * and the button is pressed, the robot will begin the
 		 * autonomous routine to allow for easy testing.
 		 */
-		if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
+		if (partner.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
 			autonomous();
 
 		// Game Related Subsystems
@@ -304,25 +258,24 @@ void opcontrol() {
 
 		if (flywheelState) {
 			// flywheel max speed
-			fwON = true;
+			fwON = !fwON;
 			deFenestration::Flywheel::FwVelocitySet(210, 1);
 		}
 
-		if (flywheel4PosState) {
+		if (flywheelThirdPosState) {
 			// flywheel 17/21 speed
-			fwON = true;
+			fwON = !fwON;
 			deFenestration::Flywheel::FwVelocitySet(170, 0.5);
 		}
 
-		if (flywheelThirdPosState) {
+		if (flywheel4PosState) {
 			// flywheel 2/3 speed
-			fwON = true;
+			fwON = !fwON;
 			deFenestration::Flywheel::FwVelocitySet(140, 0.5);
 		}
 
-		if (flywheelOff) {
+		if (fwON == false) {
 			// partner controller turns off flywheel
-			fwON = false;
 			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 		}
 
@@ -341,7 +294,7 @@ void opcontrol() {
 			conv2.move_velocity(0);
 		}
 
-		if (master.get_digital_new_press(DIGITAL_R2) || partner.get_digital_new_press(DIGITAL_R2)) {
+		if (master.get_digital_new_press(DIGITAL_R2)) {
 			// extend piston to fire
 			indexState = !indexState;
 			indexer.set_value(indexState);
@@ -366,32 +319,7 @@ void opcontrol() {
 			arms::odom::reset({0, 0}, 0);
 		}
 
-		// steer with left dpad, acceleration is controlled by A and B
-		int accel = 0;
-		if (partner.get_digital(DIGITAL_A)) {
-			accel = 100;
-		} else if (partner.get_digital(DIGITAL_B)) {
-			accel = -100;
-		}
-
-		// this is mostly a joke, and is not very useful
-		if (partner.get_digital(DIGITAL_UP)) {
-			arms::chassis::arcade(accel, 0);
-		} else if (partner.get_digital(DIGITAL_DOWN)) {
-			arms::chassis::arcade(-accel, 0);
-		} else if (partner.get_digital(DIGITAL_LEFT)) {
-			arms::chassis::arcade(0, -accel);
-		} else if (partner.get_digital(DIGITAL_RIGHT)) {
-			arms::chassis::arcade(0, accel);
-		}
-
-		/* Brake System
-		 * The brake system is a safety feature that prevents the robot from being
-		 * punished by other robots. Uses basic logic for toggle button
-		 */
-		if (master.get_digital_new_press(DIGITAL_B) == 1)
-			pbrake = !pbrake;
-		prosBrake(pbrake);
+		prosBrake();
 
 		// Lastly, delay
 		pros::delay(2);

@@ -62,7 +62,33 @@ extern sylib::MedianFilter distanceFilter;
 
 // deFenestration Flywheel System
 
-extern float motor_velocity;
+// Set the encoder ticks per revolution
+inline float ticks_per_rev = 360;
+
+// Encoder
+inline long encoder_counts;      ///< current encoder count
+inline long encoder_counts_last; ///< current encoder count
+
+// velocity measurement
+inline float motor_velocity; ///< current velocity in rpm
+inline long millis_last;     ///< Time of last velocity calculation
+
+// TBH control algorithm variables
+inline long target_velocity; ///< target_velocity velocity
+inline float current_error;  ///< error between actual and target_velocity velocities
+inline float last_error;     ///< error last time update called
+inline float gain;           ///< gain
+inline float drive;          ///< final drive out of TBH (0.0 to 1.0)
+inline float drive_at_zero;  ///< drive at last zero crossing
+inline long first_cross;     ///< flag indicating first zero crossing
+inline float drive_approx;   ///< estimated open loop drive
+
+// final motor drive
+inline long motor_drive; ///< final motor control value
+
+inline int current_time;
+inline float delta_ms;
+inline int delta_enc;
 
 namespace deFenestration::Flywheel {
 void FwMotorSet(int value);
@@ -82,6 +108,25 @@ void FwControlTask();
 inline bool pbrake = true;
 inline bool bypass = false;
 inline bool curve2 = false;
+
+// Game System Variables
+
+// flywheel speed state
+inline bool flywheelState = false;
+inline bool flywheelThirdPosState = false;
+inline bool flywheel4PosState = false;
+inline bool flywheelOff = false;
+inline bool fwON = false;
+
+// firing piston state
+inline bool pistonState = false;
+inline bool prevPistonState = false;
+inline bool indexState = false;
+
+// endgame piston state
+inline bool EpistonState = false;
+inline bool EprevPistonState = false;
+inline bool endgameState = false;
 
 // Declare driver functions.
 void customBrake(bool pbrake);
