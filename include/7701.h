@@ -33,7 +33,7 @@ const bool showScreen = true;
 extern pros::Controller master;
 extern pros::Controller partner;
 
-/* Drive Motors*/
+// /* Drive Motors*/
 // extern pros::Motor rightMtr;
 // extern pros::Motor rightMtrR;
 // extern pros::Motor leftMtr;

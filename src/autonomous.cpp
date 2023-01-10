@@ -198,39 +198,39 @@ void autonomous() {
 		case 3:
 			// Do Nothing.
 			break;
-		// case 4:
-		// 	// PID Testing
-		// 	arms::chassis::setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
-		// 	arms::pid::linearKP = 0;
-		// 	arms::pid::linearKI = 0;
-		// 	arms::pid::linearKD = 0;
+		case 4:
+			// // PID Testing
+			// arms::chassis::setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
+			// arms::pid::linearKP = 0;
+			// arms::pid::linearKI = 0;
+			// arms::pid::linearKD = 0;
 
-		// 	arms::chassis::move(5);
-		// 	arms::chassis::move(-5, arms::REVERSE);
+			// arms::chassis::move(5);
+			// arms::chassis::move(-5, arms::REVERSE);
 
-		// 	rightMtr.set_zero_position(rightMtr.get_position());
-		// 	leftMtr.set_zero_position(leftMtr.get_position());
-		// 	rightMtrR.set_zero_position(rightMtrR.get_position());
-		// 	leftMtrR.set_zero_position(leftMtrR.get_position());
+			// rightMtr.set_zero_position(rightMtr.get_position());
+			// leftMtr.set_zero_position(leftMtr.get_position());
+			// rightMtrR.set_zero_position(rightMtrR.get_position());
+			// leftMtrR.set_zero_position(leftMtrR.get_position());
 
-		// 	for (int i = 0; i < 1000; i++) {
-		// 		rightMtr.set_zero_position(rightMtr.get_position());
-		// 		leftMtr.set_zero_position(leftMtr.get_position());
-		// 		rightMtrR.set_zero_position(rightMtrR.get_position());
-		// 		leftMtrR.set_zero_position(leftMtrR.get_position());
+			// for (int i = 0; i < 1000; i++) {
+			// 	rightMtr.set_zero_position(rightMtr.get_position());
+			// 	leftMtr.set_zero_position(leftMtr.get_position());
+			// 	rightMtrR.set_zero_position(rightMtrR.get_position());
+			// 	leftMtrR.set_zero_position(leftMtrR.get_position());
 
-		// 		arms::chassis::move(5);
-		// 		if (rightMtr.get_position() == rotations) {
-		// 			printf("Success! %f\n", arms::pid::linearKP);
-		// 			break;
-		// 		}
-		// 		// drive backward
-		// 		// arms::chassis::move(-5, arms::REVERSE);
-		// 		moveF(-5, -100, 0);
+			// 	arms::chassis::move(5);
+			// 	if (rightMtr.get_position() == rotations) {
+			// 		printf("Success! %f\n", arms::pid::linearKP);
+			// 		break;
+			// 	}
+			// 	// drive backward
+			// 	// arms::chassis::move(-5, arms::REVERSE);
+			// 	moveF(-5, -100, 0);
 
-		// 		kU += .01;
-		// 		arms::pid::linearKP = 0.5 * kU;
-		// 	}
+			// 	kU += .01;
+			// 	arms::pid::linearKP = 0.5 * kU;
+			// }
 
 			// arms::pid::angularKP = 0;
 			// arms::pid::angularKI = 0;

@@ -294,7 +294,7 @@ void opcontrol() {
 			conv2.move_velocity(0);
 		}
 
-		if (master.get_digital_new_press(DIGITAL_R2) || partner.get_digital_new_press(DIGITAL_R2)) {
+		if (master.get_digital_new_press(DIGITAL_R2)) {
 			// extend piston to fire
 			indexState = !indexState;
 			indexer.set_value(indexState);
