@@ -81,8 +81,8 @@ void setRollerBlue() {
 	conveyor.move_velocity(0);
 }
 
-/* Blue Back Auton */
-void backAuto(int color) {
+/* Long Side Auton */
+void longAuto(int color) {
 	using namespace arms::chassis;
 
 	move(6);
@@ -160,7 +160,7 @@ void autonomous() {
 			// Do Nothing.
 			break;
 		case -2:
-			// backAuto(COLORS::BLUE);
+			// longAuto(COLORS::BLUE);
 			break;
 		case -1:
 			shortAuto(colors::BLUE);
@@ -171,7 +171,7 @@ void autonomous() {
 			shortAuto(colors::RED);
 			break;
 		case 2:
-			// backAuto(COLORS::RED);
+			// longAuto(COLORS::RED);
 			break;
 		case 3:
 			// Do Nothing.
