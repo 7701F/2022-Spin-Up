@@ -11,7 +11,7 @@
   original software. If you use this software in a product, an acknowledgment (see the following)
   in the product documentation is required.
 
-  Portions Copyright (c) 2019-2022 7701F
+  Portions Copyright (c) 2019-2023 7701F
 
   2. Altered source versions must be plainly marked as such, and must not be misrepresented as
   being the original software.
