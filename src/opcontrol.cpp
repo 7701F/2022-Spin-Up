@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2019-2022 7701F
+  Copyright (c) 2019-2023 7701F
 
   This software is provided 'as-is', without any express or implied warranty. In no event will
   the authors be held liable for any damages arising from the use of this software.
@@ -11,7 +11,7 @@
   original software. If you use this software in a product, an acknowledgment (see the following)
   in the product documentation is required.
 
-  Portions Copyright (c) 2019-2022 7701F
+  Portions Copyright (c) 2019-2023 7701F
 
   2. Altered source versions must be plainly marked as such, and must not be misrepresented as
   being the original software.
