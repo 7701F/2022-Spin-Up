@@ -24,7 +24,7 @@
 
 lv_obj_t* scr = lv_obj_create(NULL, NULL);
 
-// Magic beyond my understanding of LVGL
+// Custom Display Function
 namespace deFenestration {
 void display() {
 	// Background Style

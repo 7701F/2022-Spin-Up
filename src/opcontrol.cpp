@@ -22,14 +22,43 @@
 
 #include "7701.h"
 
+/* Smart boy motor brake, additional parameter to set brake type */
+void prosBrake(int type) {
+	if (pbrake == true) {
+		// pros::E_MOTOR_BRAKE_HOLD if type is set to 0
+		if (type == 0) {
+			if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_HOLD)) {
+				arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
+				arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
+			}
+		}
+
+		// pros::E_MOTOR_BRAKE_BRAKE if type is set to 1
+		if (type == 1) {
+			if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_BRAKE)) {
+				arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
+				arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
+			}
+		}
+	} else if (pbrake == false) {
+		// coasting, ie, no braking
+		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_COAST)) {
+			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
+			arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
+		}
+	}
+}
+
 /* Smart boy motor brake */
 void prosBrake() {
 	if (pbrake == true) {
+		// actively holds position
 		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_HOLD)) {
 			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
 			arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
 		}
 	} else if (pbrake == false) {
+		// coasting, ie, no braking
 		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_COAST)) {
 			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 			arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
@@ -130,7 +159,8 @@ void FwControlUpdateVelocityTbh() {
 /* Task to control the velocity of the flywheel */
 void FwControlTask() {
 	// Set the gain
-	gain = 0.0005;
+	// gain = 0.0005;
+	gain = 0.00025;
 
 	while (1) {
 		// Calculate velocity
@@ -178,7 +208,7 @@ std::int32_t exponentialDrive(std::int32_t joyVal, bool slow) {
 	} else if (slow == true) {
 		return (pow(joyVal, 3) * .75) / 10000;
 	} else
-		throw("Invalid curve type");
+		return 100;
 }
 
 /*
@@ -195,7 +225,9 @@ std::int32_t exponentialDrive(std::int32_t joyVal, bool slow) {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+	// set brake mode
 	pbrake = true;
+	prosBrake();
 
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
@@ -212,18 +244,18 @@ void opcontrol() {
 		int leftJoyStick = master.get_analog(ANALOG_LEFT_Y);
 		int rightJoyStick = master.get_analog(ANALOG_RIGHT_X);
 
+		// Minor deadzone to account for stick drift
+		if (abs(leftJoyStick) < 3)
+			leftJoyStick = 0;
+		if (abs(rightJoyStick) < 3)
+			rightJoyStick = 0;
+
 		/* Brake System
 		 * The brake system is a safety feature that prevents the robot from being
 		 * punished by other robots. Uses basic logic for toggle button
 		 */
 		if (master.get_digital_new_press(DIGITAL_B) == 1)
 			pbrake = !pbrake;
-
-		// Minor deadzone to account for stick drift
-		if (abs(leftJoyStick) < 3)
-			leftJoyStick = 0;
-		if (abs(rightJoyStick) < 3)
-			rightJoyStick = 0;
 
 		/* Exponential Bypass Toggle */
 		if (master.get_digital_new_press(DIGITAL_LEFT))
@@ -238,14 +270,7 @@ void opcontrol() {
 			exponentialDrive(rightJoyStick * (double)100 / 127, curve2)
 		);
 		// clang-format on
-
-		/* Autonomous Manual Trigger
-		 * If the robot is not connected to competition control
-		 * and the button is pressed, the robot will begin the
-		 * autonomous routine to allow for easy testing.
-		 */
-		if (partner.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
-			autonomous();
+		prosBrake();
 
 		// Game Related Subsystems
 
@@ -265,13 +290,13 @@ void opcontrol() {
 		if (flywheelThirdPosState) {
 			// flywheel 17/21 speed
 			fwON = !fwON;
-			deFenestration::Flywheel::FwVelocitySet(170, 0.5);
+			deFenestration::Flywheel::FwVelocitySet(170, 0.7);
 		}
 
 		if (flywheel4PosState) {
 			// flywheel 2/3 speed
 			fwON = !fwON;
-			deFenestration::Flywheel::FwVelocitySet(140, 0.5);
+			deFenestration::Flywheel::FwVelocitySet(140, .4);
 		}
 
 		if (fwON == false) {
@@ -294,17 +319,6 @@ void opcontrol() {
 			conv2.move_velocity(0);
 		}
 
-		if (master.get_digital_new_press(DIGITAL_R2)) {
-			// extend piston to fire
-			indexState = !indexState;
-			indexer.set_value(indexState);
-
-			// delay 100 ms then retract
-			pros::delay(100);
-			indexState = !indexState;
-			indexer.set_value(indexState);
-		}
-
 		// Endgame Piston
 		EpistonState = master.get_digital_new_press(DIGITAL_RIGHT);
 		if (EpistonState == true && EprevPistonState == false) {
@@ -313,13 +327,31 @@ void opcontrol() {
 		}
 		EprevPistonState = EpistonState;
 
+		// flywheel launcher
+		if (master.get_digital_new_press(DIGITAL_R2)) {
+			// extend piston to fire
+			indexState = !indexState;
+			indexer.set_value(indexState);
+
+			// delay 100 ms then retract
+			pros::delay(125);
+			indexState = !indexState;
+			indexer.set_value(indexState);
+		}
+
+		/* Autonomous Manual Trigger
+		 * If the robot is not connected to competition control
+		 * and the button is pressed, the robot will begin the
+		 * autonomous routine to allow for easy testing.
+		 */
+		if (partner.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
+			autonomous();
+
 		// reset odom position to 0,0 when up arrow is pressed
 		if (partner.get_digital_new_press(DIGITAL_R2)) {
 			// on partner controller to prevent accidental resets, plus master is literally out of buttons
 			arms::odom::reset({0, 0}, 0);
 		}
-
-		prosBrake();
 
 		// Lastly, delay
 		pros::delay(2);

@@ -33,12 +33,6 @@ const bool showScreen = true;
 extern pros::Controller master;
 extern pros::Controller partner;
 
-/* Drive Motors*/
-extern pros::Motor rightMtr;
-extern pros::Motor rightMtrR;
-extern pros::Motor leftMtr;
-extern pros::Motor leftMtrR;
-
 /* Game System Motors */
 extern pros::Motor fw;
 extern pros::Motor conveyor;
@@ -129,8 +123,8 @@ inline bool EprevPistonState = false;
 inline bool endgameState = false;
 
 // Declare driver functions.
-void customBrake(bool pbrake);
-void prosBrake(bool pbrake);
+void prosBrake(int type);
+void prosBrake();
 
 // Declare game system functions.
 int getFrisbeesInIndexer();
