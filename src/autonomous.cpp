@@ -106,7 +106,7 @@ void Sauton() {
 /* Program an autonomous that moves to {{0, 0}} then turns to 90 degrees*/
 void Pauton() {
 	using namespace arms::chassis;
-	arms::odom::reset({{0, 0}});
+	arms::odom::reset({{20, 20}});
 
 	turn({0, 0}, 90);
 	move({{0, 0}}, 200);
