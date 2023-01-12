@@ -186,12 +186,12 @@ void autonomous() {
 			// longAuto(COLORS::BLUE);
 			break;
 		case -1:
-			shortAuto(colors::BLUE);
+			shortAuto(colors::BLUE, false);
 			break;
 		case 0:
 			break;
 		case 1:
-			shortAuto(colors::RED);
+			shortAuto(colors::RED, false);
 			break;
 		case 2:
 			// longAuto(COLORS::RED);
