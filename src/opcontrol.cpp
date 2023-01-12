@@ -322,16 +322,8 @@ void opcontrol() {
 		EprevPistonState = EpistonState;
 
 		// flywheel launcher
-		if (master.get_digital_new_press(DIGITAL_R2)) {
-			// extend piston to fire
-			indexState = !indexState;
-			indexer.set_value(indexState);
-
-			// delay 100 ms then retract
-			pros::delay(125);
-			indexState = !indexState;
-			indexer.set_value(indexState);
-		}
+		if (master.get_digital_new_press(DIGITAL_R2))
+			fireDisc();
 
 		/* Autonomous Manual Trigger
 		 * If the robot is not connected to competition control

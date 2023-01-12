@@ -87,7 +87,7 @@ void fireDisc() {
 	indexer.set_value(indexState);
 
 	// delay 125 ms then retract
-	pros::delay(125);
+	pros::delay(130);
 	indexState = !indexState;
 	indexer.set_value(indexState);
 }
@@ -110,6 +110,51 @@ void Pauton() {
 
 	turn({0, 0}, 90);
 	move({{0, 0}}, 200);
+}
+
+/* longAuto */
+void longAuto(int color, bool AWP) {
+	using namespace arms::chassis;
+
+	// reset odom to correct position
+	arms::odom::reset({{-10, -65}}, 0);
+
+	// move to the roller
+	move({{10, -36}}, arms::THRU);
+	move({{41, -65}});
+
+	// set the roller to the correct color
+	move(30, 200, arms::ASYNC);
+	while (!settled()) {
+		pros::delay(10);
+	}
+
+	// set the roller to the correct color
+	conveyor.move_velocity(100);
+	pros::delay(250);
+	conveyor.move_velocity(0);
+
+	// move back then turn
+	move(-10, 200, arms::REVERSE);
+	turn({53, 52}, 200);
+
+	// check if AWP is enabled, else exit (return)
+	if (!AWP) {
+		return;
+	}
+
+	// set the flywheel to the correct speed, then wait for it to be up to speed
+	deFenestration::Flywheel::FwVelocitySet(210, .92);
+	while (current_error > 0.2) {
+		pros::delay(10);
+	}
+
+	// fire piston and wait to ensure it is fired
+	fireDisc();
+	pros::delay(250);
+
+	// spin down flywheel
+	deFenestration::Flywheel::FwVelocitySet(0, 0);
 }
 
 /* shortAuto except it uses the arms::odom system for position */
@@ -147,7 +192,7 @@ void shortAuto(int color, bool AWP) {
 		pros::delay(10);
 	}
 
-	// fire piston
+	// fire piston and wait to ensure it is fired
 	fireDisc();
 	pros::delay(250);
 
