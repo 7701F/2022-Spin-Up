@@ -81,6 +81,18 @@ void setRollerBlue() {
 	conveyor.move_velocity(0);
 }
 
+// fire disc from indexer
+void fireDisc() {
+	// extend piston to fire
+	indexState = !indexState;
+	indexer.set_value(indexState);
+
+	// delay 100 ms then retract
+	pros::delay(125);
+	indexState = !indexState;
+	indexer.set_value(indexState);
+}
+
 /* Long Side Auton */
 void longAuto(int color) {
 	using namespace arms::chassis;
@@ -130,6 +142,44 @@ void Pauton() {
 
 	turn({0, 0}, 90);
 	move({{0, 0}}, 200);
+}
+
+/* shortAuto except it uses the arms::odom system for position */
+void OShortAuto() {
+	using namespace arms::chassis;
+
+	// reset odom to correct position
+	arms::odom::reset({{41, -60}}, 0);
+
+	// move to the roller
+	move({{41, -80}}, 200);
+	move(30, 200, arms::ASYNC);
+	while (!settled()) {
+		pros::delay(10);
+	}
+
+	// set the roller to the correct color
+	conveyor.move_velocity(100);
+	pros::delay(250);
+	conveyor.move_velocity(0);
+
+	// move back then turn
+	move(-10, 200, arms::REVERSE);
+	// turn({-22.7196581703463, 21.439677428355}, 90);
+	turn({55, 53}, 200);
+
+	// set the flywheel to the correct speed, then wait for it to be up to speed
+	deFenestration::Flywheel::FwVelocitySet(210, .92);
+	while (current_error > 0.2) {
+		pros::delay(10);
+	}
+
+	// fire piston
+	fireDisc();
+	pros::delay(250);
+
+	// spin down flywheel
+	deFenestration::Flywheel::FwVelocitySet(0, 0);
 }
 
 /**
