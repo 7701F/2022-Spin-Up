@@ -179,11 +179,17 @@ void autonomous() {
 	// Negative = Blue
 	// Positive = Red
 	switch (arms::selector::auton) {
-		case -3:
+		case -5:
 			// Do Nothing.
 			break;
+		case -4:
+			longAuto(colors::BLUE, true);
+			break;
+		case -3:
+			shortAuto(colors::BLUE, true);
+			break;
 		case -2:
-			// longAuto(COLORS::BLUE);
+			longAuto(colors::BLUE, false);
 			break;
 		case -1:
 			shortAuto(colors::BLUE, false);
@@ -194,14 +200,20 @@ void autonomous() {
 			shortAuto(colors::RED, false);
 			break;
 		case 2:
-			// longAuto(COLORS::RED);
+			longAuto(colors::RED, false);
 			break;
 		case 3:
+			shortAuto(colors::RED, true);
+			break;
+		case 4:
+			longAuto(colors::RED, true);
+			break;
+		case 5:
 			// Do Nothing.
 			break;
 		default:
-			printf("Invalid Auton: %d\n", arms::selector::auton);
-			break;
+			throw printf("Invalid Auton: %d\n", arms::selector::auton);
+			// break;
 	}
 
 	printf("Successfully ran auton: %d\n", arms::selector::auton);
