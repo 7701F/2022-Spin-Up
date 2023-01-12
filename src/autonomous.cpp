@@ -20,12 +20,13 @@
 */
 #include "7701.h"
 
-/* Util Functions */
 namespace colors {
 const int BLUE = 1;
 const int RED = 2;
 const int ERROR = 3;
 } // namespace colors
+
+/* Util Functions */
 
 /* Gets the # of Frisbees in the Indexer */
 int getFrisbeesInIndexer() {

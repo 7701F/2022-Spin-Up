@@ -19,13 +19,12 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 #include "main.h"
-
+#include "settings.h"
 namespace deFenestration {
+
 /* Display */
 void display();
 
-/* Enable Show Screen */
-const bool showScreen = true;
 } // namespace deFenestration
 
 // Declarations
