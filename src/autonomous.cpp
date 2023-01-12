@@ -19,7 +19,6 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 #include "7701.h"
-#include "ARMS/flags.h"
 
 /* Util Functions */
 namespace colors {
@@ -118,6 +117,11 @@ void shortAuto(int color) {
 	conveyor.move_velocity(100);
 	pros::delay(250);
 	conveyor.move_velocity(0);
+
+	// move(-10, 200, arms::REVERSE);
+
+	// turn({-22.7196581703463, 21.439677428355}, 90);
+
 	// if (color == 1)
 	// 	setRollerBlue();
 	// if (color == 2)

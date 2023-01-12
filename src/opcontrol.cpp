@@ -181,12 +181,6 @@ void FwControlTask() {
 		// and finally set the motor control value
 		deFenestration::Flywheel::FwMotorSet(motor_drive);
 
-		// print fw speed
-		// printf("flywheel speed: %f current error: %f\r", motor_velocity, current_error);
-
-		// log current odometry position and reset line
-		printf("(%f, %f) %f\r", arms::odom::getPosition().x, arms::odom::getPosition().y, arms::odom::getHeading());
-
 		// Run at somewhere between 20 and 50mS
 		pros::delay(FW_LOOP_SPEED);
 	}
@@ -296,7 +290,7 @@ void opcontrol() {
 		if (flywheel4PosState) {
 			// flywheel 2/3 speed
 			fwON = !fwON;
-			deFenestration::Flywheel::FwVelocitySet(140, .4);
+			deFenestration::Flywheel::FwVelocitySet(140, .5);
 		}
 
 		if (fwON == false) {
