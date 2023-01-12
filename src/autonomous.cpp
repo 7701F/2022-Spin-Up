@@ -135,7 +135,7 @@ void longAuto(int color, bool AWP) {
 	conveyor.move_velocity(0);
 
 	// move back then turn
-	move(-10, 200, arms::REVERSE);
+	move(-10, 100, arms::REVERSE);
 	turn({53, 52}, 200);
 
 	// check if AWP is enabled, else exit (return)
@@ -166,7 +166,7 @@ void shortAuto(int color, bool AWP) {
 
 	// move to the roller
 	move({{-60, -40}}, 200);
-	move(30, 200, arms::ASYNC);
+	move(30, 100, arms::ASYNC);
 	while (!settled()) {
 		pros::delay(10);
 	}
@@ -177,7 +177,7 @@ void shortAuto(int color, bool AWP) {
 	conveyor.move_velocity(0);
 
 	// move back then turn
-	move(-10, 200, arms::REVERSE);
+	move(-10, 100, arms::REVERSE);
 	// turn({-22.7196581703463, 21.439677428355}, 90);
 	turn({53, 52}, 200);
 
