@@ -290,7 +290,7 @@ void opcontrol() {
 		if (flywheel4PosState) {
 			// flywheel 2/3 speed
 			fwON = !fwON;
-			deFenestration::Flywheel::FwVelocitySet(140, .4);
+			deFenestration::Flywheel::FwVelocitySet(140, .5);
 		}
 
 		if (fwON == false) {
