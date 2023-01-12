@@ -86,46 +86,10 @@ void fireDisc() {
 	indexState = !indexState;
 	indexer.set_value(indexState);
 
-	// delay 100 ms then retract
+	// delay 125 ms then retract
 	pros::delay(125);
 	indexState = !indexState;
 	indexer.set_value(indexState);
-}
-
-/* Long Side Auton */
-void longAuto(int color) {
-	using namespace arms::chassis;
-
-	move(6);
-	turn(-30);
-	move(-10, arms::REVERSE);
-	move(-10, -100, arms::REVERSE | arms::ASYNC);
-	if (color == 1)
-		setRollerBlue();
-	if (color == 2)
-		setRollerRed();
-}
-
-/* Short Side Auton */
-void shortAuto(int color) {
-	using namespace arms::chassis;
-
-	move(100, arms::ASYNC);
-	while (!settled()) {
-		pros::delay(10);
-	}
-	conveyor.move_velocity(100);
-	pros::delay(250);
-	conveyor.move_velocity(0);
-
-	// move(-10, 200, arms::REVERSE);
-
-	// turn({-22.7196581703463, 21.439677428355}, 90);
-
-	// if (color == 1)
-	// 	setRollerBlue();
-	// if (color == 2)
-	// 	setRollerRed();
 }
 
 /* Programming Skills */
