@@ -30,12 +30,30 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	/* ARMS & sylib initialization */
+	/* ARMS & Sylib initialization */
 	arms::init();
 	sylib::initialize();
 
-	// Inititalize Flywheel
-	pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
+	// Check if deFenestration::flywheelEnabled is enabled
+	if (deFenestration::flywheelEnabled) {
+		// Inititalize Flywheel
+		pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
+	}
+
+	// Check if deFenestration::debug is enabled
+	if (deFenestration::debug) {
+		pros::Task logger{[=] {
+			while (true) {
+				pros::delay(1000);
+
+				// flywheel status
+				printf("(flywheel speed: %f, current error: %f) \n", motor_velocity, current_error);
+
+				// odom debug
+				printf("(%f, %f) %f\n", arms::odom::getPosition().x, arms::odom::getPosition().y, arms::odom::getHeading());
+			}
+		}};
+	}
 
 	/* Controller Status Display */
 	pros::Task controllerTask{[=] {
@@ -72,10 +90,6 @@ void initialize() {
 
 			count++;
 			count %= 20;
-
-			// log current odometry position and reset line
-			printf("(flywheel speed: %f, current error: %f\n) (%f, %f) %f\r", motor_velocity, current_error,
-			       arms::odom::getPosition().x, arms::odom::getPosition().y, arms::odom::getHeading());
 
 			// indexLights.set_all(0xE62169);
 			pros::delay(10);
