@@ -129,3 +129,4 @@ void prosBrake();
 // Declare game system functions.
 int getFrisbeesInIndexer();
 int getRollerColor();
+void fireDisc();

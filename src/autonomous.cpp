@@ -87,7 +87,7 @@ void fireDisc() {
 	indexer.set_value(indexState);
 
 	// delay 125 ms then retract
-	pros::delay(125);
+	pros::delay(130);
 	indexState = !indexState;
 	indexer.set_value(indexState);
 }
@@ -112,8 +112,8 @@ void Pauton() {
 	move({{0, 0}}, 200);
 }
 
-/* longAuto  */
-void OLongAuto(int color, bool AWP) {
+/* longAuto */
+void longAuto(int color, bool AWP) {
 	using namespace arms::chassis;
 
 	// reset odom to correct position
@@ -149,7 +149,7 @@ void OLongAuto(int color, bool AWP) {
 		pros::delay(10);
 	}
 
-	// fire piston
+	// fire piston and wait to ensure it is fired
 	fireDisc();
 	pros::delay(250);
 
@@ -192,7 +192,7 @@ void shortAuto(int color, bool AWP) {
 		pros::delay(10);
 	}
 
-	// fire piston
+	// fire piston and wait to ensure it is fired
 	fireDisc();
 	pros::delay(250);
 
