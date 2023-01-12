@@ -158,14 +158,14 @@ void OLongAuto(int color, bool AWP) {
 }
 
 /* shortAuto except it uses the arms::odom system for position */
-void OShortAuto() {
+void shortAuto(int color, bool AWP) {
 	using namespace arms::chassis;
 
 	// reset odom to correct position
-	arms::odom::reset({{41, -60}}, 0);
+	arms::odom::reset({{-60, 40}}, 270);
 
 	// move to the roller
-	move({{41, -80}}, 200);
+	move({{-60, -40}}, 200);
 	move(30, 200, arms::ASYNC);
 	while (!settled()) {
 		pros::delay(10);
@@ -179,7 +179,12 @@ void OShortAuto() {
 	// move back then turn
 	move(-10, 200, arms::REVERSE);
 	// turn({-22.7196581703463, 21.439677428355}, 90);
-	turn({55, 53}, 200);
+	turn({53, 52}, 200);
+
+	// check if AWP is enabled, else exit (return)
+	if (!AWP) {
+		return;
+	}
 
 	// set the flywheel to the correct speed, then wait for it to be up to speed
 	deFenestration::Flywheel::FwVelocitySet(210, .92);
@@ -226,12 +231,12 @@ void autonomous() {
 			// longAuto(COLORS::BLUE);
 			break;
 		case -1:
-			shortAuto(colors::BLUE);
+			shortAuto(colors::BLUE, false);
 			break;
 		case 0:
 			break;
 		case 1:
-			shortAuto(colors::RED);
+			shortAuto(colors::RED, false);
 			break;
 		case 2:
 			// longAuto(COLORS::RED);
