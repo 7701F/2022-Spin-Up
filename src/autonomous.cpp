@@ -181,6 +181,7 @@ void autonomous() {
 			// Do Nothing.
 			break;
 		default:
+			printf("Invalid Auton: %d\n", arms::selector::auton);
 			break;
 	}
 
