@@ -122,8 +122,8 @@ inline bool EprevPistonState = false;
 inline bool endgameState = false;
 
 // Declare driver functions.
-void prosBrake(int type);
-void prosBrake();
+void prosBrake(bool on, int type);
+void prosBrake(bool on);
 
 // Declare game system functions.
 int getFrisbeesInIndexer();

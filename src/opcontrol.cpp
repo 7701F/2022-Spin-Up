@@ -23,8 +23,8 @@
 #include "7701.h"
 
 /* Smart boy motor brake, additional parameter to set brake type */
-void prosBrake(int type) {
-	if (pbrake == true) {
+void prosBrake(bool on, int type) {
+	if (on == true) {
 		// pros::E_MOTOR_BRAKE_HOLD if type is set to 0
 		if (type == 0) {
 			if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_HOLD)) {
@@ -40,7 +40,7 @@ void prosBrake(int type) {
 				arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
 			}
 		}
-	} else if (pbrake == false) {
+	} else if (on == false) {
 		// coasting, ie, no braking
 		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_COAST)) {
 			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
@@ -50,14 +50,14 @@ void prosBrake(int type) {
 }
 
 /* Smart boy motor brake */
-void prosBrake() {
-	if (pbrake == true) {
+void prosBrake(bool on) {
+	if (on == true) {
 		// actively holds position
 		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_HOLD)) {
 			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
 			arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
 		}
-	} else if (pbrake == false) {
+	} else if (on == false) {
 		// coasting, ie, no braking
 		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_COAST)) {
 			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
@@ -191,23 +191,12 @@ void FwControlTask() {
 /* Exponential Drive Control
  * If bypass is set to true we switch to direct input,
  * bypassing the exponential curve
- * If slow is set to false we use a faster curve
- * If slow is set to true we use a slower curve
  */
-// std::int32_t exponentialDrive(std::int32_t joyVal, bool slow) {
-// 	if (bypass == true) {
-// 		return joyVal;
-// 	} else if (slow == false) {
-// 		return pow(joyVal, 3) / 10000;
-// 	} else if (slow == true) {
-// 		return (pow(joyVal, 3) * .75) / 10000;
-// 	} else
-// 		return 100;
-// }
-std::int32_t exponentialDrive(std::int32_t joyVal) {
-	if (bypass == true) {
+
+std::int32_t exponentialDrive(std::int32_t joyVal, bool on) {
+	if (on == true) {
 		return joyVal;
-	} else if (bypass == false) {
+	} else if (on == false) {
 		return pow(joyVal, 3) / 10000;
 	} else
 		return 100;
@@ -228,8 +217,7 @@ std::int32_t exponentialDrive(std::int32_t joyVal) {
  */
 void opcontrol() {
 	// set brake mode
-	pbrake = true;
-	prosBrake();
+	prosBrake(true);
 
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
@@ -263,19 +251,13 @@ void opcontrol() {
 		if (master.get_digital_new_press(DIGITAL_LEFT))
 			bypass = !bypass;
 
-		// if (master.get_digital(DIGITAL_DOWN)) {
-		// 	curve2 = true;
-		// } else {
-		// 	curve2 = false;
-		// }
-
 		// clang-format off
 		arms::chassis::arcade(
-			exponentialDrive(leftJoyStick * (double)100 / 127),
-			exponentialDrive(rightJoyStick * (double)100 / 127)
+			exponentialDrive(leftJoyStick * (double)100 / 127, bypass),
+			exponentialDrive(rightJoyStick * (double)100 / 127, bypass)
 		);
 		// clang-format on
-		prosBrake();
+		prosBrake(pbrake);
 
 		// Game Related Subsystems
 
