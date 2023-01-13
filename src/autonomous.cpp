@@ -118,11 +118,12 @@ void longAuto(int color, bool AWP) {
 	using namespace arms::chassis;
 
 	// reset odom to correct position
-	arms::odom::reset({{-10, -65}}, 0);
+	arms::odom::reset({{0, 0}}, 0);
+	// arms::odom::reset({{-10, -65}}, 0);
 
 	// move to the roller
-	move({{10, -36}}, arms::THRU);
-	move({{41, -65}});
+	move({{5, -16}});
+	move({{-16, -29}});
 
 	// set the roller to the correct color
 	move(30, 200, arms::ASYNC);
@@ -136,23 +137,28 @@ void longAuto(int color, bool AWP) {
 	conveyor.move_velocity(0);
 
 	// move back then turn
-	move(-10, 100, arms::REVERSE);
-	turn({53, 52}, 200);
+	// move(-20, 100, arms::REVERSE);
+	move({{-16, 0}});
+	turn({134.985069, -55.079769}, 50);
+	pros::delay(200);
+	turn(180, 25, arms::RELATIVE);
 
 	// check if AWP is enabled, else exit (return)
 	if (!AWP) {
 		return;
 	}
 
-	// set the flywheel to the correct speed, then wait for it to be up to speed
-	deFenestration::Flywheel::FwVelocitySet(210, .92);
-	while (current_error > 0.2) {
-		pros::delay(10);
-	}
+	for (int i = 0; i < 1; i++) {
+		// set the flywheel to the correct speed, then wait for it to be up to speed
+		deFenestration::Flywheel::FwVelocitySet(170, .92);
+		while (current_error > 10) {
+			pros::delay(10);
+		}
 
-	// fire piston and wait to ensure it is fired
-	fireDisc();
-	pros::delay(250);
+		// fire piston and wait to ensure it is fired
+		fireDisc();
+		pros::delay(250);
+	}
 
 	// spin down flywheel
 	deFenestration::Flywheel::FwVelocitySet(0, 0);
