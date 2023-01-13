@@ -98,13 +98,13 @@ void Sauton() {
 	// deFenestration::Flywheel::FwVelocitySet(96, 0.2);
 
 	using namespace arms::chassis;
-	arms::odom::reset({{0, 24}});
+	arms::odom::reset({{0, 0}});
 
 	turn({0, 24}, 75);
 	move({{0, 24}}, 200);
 }
 
-/* Program an autonomous that moves to {{0, 0}} then turns to 90 degrees*/
+/* Autonomous that moves to {{0, 0}} then turns to 90 degrees*/
 void Pauton() {
 	using namespace arms::chassis;
 	arms::odom::reset({{20, 20}});
@@ -220,12 +220,8 @@ void shortAuto(int color, bool AWP) {
  */
 void autonomous() {
 	// set brake to hold
-	pbrake = true;
-	prosBrake(1);
-	pbrake = false;
+	prosBrake(true, 1);
 
-	// reset odom
-	arms::odom::reset({{0, 0}}, 0);
 
 	/* Auton Selector Logic */
 	// Negative = Blue
@@ -247,6 +243,7 @@ void autonomous() {
 			shortAuto(colors::BLUE, false);
 			break;
 		case 0:
+			Sauton();
 			break;
 		case 1:
 			shortAuto(colors::RED, false);
