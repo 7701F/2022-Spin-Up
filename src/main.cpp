@@ -64,19 +64,22 @@ void initialize() {
 		while (true) {
 			if (count == 15) {
 				std::stringstream bypassstr;
-				bypassstr << "BYP:" << (bypass ? "Y" : "N") << "\r"; //<< " CRV:" << (curve2 ? "2" : "1") << "\r";
+				bypassstr << "BYP:" << (bypass ? "Y" : "N") << " FW:" << (fwON ? "Y" : "N") << "\r";
 				master.print(0, 0, bypassstr.str().c_str());
 			} else if (count == 10) {
 				std::stringstream autonstr;
 				int sel_auton = abs(arms::selector::auton);
+				std::string textA = arms::autons[sel_auton];
+
 				if (arms::selector::auton < 0) {
-					autonstr << "Auton: Red " << arms::autons[sel_auton] << "\r";
+					autonstr << "Auton: Red " << textA << "\r";
 				} else if (arms::selector::auton > 0) {
-					autonstr << "Auton: Blue " << arms::autons[sel_auton] << "\r";
+					autonstr << "Auton: Blue " << textA << "\r";
 				} else if (arms::selector::auton == 0) {
 					autonstr << "Auton: Skills"
 					         << "\r";
 				}
+
 				master.print(1, 0, autonstr.str().c_str());
 			} else if (count == 5) {
 				std::stringstream brakestr;
