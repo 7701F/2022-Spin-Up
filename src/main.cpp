@@ -44,13 +44,12 @@ void initialize() {
 	if (deFenestration::debug) {
 		pros::Task logger{[=] {
 			while (true) {
-				pros::delay(1000);
-
 				// flywheel status
 				printf("(flywheel speed: %f, current error: %f) \n", motor_velocity, current_error);
 
 				// odom debug
 				printf("(%f, %f) %f\n", arms::odom::getPosition().x, arms::odom::getPosition().y, arms::odom::getHeading());
+				pros::delay(2500);
 			}
 		}};
 	}
@@ -65,18 +64,15 @@ void initialize() {
 		while (true) {
 			if (count == 15) {
 				std::stringstream bypassstr;
-				bypassstr << "BYP:" << (bypass ? "Y" : "N") << " CRV:" << (curve2 ? "2" : "1") << "\r";
+				bypassstr << "BYP:" << (bypass ? "Y" : "N") << "\r"; //<< " CRV:" << (curve2 ? "2" : "1") << "\r";
 				master.print(0, 0, bypassstr.str().c_str());
-
-				std::stringstream FWstr;
-				FWstr << "FW: " << motor_velocity << "\r";
-				partner.print(0, 0, FWstr.str().c_str());
 			} else if (count == 10) {
 				std::stringstream autonstr;
+				int sel_auton = abs(arms::selector::auton);
 				if (arms::selector::auton < 0) {
-					autonstr << "Auton: Red" << arms::autons[arms::selector::auton] << "\r";
+					autonstr << "Auton: Red " << arms::autons[sel_auton] << "\r";
 				} else if (arms::selector::auton > 0) {
-					autonstr << "Auton: Blue" << arms::autons[arms::selector::auton] << "\r";
+					autonstr << "Auton: Blue " << arms::autons[sel_auton] << "\r";
 				} else if (arms::selector::auton == 0) {
 					autonstr << "Auton: Skills"
 					         << "\r";
