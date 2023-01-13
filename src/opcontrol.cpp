@@ -194,13 +194,21 @@ void FwControlTask() {
  * If slow is set to false we use a faster curve
  * If slow is set to true we use a slower curve
  */
-std::int32_t exponentialDrive(std::int32_t joyVal, bool slow) {
+// std::int32_t exponentialDrive(std::int32_t joyVal, bool slow) {
+// 	if (bypass == true) {
+// 		return joyVal;
+// 	} else if (slow == false) {
+// 		return pow(joyVal, 3) / 10000;
+// 	} else if (slow == true) {
+// 		return (pow(joyVal, 3) * .75) / 10000;
+// 	} else
+// 		return 100;
+// }
+std::int32_t exponentialDrive(std::int32_t joyVal) {
 	if (bypass == true) {
 		return joyVal;
-	} else if (slow == false) {
+	} else if (bypass == false) {
 		return pow(joyVal, 3) / 10000;
-	} else if (slow == true) {
-		return (pow(joyVal, 3) * .75) / 10000;
 	} else
 		return 100;
 }
@@ -255,13 +263,16 @@ void opcontrol() {
 		if (master.get_digital_new_press(DIGITAL_LEFT))
 			bypass = !bypass;
 
-		if (master.get_digital_new_press(DIGITAL_DOWN))
-			curve2 = !curve2;
+		// if (master.get_digital(DIGITAL_DOWN)) {
+		// 	curve2 = true;
+		// } else {
+		// 	curve2 = false;
+		// }
 
 		// clang-format off
 		arms::chassis::arcade(
-			exponentialDrive(leftJoyStick * (double)100 / 127, curve2),
-			exponentialDrive(rightJoyStick * (double)100 / 127, curve2)
+			exponentialDrive(leftJoyStick * (double)100 / 127),
+			exponentialDrive(rightJoyStick * (double)100 / 127)
 		);
 		// clang-format on
 		prosBrake();
@@ -333,8 +344,8 @@ void opcontrol() {
 		if (partner.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
 			autonomous();
 
-		// reset odom position to 0,0 when up arrow is pressed
-		if (partner.get_digital_new_press(DIGITAL_R2)) {
+		// reset odom position to 0,0 when X is pressed
+		if (partner.get_digital_new_press(DIGITAL_X)) {
 			// on partner controller to prevent accidental resets, plus master is literally out of buttons
 			arms::odom::reset({0, 0}, 0);
 		}
