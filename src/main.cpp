@@ -30,12 +30,30 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	/* ARMS initialization */
+	/* ARMS & Sylib initialization */
 	arms::init();
 	sylib::initialize();
 
-	// Inititalize Flywheel
-	pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
+	// Check if deFenestration::flywheelEnabled is enabled
+	if (deFenestration::flywheelEnabled) {
+		// Inititalize Flywheel
+		pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
+	}
+
+	// Check if deFenestration::debug is enabled
+	if (deFenestration::debug) {
+		pros::Task logger{[=] {
+			while (true) {
+				pros::delay(1000);
+
+				// flywheel status
+				printf("(flywheel speed: %f, current error: %f) \n", motor_velocity, current_error);
+
+				// odom debug
+				printf("(%f, %f) %f\n", arms::odom::getPosition().x, arms::odom::getPosition().y, arms::odom::getHeading());
+			}
+		}};
+	}
 
 	/* Controller Status Display */
 	pros::Task controllerTask{[=] {
@@ -52,9 +70,17 @@ void initialize() {
 
 				std::stringstream FWstr;
 				FWstr << "FW: " << motor_velocity << "\r";
+				partner.print(0, 0, FWstr.str().c_str());
 			} else if (count == 10) {
 				std::stringstream autonstr;
-				autonstr << "Auton: " << arms::selector::auton << "\r";
+				if (arms::selector::auton < 0) {
+					autonstr << "Auton: Red" << arms::autons[arms::selector::auton] << "\r";
+				} else if (arms::selector::auton > 0) {
+					autonstr << "Auton: Blue" << arms::autons[arms::selector::auton] << "\r";
+				} else if (arms::selector::auton == 0) {
+					autonstr << "Auton: Skills"
+					         << "\r";
+				}
 				master.print(1, 0, autonstr.str().c_str());
 			} else if (count == 5) {
 				std::stringstream brakestr;
@@ -64,8 +90,6 @@ void initialize() {
 
 			count++;
 			count %= 20;
-
-			// master.clear();
 
 			// indexLights.set_all(0xE62169);
 			pros::delay(10);

@@ -19,14 +19,14 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 #include "7701.h"
-#include "ARMS/flags.h"
 
-/* Util Functions */
 namespace colors {
 const int BLUE = 1;
 const int RED = 2;
 const int ERROR = 3;
 } // namespace colors
+
+/* Util Functions */
 
 /* Gets the # of Frisbees in the Indexer */
 int getFrisbeesInIndexer() {
@@ -81,8 +81,8 @@ void setRollerBlue() {
 	conveyor.move_velocity(0);
 }
 
-/* Blue Back Auton */
-void backAuto(int color) {
+/* Long Side Auton */
+void longAuto(int color) {
 	using namespace arms::chassis;
 
 	move(6);
@@ -106,6 +106,11 @@ void shortAuto(int color) {
 	conveyor.move_velocity(100);
 	pros::delay(250);
 	conveyor.move_velocity(0);
+
+	// move(-10, 200, arms::REVERSE);
+
+	// turn({-22.7196581703463, 21.439677428355}, 90);
+
 	// if (color == 1)
 	// 	setRollerBlue();
 	// if (color == 2)
@@ -114,7 +119,7 @@ void shortAuto(int color) {
 
 /* Programming Skills */
 void Sauton() {
-	deFenestration::Flywheel::FwVelocitySet(96, 0.2);
+	// deFenestration::Flywheel::FwVelocitySet(96, 0.2);
 
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 24}});
@@ -132,33 +137,6 @@ void Pauton() {
 	move({{0, 0}}, 200);
 }
 
-// double wheel_radius = 2.0625;
-double wheel_radius = 1.625;
-double const pi = 3.141592653589793238462643383279502884197169399375105820974944592307816406286;
-// Distance in inches, Speed in rpms, Wait in seconds (converted to milliseconds)
-void moveF(double distance, int speed, int wait) {
-	// 1 rotation will move the robot
-	// 2 *pi *wheel_radius inches
-	double rotations = distance / (pi * 2 * wheel_radius);
-
-	leftMtr.move_relative(rotations, speed);
-	rightMtr.move_relative(rotations, speed);
-	leftMtrR.move_relative(rotations, speed);
-	rightMtrR.move_relative(rotations, speed);
-
-	rotations += leftMtr.get_position();
-
-	while (!((leftMtr.get_position() < rotations + 0.5) && (leftMtr.get_position() > rotations - 0.5))) {
-		pros::delay(5);
-	}
-
-	pros::delay(wait * 1000);
-}
-double rotations = 5 / (pi * 2 * wheel_radius);
-
-double kU = 0.2;
-double kpU = 0;
-
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -172,6 +150,12 @@ double kpU = 0;
  */
 void autonomous() {
 	// set brake to hold
+	pbrake = true;
+	prosBrake(1);
+	pbrake = false;
+
+	// reset odom
+	arms::odom::reset({{0, 0}}, 0);
 
 	/* Auton Selector Logic */
 	// Negative = Blue
@@ -181,7 +165,7 @@ void autonomous() {
 			// Do Nothing.
 			break;
 		case -2:
-			// backAuto(COLORS::BLUE);
+			// longAuto(COLORS::BLUE);
 			break;
 		case -1:
 			shortAuto(colors::BLUE);
@@ -192,56 +176,13 @@ void autonomous() {
 			shortAuto(colors::RED);
 			break;
 		case 2:
-			// backAuto(COLORS::RED);
+			// longAuto(COLORS::RED);
 			break;
 		case 3:
 			// Do Nothing.
 			break;
-		case 4:
-			// // PID Testing
-			arms::chassis::setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
-			arms::pid::linearKP = 1;
-			arms::pid::linearKI = 0;
-			arms::pid::linearKD = 0;
-
-			rightMtr.set_zero_position(rightMtr.get_position());
-			leftMtr.set_zero_position(leftMtr.get_position());
-			rightMtrR.set_zero_position(rightMtrR.get_position());
-			leftMtrR.set_zero_position(leftMtrR.get_position());
-
-			for (int i = 0; i < 1000; i++) {
-				rightMtr.set_zero_position(rightMtr.get_position());
-				leftMtr.set_zero_position(leftMtr.get_position());
-				rightMtrR.set_zero_position(rightMtrR.get_position());
-				leftMtrR.set_zero_position(leftMtrR.get_position());
-
-				arms::chassis::move(5, arms::ASYNC);
-				if (rightMtr.get_position() == rotations) {
-					printf("Success! %f\n", arms::pid::linearKP);
-					break;
-				}
-				// drive backward
-				// arms::chassis::move(-5, arms::REVERSE);
-				moveF(-5, -100, 0);
-
-				kU += .01;
-				arms::pid::linearKP = 0.5 * kU;
-
-				printf("Success! %f\n", arms::pid::linearKP);
-			}
-
-			arms::pid::angularKP = 0;
-			arms::pid::angularKI = 0;
-			arms::pid::angularKD = 0;
-
-			for (int i = 0; i < 100; i++) {
-				arms::chassis::turn(45);
-				arms::chassis::turn(-45);
-
-				arms::pid::angularKP = 0.5 * kU;
-			}
-			break;
 		default:
+			printf("Invalid Auton: %d\n", arms::selector::auton);
 			break;
 	}
 

@@ -19,25 +19,18 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 #include "main.h"
-
+#include "settings.h"
 namespace deFenestration {
+
 /* Display */
 void display();
 
-/* Enable Show Screen */
-const bool showScreen = true;
 } // namespace deFenestration
 
 // Declarations
 /* Controller */
 extern pros::Controller master;
 extern pros::Controller partner;
-
-/* Drive Motors*/
-extern pros::Motor rightMtr;
-extern pros::Motor rightMtrR;
-extern pros::Motor leftMtr;
-extern pros::Motor leftMtrR;
 
 /* Game System Motors */
 extern pros::Motor fw;
@@ -129,8 +122,8 @@ inline bool EprevPistonState = false;
 inline bool endgameState = false;
 
 // Declare driver functions.
-void customBrake(bool pbrake);
-void prosBrake(bool pbrake);
+void prosBrake(int type);
+void prosBrake();
 
 // Declare game system functions.
 int getFrisbeesInIndexer();
