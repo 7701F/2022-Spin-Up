@@ -273,28 +273,35 @@ void opcontrol() {
 		flywheelState = master.get_digital_new_press(DIGITAL_L2);
 		flywheelThirdPosState = partner.get_digital_new_press(DIGITAL_L2);
 		flywheel4PosState = master.get_digital_new_press(DIGITAL_L1);
-		flywheelOff = partner.get_digital_new_press(DIGITAL_B);
 
 		if (flywheelState) {
 			// flywheel max speed
 			fwON = !fwON;
-			deFenestration::Flywheel::FwVelocitySet(210, 1);
+			if (fwON == true)
+				deFenestration::Flywheel::FwVelocitySet(210, 1);
+			else if (fwON == false)
+				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
 		}
 
 		if (flywheelThirdPosState) {
 			// flywheel 17/21 speed
 			fwON = !fwON;
-			deFenestration::Flywheel::FwVelocitySet(170, 0.7);
+			if (fwON == true)
+				deFenestration::Flywheel::FwVelocitySet(170, 0.81);
+			else if (fwON == false)
+				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
 		}
 
 		if (flywheel4PosState) {
 			// flywheel 2/3 speed
 			fwON = !fwON;
-			deFenestration::Flywheel::FwVelocitySet(140, .5);
+			if (fwON == true)
+				deFenestration::Flywheel::FwVelocitySet(140, .6);
+			else if (fwON == false)
+				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
 		}
 
 		if (fwON == false) {
-			// partner controller turns off flywheel
 			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 		}
 
