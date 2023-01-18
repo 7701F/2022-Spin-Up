@@ -1,20 +1,21 @@
 /*
   Copyright (c) 2019-2023 7701F
 
-  This software is provided 'as-is', without any express or implied warranty. In no event will
-  the authors be held liable for any damages arising from the use of this software.
+  This software is provided 'as-is', without any express or implied warranty. In no event
+  will the authors be held liable for any damages arising from the use of this software.
 
-  Permission is granted to anyone to use this software for any purpose, including commercial
-  applications, and to alter it and redistribute it freely, subject to the following restrictions:
+  Permission is granted to anyone to use this software for any purpose, including
+  commercial applications, and to alter it and redistribute it freely, subject to the
+  following restrictions:
 
-  1. The origin of this software must not be misrepresented; you must not claim that you wrote the
-  original software. If you use this software in a product, an acknowledgment (see the following)
-  in the product documentation is required.
+  1. The origin of this software must not be misrepresented; you must not claim that you
+  wrote the original software. If you use this software in a product, an acknowledgment
+  (see the following) in the product documentation is required.
 
   Portions Copyright (c) 2019-2023 7701F
 
-  2. Altered source versions must be plainly marked as such, and must not be misrepresented as
-  being the original software.
+  2. Altered source versions must be plainly marked as such, and must not be
+  misrepresented as being the original software.
 
   3. This notice may not be removed or altered from any source distribution.
 */
@@ -231,30 +232,39 @@ void autonomous() {
 			// Do Nothing.
 			break;
 		case -4:
+			// Blue Long AWP
 			longAuto(colors::BLUE, true);
 			break;
 		case -3:
+			// Blue Short AWP
 			shortAuto(colors::BLUE, true);
 			break;
 		case -2:
+			// Blue Long
 			longAuto(colors::BLUE, false);
 			break;
 		case -1:
+			// Blue Short
 			shortAuto(colors::BLUE, false);
 			break;
 		case 0:
+			// Programming Skills
 			Sauton();
 			break;
 		case 1:
+			// Red Short
 			shortAuto(colors::RED, false);
 			break;
 		case 2:
+			// Red Long
 			longAuto(colors::RED, false);
 			break;
 		case 3:
+			// Red Short AWP
 			shortAuto(colors::RED, true);
 			break;
 		case 4:
+			// Red Long AWP
 			longAuto(colors::RED, true);
 			break;
 		case 5:
