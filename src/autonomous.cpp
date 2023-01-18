@@ -27,6 +27,22 @@ const int RED = 2;
 const int ERROR = 3;
 } // namespace colors
 
+/* Roller Blue Positions */
+arms::Point rollerPos = {{-16, -29}};
+arms::Point rollerPos2 = {{-16, -29}};
+
+/* Roller Red Positions */
+arms::Point rollerPos3 = {{-16, -29}};
+arms::Point rollerPos4 = {{-16, -29}};
+
+/* Goal Red Positions */
+arms::Point goalPos = {{134.985069, -55.079769}};
+arms::Point goalPos2 = {{134.985069, -55.079769}};
+
+/* Goal Blue Positions */
+arms::Point enemyGoal = {{134.985069, -55.079769}};
+arms::Point goalPos4 = {{134.985069, -55.079769}};
+
 /* Util Functions */
 
 /* Gets the # of Frisbees in the Indexer */
@@ -222,7 +238,6 @@ void shortAuto(int color, bool AWP) {
 void autonomous() {
 	// set brake to hold
 	prosBrake(true, 1);
-
 
 	/* Auton Selector Logic */
 	// Negative = Blue
