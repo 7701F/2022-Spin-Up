@@ -35,6 +35,9 @@ void initialize() {
 	arms::init();
 	sylib::initialize();
 
+	// set optical sensor LED to 100% brightness
+	rollerSensor.set_led_pwm(100);
+
 	// Check if deFenestration::flywheelEnabled is enabled
 	if (deFenestration::flywheelEnabled) {
 		// Inititalize Flywheel
@@ -46,38 +49,46 @@ void initialize() {
 		pros::Task logger{[=] {
 			while (true) {
 				// flywheel status
-				printf("(flywheel speed: %f, current error: %f) \n", motor_velocity, current_error);
+				// printf("(flywheel speed: %f, current error: %f) \n", motor_velocity,
+				// current_error);
 
 				// odom debug
-				printf("(%f, %f) %f\n", arms::odom::getPosition().x, arms::odom::getPosition().y, arms::odom::getHeading());
-				pros::delay(2500);
+				printf("(%f, %f) %f\n", arms::odom::getPosition().x, arms::odom::getPosition().y,
+				       arms::odom::getHeading());
+				pros::delay(3000);
 			}
 		}};
 	}
 
-	/* Controller Status Display */
+	// /* Controller Status Display */
 	pros::Task controllerTask{[=] {
 		/*
 		 * Only print every 50ms, the controller text update rate is slow.
 		 * Any input faster than this will be dropped.
 		 */
 		int count;
+		std::string textA;
 		while (true) {
 			if (count == 15) {
 				std::stringstream bypassstr;
-				bypassstr << "BYP:" << (bypass ? "Y" : "N") << " FW:" << (fwON ? "Y" : "N") << "\r";
+				bypassstr << "BYP:" << (bypass ? "Y" : "N") << " FW:" << (fwON ? "Y" : "N")
+				          << "\r";
 				master.print(0, 0, bypassstr.str().c_str());
 			} else if (count == 10) {
 				std::stringstream autonstr;
 				int sel_auton = abs(arms::selector::auton);
-				std::string textA = arms::autons[sel_auton];
+				if (sel_auton != 0) {
+					textA = arms::autons[sel_auton - 1];
+				} else {
+					textA = "skills";
+				}
 
-				if (arms::selector::auton < 0) {
-					autonstr << "Auton: Red " << textA << "\r";
-				} else if (arms::selector::auton > 0) {
-					autonstr << "Auton: Blue " << textA << "\r";
+				if (arms::selector::auton > 0) {
+					autonstr << "Auton: R " << textA << "\r";
+				} else if (arms::selector::auton < 0) {
+					autonstr << "Auton: B " << textA << "\r";
 				} else if (arms::selector::auton == 0) {
-					autonstr << "Auton: Skills"
+					autonstr << "Auton: SKLS"
 					         << "\r";
 				}
 

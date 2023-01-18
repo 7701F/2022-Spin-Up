@@ -109,7 +109,7 @@ inline bool curve2 = false;
 inline bool flywheelState = false;
 inline bool flywheelThirdPosState = false;
 inline bool flywheel4PosState = false;
-inline bool flywheelOff = false;
+inline bool flywheel5PosState = false;
 inline bool fwON = false;
 
 // firing piston state

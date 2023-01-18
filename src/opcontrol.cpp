@@ -28,7 +28,8 @@ void prosBrake(bool on, int type) {
 	if (on == true) {
 		// pros::E_MOTOR_BRAKE_HOLD if type is set to 0
 		if (type == 0) {
-			if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_HOLD)) {
+			if (arms::chassis::rightMotors->get_brake_modes() !=
+			    std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_HOLD)) {
 				arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
 				arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
 			}
@@ -36,14 +37,16 @@ void prosBrake(bool on, int type) {
 
 		// pros::E_MOTOR_BRAKE_BRAKE if type is set to 1
 		if (type == 1) {
-			if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_BRAKE)) {
+			if (arms::chassis::rightMotors->get_brake_modes() !=
+			    std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_BRAKE)) {
 				arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
 				arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
 			}
 		}
 	} else if (on == false) {
 		// coasting, ie, no braking
-		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_COAST)) {
+		if (arms::chassis::rightMotors->get_brake_modes() !=
+		    std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_COAST)) {
 			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 			arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 		}
@@ -54,13 +57,15 @@ void prosBrake(bool on, int type) {
 void prosBrake(bool on) {
 	if (on == true) {
 		// actively holds position
-		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_HOLD)) {
+		if (arms::chassis::rightMotors->get_brake_modes() !=
+		    std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_HOLD)) {
 			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
 			arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_HOLD);
 		}
 	} else if (on == false) {
 		// coasting, ie, no braking
-		if (arms::chassis::rightMotors->get_brake_modes() != std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_COAST)) {
+		if (arms::chassis::rightMotors->get_brake_modes() !=
+		    std::vector<pros::motor_brake_mode_e>(4, pros::E_MOTOR_BRAKE_COAST)) {
 			arms::chassis::leftMotors->set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 			arms::chassis::rightMotors->set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
 		}
@@ -223,8 +228,8 @@ void opcontrol() {
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
 	// if (deFenestration::showScreen == true) {
-	// 	arms::selector::destroy();
-	// 	pros::Task displayTask(deFenestration::display);
+	arms::selector::destroy();
+	pros::Task displayTask(deFenestration::display);
 	// }
 
 	// Run Loop
@@ -264,9 +269,10 @@ void opcontrol() {
 
 		// Frisbee Shooter Flywheel
 		// various bindings for flywheel speed
-		flywheelState = master.get_digital_new_press(DIGITAL_L2);
+		flywheelState = master.get_digital_new_press(DIGITAL_L1);
 		flywheelThirdPosState = partner.get_digital_new_press(DIGITAL_L2);
-		flywheel4PosState = master.get_digital_new_press(DIGITAL_L1);
+		flywheel4PosState = master.get_digital_new_press(DIGITAL_L2);
+		flywheel5PosState = partner.get_digital_new_press(DIGITAL_L1);
 
 		if (flywheelState) {
 			// flywheel max speed
@@ -291,6 +297,15 @@ void opcontrol() {
 			fwON = !fwON;
 			if (fwON == true)
 				deFenestration::Flywheel::FwVelocitySet(140, .6);
+			else if (fwON == false)
+				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
+		}
+
+		if (flywheel5PosState) {
+			// flywheel 2/3 speed
+			fwON = !fwON;
+			if (fwON == true)
+				deFenestration::Flywheel::FwVelocitySet(120, .48);
 			else if (fwON == false)
 				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
 		}
