@@ -228,8 +228,8 @@ void opcontrol() {
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
 	// if (deFenestration::showScreen == true) {
-	arms::selector::destroy();
-	pros::Task displayTask(deFenestration::display);
+	// arms::selector::destroy();
+	// pros::Task displayTask(deFenestration::display);
 	// }
 
 	// Run Loop

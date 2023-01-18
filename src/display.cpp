@@ -64,6 +64,7 @@ void display() {
 
 		// stats << "(" << arms::odom::getPosition().x << "," << arms::odom::getPosition().y
 		// << ") " << arms::odom::getHeading();
+
 		lv_label_set_text(statsDisplay, stats.str().c_str());
 
 		// Lastly, delay
