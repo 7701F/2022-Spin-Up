@@ -198,7 +198,6 @@ void FwControlTask() {
  * If bypass is set to true we switch to direct input,
  * bypassing the exponential curve
  */
-
 std::int32_t exponentialDrive(std::int32_t joyVal, bool on) {
 	if (on == true) {
 		return joyVal;

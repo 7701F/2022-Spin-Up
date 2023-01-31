@@ -36,16 +36,20 @@ namespace arms {
 #define SETTLE_THRESH_ANGULAR 1 // amount of angular movement for settling
 #define SETTLE_TIME 250         // amount of time to count as settled
 
+// Linear PID Constants
 #define LINEAR_KP 1
 #define LINEAR_KI 0
 #define LINEAR_KD 0
 
+// Tracking Constants
 #define TRACKING_KP 60 // point tracking turning strength
 
+// Angular PID Constants
 #define ANGULAR_KP 1
 #define ANGULAR_KI 0
 #define ANGULAR_KD 0
 
+//
 #define MIN_ERROR 5 // Minimum distance to target before angular componenet is disabled
 #define LEAD_PCT .6 // Go-to-pose lead distance ratio (0-1)
 
