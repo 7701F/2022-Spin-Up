@@ -20,7 +20,7 @@ namespace arms {
 
 // Tracking wheel distances
 #define TRACK_WIDTH 12.9375   // The distance between left and right wheels (or tracker wheels)
-#define MIDDLE_DISTANCE 4.125 // Distance from middle wheel to the robot turning center
+#define MIDDLE_DISTANCE 4.025 // Distance from middle wheel to the robot turning center
 
 // Sensors
 #define IMU_PORT 1                                // Port 0 for disabled
@@ -35,15 +35,17 @@ namespace arms {
 #define SETTLE_THRESH_LINEAR .5 // amount of linear movement for settling
 #define SETTLE_THRESH_ANGULAR 1 // amount of angular movement for settling
 #define SETTLE_TIME 250         // amount of time to count as settled
-// #define LINEAR_KP .45
+
 #define LINEAR_KP 1
 #define LINEAR_KI 0
-// #define LINEAR_KD 5
 #define LINEAR_KD 0
+
 #define TRACKING_KP 60 // point tracking turning strength
+
 #define ANGULAR_KP 1
 #define ANGULAR_KI 0
 #define ANGULAR_KD 0
+
 #define MIN_ERROR 5 // Minimum distance to target before angular componenet is disabled
 #define LEAD_PCT .6 // Go-to-pose lead distance ratio (0-1)
 
