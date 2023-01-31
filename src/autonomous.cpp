@@ -276,6 +276,9 @@ void autonomous() {
 	// set brake to hold
 	prosBrake(true, 1);
 
+	// reset odom
+	arms::odom::reset({{0, 0}}, 0);
+
 	/* Auton Selector Logic */
 	// Negative = Blue
 	// Positive = Red
