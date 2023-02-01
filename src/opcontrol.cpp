@@ -263,36 +263,36 @@ void opcontrol() {
 		// Frisbee Shooter Flywheel
 		// various bindings for flywheel speed
 		flywheelState = master.get_digital_new_press(DIGITAL_L1);
-		flywheelThirdPosState = partner.get_digital_new_press(DIGITAL_L2);
-		flywheel4PosState = master.get_digital_new_press(DIGITAL_L2);
-		flywheel5PosState = partner.get_digital_new_press(DIGITAL_L1);
-
-		// toggle for flywheel on
-		if (master.get_digital_new_press(DIGITAL_A) == 1)
-			fwON = !fwON;
+		flywheel2PosState = partner.get_digital_new_press(DIGITAL_L2);
+		flywheel3PosState = master.get_digital_new_press(DIGITAL_L2);
+		flywheel4PosState = partner.get_digital_new_press(DIGITAL_L1);
 
 		// flywheel max speed
-		if (flywheelState && fwON == true) {
+		if (flywheelState) {
+			fwON = !fwON;
 			deFenestration::Flywheel::FwVelocitySet(210, 1);
 		}
 
 		// flywheel 17/21 speed
-		if (flywheelThirdPosState && fwON == true) {
+		if (flywheel2PosState) {
+			fwON = !fwON;
 			deFenestration::Flywheel::FwVelocitySet(170, 0.81);
 		}
 
 		// flywheel 2/3 speed
-		if (flywheel4PosState && fwON == true) {
+		if (flywheel4PosState) {
+			fwON = !fwON;
 			deFenestration::Flywheel::FwVelocitySet(140, .6);
 		}
 
 		// flywheel 2/3 speed
-		if (flywheel5PosState && fwON == true) {
+		if (flywheel4PosState) {
+			fwON = !fwON;
 			deFenestration::Flywheel::FwVelocitySet(120, .48);
 		}
 
 		// flywheel off if fwON is false or no button is pressed
-		if (fwON == false || flywheelState == 0 || flywheelThirdPosState == 0 || flywheel4PosState == 0 || flywheel5PosState == 0) {
+		if (fwON == false) {
 			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 		}
 
