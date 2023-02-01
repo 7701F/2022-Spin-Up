@@ -225,6 +225,9 @@ void opcontrol() {
 	// set brake mode
 	prosBrake(true);
 
+	// set optical sensor to 30% brightness
+	rollerSensor.set_led_pwm(0);
+
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
 	// if (deFenestration::showScreen == true) {

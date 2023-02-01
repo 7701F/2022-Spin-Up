@@ -89,7 +89,7 @@ void fireDisc() {
 	indexer.set_value(indexState);
 
 	// delay 125 ms then retract
-	pros::delay(80);
+	pros::delay(110);
 	indexState = !indexState;
 	indexer.set_value(indexState);
 }
