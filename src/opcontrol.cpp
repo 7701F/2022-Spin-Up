@@ -198,14 +198,8 @@ void FwControlTask() {
  * If bypass is set to true we switch to direct input,
  * bypassing the exponential curve
  */
-
-std::int32_t exponentialDrive(std::int32_t joyVal, bool on) {
-	if (on == true) {
-		return joyVal;
-	} else if (on == false) {
-		return pow(joyVal, 3) / 10000;
-	} else
-		return 100;
+std::int32_t exponentialDrive(std::int32_t joyVal) {
+	return pow(joyVal, 3) / 10000;
 }
 
 /*
@@ -225,7 +219,7 @@ void opcontrol() {
 	// set brake mode
 	prosBrake(true);
 
-	// set optical sensor to 30% brightness
+	// set optical sensor to 0% brightness
 	rollerSensor.set_led_pwm(0);
 
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
@@ -256,14 +250,10 @@ void opcontrol() {
 		if (master.get_digital_new_press(DIGITAL_B) == 1)
 			pbrake = !pbrake;
 
-		/* Exponential Bypass Toggle */
-		if (master.get_digital_new_press(DIGITAL_LEFT))
-			bypass = !bypass;
-
 		// clang-format off
 		arms::chassis::arcade(
-			exponentialDrive(leftJoyStick * (double)100 / 127, bypass),
-			exponentialDrive(rightJoyStick * (double)100 / 127, bypass)
+			exponentialDrive(leftJoyStick * (double)100 / 127),
+			exponentialDrive(rightJoyStick * (double)100 / 127)
 		);
 		// clang-format on
 		prosBrake(pbrake);
@@ -352,14 +342,7 @@ void opcontrol() {
 		if (partner.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
 			autonomous();
 
-		// reset odom position to 0,0 when X is pressed
-		if (partner.get_digital_new_press(DIGITAL_A)) {
-			// on partner controller to prevent accidental resets, plus master is literally out
-			// of buttons
-			arms::odom::reset({0, 0}, 0);
-		}
-
 		// Lastly, delay
-		pros::delay(2);
+		pros::delay(20);
 	}
 }
