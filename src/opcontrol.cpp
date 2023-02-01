@@ -267,8 +267,10 @@ void opcontrol() {
 		flywheel4PosState = master.get_digital_new_press(DIGITAL_L2);
 		flywheel5PosState = partner.get_digital_new_press(DIGITAL_L1);
 
-		if (flywheelState) {
-			// flywheel max speed
+		// toggle for flywheel on
+		if (master.get_digital_new_press(DIGITAL_A) == 1)
+			fwON = !fwON;
+
 		// flywheel max speed
 		if (flywheelState) {
 			fwON = !fwON;
