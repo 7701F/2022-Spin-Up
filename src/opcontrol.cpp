@@ -269,6 +269,8 @@ void opcontrol() {
 
 		if (flywheelState) {
 			// flywheel max speed
+		// flywheel max speed
+		if (flywheelState) {
 			fwON = !fwON;
 			if (fwON == true)
 				deFenestration::Flywheel::FwVelocitySet(210, 1);
@@ -276,8 +278,8 @@ void opcontrol() {
 				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
 		}
 
+		// flywheel 17/21 speed
 		if (flywheelThirdPosState) {
-			// flywheel 17/21 speed
 			fwON = !fwON;
 			if (fwON == true)
 				deFenestration::Flywheel::FwVelocitySet(170, 0.81);
@@ -285,8 +287,8 @@ void opcontrol() {
 				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
 		}
 
+		// flywheel 2/3 speed
 		if (flywheel4PosState) {
-			// flywheel 2/3 speed
 			fwON = !fwON;
 			if (fwON == true)
 				deFenestration::Flywheel::FwVelocitySet(140, .6);
@@ -294,8 +296,8 @@ void opcontrol() {
 				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
 		}
 
+		// flywheel 2/3 speed
 		if (flywheel5PosState) {
-			// flywheel 2/3 speed
 			fwON = !fwON;
 			if (fwON == true)
 				deFenestration::Flywheel::FwVelocitySet(120, .48);
@@ -303,6 +305,7 @@ void opcontrol() {
 				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
 		}
 
+		// flywheel off
 		if (fwON == false) {
 			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 		}
