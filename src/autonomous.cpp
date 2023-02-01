@@ -94,158 +94,9 @@ void fireDisc() {
 	indexer.set_value(indexState);
 }
 
-/* Programming Skills */
-void Sauton() {
-	// deFenestration::Flywheel::FwVelocitySet(96, 0.2);
-
-	using namespace arms::chassis;
-	arms::odom::reset({{0, 0}});
-
-	turn({0, 24}, 75);
-	move({{0, 24}}, 200);
-}
-
-/* Autonomous that moves to {{0, 0}} then turns to 90 degrees*/
-void Pauton() {
-	using namespace arms::chassis;
-	arms::odom::reset({{20, 20}});
-
-	turn({0, 0}, 90);
-	move({{0, 0}}, 200);
-}
-
-/* longAuto */
-void longAuto(int color, bool AWP) {
-	using namespace arms::chassis;
-
-	// reset odom to correct position
-	arms::odom::reset({{0, 0}}, 0);
-
-	// move to the roller
-	move(45, 75);
-
-	move({12.65, -30.51}, 75);
-
-	// set the roller to the correct color
-	move(30, 200, arms::ASYNC);
-	while (!settled()) {
-		pros::delay(10);
-	}
-
-	// set the roller to the correct color
-	conveyor.move_velocity(100);
-	pros::delay(250);
-	conveyor.move_velocity(0);
-
-	// move back then turn
-	move({{-16, 0}});
-	turn({134.985069, -55.079769}, 50);
-	pros::delay(200);
-	turn(180, 25, arms::RELATIVE);
-
-	// check if AWP is enabled, else exit (return)
-	if (!AWP) {
-		return;
-	}
-
-	for (int i = 0; i < 2; i++) {
-		// set the flywheel to the correct speed, then wait for it to be up to speed
-		deFenestration::Flywheel::FwVelocitySet(170, .92);
-		while (current_error > 10) {
-			pros::delay(30);
-		}
-
-		// fire piston and wait to ensure it is fired
-		// fireDisc();
-		pros::delay(250);
-	}
-
-	// spin down flywheel
-	deFenestration::Flywheel::FwVelocitySet(0, 0);
-}
-
-/* longAuto working */
-void longAutoTesting(int color, bool AWP) {
-	using namespace arms::chassis;
-
-	// reset odom to correct position
-	arms::odom::reset({{0, 0}}, 0);
-
-	// move to the roller
-	move(45, 75);
-
-	move({0, 12.65}, 75);
-
-	// set the roller to the correct color
-	move(30, 200, arms::ASYNC);
-	while (!settled()) {
-		pros::delay(10);
-	}
-
-	// set the roller to the correct color
-	conveyor.move_velocity(100);
-	pros::delay(250);
-	conveyor.move_velocity(0);
-
-	// move back then turn
-	move({{-0, 0}});
-	// face 0
-	turn({134.985069, -55.079769}, 50);
-	pros::delay(200);
-	// turn 180
-	turn(180, 25, arms::RELATIVE);
-
-	// check if AWP is enabled, else exit (return)
-	if (!AWP) {
-		return;
-	}
-
-	for (int i = 0; i < 2; i++) {
-		// set the flywheel to the correct speed, then wait for it to be up to speed
-		deFenestration::Flywheel::FwVelocitySet(170, .92);
-		while (current_error > 10) {
-			pros::delay(30);
-		}
-
-		// fire piston and wait to ensure it is fired
-		// fireDisc();
-		pros::delay(250);
-	}
-
-	// spin down flywheel
-	deFenestration::Flywheel::FwVelocitySet(0, 0);
-}
-
-/* shortAuto except it uses the arms::odom system for position */
-void shortAuto(int color, bool AWP) {
-	using namespace arms::chassis;
-
-	// reset odom to correct position
-	arms::odom::reset({{-0, 0}}, 0);
-
-	// move to the roller
-	// move({{-60, -40}}, 100);
-	move(30, 100, arms::ASYNC);
-	while (!settled()) {
-		pros::delay(10);
-	}
-
-	// set the roller to the correct color
-	conveyor.move_velocity(-100);
-	pros::delay(500);
-	conveyor.move_velocity(0);
-
-	// move back then turn
-	move(-10, 100, arms::REVERSE);
-	// turn({-22.7196581703463, 21.439677428355}, 90);
-	turn({-147.6, -8.5}, 100);
-
-	// check if AWP is enabled, else exit (return)
-	if (!AWP) {
-		return;
-	}
-
-	for (int i = 0; i < 2; i++) {
+// fire disc(s) from indexer
+void fireDiscs(int discs) {
+	for (int i = 0; i < discs; i++) {
 		// set the flywheel to the correct speed, then wait for it to be up to speed
 		deFenestration::Flywheel::FwVelocitySet(170, .92);
 		while (current_error > 10) {
@@ -259,6 +110,96 @@ void shortAuto(int color, bool AWP) {
 
 	// spin down flywheel
 	deFenestration::Flywheel::FwVelocitySet(0, 0);
+}
+
+/* Autonomous Functions */
+
+/* Programming Skills */
+void Sauton() {
+	// deFenestration::Flywheel::FwVelocitySet(96, 0.2);
+
+	using namespace arms::chassis;
+	arms::odom::reset({{0, 0}});
+
+	turn({0, 24}, 75);
+	move({{0, 24}}, 200);
+}
+
+/* longAuto */
+void longAuto(int color, bool AWP) {
+	using namespace arms::chassis;
+
+	// reset odom to correct position
+	arms::odom::reset({{0, 0}}, 0);
+
+	// move to the roller
+	move(45, 75);
+	// second stage of moving to the rollerw
+	move({12.65, -30.51}, 75);
+
+	// set the roller to the correct color
+	move(30, 100);
+
+	// set the roller to the correct color
+	conveyor.move_velocity(100);
+	pros::delay(500);
+	conveyor.move_velocity(0);
+
+	// move back then turn
+	move(-10, 100, arms::REVERSE);
+
+	// turn around
+	turn(180, 25, arms::RELATIVE);
+	turn({134.985069, -55.079769}, 50);
+
+	// wait 250 just to be safe
+	pros::delay(200);
+
+	// turn around so the flywheel is facing the goal
+	turn(180, 25, arms::RELATIVE);
+
+	// check if AWP is enabled, else exit (return)
+	if (!AWP) {
+		return;
+	}
+
+	// fire 2 discs
+	fireDiscs(2);
+}
+
+/* shortAuto except it uses the arms::odom system for position */
+void shortAuto(int color, bool AWP) {
+	using namespace arms::chassis;
+
+	// reset odom to correct position
+	arms::odom::reset({{-0, 0}}, 0);
+
+	// move to the roller
+	// drives forward 30 inches at 100% speed
+	move(30, 100);
+
+	// set the roller to the correct color
+	// currently time based, will be changed to optical sensor based soon™
+	conveyor.move_velocity(-100);
+	pros::delay(500);
+	conveyor.move_velocity(0);
+
+	// move back then turn
+	move(-10, 100, arms::REVERSE);
+
+	// turn around
+	turn(180, 25, arms::RELATIVE);
+
+	// turn to the goal
+	turn({-147.6, -8.5}, 100);
+
+	// check if AWP is enabled, else exit (return)
+	if (!AWP) {
+		return;
+	}
+
+	// fire 2 discs
+	fireDiscs(2);
 }
 
 /**
@@ -283,47 +224,36 @@ void autonomous() {
 	// Negative = Blue
 	// Positive = Red
 	switch (arms::selector::auton) {
-		case -5:
-			// Do Nothing.
+		case -5: // Do Nothing.
 			break;
-		case -4:
-			// Blue Long AWP
+		case -4: // Blue Long AWP
 			longAuto(colors::BLUE, true);
 			break;
-		case -3:
-			// Blue Short AWP
+		case -3: // Blue Short AWP
 			shortAuto(colors::BLUE, true);
 			break;
-		case -2:
-			// Blue Long
+		case -2: // Blue Long
 			longAuto(colors::BLUE, false);
 			break;
-		case -1:
-			// Blue Short
+		case -1: // Blue Short
 			shortAuto(colors::BLUE, false);
 			break;
-		case 0:
-			// Programming Skills
+		case 0: // Programming Skills
 			Sauton();
 			break;
-		case 1:
-			// Red Short
+		case 1: // Red Short
 			shortAuto(colors::RED, false);
 			break;
-		case 2:
-			// Red Long
+		case 2: // Red Long
 			longAuto(colors::RED, false);
 			break;
-		case 3:
-			// Red Short AWP
+		case 3: // Red Short AWP
 			shortAuto(colors::RED, true);
 			break;
-		case 4:
-			// Red Long AWP
+		case 4: // Red Long AWP
 			longAuto(colors::RED, true);
 			break;
-		case 5:
-			// Do Nothing.
+		case 5: // Do Nothing.
 			break;
 		default:
 			throw printf("Invalid Auton: %d\n", arms::selector::auton);

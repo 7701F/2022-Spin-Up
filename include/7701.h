@@ -109,9 +109,9 @@ inline bool pbrake = true;
 
 // flywheel speed state
 inline bool flywheelState = false;
-inline bool flywheelThirdPosState = false;
+inline bool flywheel2PosState = false;
+inline bool flywheel3PosState = false;
 inline bool flywheel4PosState = false;
-inline bool flywheel5PosState = false;
 inline bool fwON = false;
 
 // firing piston state

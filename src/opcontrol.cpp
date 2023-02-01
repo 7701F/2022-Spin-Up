@@ -262,47 +262,36 @@ void opcontrol() {
 
 		// Frisbee Shooter Flywheel
 		// various bindings for flywheel speed
-		flywheelState = master.get_digital_new_press(DIGITAL_L1);
-		flywheelThirdPosState = partner.get_digital_new_press(DIGITAL_L2);
-		flywheel4PosState = master.get_digital_new_press(DIGITAL_L2);
-		flywheel5PosState = partner.get_digital_new_press(DIGITAL_L1);
+		flywheelState = partner.get_digital_new_press(DIGITAL_L1);
+		flywheel2PosState = master.get_digital_new_press(DIGITAL_L1);
+		flywheel3PosState = master.get_digital_new_press(DIGITAL_L2);
+		flywheel4PosState = partner.get_digital_new_press(DIGITAL_L2);
 
-		if (flywheelState) {
-			// flywheel max speed
+		// flywheel on toggle
+		if (master.get_digital_new_press(DIGITAL_A))
 			fwON = !fwON;
-			if (fwON == true)
-				deFenestration::Flywheel::FwVelocitySet(210, 1);
-			else if (fwON == false)
-				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
+
+		// flywheel max speed
+		if (flywheelState && fwON == true) {
+			deFenestration::Flywheel::FwVelocitySet(210, 1);
 		}
 
-		if (flywheelThirdPosState) {
-			// flywheel 17/21 speed
-			fwON = !fwON;
-			if (fwON == true)
-				deFenestration::Flywheel::FwVelocitySet(170, 0.81);
-			else if (fwON == false)
-				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
+		// flywheel 17/21 speed
+		if (flywheel2PosState && fwON == true) {
+			deFenestration::Flywheel::FwVelocitySet(170, 0.81);
 		}
 
-		if (flywheel4PosState) {
-			// flywheel 2/3 speed
-			fwON = !fwON;
-			if (fwON == true)
-				deFenestration::Flywheel::FwVelocitySet(140, .6);
-			else if (fwON == false)
-				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
+		// flywheel 2/3 speed
+		if (flywheel3PosState && fwON == true) {
+			deFenestration::Flywheel::FwVelocitySet(140, .6);
 		}
 
-		if (flywheel5PosState) {
-			// flywheel 2/3 speed
-			fwON = !fwON;
-			if (fwON == true)
-				deFenestration::Flywheel::FwVelocitySet(120, .48);
-			else if (fwON == false)
-				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
+		// flywheel 2/3 speed
+		if (flywheel4PosState && fwON == true) {
+			deFenestration::Flywheel::FwVelocitySet(120, .48);
 		}
 
+		// flywheel off if fwON is false or no button is pressed
 		if (fwON == false) {
 			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 		}
