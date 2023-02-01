@@ -19,8 +19,12 @@
 
   3. This notice may not be removed or altered from any source distribution.
 */
+#ifndef _7701F_HEAD_H_
+#define _7701F_HEAD_H_
+
 #include "main.h"
 #include "settings.h"
+
 namespace deFenestration {
 
 /* Display */
@@ -100,8 +104,6 @@ void FwControlTask();
 
 // Declare drive system variables.
 inline bool pbrake = true;
-inline bool bypass = false;
-inline bool curve2 = false;
 
 // Game System Variables
 
@@ -130,3 +132,4 @@ void prosBrake(bool on);
 int getFrisbeesInIndexer();
 int getRollerColor();
 void fireDisc();
+#endif // _7701F_HEAD_H_

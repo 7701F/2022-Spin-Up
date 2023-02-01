@@ -23,6 +23,7 @@
 
 #include "7701.h"
 #include "ARMS/config.h"
+#include "settings.h"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -70,10 +71,10 @@ void initialize() {
 		std::string textA;
 		while (true) {
 			if (count == 15) {
-				std::stringstream bypassstr;
-				bypassstr << "BYP:" << (bypass ? "Y" : "N") << " FW:" << (fwON ? "Y" : "N")
-				          << "\r";
-				master.print(0, 0, bypassstr.str().c_str());
+				std::stringstream line1;
+				line1 << "Brake: " << (pbrake ? "ON" : "OFF") << " FW:" << (fwON ? "Y" : "N")
+				      << "\r";
+				master.print(0, 0, line1.str().c_str());
 			} else if (count == 10) {
 				std::stringstream autonstr;
 				int sel_auton = abs(arms::selector::auton);
@@ -94,9 +95,9 @@ void initialize() {
 
 				master.print(1, 0, autonstr.str().c_str());
 			} else if (count == 5) {
-				std::stringstream brakestr;
-				brakestr << "Brake: " << (pbrake ? "ON" : "OFF") << "\r";
-				master.print(2, 0, brakestr.str().c_str());
+				std::stringstream versionstr;
+				versionstr << "Version: " << deFenestration::version << "\r";
+				master.print(2, 0, versionstr.str().c_str());
 			}
 
 			count++;

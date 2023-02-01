@@ -89,7 +89,7 @@ void fireDisc() {
 	indexer.set_value(indexState);
 
 	// delay 125 ms then retract
-	pros::delay(80);
+	pros::delay(110);
 	indexState = !indexState;
 	indexer.set_value(indexState);
 }
@@ -275,6 +275,9 @@ void shortAuto(int color, bool AWP) {
 void autonomous() {
 	// set brake to hold
 	prosBrake(true, 1);
+
+	// reset odom
+	arms::odom::reset({{0, 0}}, 0);
 
 	/* Auton Selector Logic */
 	// Negative = Blue
