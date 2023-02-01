@@ -280,74 +280,74 @@ void opcontrol() {
 				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
 		}
 
-		// flywheel 17/21 speed
-		if (flywheelThirdPosState) {
-			fwON = !fwON;
-			if (fwON == true)
-				deFenestration::Flywheel::FwVelocitySet(170, 0.81);
-			else if (fwON == false)
-				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
+			// flywheel 17/21 speed
+			if (flywheelThirdPosState) {
+				fwON = !fwON;
+				if (fwON == true)
+					deFenestration::Flywheel::FwVelocitySet(170, 0.81);
+				else if (fwON == false)
+					deFenestration::Flywheel::FwVelocitySet(50, 0.0);
+			}
+
+			// flywheel 2/3 speed
+			if (flywheel4PosState) {
+				fwON = !fwON;
+				if (fwON == true)
+					deFenestration::Flywheel::FwVelocitySet(140, .6);
+				else if (fwON == false)
+					deFenestration::Flywheel::FwVelocitySet(50, 0.0);
+			}
+
+			// flywheel 2/3 speed
+			if (flywheel5PosState) {
+				fwON = !fwON;
+				if (fwON == true)
+					deFenestration::Flywheel::FwVelocitySet(120, .48);
+				else if (fwON == false)
+					deFenestration::Flywheel::FwVelocitySet(50, 0.0);
+			}
+
+			// flywheel off
+			if (fwON == false) {
+				deFenestration::Flywheel::FwVelocitySet(0, 0.0);
+			}
+
+			// Frisbee Conveyor / Intake
+			if (master.get_digital(DIGITAL_R1)) {
+				// intake
+				conveyor.move_velocity(200);
+				conv2.move_velocity(200);
+			} else if (master.get_digital(DIGITAL_Y)) {
+				// outtake
+				conveyor.move_velocity(-200);
+				conv2.move_velocity(-200);
+			} else {
+				// stop if neither button is pressed
+				conveyor.move_velocity(0);
+				conv2.move_velocity(0);
+			}
+
+			// Endgame Piston
+			EpistonState = master.get_digital_new_press(DIGITAL_RIGHT);
+			if (EpistonState == true && EprevPistonState == false) {
+				endgameState = !endgameState;
+				endgame.set_value(endgameState);
+			}
+			EprevPistonState = EpistonState;
+
+			// flywheel launcher
+			if (master.get_digital_new_press(DIGITAL_R2))
+				fireDisc();
+
+			/* Autonomous Manual Trigger
+			 * If the robot is not connected to competition control
+			 * and the button is pressed, the robot will begin the
+			 * autonomous routine to allow for easy testing.
+			 */
+			if (partner.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
+				autonomous();
+
+			// Lastly, delay
+			pros::delay(20);
 		}
-
-		// flywheel 2/3 speed
-		if (flywheel4PosState) {
-			fwON = !fwON;
-			if (fwON == true)
-				deFenestration::Flywheel::FwVelocitySet(140, .6);
-			else if (fwON == false)
-				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
-		}
-
-		// flywheel 2/3 speed
-		if (flywheel5PosState) {
-			fwON = !fwON;
-			if (fwON == true)
-				deFenestration::Flywheel::FwVelocitySet(120, .48);
-			else if (fwON == false)
-				deFenestration::Flywheel::FwVelocitySet(50, 0.0);
-		}
-
-		// flywheel off
-		if (fwON == false) {
-			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
-		}
-
-		// Frisbee Conveyor / Intake
-		if (master.get_digital(DIGITAL_R1)) {
-			// intake
-			conveyor.move_velocity(200);
-			conv2.move_velocity(200);
-		} else if (master.get_digital(DIGITAL_Y)) {
-			// outtake
-			conveyor.move_velocity(-200);
-			conv2.move_velocity(-200);
-		} else {
-			// stop if neither button is pressed
-			conveyor.move_velocity(0);
-			conv2.move_velocity(0);
-		}
-
-		// Endgame Piston
-		EpistonState = master.get_digital_new_press(DIGITAL_RIGHT);
-		if (EpistonState == true && EprevPistonState == false) {
-			endgameState = !endgameState;
-			endgame.set_value(endgameState);
-		}
-		EprevPistonState = EpistonState;
-
-		// flywheel launcher
-		if (master.get_digital_new_press(DIGITAL_R2))
-			fireDisc();
-
-		/* Autonomous Manual Trigger
-		 * If the robot is not connected to competition control
-		 * and the button is pressed, the robot will begin the
-		 * autonomous routine to allow for easy testing.
-		 */
-		if (partner.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
-			autonomous();
-
-		// Lastly, delay
-		pros::delay(20);
 	}
-}
