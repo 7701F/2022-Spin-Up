@@ -94,6 +94,8 @@ void fireDisc() {
 	indexer.set_value(indexState);
 }
 
+/* Autonomous Functions */
+
 /* Programming Skills */
 void Sauton() {
 	// deFenestration::Flywheel::FwVelocitySet(96, 0.2);
@@ -283,47 +285,36 @@ void autonomous() {
 	// Negative = Blue
 	// Positive = Red
 	switch (arms::selector::auton) {
-		case -5:
-			// Do Nothing.
+		case -5: // Do Nothing.
 			break;
-		case -4:
-			// Blue Long AWP
+		case -4: // Blue Long AWP
 			longAuto(colors::BLUE, true);
 			break;
-		case -3:
-			// Blue Short AWP
+		case -3: // Blue Short AWP
 			shortAuto(colors::BLUE, true);
 			break;
-		case -2:
-			// Blue Long
+		case -2: // Blue Long
 			longAuto(colors::BLUE, false);
 			break;
-		case -1:
-			// Blue Short
+		case -1: // Blue Short
 			shortAuto(colors::BLUE, false);
 			break;
-		case 0:
-			// Programming Skills
+		case 0: // Programming Skills
 			Sauton();
 			break;
-		case 1:
-			// Red Short
+		case 1: // Red Short
 			shortAuto(colors::RED, false);
 			break;
-		case 2:
-			// Red Long
+		case 2: // Red Long
 			longAuto(colors::RED, false);
 			break;
-		case 3:
-			// Red Short AWP
+		case 3: // Red Short AWP
 			shortAuto(colors::RED, true);
 			break;
-		case 4:
-			// Red Long AWP
+		case 4: // Red Long AWP
 			longAuto(colors::RED, true);
 			break;
-		case 5:
-			// Do Nothing.
+		case 5: // Do Nothing.
 			break;
 		default:
 			throw printf("Invalid Auton: %d\n", arms::selector::auton);
