@@ -16,3 +16,6 @@ temp.errors
 *.ini
 .d/
 docs/
+
+# trolling
+decomp/
