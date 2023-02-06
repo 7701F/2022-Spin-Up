@@ -23,7 +23,8 @@
 
 #include "7701.h"
 #include "ARMS/config.h"
-#include "settings.h"
+
+#include "selector.h"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -35,6 +36,9 @@ void initialize() {
 	/* ARMS & Sylib initialization */
 	arms::init();
 	sylib::initialize();
+
+	/* Auton Selector */
+	deFenestration::init();
 
 	// set optical sensor LED to 100% brightness
 	rollerSensor.set_led_pwm(100);

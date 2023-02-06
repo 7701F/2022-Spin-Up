@@ -299,7 +299,7 @@ void autonomous() {
 	/* Auton Selector Logic */
 	// Negative = Blue
 	// Positive = Red
-	switch (arms::selector::auton) {
+	switch (deFenestration::selector::auton) {
 		case -5: // Do Nothing.
 			printf("Do Nothing\n");
 			break;

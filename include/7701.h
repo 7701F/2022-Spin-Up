@@ -23,7 +23,8 @@
 #define _7701F_HEAD_H_
 
 #include "main.h"
-#include "settings.h"
+
+#include "selector.h"
 
 namespace deFenestration {
 
