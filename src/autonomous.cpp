@@ -160,7 +160,19 @@ void Sauton() {
 	turn(-45, 25, arms::RELATIVE);
 
 	// drive torwards the next roller (156 inches)
-	move(156, 100);
+	// move(156, 100);
+
+	// turn on the intake
+	conveyor.move_velocity(76);
+
+	// move forward 1/3rd the distance to the roller
+	move(52, 100);
+
+	// turn off the intake
+	conveyor.move_velocity(0);
+
+	// move the rest of the way to the roller
+	move(104, 100);
 
 	// turn left 45 so we are facing the roller
 	turn(45, 25, arms::RELATIVE);
