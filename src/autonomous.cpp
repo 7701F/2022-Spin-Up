@@ -64,22 +64,26 @@ int getRollerColor() {
 void setRollerRed() {
 	int rollerStartTime = pros::millis();
 	conveyor.move_velocity(100);
+	conv2.move_velocity(100);
 	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
 		pros::delay(10);
 	}
 	pros::delay(200);
 	conveyor.move_velocity(0);
+	conv2.move_velocity(0);
 }
 
 /* Set Roller to Blue */
 void setRollerBlue() {
 	int rollerStartTime = pros::millis();
 	conveyor.move_velocity(100);
+	conv2.move_velocity(100);
 	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
 		pros::delay(10);
 	}
 	pros::delay(200);
 	conveyor.move_velocity(0);
+	conv2.move_velocity(0);
 }
 
 // fire disc from indexer
@@ -105,7 +109,7 @@ void fireDiscs(int discs) {
 
 		// fire piston and wait to ensure it is fired
 		fireDisc();
-		pros::delay(250);
+		pros::delay(125);
 	}
 
 	// spin down flywheel
@@ -167,6 +171,66 @@ void longAuto(int color, bool AWP) {
 	fireDiscs(2);
 }
 
+/* longAuto that drives forward 16.5 inches, sets our position to 0,0 (0), turns 90
+ * degrees relitive to current position, then turns around, drives forward 16.5 inches */
+void longAuto2(int color, bool AWP) {
+	using namespace arms::chassis;
+
+	// reset odom to correct position
+	arms::odom::reset({{0, 0}}, 0);
+
+	// move to the roller
+	move(16.5, 100);
+
+	// turn
+	turn(90, 25, arms::RELATIVE);
+
+	// move back then turn
+	move(-10, 100, arms::REVERSE);
+
+	// turn around
+	turn(90, 25, arms::RELATIVE);
+
+	// drive torwards the roller
+	move(24, 100);
+
+	// set the roller to the correct color
+	// conveyor.move_velocity(100);
+	// pros::delay(500);
+	// conveyor.move_velocity(0);
+	// switch statement on color
+	switch (color) {
+		case 1:
+			setRollerRed();
+			break;
+		case 2:
+			setRollerBlue();
+			break;
+		default:
+			break;
+	}
+
+	// wait 250 just to be safe
+	pros::delay(250);
+
+	// drive backwards
+	move(-10, 100, arms::REVERSE);
+
+	// turn to the goal
+	turn({-147.6, -8.5}, 50);
+
+	// turn around so the flywheel is facing the goal
+	turn(180, 25, arms::RELATIVE);
+
+	// check if AWP is enabled, else exit (return)
+	if (!AWP) {
+		return;
+	}
+
+	// fire 2 discs
+	fireDiscs(2);
+}
+
 /* shortAuto except it uses the arms::odom system for position */
 void shortAuto(int color, bool AWP) {
 	using namespace arms::chassis;
@@ -176,22 +240,34 @@ void shortAuto(int color, bool AWP) {
 
 	// move to the roller
 	// drives forward 30 inches at 100% speed
-	move(30, 100);
+	move(30, 86);
 
 	// set the roller to the correct color
 	// currently time based, will be changed to optical sensor based soon™
-	conveyor.move_velocity(-100);
+	/*conveyor.move_velocity(-100);
 	pros::delay(500);
-	conveyor.move_velocity(0);
+	conveyor.move_velocity(0);*/
+
+	// switch statement on color
+	switch (color) {
+		case 1:
+			setRollerRed();
+			break;
+		case 2:
+			setRollerBlue();
+			break;
+		default:
+			break;
+	}
 
 	// move back then turn
 	move(-10, 100, arms::REVERSE);
 
-	// turn around
-	turn(180, 25, arms::RELATIVE);
-
 	// turn to the goal
 	turn({-147.6, -8.5}, 100);
+
+	// turn around
+	turn(180, 25, arms::RELATIVE);
 
 	// check if AWP is enabled, else exit (return)
 	if (!AWP) {
@@ -225,15 +301,16 @@ void autonomous() {
 	// Positive = Red
 	switch (arms::selector::auton) {
 		case -5: // Do Nothing.
+			printf("Do Nothing\n");
 			break;
 		case -4: // Blue Long AWP
-			longAuto(colors::BLUE, true);
+			longAuto2(colors::BLUE, true);
 			break;
 		case -3: // Blue Short AWP
 			shortAuto(colors::BLUE, true);
 			break;
 		case -2: // Blue Long
-			longAuto(colors::BLUE, false);
+			longAuto2(colors::BLUE, false);
 			break;
 		case -1: // Blue Short
 			shortAuto(colors::BLUE, false);
@@ -245,15 +322,16 @@ void autonomous() {
 			shortAuto(colors::RED, false);
 			break;
 		case 2: // Red Long
-			longAuto(colors::RED, false);
+			longAuto2(colors::RED, false);
 			break;
 		case 3: // Red Short AWP
 			shortAuto(colors::RED, true);
 			break;
 		case 4: // Red Long AWP
-			longAuto(colors::RED, true);
+			longAuto2(colors::RED, true);
 			break;
 		case 5: // Do Nothing.
+			printf("Do Nothing\n");
 			break;
 		default:
 			throw printf("Invalid Auton: %d\n", arms::selector::auton);
