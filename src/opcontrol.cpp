@@ -168,7 +168,7 @@ void FwControlTask() {
 	// gain = 0.0005;
 	gain = 0.00025;
 
-	while (1) {
+	while (true) {
 		// Calculate velocity
 		deFenestration::Flywheel::FwCalculateSpeed();
 
