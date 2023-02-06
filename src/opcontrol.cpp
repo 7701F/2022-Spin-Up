@@ -168,7 +168,7 @@ void FwControlTask() {
 	// gain = 0.0005;
 	gain = 0.00025;
 
-	while (1) {
+	while (true) {
 		// Calculate velocity
 		deFenestration::Flywheel::FwCalculateSpeed();
 
@@ -256,7 +256,7 @@ void opcontrol() {
 			exponentialDrive(rightJoyStick * (double)100 / 127)
 		);
 		// clang-format on
-		prosBrake(pbrake);
+		prosBrake(pbrake, 1);
 
 		// Game Related Subsystems
 

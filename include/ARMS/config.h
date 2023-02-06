@@ -24,9 +24,9 @@ namespace arms {
 
 // Sensors
 #define IMU_PORT 1                                // Port 0 for disabled
-#define ENCODER_PORTS 0, 0, 20                    // Port 0 for disabled,
+#define ENCODER_PORTS 18, 19, 20                    // Port 0 for disabled,
 #define EXPANDER_PORT 0                           // Port 0 for disabled
-#define ENCODER_TYPE arms::odom::ENCODER_ADI // The type of encoders
+#define ENCODER_TYPE arms::odom::ENCODER_ROTATION // The type of encoders
 
 // Movement tuning
 #define SLEW_STEP 8             // Smaller number = more slew
