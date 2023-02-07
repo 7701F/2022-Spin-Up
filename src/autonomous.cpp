@@ -124,10 +124,33 @@ void toggleEndgame() {
 
 /* Autonomous Functions */
 
-/* Programming Skills */
+// calibrate robot distance for movement
 void Sauton() {
 	using namespace arms::chassis;
+
+	// move forward 5 inches
+	move(10, 60);
+
+	// turn right 90 degrees
+	turn(-90, 25, arms::RELATIVE);
+}
+
+/* Programming Skills */
+void fjasdlkf() {
+	using namespace arms::chassis;
 	arms::odom::reset({{0, 0}});
+
+	// move forward 5 inches
+	move(5, 60);
+
+	// turn right 90 degrees
+	turn(90, 25, arms::RELATIVE);
+
+	// move forward 10 inches
+	move(10, 60);
+
+	// turn right 90 degrees
+	turn(90, 25, arms::RELATIVE);
 
 	// drive torwards the roller
 	move(24, 100);
