@@ -16,7 +16,7 @@ namespace arms {
 
 // Ticks per inch
 #define TPI 37       // Encoder ticks per inch of forward robot movement
-#define MIDDLE_TPI 1 // Ticks per inch for the middle wheel
+#define MIDDLE_TPI 44 // Ticks per inch for the middle wheel
 
 // Tracking wheel distances
 #define TRACK_WIDTH 12.9375   // The distance between left and right wheels (or tracker wheels)
@@ -42,7 +42,7 @@ namespace arms {
 
 #define TRACKING_KP 60 // point tracking turning strength
 
-#define ANGULAR_KP 30
+#define ANGULAR_KP 1
 #define ANGULAR_KI 0
 #define ANGULAR_KD 0
 
