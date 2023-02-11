@@ -35,7 +35,6 @@ void display();
 // Declarations
 /* Controller */
 extern pros::Controller master;
-extern pros::Controller partner;
 
 /* Game System Motors */
 extern pros::Motor fw;
@@ -108,10 +107,9 @@ inline bool pbrake = true;
 // Game System Variables
 
 // flywheel speed state
-inline bool flywheelState = false;
+inline bool flywheelRev = false;
 inline bool flywheel2PosState = false;
 inline bool flywheel3PosState = false;
-inline bool flywheel4PosState = false;
 inline bool fwON = false;
 
 // firing piston state
