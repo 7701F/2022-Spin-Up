@@ -262,18 +262,17 @@ void opcontrol() {
 
 		// Frisbee Shooter Flywheel
 		// various bindings for flywheel speed
-		flywheelState = partner.get_digital_new_press(DIGITAL_L1);
 		flywheel2PosState = master.get_digital_new_press(DIGITAL_L1);
 		flywheel3PosState = master.get_digital_new_press(DIGITAL_L2);
-		flywheel4PosState = partner.get_digital_new_press(DIGITAL_L2);
+		flywheelRev = master.get_digital_new_press(DIGITAL_DOWN);
 
 		// flywheel on toggle
 		if (master.get_digital_new_press(DIGITAL_A))
 			fwON = !fwON;
 
-		// flywheel max speed
-		if (flywheelState && fwON == true) {
-			deFenestration::Flywheel::FwVelocitySet(210, 1);
+
+		if (flywheelRev && fwON == true) {
+			deFenestration::Flywheel::FwVelocitySet(-20, .1);
 		}
 
 		// flywheel 17/21 speed
@@ -286,11 +285,6 @@ void opcontrol() {
 			deFenestration::Flywheel::FwVelocitySet(140, .6);
 		}
 
-		// flywheel 2/3 speed
-		if (flywheel4PosState && fwON == true) {
-			deFenestration::Flywheel::FwVelocitySet(120, .48);
-		}
-
 		// flywheel off if fwON is false or no button is pressed
 		if (fwON == false) {
 			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
@@ -299,16 +293,13 @@ void opcontrol() {
 		// Frisbee Conveyor / Intake
 		if (master.get_digital(DIGITAL_R1)) {
 			// intake
-			conveyor.move_velocity(200);
-			conv2.move_velocity(200);
+			conveyor.move_velocity(450);
 		} else if (master.get_digital(DIGITAL_Y)) {
 			// outtake
-			conveyor.move_velocity(-200);
-			conv2.move_velocity(-200);
+			conveyor.move_velocity(-450);
 		} else {
 			// stop if neither button is pressed
 			conveyor.move_velocity(0);
-			conv2.move_velocity(0);
 		}
 
 		// Endgame Piston
@@ -328,7 +319,7 @@ void opcontrol() {
 		 * and the button is pressed, the robot will begin the
 		 * autonomous routine to allow for easy testing.
 		 */
-		if (partner.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
+		if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
 			autonomous();
 
 		// Lastly, delay
