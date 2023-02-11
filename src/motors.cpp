@@ -23,21 +23,19 @@
 
 /* Controller */
 pros::Controller master(pros::E_CONTROLLER_MASTER);
-pros::Controller partner(pros::E_CONTROLLER_PARTNER);
 
 /* Game System Motors */
-pros::Motor fw(18, pros::E_MOTOR_GEAR_GREEN, true, pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor conveyor(13, pros::E_MOTOR_GEAR_GREEN, false, pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor conv2(10, pros::E_MOTOR_GEAR_GREEN, false, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor fw(13, pros::E_MOTOR_GEAR_GREEN, true, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor conveyor(10, pros::E_MOTOR_GEAR_BLUE, false, pros::E_MOTOR_ENCODER_COUNTS);
 
 /* Pistons */
 pros::ADIDigitalOut indexer('G');
 pros::ADIDigitalOut endgame('H');
 
 /* Sensors */
-pros::Distance indexerSensor(2);
-pros::Optical rollerSensor(3);
-pros::IMU imu_sensor(1);
+pros::Distance indexerSensor(14);
+pros::Optical rollerSensor(15);
+pros::IMU imu_sensor(16);
 
 /* LEDs */
 // sylib::Addrled indexLights(22, 2, 64);

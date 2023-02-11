@@ -10,9 +10,9 @@ namespace arms {
 #define ODOM_DEBUG 0
 
 // Negative numbers mean reversed motor
-#define LEFT_MOTORS -4, 5
-#define RIGHT_MOTORS -8, 7
-#define GEARSET pros::E_MOTOR_GEAR_200 // RPM of chassis motors
+#define LEFT_MOTORS -2, 4, -5
+#define RIGHT_MOTORS 6, -7, 8
+#define GEARSET pros::E_MOTOR_GEAR_600 // RPM of chassis motors
 
 // Ticks per inch
 #define TPI 45       // Encoder ticks per inch of forward robot movement
@@ -24,9 +24,9 @@ namespace arms {
 
 // Sensors
 #define IMU_PORT 1                                // Port 0 for disabled
-#define ENCODER_PORTS 0, 0, 20                    // Port 0 for disabled,
+#define ENCODER_PORTS 18, 19, 20                    // Port 0 for disabled,
 #define EXPANDER_PORT 0                           // Port 0 for disabled
-#define ENCODER_TYPE arms::odom::ENCODER_ADI // The type of encoders
+#define ENCODER_TYPE arms::odom::ENCODER_ROTATION // The type of encoders
 
 // Movement tuning
 #define SLEW_STEP 8             // Smaller number = more slew
