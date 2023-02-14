@@ -105,9 +105,7 @@ void FwControlTask();
 inline bool pbrake = true;
 
 // Game System Variables
-
 // flywheel speed state
-inline bool flywheelRev = false;
 inline bool flywheel2PosState = false;
 inline bool flywheel3PosState = false;
 inline bool fwON = false;

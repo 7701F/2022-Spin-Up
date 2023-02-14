@@ -264,15 +264,10 @@ void opcontrol() {
 		// various bindings for flywheel speed
 		flywheel2PosState = master.get_digital_new_press(DIGITAL_L1);
 		flywheel3PosState = master.get_digital_new_press(DIGITAL_L2);
-		flywheelRev = master.get_digital_new_press(DIGITAL_DOWN);
 
 		// flywheel on toggle
 		if (master.get_digital_new_press(DIGITAL_A))
 			fwON = !fwON;
-
-		if (flywheelRev && fwON == true) {
-			deFenestration::Flywheel::FwVelocitySet(-20, .1);
-		}
 
 		// flywheel 17/21 speed
 		if (flywheel2PosState && fwON == true) {
