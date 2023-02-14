@@ -25,7 +25,7 @@
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 /* Game System Motors */
-pros::Motor fw(13, pros::E_MOTOR_GEAR_GREEN, true, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor fw(13, pros::E_MOTOR_GEAR_GREEN, false, pros::E_MOTOR_ENCODER_COUNTS);
 pros::Motor conveyor(10, pros::E_MOTOR_GEAR_BLUE, false, pros::E_MOTOR_ENCODER_COUNTS);
 
 /* Pistons */

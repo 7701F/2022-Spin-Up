@@ -112,17 +112,129 @@ void fireDiscs(int discs) {
 	deFenestration::Flywheel::FwVelocitySet(0, 0);
 }
 
+// function for toggling the endgame
+void toggleEndgame() {
+	endgameState = !endgameState;
+	endgame.set_value(endgameState);
+}
+
 /* Autonomous Functions */
 
-/* Programming Skills */
+// calibrate robot distance for movement
 void Sauton() {
-	// deFenestration::Flywheel::FwVelocitySet(96, 0.2);
+	using namespace arms::chassis;
 
+	prosBrake(false);
+
+	// turn right 90 degrees
+	turn({0, 10}, 100);
+}
+
+/* Programming Skills */
+void asdfkljalksjdg() {
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 0}});
 
-	turn({0, 24}, 75);
-	move({{0, 24}}, 200);
+	// move forward 5 inches
+	move(5, 60);
+
+	// turn right 90 degrees
+	turn(-90, 25, arms::RELATIVE);
+
+	// move forward 10 inches
+	move(10, 60);
+
+	// turn right 90 degrees
+	turn(-90, 25);
+
+	// drive torwards the roller
+	move(24, 100);
+
+	// set the roller to the correct color
+	setRollerRed();
+
+	// move back then turn
+	move(-12, 100, arms::REVERSE);
+
+	// turn left
+	turn(90, 25);
+
+	// drive torwards the next roller
+	move(24, 100);
+
+	// set the roller to the correct color
+	setRollerRed();
+
+	// move back then turn left 135 degrees
+	move(-12, 100, arms::REVERSE);
+
+	// turn left 90 for our disc shot
+	turn(90, 25);
+
+	// fire our preloaded disc
+	fireDiscs(2);
+
+	// turn left 45 degrees to aim for the diagonal
+	turn(45, 25);
+
+	// drive torwards the next roller (156 inches)
+	// move(156, 100);
+
+	// turn on the intake
+	conveyor.move_velocity(76);
+
+	// move forward 1/3rd the distance to the roller
+	move(52, 100);
+
+	// turn off the intake
+	conveyor.move_velocity(0);
+
+	// move the rest of the way to the roller
+	move(104, 100);
+
+	// turn left 45 so we are facing the roller
+	turn(45, 25);
+
+	// engage with the roller
+	move(24, 100);
+
+	// set the roller to the correct color
+	setRollerRed();
+
+	// move back then turn right 90 degrees
+	move(-12, 100, arms::REVERSE);
+	turn(-90, 25);
+
+	// drive torwards the next roller
+	move(24, 100);
+
+	// set the roller to the correct color
+	setRollerRed();
+
+	// move back then turn left 135 degrees
+	move(-12, 100, arms::REVERSE);
+	turn(-135, 25);
+
+	// drive to the middle of the field 156/2 = 78
+	move(78, 100);
+
+	// turn left 90 degrees
+	turn(90, 25);
+
+	// shoot 3 discs into the goal
+	fireDiscs(3);
+
+	// turn right 90 degrees
+	turn(-90, 25);
+
+	// drive 78 back to the starting position
+	move(-78, 100, arms::REVERSE);
+
+	// turn around
+	turn(180, 25);
+
+	// fire endgame
+	toggleEndgame();
 }
 
 /* longAuto */
