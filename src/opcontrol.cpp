@@ -270,7 +270,6 @@ void opcontrol() {
 		if (master.get_digital_new_press(DIGITAL_A))
 			fwON = !fwON;
 
-
 		if (flywheelRev && fwON == true) {
 			deFenestration::Flywheel::FwVelocitySet(-20, .1);
 		}
