@@ -60,25 +60,40 @@ int getRollerColor() {
 	return 0;
 }
 
-/* Set Roller to Red */
+/* Set roller to Red */
 void setRollerRed() {
-	int rollerStartTime = pros::millis();
-	conveyor.move_velocity(300);
-	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
-		pros::delay(10);
+	int rollerStartTime = sylib::millis();
+	conveyor.move_velocity(100);
+	while (getRollerColor() != 2 && sylib::millis() - rollerStartTime < 1500) {
+		sylib::delay(10);
 	}
-	pros::delay(200);
+	conveyor.move_velocity(0);
+	sylib::delay(50);
+	rollerStartTime = sylib::millis();
+	conveyor.move_velocity(100);
+	while (getRollerColor() != 1 && sylib::millis() - rollerStartTime < 1500) {
+		sylib::delay(10);
+	}
+	conveyor.move_velocity(50);
+	sylib::delay(250);
 	conveyor.move_velocity(0);
 }
 
-/* Set Roller to Blue */
 void setRollerBlue() {
-	int rollerStartTime = pros::millis();
-	conveyor.move_velocity(300);
-	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
-		pros::delay(10);
+	int rollerStartTime = sylib::millis();
+	conveyor.move_velocity(100);
+	while (getRollerColor() != 1 && sylib::millis() - rollerStartTime < 1500) {
+		sylib::delay(10);
 	}
-	pros::delay(200);
+	conveyor.move_velocity(0);
+	sylib::delay(50);
+	rollerStartTime = sylib::millis();
+	conveyor.move_velocity(100);
+	while (getRollerColor() != 2 && sylib::millis() - rollerStartTime < 1500) {
+		sylib::delay(10);
+	}
+	conveyor.move_velocity(50);
+	sylib::delay(250);
 	conveyor.move_velocity(0);
 }
 
@@ -88,7 +103,7 @@ void fireDisc() {
 	indexState = !indexState;
 	indexer.set_value(indexState);
 
-	// delay 125 ms then retract
+	// wait for piston to fire, then retract 150ms later
 	pros::delay(150);
 	indexState = !indexState;
 	indexer.set_value(indexState);
@@ -96,9 +111,11 @@ void fireDisc() {
 
 // fire disc(s) from indexer
 void fireDiscs(int discs) {
+	// set the flywheel to the correct speed, then wait for it to be up to speed
+	deFenestration::Flywheel::FwVelocitySet(170, .92);
+
+	// loop through firing discs
 	for (int i = 0; i < discs; i++) {
-		// set the flywheel to the correct speed, then wait for it to be up to speed
-		deFenestration::Flywheel::FwVelocitySet(170, .92);
 		while (current_error > 10) {
 			pros::delay(10);
 		}
@@ -121,17 +138,20 @@ void toggleEndgame() {
 /* Autonomous Functions */
 
 // calibrate robot distance for movement
-void Sauton() {
+void calibrateAutos() {
 	using namespace arms::chassis;
 
 	prosBrake(false);
 
+	// move forward 5 inches
+	move(5, 60, arms::RELATIVE);
+
 	// turn right 90 degrees
-	turn({0, 10}, 100);
+	turn({0, 10}, 60, arms::RELATIVE);
 }
 
 /* Programming Skills */
-void asdfkljalksjdg() {
+void Sauton() {
 	using namespace arms::chassis;
 	arms::odom::reset({{0, 0}});
 
@@ -237,51 +257,27 @@ void asdfkljalksjdg() {
 	toggleEndgame();
 }
 
-/* longAuto */
-void longAuto(int color, bool AWP) {
+/* Wauton */
+void Wauton() {
 	using namespace arms::chassis;
 
 	// reset odom to correct position
 	arms::odom::reset({{0, 0}}, 0);
 
 	// move to the roller
-	move(45, 75);
-	// second stage of moving to the rollerw
-	move({12.65, -30.51}, 75);
+	move({10, -10, 90}, 100);
 
 	// set the roller to the correct color
-	move(30, 100);
-
-	// set the roller to the correct color
-	conveyor.move_velocity(100);
-	pros::delay(500);
-	conveyor.move_velocity(0);
+	setRollerRed();
 
 	// move back then turn
-	move(-10, 100, arms::REVERSE);
-
-	// turn around
-	turn(180, 25, arms::RELATIVE);
-	turn({134.985069, -55.079769}, 50);
-
-	// wait 250 just to be safe
-	pros::delay(200);
-
-	// turn around so the flywheel is facing the goal
-	turn(180, 25, arms::RELATIVE);
-
-	// check if AWP is enabled, else exit (return)
-	if (!AWP) {
-		return;
-	}
-
-	// fire 2 discs
-	fireDiscs(2);
+	move({-10, 10, 180}, 100, arms::REVERSE);
 }
 
 /* longAuto that drives forward 16.5 inches, sets our position to 0,0 (0), turns 90
- * degrees relitive to current position, then turns around, drives forward 16.5 inches */
-void longAuto2(int color, bool AWP) {
+ * degrees relitive to current position, then turns around, drives forward 16.5 inches
+ */
+void longAuto(int color, bool AWP) {
 	using namespace arms::chassis;
 
 	// reset odom to correct position
@@ -290,7 +286,7 @@ void longAuto2(int color, bool AWP) {
 	// move to the roller
 	move(16.5, 100);
 
-	// turn
+	// turn right 90 degrees
 	turn(90, 25, arms::RELATIVE);
 
 	// move back then turn
@@ -412,13 +408,13 @@ void autonomous() {
 			printf("Do Nothing\n");
 			break;
 		case -4: // Blue Long AWP
-			longAuto2(colors::BLUE, true);
+			longAuto(colors::BLUE, true);
 			break;
 		case -3: // Blue Short AWP
 			shortAuto(colors::BLUE, true);
 			break;
 		case -2: // Blue Long
-			longAuto2(colors::BLUE, false);
+			longAuto(colors::BLUE, false);
 			break;
 		case -1: // Blue Short
 			shortAuto(colors::BLUE, false);
@@ -430,13 +426,13 @@ void autonomous() {
 			shortAuto(colors::RED, false);
 			break;
 		case 2: // Red Long
-			longAuto2(colors::RED, false);
+			longAuto(colors::RED, false);
 			break;
 		case 3: // Red Short AWP
 			shortAuto(colors::RED, true);
 			break;
 		case 4: // Red Long AWP
-			longAuto2(colors::RED, true);
+			longAuto(colors::RED, true);
 			break;
 		case 5: // Do Nothing.
 			printf("Do Nothing\n");
