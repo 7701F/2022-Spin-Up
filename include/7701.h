@@ -25,10 +25,10 @@
 #include "main.h"
 #include "settings.h"
 
-namespace deFenestration {
+namespace deFenestration::display {
 
 /* Display */
-void display();
+void create();
 
 } // namespace deFenestration
 

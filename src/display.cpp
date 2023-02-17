@@ -26,8 +26,8 @@
 lv_obj_t* scr = lv_obj_create(NULL, NULL);
 
 // Custom Display Function
-namespace deFenestration {
-void display() {
+namespace deFenestration::display {
+void create() {
 	// Background Style
 	static lv_style_t backgroundStyle;
 	lv_style_copy(&backgroundStyle, &lv_style_plain);
