@@ -1,18 +1,30 @@
-Copyright (c) 2019-2022 7701F
+# VEX Robotics Competition License
+
+## VEX Robotics Competition License Terms for Redistribution and Use
+
+### Copyright © 2019-2023 7701F
 
 This software is provided 'as-is', without any express or implied warranty. In no event will
-the authors be held liable for any damages arising from the use of this software.
+the authors be held liable for any damages arising from the use of this software in competition.
 
-Permission is granted to anyone to use this software for any purpose, including commercial
-applications, and to alter it and redistribute it freely, subject to the following restrictions:
+Permission is granted to anyone to use this software for any purpose, and to alter it and redistribute it freely, subject to the following restrictions:
 
 1. The origin of this software must not be misrepresented; you must not claim that you wrote the
-original software. If you use this software in a product, an acknowledgment (see the following)
-in the product documentation is required.
+original software. If you deploy / use this code on your competition bot, an acknowledgment (see the following)
+in the Engineering Notebook is required. Under to pretense, may your remove this notice from your code,
+as long as you continue to use this code on your competition bot.
 
-Portions Copyright (c) 2019-2022 7701F
+```md
+Portions of Programming Code Copyright © 2019-2023 7701F
+```
 
 2. Altered source versions must be plainly marked as such, and must not be misrepresented as
-being the original software.
+being the original source of the software.
 
-3. This notice may not be removed or altered from any source distribution.
+3. This software may not be used directly in the VEX Robotics Competition in compliance with the Game Manual rules.
+
+4. This source release is explicitly for educational purposes and may not be directly copied or pasted into another team's code without prior consent from the authors.
+
+5. The authors of this software reserve the right to revoke the permission granted in this license should it be discovered that a team has violated the terms of this license.
+
+### By using this software, you agree to the terms of this license and acknowledge that you have read and understood its contents
