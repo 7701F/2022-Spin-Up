@@ -19,14 +19,13 @@
 
   3. This notice may not be removed or altered from any source distribution.
 */
-#include <sstream>
-
-#include "7701.h"
+#include "7701.hpp"
 
 lv_obj_t* scr = lv_obj_create(NULL, NULL);
 
 // Custom Display Function
 namespace deFenestration::display {
+// Create a new custom display object
 void create() {
 	// Background Style
 	static lv_style_t backgroundStyle;
@@ -72,6 +71,7 @@ void create() {
 	}
 }
 
+// Destroys the display
 void destroy() {
 	lv_obj_del(scr);
 }

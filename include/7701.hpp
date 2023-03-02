@@ -24,38 +24,42 @@
 
 #include "main.h"
 #include "settings.h"
+#include "ARMS/config.h"
+
+// dependencies
+#include <sstream>
 
 namespace deFenestration::display {
 
-/* Display */
+/* create custom display */
 void create();
+
+/* destroy custom display*/
+// void destroy();
 
 } // namespace deFenestration
 
 // Declarations
+
 /* Controller */
-extern pros::Controller master;
+inline pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 /* Game System Motors */
-extern pros::Motor fw;
-extern pros::Motor conveyor;
-extern pros::Motor conv2;
+inline pros::Motor fw(13, pros::E_MOTOR_GEAR_GREEN, true, pros::E_MOTOR_ENCODER_COUNTS);
+inline pros::Motor conveyor(10, pros::E_MOTOR_GEAR_BLUE, true, pros::E_MOTOR_ENCODER_COUNTS);
 
 /* Pistons */
-extern pros::ADIDigitalOut indexer;
-extern pros::ADIDigitalOut endgame;
+inline pros::ADIDigitalOut indexer('G');
+inline pros::ADIDigitalOut endgame('H');
 
 /* Sensors */
-extern pros::Distance indexerSensor;
-extern pros::Optical rollerSensor;
-extern pros::IMU imu_sensor;
+inline pros::Optical rollerSensor(15);
 
 /* LEDs */
-// extern sylib::Addrled;
+// inline sylib::Addrled indexLights(22, 2, 64);
 
 /* Filters */
-extern sylib::MedianFilter hueFilter;
-extern sylib::MedianFilter distanceFilter;
+inline sylib::MedianFilter hueFilter(5, 2, 1);
 
 // deFenestration Flywheel System
 

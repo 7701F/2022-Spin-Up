@@ -19,9 +19,7 @@
 
   3. This notice may not be removed or altered from any source distribution.
 */
-#include <sstream>
-
-#include "7701.h"
+#include "7701.hpp"
 
 /* Smart boy motor brake, additional parameter to set brake type */
 void prosBrake(bool on, int type) {
@@ -287,17 +285,17 @@ void opcontrol() {
 		// Frisbee Conveyor / Intake
 		if (master.get_digital(DIGITAL_R1)) {
 			// intake
-			conveyor.move_velocity(450);
+			conveyor.move_velocity(400);
 		} else if (master.get_digital(DIGITAL_Y)) {
 			// outtake
-			conveyor.move_velocity(-450);
+			conveyor.move_velocity(-350);
 		} else {
 			// stop if neither button is pressed
 			conveyor.move_velocity(0);
 		}
 
 		// Endgame Piston
-		EpistonState = master.get_digital_new_press(DIGITAL_RIGHT);
+		EpistonState = master.get_digital_new_press(DIGITAL_LEFT);
 		if (EpistonState == true && EprevPistonState == false) {
 			endgameState = !endgameState;
 			endgame.set_value(endgameState);

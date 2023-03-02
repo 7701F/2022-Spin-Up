@@ -19,11 +19,8 @@
 
   3. This notice may not be removed or altered from any source distribution.
 */
-#include <sstream>
 
-#include "7701.h"
-#include "ARMS/config.h"
-#include "settings.h"
+#include "7701.hpp"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.

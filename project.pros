@@ -332,7 +332,7 @@
     },
     "upload_options": {
       "after": "run",
-      "description": "L + bozo + skill issue + no auton + literally 1:1 gear ratio",
+      "description": "L + bozo + skill issue + no auton",
       "icon": "pros",
       "slot": 1
     }

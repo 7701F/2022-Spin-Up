@@ -15,16 +15,16 @@ namespace arms {
 #define GEARSET pros::E_MOTOR_GEAR_600 // RPM of chassis motors
 
 // Ticks per inch
-#define TPI 37       // Encoder ticks per inch of forward robot movement
-#define MIDDLE_TPI 44 // Ticks per inch for the middle wheel
+#define TPI 46.5        // Encoder ticks per inch of forward robot movement
+#define MIDDLE_TPI 33 // Ticks per inch for the middle wheel
 
 // Tracking wheel distances
-#define TRACK_WIDTH 12.9375   // The distance between left and right wheels (or tracker wheels)
-#define MIDDLE_DISTANCE 4.025 // Distance from middle wheel to the robot turning center
+#define TRACK_WIDTH 3.5 // The distance between left and right wheels (or tracker wheels)
+#define MIDDLE_DISTANCE 3.5 // Distance from middle wheel to the robot turning center
 
 // Sensors
 #define IMU_PORT 1                                // Port 0 for disabled
-#define ENCODER_PORTS 18, 19, 20                    // Port 0 for disabled,
+#define ENCODER_PORTS 0, 0, 20                // Port 0 for disabled,
 #define EXPANDER_PORT 0                           // Port 0 for disabled
 #define ENCODER_TYPE arms::odom::ENCODER_ROTATION // The type of encoders
 
@@ -36,7 +36,7 @@ namespace arms {
 #define SETTLE_THRESH_ANGULAR 1 // amount of angular movement for settling
 #define SETTLE_TIME 250         // amount of time to count as settled
 
-#define LINEAR_KP 25
+#define LINEAR_KP 5
 #define LINEAR_KI 0
 #define LINEAR_KD 1
 
@@ -51,19 +51,22 @@ namespace arms {
 
 // Auton selector configuration constants
 #define AUTONS "Short", "Long", "SAWP", "LAWP", "Sit." // Names of autonomi, up to 10
-#define HUE 0                                // Color of theme from 0-359(H part of HSV)
-#define DEFAULT 0                            // Default auton selected
+#define HUE 0     // Color of theme from 0-359(H part of HSV)
+#define DEFAULT -1 // Default auton selected
 
 inline const char* autons[] = {AUTONS, ""};
 
 // Initializer
 inline void init() {
-	chassis::init({LEFT_MOTORS}, {RIGHT_MOTORS}, GEARSET, SLEW_STEP, LINEAR_EXIT_ERROR, ANGULAR_EXIT_ERROR, SETTLE_THRESH_LINEAR,
-	              SETTLE_THRESH_ANGULAR, SETTLE_TIME);
+	chassis::init({LEFT_MOTORS}, {RIGHT_MOTORS}, GEARSET, SLEW_STEP, LINEAR_EXIT_ERROR,
+	              ANGULAR_EXIT_ERROR, SETTLE_THRESH_LINEAR, SETTLE_THRESH_ANGULAR,
+	              SETTLE_TIME);
 
-	odom::init(ODOM_DEBUG, ENCODER_TYPE, {ENCODER_PORTS}, EXPANDER_PORT, IMU_PORT, TRACK_WIDTH, MIDDLE_DISTANCE, TPI, MIDDLE_TPI);
+	odom::init(ODOM_DEBUG, ENCODER_TYPE, {ENCODER_PORTS}, EXPANDER_PORT, IMU_PORT,
+	           TRACK_WIDTH, MIDDLE_DISTANCE, TPI, MIDDLE_TPI);
 
-	pid::init(LINEAR_KP, LINEAR_KI, LINEAR_KD, ANGULAR_KP, ANGULAR_KI, ANGULAR_KD, TRACKING_KP, MIN_ERROR, LEAD_PCT);
+	pid::init(LINEAR_KP, LINEAR_KI, LINEAR_KD, ANGULAR_KP, ANGULAR_KI, ANGULAR_KD,
+	          TRACKING_KP, MIN_ERROR, LEAD_PCT);
 
 	const char* b[] = {AUTONS, ""};
 	selector::init(HUE, DEFAULT, b);

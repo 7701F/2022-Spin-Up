@@ -19,7 +19,7 @@
 
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "7701.h"
+#include "7701.hpp"
 
 namespace colors {
 const int BLUE = 1;
@@ -28,20 +28,6 @@ const int ERROR = 3;
 } // namespace colors
 
 /* Util Functions */
-
-/* Gets the # of Frisbees in the Indexer */
-int getFrisbeesInIndexer() {
-	int sensorDistance = distanceFilter.filter(indexerSensor.get());
-	if (sensorDistance > 105) {
-		return 0;
-	} else if (sensorDistance > 90) {
-		return 1;
-	} else if (sensorDistance > 70) {
-		return 2;
-	} else {
-		return 3;
-	}
-}
 
 /* Get the color of the Roller from the Optical Sensor */
 int getRollerColor() {
@@ -62,38 +48,40 @@ int getRollerColor() {
 
 /* Set roller to Red */
 void setRollerRed() {
-	int rollerStartTime = sylib::millis();
-	conveyor.move_velocity(100);
-	while (getRollerColor() != 2 && sylib::millis() - rollerStartTime < 1500) {
-		sylib::delay(10);
+	int rollerStartTime = pros::millis();
+	conveyor.move_velocity(450);
+	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
+		pros::delay(10);
 	}
 	conveyor.move_velocity(0);
-	sylib::delay(50);
-	rollerStartTime = sylib::millis();
-	conveyor.move_velocity(100);
-	while (getRollerColor() != 1 && sylib::millis() - rollerStartTime < 1500) {
-		sylib::delay(10);
+	pros::delay(50);
+	rollerStartTime = pros::millis();
+	conveyor.move_velocity(450);
+	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
+		pros::delay(10);
 	}
 	conveyor.move_velocity(50);
-	sylib::delay(250);
+	pros::delay(250);
 	conveyor.move_velocity(0);
 }
 
 void setRollerBlue() {
-	int rollerStartTime = sylib::millis();
-	conveyor.move_velocity(100);
-	while (getRollerColor() != 1 && sylib::millis() - rollerStartTime < 1500) {
-		sylib::delay(10);
+	int rollerStartTime = pros::millis();
+
+	conveyor.move_velocity(400);
+	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
+		pros::delay(10);
 	}
 	conveyor.move_velocity(0);
-	sylib::delay(50);
-	rollerStartTime = sylib::millis();
-	conveyor.move_velocity(100);
-	while (getRollerColor() != 2 && sylib::millis() - rollerStartTime < 1500) {
-		sylib::delay(10);
+	pros::delay(50);
+
+	rollerStartTime = pros::millis();
+	conveyor.move_velocity(450);
+	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
+		pros::delay(10);
 	}
 	conveyor.move_velocity(50);
-	sylib::delay(250);
+	pros::delay(250);
 	conveyor.move_velocity(0);
 }
 
@@ -143,11 +131,13 @@ void calibrateAutos() {
 
 	prosBrake(false);
 
+	arms::odom::reset({{0, 0}}, 0);
+
 	// move forward 5 inches
 	move(5, 60, arms::RELATIVE);
 
 	// turn right 90 degrees
-	turn({0, 10}, 60, arms::RELATIVE);
+	// turn({0, 10}, 60, arms::RELATIVE);
 }
 
 /* Programming Skills */
@@ -342,15 +332,20 @@ void shortAuto(int color, bool AWP) {
 	// reset odom to correct position
 	arms::odom::reset({{-0, 0}}, 0);
 
+	// set our intake on
+	conveyor.move_velocity(450);
+
 	// move to the roller
 	// drives forward 30 inches at 100% speed
-	move(30, 86);
+	move(30, 76, arms::ASYNC | arms::RELATIVE);
 
 	// set the roller to the correct color
 	// currently time based, will be changed to optical sensor based soon™
-	/*conveyor.move_velocity(-100);
-	pros::delay(500);
-	conveyor.move_velocity(0);*/
+	// conveyor.move_velocity(-100);
+	// pros::delay(500);
+	// conveyor.move_velocity(0);
+
+	// return;
 
 	// switch statement on color
 	switch (color) {
@@ -364,8 +359,10 @@ void shortAuto(int color, bool AWP) {
 			break;
 	}
 
+	return;
+
 	// move back then turn
-	move(-10, 100, arms::REVERSE);
+	move(-10, 100, arms::REVERSE | arms::RELATIVE);
 
 	// turn to the goal
 	turn({-147.6, -8.5}, 100);
@@ -400,6 +397,8 @@ void autonomous() {
 	// reset odom
 	arms::odom::reset({{0, 0}}, 0);
 
+	printf("Running auton: %d\n", arms::selector::auton);
+
 	/* Auton Selector Logic */
 	// Negative = Blue
 	// Positive = Red
@@ -420,7 +419,7 @@ void autonomous() {
 			shortAuto(colors::BLUE, false);
 			break;
 		case 0: // Programming Skills
-			Sauton();
+			calibrateAutos();
 			break;
 		case 1: // Red Short
 			shortAuto(colors::RED, false);
@@ -441,6 +440,4 @@ void autonomous() {
 			throw printf("Invalid Auton: %d\n", arms::selector::auton);
 			// break;
 	}
-
-	printf("Successfully ran auton: %d\n", arms::selector::auton);
 }
