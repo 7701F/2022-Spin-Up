@@ -27,40 +27,40 @@ const int RED = 2;
 const int ERROR = 3;
 } // namespace colors
 
-void setRollerRed(){
-    int rollerStartTime = pros::millis();
-    conveyor.move_velocity(100);
-    while(getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500){
-        pros::delay(10);
-    }
-    conveyor.move_velocity(0);
-    pros::delay(50);
-    rollerStartTime = pros::millis();
-    conveyor.move_velocity(100);
-    while(getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500){
-        pros::delay(10);
-    }
-    conveyor.move_velocity(50);
-    pros::delay(250);
-    conveyor.move_velocity(0);
+void setRollerRed() {
+	int rollerStartTime = pros::millis();
+	conveyor.move_velocity(100);
+	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
+		pros::delay(10);
+	}
+	conveyor.move_velocity(0);
+	pros::delay(50);
+	rollerStartTime = pros::millis();
+	conveyor.move_velocity(100);
+	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
+		pros::delay(10);
+	}
+	conveyor.move_velocity(50);
+	pros::delay(250);
+	conveyor.move_velocity(0);
 }
 
-void setRollerBlue(){
-    int rollerStartTime = pros::millis();
-    conveyor.move_velocity(100);
-    while(getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500){
-        pros::delay(10);
-    }
-    conveyor.move_velocity(0);
-    pros::delay(50);
-    rollerStartTime = pros::millis();
-    conveyor.move_velocity(100);
-    while(getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500){
-        pros::delay(10);
-    }
-    conveyor.move_velocity(50);
-    pros::delay(250);
-    conveyor.move_velocity(0);
+void setRollerBlue() {
+	int rollerStartTime = pros::millis();
+	conveyor.move_velocity(100);
+	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
+		pros::delay(10);
+	}
+	conveyor.move_velocity(0);
+	pros::delay(50);
+	rollerStartTime = pros::millis();
+	conveyor.move_velocity(100);
+	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
+		pros::delay(10);
+	}
+	conveyor.move_velocity(50);
+	pros::delay(250);
+	conveyor.move_velocity(0);
 }
 
 // fire disc from indexer
