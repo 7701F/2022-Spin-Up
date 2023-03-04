@@ -81,22 +81,23 @@ inline int getFrisbeesInIndexer() {
 }*/
 
 /* Get the color of the Roller from the Optical Sensor */
-inline int getRollerColor() {
-	if (rollerSensor.get_proximity() < 200) {
-		return 0;
-	}
+inline int getRollerColor(){
+    if(rollerSensor.get_proximity() < 200){
+        return 0;
+    }
 
-	double hue = hueFilter.filter(rollerSensor.get_hue());
-	if (hue < 260 && hue > 230) {
-		return 1; // blue
-	} else if (hue < 30 && hue > 0) {
-		return 2; // red
-	} else {
-		return 3; // lol it doesnt know
-	}
-	return 0;
+    double hue = hueFilter.filter(rollerSensor.get_hue());
+    if(hue < 260 && hue > 230){
+        return 1; // blue
+    }
+    else if(hue < 30 && hue > 0){
+        return 2; // red
+    }
+    else{
+        return 3; // lol it doesnt know
+    }
+    return 0;
 }
-
 
 // deFenestration Flywheel System
 
