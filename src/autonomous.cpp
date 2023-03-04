@@ -27,62 +27,40 @@ const int RED = 2;
 const int ERROR = 3;
 } // namespace colors
 
-/* Util Functions */
-
-/* Get the color of the Roller from the Optical Sensor */
-int getRollerColor() {
-	if (rollerSensor.get_proximity() < 200) {
-		return 0;
-	}
-
-	double hue = hueFilter.filter(rollerSensor.get_hue());
-	if (hue < 260 && hue > 230) {
-		return 1; // blue
-	} else if (hue < 30 && hue > 0) {
-		return 2; // red
-	} else {
-		return 3; // lol it doesnt know
-	}
-	return 0;
+void setRollerRed(){
+    int rollerStartTime = pros::millis();
+    conveyor.move_velocity(100);
+    while(getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500){
+        pros::delay(10);
+    }
+    conveyor.move_velocity(0);
+    pros::delay(50);
+    rollerStartTime = pros::millis();
+    conveyor.move_velocity(100);
+    while(getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500){
+        pros::delay(10);
+    }
+    conveyor.move_velocity(50);
+    pros::delay(250);
+    conveyor.move_velocity(0);
 }
 
-/* Set roller to Red */
-void setRollerRed() {
-	int rollerStartTime = pros::millis();
-	conveyor.move_velocity(450);
-	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
-		pros::delay(10);
-	}
-	conveyor.move_velocity(0);
-	pros::delay(50);
-	rollerStartTime = pros::millis();
-	conveyor.move_velocity(450);
-	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
-		pros::delay(10);
-	}
-	conveyor.move_velocity(50);
-	pros::delay(250);
-	conveyor.move_velocity(0);
-}
-
-void setRollerBlue() {
-	int rollerStartTime = pros::millis();
-
-	conveyor.move_velocity(400);
-	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
-		pros::delay(10);
-	}
-	conveyor.move_velocity(0);
-	pros::delay(50);
-
-	rollerStartTime = pros::millis();
-	conveyor.move_velocity(450);
-	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
-		pros::delay(10);
-	}
-	conveyor.move_velocity(50);
-	pros::delay(250);
-	conveyor.move_velocity(0);
+void setRollerBlue(){
+    int rollerStartTime = pros::millis();
+    conveyor.move_velocity(100);
+    while(getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500){
+        pros::delay(10);
+    }
+    conveyor.move_velocity(0);
+    pros::delay(50);
+    rollerStartTime = pros::millis();
+    conveyor.move_velocity(100);
+    while(getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500){
+        pros::delay(10);
+    }
+    conveyor.move_velocity(50);
+    pros::delay(250);
+    conveyor.move_velocity(0);
 }
 
 // fire disc from indexer
@@ -141,112 +119,6 @@ void calibrateAutos() {
 }
 
 /* Programming Skills */
-void Sauton() {
-	using namespace arms::chassis;
-	arms::odom::reset({{0, 0}});
-
-	// move forward 5 inches
-	move(5, 60);
-
-	// turn right 90 degrees
-	turn(-90, 25, arms::RELATIVE);
-
-	// move forward 10 inches
-	move(10, 60);
-
-	// turn right 90 degrees
-	turn(-90, 25);
-
-	// drive torwards the roller
-	move(24, 100);
-
-	// set the roller to the correct color
-	setRollerRed();
-
-	// move back then turn
-	move(-12, 100, arms::REVERSE);
-
-	// turn left
-	turn(90, 25);
-
-	// drive torwards the next roller
-	move(24, 100);
-
-	// set the roller to the correct color
-	setRollerRed();
-
-	// move back then turn left 135 degrees
-	move(-12, 100, arms::REVERSE);
-
-	// turn left 90 for our disc shot
-	turn(90, 25);
-
-	// fire our preloaded disc
-	fireDiscs(2);
-
-	// turn left 45 degrees to aim for the diagonal
-	turn(45, 25);
-
-	// drive torwards the next roller (156 inches)
-	// move(156, 100);
-
-	// turn on the intake
-	conveyor.move_velocity(76);
-
-	// move forward 1/3rd the distance to the roller
-	move(52, 100);
-
-	// turn off the intake
-	conveyor.move_velocity(0);
-
-	// move the rest of the way to the roller
-	move(104, 100);
-
-	// turn left 45 so we are facing the roller
-	turn(45, 25);
-
-	// engage with the roller
-	move(24, 100);
-
-	// set the roller to the correct color
-	setRollerRed();
-
-	// move back then turn right 90 degrees
-	move(-12, 100, arms::REVERSE);
-	turn(-90, 25);
-
-	// drive torwards the next roller
-	move(24, 100);
-
-	// set the roller to the correct color
-	setRollerRed();
-
-	// move back then turn left 135 degrees
-	move(-12, 100, arms::REVERSE);
-	turn(-135, 25);
-
-	// drive to the middle of the field 156/2 = 78
-	move(78, 100);
-
-	// turn left 90 degrees
-	turn(90, 25);
-
-	// shoot 3 discs into the goal
-	fireDiscs(3);
-
-	// turn right 90 degrees
-	turn(-90, 25);
-
-	// drive 78 back to the starting position
-	move(-78, 100, arms::REVERSE);
-
-	// turn around
-	turn(180, 25);
-
-	// fire endgame
-	toggleEndgame();
-}
-
 /* Wauton */
 void Wauton() {
 	using namespace arms::chassis;

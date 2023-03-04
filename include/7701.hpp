@@ -23,6 +23,7 @@
 #define _7701F_HEAD_H_
 
 #include "main.h"
+#include "pros/distance.hpp"
 #include "settings.h"
 #include "ARMS/config.h"
 
@@ -53,6 +54,7 @@ inline pros::ADIDigitalOut indexer('G');
 inline pros::ADIDigitalOut endgame('H');
 
 /* Sensors */
+// inline pros::Distance indexerSensor(16);
 inline pros::Optical rollerSensor(15);
 
 /* LEDs */
@@ -60,6 +62,41 @@ inline pros::Optical rollerSensor(15);
 
 /* Filters */
 inline sylib::MedianFilter hueFilter(5, 2, 1);
+inline sylib::MedianFilter distanceFilter(5, 2, 1);
+
+/* Util Functions */
+
+/* Gets the # of Frisbees in the Indexer *//*
+inline int getFrisbeesInIndexer() {
+	int sensorDistance = distanceFilter.filter(indexerSensor.get());
+	if (sensorDistance > 105) {
+		return 0;
+	} else if (sensorDistance > 90) {
+		return 1;
+	} else if (sensorDistance > 70) {
+		return 2;
+	} else {
+		return 3;
+	}
+}*/
+
+/* Get the color of the Roller from the Optical Sensor */
+inline int getRollerColor() {
+	if (rollerSensor.get_proximity() < 200) {
+		return 0;
+	}
+
+	double hue = hueFilter.filter(rollerSensor.get_hue());
+	if (hue < 260 && hue > 230) {
+		return 1; // blue
+	} else if (hue < 30 && hue > 0) {
+		return 2; // red
+	} else {
+		return 3; // lol it doesnt know
+	}
+	return 0;
+}
+
 
 // deFenestration Flywheel System
 

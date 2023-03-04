@@ -285,10 +285,10 @@ void opcontrol() {
 		// Frisbee Conveyor / Intake
 		if (master.get_digital(DIGITAL_R1)) {
 			// intake
-			conveyor.move_velocity(400);
+			conveyor.move_velocity(600);
 		} else if (master.get_digital(DIGITAL_Y)) {
 			// outtake
-			conveyor.move_velocity(-350);
+			conveyor.move_velocity(-450);
 		} else {
 			// stop if neither button is pressed
 			conveyor.move_velocity(0);
