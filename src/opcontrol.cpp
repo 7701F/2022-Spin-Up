@@ -285,9 +285,7 @@ void opcontrol() {
 		// Endgame Piston
 		EpistonState = master.get_digital_new_press(DIGITAL_LEFT);
 		if (EpistonState == true && EprevPistonState == false) {
-			endgameState = !endgameState;
-			endgame.set_value(endgameState);
-			endgame2.set_value(endgameState);
+			toggleEndgame();
 		}
 		EprevPistonState = EpistonState;
 

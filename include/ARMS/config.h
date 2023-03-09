@@ -15,7 +15,7 @@ namespace arms {
 #define GEARSET pros::E_MOTOR_GEAR_600 // RPM of chassis motors
 
 // Ticks per inch
-#define TPI 46.5        // Encoder ticks per inch of forward robot movement
+#define TPI 54.46        // Encoder ticks per inch of forward robot movement
 #define MIDDLE_TPI 33 // Ticks per inch for the middle wheel
 
 // Tracking wheel distances
@@ -44,9 +44,9 @@ namespace arms {
 #define TRACKING_KP 60 // point tracking turning strength
 
 // angular PID constants
-#define ANGULAR_KP 4
+#define ANGULAR_KP 1.2
 #define ANGULAR_KI 0
-#define ANGULAR_KD 1
+#define ANGULAR_KD 5.5
 
 // Auton PID constants
 #define MIN_ERROR 5 // Minimum distance to target before angular componenet is disabled

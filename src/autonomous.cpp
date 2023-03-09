@@ -100,7 +100,7 @@ void calibrateAutos() {
 	arms::odom::reset({{0, 0}}, 0);
 
 	// move forward 5 inches
-	move(5, 60, arms::RELATIVE);
+	// move(5, 60, arms::RELATIVE);
 
 	// turn right 90 degrees
 	// turn({0, 10}, 60, arms::RELATIVE);
@@ -111,71 +111,38 @@ void calibrateAutos() {
 void Wauton() {
 	using namespace arms::chassis;
 
-	move(7.7, 50);
-	turn(90, 50);
-
 	// move 10 inches forward
-	move(10, 76);
+	move(5, 76);
 
 	setRollerRed(); // we're playing for the red alliance for roller's sake
 
 	// move back then turn 90 degrees
-	move(-20, 66, arms::REVERSE);
+	move(-17.5, 66, arms::REVERSE);
 	turn(-90, 45, arms::RELATIVE);
 
 	move(19.5, 76); // move forward 24 inches
 
-	move(10, 76);   // move 10 inches forward and set the roller to the correct color
+	move(5, 76);   // move 10 inches forward and set the roller to the correct color
 	setRollerRed(); // we're playing for the red alliance for roller's sake
 
 	// move 20 inches back
-	move(-24, 40, arms::REVERSE);
+	move(-15, 40, arms::REVERSE);
 
 	// turn -135 degrees, and halfway thru we fire two discs for 10 points
 
 	// first, turn -90 to face the goal
 	turn(-90, 43, arms::RELATIVE);
 
-	arms::odom::reset({{0, 0}}, 0);
-
-	// face the target location,
-
+	// move(50, 50, arms::RELATIVE);
 	// fireDiscs(2) // fire two discs, it's a free 10 points, will help in rankings
+	// move(-50, 50, arms::REVERSE);
 
-	turn(-45, 20, arms::RELATIVE); // turn -45 to face the endgame firing position
+	turn(-45, 43, arms::RELATIVE); // turn -45 to face the endgame firing position
 
-	move(-15, 76, arms::REVERSE); // move 10 inches forward
+	move(-9, 76, arms::REVERSE); // move 10 inches forward
 
-	turn(160, 50, arms::RELATIVE);
+	turn(168, 50, arms::RELATIVE);
 	// toggleEndgame(); // fire endgame
-	return;
-
-	move(135, 60); // drive to the other side of the field (180 inches)
-
-	turn(90, 45, arms::RELATIVE); // turn 90 degrees
-
-	move(31.5, 90); // move 30 inches forward
-	setRollerRed(); // set the roller to the correct color
-
-	move(-21.5, 66, arms::REVERSE); // move back then turn
-
-	turn(-90, 45, arms::RELATIVE); // turn right 90 degrees
-
-	move(25, 76); // move forward 24 inches
-
-	move(10, 76); // move 10 inches forward
-
-	setRollerRed(); // set the roller to the correct color
-
-	move(-30, 40, arms::REVERSE); // move 30 inches back
-
-	// turn -135 degrees, and halfway thru we fire two discs for 10 points
-	turn(-90, 45, arms::RELATIVE); // first, turn -90 to face the goal
-
-	// fireDiscs(2) // fire two discs, it's a free 10 points, will help in rankinks
-
-	turn(-45, 45, arms::RELATIVE); // turn -45 to face the endgame firing position
-	                               // toggleEndgame(); // fire endgame
 }
 
 /* far side auton */
@@ -303,7 +270,7 @@ void shortAuto(int color, bool AWP) {
  */
 void autonomous() {
 	// set brake to hold
-	prosBrake(true, 1);
+	// prosBrake(true, 1);
 
 	// reset odom
 	arms::odom::reset({{0, 0}}, 0);

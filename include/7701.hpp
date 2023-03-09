@@ -53,6 +53,7 @@ inline pros::Motor conveyor(10, pros::E_MOTOR_GEAR_BLUE, true,
 
 /* Pistons */
 inline pros::ADIDigitalOut indexer('G');
+
 // endgame
 inline pros::ADIDigitalOut endgame2('F');
 inline pros::ADIDigitalOut endgame('H');
@@ -178,4 +179,5 @@ void prosBrake(bool on);
 int getFrisbeesInIndexer();
 int getRollerColor();
 void fireDisc();
+void toggleEndgame();
 #endif // _7701F_HEAD_H_
