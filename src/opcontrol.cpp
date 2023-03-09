@@ -218,7 +218,7 @@ void opcontrol() {
 	prosBrake(true);
 
 	// set optical sensor to 0% brightness
-	rollerSensor.set_led_pwm(0);
+	// rollerSensor.set_led_pwm(0);
 
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
@@ -299,6 +299,7 @@ void opcontrol() {
 		if (EpistonState == true && EprevPistonState == false) {
 			endgameState = !endgameState;
 			endgame.set_value(endgameState);
+			endgame2.set_value(endgameState);
 		}
 		EprevPistonState = EpistonState;
 
@@ -311,8 +312,9 @@ void opcontrol() {
 		 * and the button is pressed, the robot will begin the
 		 * autonomous routine to allow for easy testing.
 		 */
-		if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
+		if (master.get_digital_new_press(DIGITAL_X))
 			autonomous();
+		// if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
 
 		// Lastly, delay
 		pros::delay(20);

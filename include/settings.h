@@ -25,17 +25,11 @@
 
 namespace deFenestration {
 
-/* Enable Logger */
-const bool debug = true;
-
-/* Enable Flywheel Task */
-const bool flywheelEnabled = true;
-
 /* Enable Show Screen */
 const bool showScreen = true;
 
 /* program version definition */
-const std::string version = "0.0.1";
+const std::string version = "4.2.0";
 
 } // namespace deFenestration
 #endif // _7701F_SETTINGS_H_

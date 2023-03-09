@@ -36,27 +36,8 @@ void initialize() {
 	// set optical sensor LED to 100% brightness
 	rollerSensor.set_led_pwm(100);
 
-	// Check if deFenestration::flywheelEnabled is enabled
-	if (deFenestration::flywheelEnabled) {
-		// Inititalize Flywheel
-		pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
-	}
-
-	// Check if deFenestration::debug is enabled
-	if (deFenestration::debug) {
-		pros::Task logger{[=] {
-			while (true) {
-				// flywheel status
-				// printf("(flywheel speed: %f, current error: %f) \n", motor_velocity,
-				// current_error);
-
-				// odom debug
-				printf("(%f, %f) %f\n", arms::odom::getPosition().x, arms::odom::getPosition().y,
-				       arms::odom::getHeading());
-				pros::delay(3000);
-			}
-		}};
-	}
+	// Inititalize Flywheel
+	pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
 
 	// /* Controller Status Display */
 	pros::Task controllerTask{[=] {

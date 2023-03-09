@@ -19,12 +19,12 @@ namespace arms {
 #define MIDDLE_TPI 33 // Ticks per inch for the middle wheel
 
 // Tracking wheel distances
-#define TRACK_WIDTH 3.5 // The distance between left and right wheels (or tracker wheels)
-#define MIDDLE_DISTANCE 3.5 // Distance from middle wheel to the robot turning center
+#define TRACK_WIDTH 12.6 // The distance between left and right wheels (or tracker wheels)
+#define MIDDLE_DISTANCE 0 // Distance from middle wheel to the robot turning center
 
 // Sensors
 #define IMU_PORT 1                                // Port 0 for disabled
-#define ENCODER_PORTS 0, 0, 20                // Port 0 for disabled,
+#define ENCODER_PORTS 0, 0, 0//20                // Port 0 for disabled,
 #define EXPANDER_PORT 0                           // Port 0 for disabled
 #define ENCODER_TYPE arms::odom::ENCODER_ROTATION // The type of encoders
 
@@ -36,23 +36,26 @@ namespace arms {
 #define SETTLE_THRESH_ANGULAR 1 // amount of angular movement for settling
 #define SETTLE_TIME 250         // amount of time to count as settled
 
+// linear PID constants
 #define LINEAR_KP 5
 #define LINEAR_KI 0
 #define LINEAR_KD 1
 
 #define TRACKING_KP 60 // point tracking turning strength
 
-#define ANGULAR_KP 1
+// angular PID constants
+#define ANGULAR_KP 4
 #define ANGULAR_KI 0
-#define ANGULAR_KD 0
+#define ANGULAR_KD 1
 
+// Auton PID constants
 #define MIN_ERROR 5 // Minimum distance to target before angular componenet is disabled
 #define LEAD_PCT .6 // Go-to-pose lead distance ratio (0-1)
 
 // Auton selector configuration constants
-#define AUTONS "Short", "Long", "SAWP", "LAWP", "Sit." // Names of autonomi, up to 10
+#define AUTONS "Short", "Long", "SAWP", "LAWP", "Sit" // Names of autonomi, up to 10
 #define HUE 0     // Color of theme from 0-359(H part of HSV)
-#define DEFAULT -1 // Default auton selected
+#define DEFAULT 0 // Default auton selected
 
 inline const char* autons[] = {AUTONS, ""};
 

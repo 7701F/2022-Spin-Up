@@ -22,9 +22,10 @@
 #ifndef _7701F_HEAD_H_
 #define _7701F_HEAD_H_
 
-#include "ARMS/config.h"
 #include "main.h"
-#include "pros/distance.hpp"
+// clang-format off
+#include "ARMS/config.h"
+// clang-format on
 #include "settings.h"
 
 // dependencies
@@ -52,11 +53,13 @@ inline pros::Motor conveyor(10, pros::E_MOTOR_GEAR_BLUE, true,
 
 /* Pistons */
 inline pros::ADIDigitalOut indexer('G');
+// endgame
+inline pros::ADIDigitalOut endgame2('F');
 inline pros::ADIDigitalOut endgame('H');
 
 /* Sensors */
 // inline pros::Distance indexerSensor(16);
-inline pros::Optical rollerSensor(15);
+inline pros::Optical rollerSensor(9);
 
 /* LEDs */
 // inline sylib::Addrled indexLights(22, 2, 64);
@@ -81,16 +84,22 @@ inline sylib::MedianFilter distanceFilter(5, 2, 1);
    }
  }*/
 
-/* Get the color of the Roller from the Optical Sensor */
+/* Get the color of the Roller from the Optical Sensor.
+
+ * 0 = no color.
+ * 1 = blue.
+ * 2 = red.
+ * 3 = idk.
+ */
 inline int getRollerColor() {
 	if (rollerSensor.get_proximity() < 200) {
 		return 0;
 	}
 
 	double hue = hueFilter.filter(rollerSensor.get_hue());
-	if (hue < 260 && hue > 230) {
+	if (hue < 265 && hue > 225) {
 		return 1; // blue
-	} else if (hue < 30 && hue > 0) {
+	} else if (hue < 20 && hue > 340) {
 		return 2; // red
 	} else {
 		return 3; // lol it doesnt know

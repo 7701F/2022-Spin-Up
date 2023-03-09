@@ -21,45 +21,31 @@
 */
 #include "7701.hpp"
 
+// handy macros for colors so we don't have to remember what color is what number
 namespace colors {
 const int BLUE = 1;
 const int RED = 2;
 const int ERROR = 3;
 } // namespace colors
 
+// set roller to red
 void setRollerRed() {
 	int rollerStartTime = pros::millis();
-	conveyor.move_velocity(100);
-	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
+	conveyor.move_velocity(-450);
+	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 400) {
 		pros::delay(10);
 	}
 	conveyor.move_velocity(0);
-	pros::delay(50);
-	rollerStartTime = pros::millis();
-	conveyor.move_velocity(100);
-	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
-		pros::delay(10);
-	}
-	conveyor.move_velocity(50);
-	pros::delay(250);
-	conveyor.move_velocity(0);
+	pros::delay(300);
 }
 
+// set roller to blue
 void setRollerBlue() {
 	int rollerStartTime = pros::millis();
-	conveyor.move_velocity(100);
-	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 1500) {
+	conveyor.move_velocity(-450);
+	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 400) {
 		pros::delay(10);
 	}
-	conveyor.move_velocity(0);
-	pros::delay(50);
-	rollerStartTime = pros::millis();
-	conveyor.move_velocity(100);
-	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 1500) {
-		pros::delay(10);
-	}
-	conveyor.move_velocity(50);
-	pros::delay(250);
 	conveyor.move_velocity(0);
 }
 
@@ -69,10 +55,11 @@ void fireDisc() {
 	indexState = !indexState;
 	indexer.set_value(indexState);
 
-	// wait for piston to fire, then retract 150ms later
+	// wait for piston to fire, then retract.
 	pros::delay(150);
 	indexState = !indexState;
 	indexer.set_value(indexState);
+	pros::delay(21);
 }
 
 // fire disc(s) from indexer
@@ -99,6 +86,7 @@ void fireDiscs(int discs) {
 void toggleEndgame() {
 	endgameState = !endgameState;
 	endgame.set_value(endgameState);
+	endgame2.set_value(endgameState);
 }
 
 /* Autonomous Functions */
@@ -123,22 +111,74 @@ void calibrateAutos() {
 void Wauton() {
 	using namespace arms::chassis;
 
-	// reset odom to correct position
+	move(7.7, 50);
+	turn(90, 50);
+
+	// move 10 inches forward
+	move(10, 76);
+
+	setRollerRed(); // we're playing for the red alliance for roller's sake
+
+	// move back then turn 90 degrees
+	move(-20, 66, arms::REVERSE);
+	turn(-90, 45, arms::RELATIVE);
+
+	move(19.5, 76); // move forward 24 inches
+
+	move(10, 76);   // move 10 inches forward and set the roller to the correct color
+	setRollerRed(); // we're playing for the red alliance for roller's sake
+
+	// move 20 inches back
+	move(-24, 40, arms::REVERSE);
+
+	// turn -135 degrees, and halfway thru we fire two discs for 10 points
+
+	// first, turn -90 to face the goal
+	turn(-90, 43, arms::RELATIVE);
+
 	arms::odom::reset({{0, 0}}, 0);
 
-	// move to the roller
-	move({10, -10, 90}, 100);
+	// face the target location,
 
-	// set the roller to the correct color
-	setRollerRed();
+	// fireDiscs(2) // fire two discs, it's a free 10 points, will help in rankings
 
-	// move back then turn
-	move({-10, 10, 180}, 100, arms::REVERSE);
+	turn(-45, 20, arms::RELATIVE); // turn -45 to face the endgame firing position
+
+	move(-15, 76, arms::REVERSE); // move 10 inches forward
+
+	turn(160, 50, arms::RELATIVE);
+	// toggleEndgame(); // fire endgame
+	return;
+
+	move(135, 60); // drive to the other side of the field (180 inches)
+
+	turn(90, 45, arms::RELATIVE); // turn 90 degrees
+
+	move(31.5, 90); // move 30 inches forward
+	setRollerRed(); // set the roller to the correct color
+
+	move(-21.5, 66, arms::REVERSE); // move back then turn
+
+	turn(-90, 45, arms::RELATIVE); // turn right 90 degrees
+
+	move(25, 76); // move forward 24 inches
+
+	move(10, 76); // move 10 inches forward
+
+	setRollerRed(); // set the roller to the correct color
+
+	move(-30, 40, arms::REVERSE); // move 30 inches back
+
+	// turn -135 degrees, and halfway thru we fire two discs for 10 points
+	turn(-90, 45, arms::RELATIVE); // first, turn -90 to face the goal
+
+	// fireDiscs(2) // fire two discs, it's a free 10 points, will help in rankinks
+
+	turn(-45, 45, arms::RELATIVE); // turn -45 to face the endgame firing position
+	                               // toggleEndgame(); // fire endgame
 }
 
-/* longAuto that drives forward 16.5 inches, sets our position to 0,0 (0), turns 90
- * degrees relitive to current position, then turns around, drives forward 16.5 inches
- */
+/* far side auton */
 void longAuto(int color, bool AWP) {
 	using namespace arms::chassis;
 
@@ -167,10 +207,10 @@ void longAuto(int color, bool AWP) {
 	// switch statement on color
 	switch (color) {
 		case 1:
-			setRollerRed();
+			setRollerBlue();
 			break;
 		case 2:
-			setRollerBlue();
+			setRollerRed();
 			break;
 		default:
 			break;
@@ -197,7 +237,7 @@ void longAuto(int color, bool AWP) {
 	fireDiscs(2);
 }
 
-/* shortAuto except it uses the arms::odom system for position */
+/* close side auton */
 void shortAuto(int color, bool AWP) {
 	using namespace arms::chassis;
 
@@ -205,27 +245,26 @@ void shortAuto(int color, bool AWP) {
 	arms::odom::reset({{-0, 0}}, 0);
 
 	// set our intake on
-	conveyor.move_velocity(450);
+	conveyor.move_velocity(-450);
 
 	// move to the roller
 	// drives forward 30 inches at 100% speed
-	move(30, 76, arms::ASYNC | arms::RELATIVE);
+	move(15, 76, arms::RELATIVE);
 
 	// set the roller to the correct color
 	// currently time based, will be changed to optical sensor based soon™
-	// conveyor.move_velocity(-100);
-	// pros::delay(500);
+	// conveyor.move_velocity(-500);
+	// pros::delay(600);
 	// conveyor.move_velocity(0);
-
-	// return;
+	// return
 
 	// switch statement on color
 	switch (color) {
 		case 1:
-			setRollerRed();
+			setRollerBlue();
 			break;
 		case 2:
-			setRollerBlue();
+			setRollerRed();
 			break;
 		default:
 			break;
@@ -291,7 +330,7 @@ void autonomous() {
 			shortAuto(colors::BLUE, false);
 			break;
 		case 0: // Programming Skills
-			calibrateAutos();
+			Wauton();
 			break;
 		case 1: // Red Short
 			shortAuto(colors::RED, false);
