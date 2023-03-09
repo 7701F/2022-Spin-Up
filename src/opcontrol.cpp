@@ -70,7 +70,6 @@ void prosBrake(bool on) {
 	}
 }
 
-/* Flywheel vars */
 // Update inteval (in mS) for the flywheel control loop
 #define FW_LOOP_SPEED 20
 
@@ -217,15 +216,7 @@ void opcontrol() {
 	// set brake mode
 	prosBrake(true);
 
-	// set optical sensor to 0% brightness
-	// rollerSensor.set_led_pwm(0);
-
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
-
-	// if (deFenestration::showScreen == true) {
-	// arms::selector::destroy();
-	// pros::Task displayTask(deFenestration::display);
-	// }
 
 	// Run Loop
 	while (true) {
@@ -256,10 +247,7 @@ void opcontrol() {
 		// clang-format on
 		prosBrake(pbrake, 1);
 
-		// Game Related Subsystems
-
 		// Frisbee Shooter Flywheel
-		// various bindings for flywheel speed
 		flywheel2PosState = master.get_digital_new_press(DIGITAL_L1);
 		flywheel3PosState = master.get_digital_new_press(DIGITAL_L2);
 
@@ -269,7 +257,7 @@ void opcontrol() {
 
 		// flywheel 17/21 speed
 		if (flywheel2PosState && fwON == true) {
-			deFenestration::Flywheel::FwVelocitySet(170, 0.81);
+			deFenestration::Flywheel::FwVelocitySet(200, 0.81);
 		}
 
 		// flywheel 2/3 speed
@@ -312,9 +300,8 @@ void opcontrol() {
 		 * and the button is pressed, the robot will begin the
 		 * autonomous routine to allow for easy testing.
 		 */
-		if (master.get_digital_new_press(DIGITAL_X))
+		if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
 			autonomous();
-		// if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
 
 		// Lastly, delay
 		pros::delay(20);
