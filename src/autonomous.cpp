@@ -65,7 +65,7 @@ void fireDisc() {
 // fire disc(s) from indexer
 void fireDiscs(int discs) {
 	// set the flywheel to the correct speed, then wait for it to be up to speed
-	deFenestration::Flywheel::FwVelocitySet(170, .92);
+	deFenestration::Flywheel::FwVelocitySet(165, .81);
 
 	// loop through firing discs
 	for (int i = 0; i < discs; i++) {
@@ -95,7 +95,7 @@ void toggleEndgame() {
 void calibrateAutos() {
 	using namespace arms::chassis;
 
-	prosBrake(false);
+	prosBrake(true, 1);
 
 	arms::odom::reset({{0, 0}}, 0);
 
@@ -111,6 +111,12 @@ void calibrateAutos() {
 void Wauton() {
 	using namespace arms::chassis;
 
+	// set the brake
+	prosBrake(true, 1);
+
+	// reset odom to correct position
+	arms::odom::reset({{0, 0}}, 0);
+
 	// move 10 inches forward
 	move(5, 76);
 
@@ -122,7 +128,7 @@ void Wauton() {
 
 	move(19.5, 76); // move forward 24 inches
 
-	move(5, 76);   // move 10 inches forward and set the roller to the correct color
+	move(5, 76);    // move 10 inches forward and set the roller to the correct color
 	setRollerRed(); // we're playing for the red alliance for roller's sake
 
 	// move 20 inches back
@@ -131,41 +137,44 @@ void Wauton() {
 	// turn -135 degrees, and halfway thru we fire two discs for 10 points
 
 	// first, turn -90 to face the goal
-	turn(-90, 43, arms::RELATIVE);
+	turn(90, 43, arms::RELATIVE);
 
 	// move(50, 50, arms::RELATIVE);
-	// fireDiscs(2) // fire two discs, it's a free 10 points, will help in rankings
+	fireDiscs(2); // fire two discs, it's a free 10 points, will help in rankings
 	// move(-50, 50, arms::REVERSE);
+
+	// turn 180
+	turn(180, 50, arms::RELATIVE);
 
 	turn(-45, 43, arms::RELATIVE); // turn -45 to face the endgame firing position
 
 	move(-9, 76, arms::REVERSE); // move 10 inches forward
 
 	turn(168, 50, arms::RELATIVE);
-	// toggleEndgame(); // fire endgame
+	toggleEndgame(); // fire endgame
 }
 
 /* far side auton */
 void longAuto(int color, bool AWP) {
 	using namespace arms::chassis;
 
+	// set the brake
+	prosBrake(true, 1);
+
 	// reset odom to correct position
 	arms::odom::reset({{0, 0}}, 0);
 
 	// move to the roller
-	move(16.5, 100);
+	move(-16.5, 76, arms::REVERSE);
 
-	// turn right 90 degrees
-	turn(90, 25, arms::RELATIVE);
+	// turn
+	turn(90, 50, arms::RELATIVE);
 
-	// move back then turn
-	move(-10, 100, arms::REVERSE);
-
-	// turn around
-	turn(90, 25, arms::RELATIVE);
+	// pre-spin up the roller
+	conveyor.move_velocity(-450);
 
 	// drive torwards the roller
-	move(24, 100);
+	move(24, 76);
 
 	// set the roller to the correct color
 	// conveyor.move_velocity(100);
@@ -186,8 +195,8 @@ void longAuto(int color, bool AWP) {
 	// wait 250 just to be safe
 	pros::delay(250);
 
-	// drive backwards
-	move(-10, 100, arms::REVERSE);
+	// drive forward 10 inches
+	move(10, 76);
 
 	// turn to the goal
 	turn({-147.6, -8.5}, 50);
@@ -208,8 +217,11 @@ void longAuto(int color, bool AWP) {
 void shortAuto(int color, bool AWP) {
 	using namespace arms::chassis;
 
+	// set the brake
+	prosBrake(true, 1);
+
 	// reset odom to correct position
-	arms::odom::reset({{-0, 0}}, 0);
+	arms::odom::reset({{0, 0}}, 0);
 
 	// set our intake on
 	conveyor.move_velocity(-450);
@@ -236,8 +248,6 @@ void shortAuto(int color, bool AWP) {
 		default:
 			break;
 	}
-
-	return;
 
 	// move back then turn
 	move(-10, 100, arms::REVERSE | arms::RELATIVE);
@@ -269,12 +279,6 @@ void shortAuto(int color, bool AWP) {
  * from where it left off.
  */
 void autonomous() {
-	// set brake to hold
-	// prosBrake(true, 1);
-
-	// reset odom
-	arms::odom::reset({{0, 0}}, 0);
-
 	printf("Running auton: %d\n", arms::selector::auton);
 
 	/* Auton Selector Logic */
