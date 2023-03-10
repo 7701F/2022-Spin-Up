@@ -257,12 +257,12 @@ void opcontrol() {
 
 		// flywheel 17/21 speed
 		if (flywheel2PosState && fwON == true) {
-			deFenestration::Flywheel::FwVelocitySet(200, 0.81);
+			deFenestration::Flywheel::FwVelocitySet(210, 0.81);
 		}
 
 		// flywheel 2/3 speed
 		if (flywheel3PosState && fwON == true) {
-			deFenestration::Flywheel::FwVelocitySet(140, .6);
+			deFenestration::Flywheel::FwVelocitySet(120, .6);
 		}
 
 		// flywheel off if fwON is false or no button is pressed
