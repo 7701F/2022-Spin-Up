@@ -128,7 +128,7 @@ void Wauton() {
 	turn(-90, 45, arms::RELATIVE);
 
 	move(18.89, 50); // move forward 24 inches
-	setRollerRed(); // we're playing for the red alliance for roller's sake
+	setRollerRed();  // we're playing for the red alliance for roller's sake
 
 	// move 20 inches back
 	move(-15.5, 40, arms::REVERSE);
@@ -162,7 +162,6 @@ void longAuto(int color, bool AWP) {
 
 	// set the brake
 	prosBrake(true, 1);
-
 
 	// move to the roller
 	move(-16.5, 76, arms::REVERSE);
