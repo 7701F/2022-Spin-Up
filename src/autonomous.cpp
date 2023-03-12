@@ -32,7 +32,7 @@ const int ERROR = 3;
 void setRollerRed() {
 	int rollerStartTime = pros::millis();
 	conveyor.move_velocity(-450);
-	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 400) {
+	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 800) {
 		pros::delay(10);
 	}
 	conveyor.move_velocity(0);
@@ -42,8 +42,8 @@ void setRollerRed() {
 // set roller to blue
 void setRollerBlue() {
 	int rollerStartTime = pros::millis();
-	conveyor.move_velocity(-450);
-	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 400) {
+	conveyor.move_velocity(-500);
+	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 800) {
 		pros::delay(10);
 	}
 	conveyor.move_velocity(0);
@@ -63,14 +63,14 @@ void fireDisc() {
 }
 
 // fire disc(s) from indexer
-void fireDiscs(int discs) {
+void fireDiscs(int discs, int rpm) {
 	// set the flywheel to the correct speed, then wait for it to be up to speed
-	deFenestration::Flywheel::FwVelocitySet(165, .81);
+	deFenestration::Flywheel::FwVelocitySet(rpm, .81);
 
 	// loop through firing discs
 	for (int i = 0; i < discs; i++) {
-		while (current_error > 10) {
-			pros::delay(10);
+		while (current_error > 3) {
+			pros::delay(30);
 		}
 
 		// fire piston and wait to ensure it is fired
@@ -115,33 +115,35 @@ void Wauton() {
 	prosBrake(true, 1);
 
 	// reset odom to correct position
-	arms::odom::reset({{0, 0}}, 0);
+	arms::odom::reset({{0, 0}}, 180);
 
 	// move 10 inches forward
-	move(5, 76);
+	move(7, 57);
 
 	setRollerRed(); // we're playing for the red alliance for roller's sake
+	// conveyor.move_velocity(0);
 
 	// move back then turn 90 degrees
-	move(-17.5, 66, arms::REVERSE);
+	move(-19, 66, arms::REVERSE);
 	turn(-90, 45, arms::RELATIVE);
 
-	move(19.5, 76); // move forward 24 inches
-
-	move(5, 76);    // move 10 inches forward and set the roller to the correct color
+	move(18.89, 50); // move forward 24 inches
 	setRollerRed(); // we're playing for the red alliance for roller's sake
 
 	// move 20 inches back
-	move(-15, 40, arms::REVERSE);
+	move(-15.5, 40, arms::REVERSE);
 
 	// turn -135 degrees, and halfway thru we fire two discs for 10 points
 
 	// first, turn -90 to face the goal
-	turn(90, 43, arms::RELATIVE);
+	turn({-147.6, 8.5}, 50);
+	turn(192, 56, arms::RELATIVE); // turn 180 to face ur mom
+	// turn(90, 43, arms::RELATIVE);
 
-	// move(50, 50, arms::RELATIVE);
-	fireDiscs(2); // fire two discs, it's a free 10 points, will help in rankings
-	// move(-50, 50, arms::REVERSE);
+	move(-30, 50, arms::REVERSE);
+	fireDiscs(2, 135); // fire two discs, it's a free 10 points, will help in rankings why
+	                   // you say disccs in the fire discs methodz
+	move(30, 50, arms::RELATIVE);
 
 	// turn 180
 	turn(180, 50, arms::RELATIVE);
@@ -150,7 +152,7 @@ void Wauton() {
 
 	move(-9, 76, arms::REVERSE); // move 10 inches forward
 
-	turn(168, 50, arms::RELATIVE);
+	turn(172, 50, arms::RELATIVE);
 	toggleEndgame(); // fire endgame
 }
 
@@ -161,8 +163,6 @@ void longAuto(int color, bool AWP) {
 	// set the brake
 	prosBrake(true, 1);
 
-	// reset odom to correct position
-	arms::odom::reset({{0, 0}}, 0);
 
 	// move to the roller
 	move(-16.5, 76, arms::REVERSE);
@@ -192,6 +192,9 @@ void longAuto(int color, bool AWP) {
 			break;
 	}
 
+	// reset odom to correct position
+	arms::odom::reset({{0, 0}}, 0);
+
 	// wait 250 just to be safe
 	pros::delay(250);
 
@@ -210,7 +213,7 @@ void longAuto(int color, bool AWP) {
 	}
 
 	// fire 2 discs
-	fireDiscs(2);
+	fireDiscs(2, 170);
 }
 
 /* close side auton */
@@ -221,21 +224,14 @@ void shortAuto(int color, bool AWP) {
 	prosBrake(true, 1);
 
 	// reset odom to correct position
-	arms::odom::reset({{0, 0}}, 0);
+	arms::odom::reset({{0, 0}}, 180);
 
 	// set our intake on
 	conveyor.move_velocity(-450);
 
 	// move to the roller
 	// drives forward 30 inches at 100% speed
-	move(15, 76, arms::RELATIVE);
-
-	// set the roller to the correct color
-	// currently time based, will be changed to optical sensor based soon™
-	// conveyor.move_velocity(-500);
-	// pros::delay(600);
-	// conveyor.move_velocity(0);
-	// return
+	move(6, 57);
 
 	// switch statement on color
 	switch (color) {
@@ -250,21 +246,20 @@ void shortAuto(int color, bool AWP) {
 	}
 
 	// move back then turn
-	move(-10, 100, arms::REVERSE | arms::RELATIVE);
-
-	// turn to the goal
-	turn({-147.6, -8.5}, 100);
-
-	// turn around
-	turn(180, 25, arms::RELATIVE);
+	move(-6, 100, arms::REVERSE);
 
 	// check if AWP is enabled, else exit (return)
 	if (!AWP) {
 		return;
 	}
 
+	// turn to the goal
+	turn({-147.6, -8.5}, 100);
+
+	// turn around
+	turn(198, 50, arms::RELATIVE);
 	// fire 2 discs
-	fireDiscs(2);
+	fireDiscs(2, 190);
 }
 
 /**
