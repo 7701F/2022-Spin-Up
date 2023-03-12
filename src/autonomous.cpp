@@ -31,7 +31,7 @@ const int ERROR = 3;
 // set roller to red
 void setRollerRed() {
 	int rollerStartTime = pros::millis();
-	conveyor.move_velocity(-450);
+	conveyor.move_velocity(-500);
 	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 800) {
 		pros::delay(10);
 	}
@@ -171,7 +171,7 @@ void longAuto(int color, bool AWP) {
 	turn(90, 50, arms::RELATIVE);
 
 	// pre-spin up the roller
-	conveyor.move_velocity(-450);
+	conveyor.move_velocity(-470);
 
 	// drive torwards the roller
 	move(24, 76);
@@ -227,7 +227,7 @@ void shortAuto(int color, bool AWP) {
 	arms::odom::reset({{0, 0}}, 180);
 
 	// set our intake on
-	conveyor.move_velocity(-450);
+	conveyor.move_velocity(-470);
 
 	// move to the roller
 	// drives forward 30 inches at 100% speed
