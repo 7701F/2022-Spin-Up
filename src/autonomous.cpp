@@ -118,32 +118,31 @@ void Wauton() {
 	arms::odom::reset({{0, 0}}, 180);
 
 	// move 10 inches forward
-	move(7, 57);
-
+	move(7, 100);
 	setRollerRed(); // we're playing for the red alliance for roller's sake
 
 	// move back then turn 90 degrees
 	move(-19, 66, arms::REVERSE);
-	turn(-90, 45, arms::RELATIVE);
+	turn(-90, 50, arms::RELATIVE);
 
 	move(12, 50);
 
-	move(7, 57);
+	move(7, 100);
 	setRollerRed(); // we're playing for the red alliance for roller's sake
 
-	move(-15.5, 40, arms::REVERSE);
+	move(-15.5, 80, arms::REVERSE);
 
 	// turn -135 degrees, and halfway thru we fire two discs for 10 points
 	turn({-147.6, 8.5}, 50);
 	turn(192, 56, arms::RELATIVE); // turn 180 to face ur mom
 
-	move(-30, 76, arms::REVERSE);
+	move(-30, 80, arms::REVERSE);
 	fireDiscs(2, 135); // fire two discs, it's a free 10 points, will help in rankings why you say discs in the fire discs methods
-	move(30, 76, arms::RELATIVE);
+	move(30, 80, arms::RELATIVE);
 
 	turn(180, 50, arms::RELATIVE);
 
-	turn(-45, 43, arms::RELATIVE); // turn -45 to face the endgame firing position
+	turn(-45, 50, arms::RELATIVE); // turn -45 to face the endgame firing position
 
 	move(-9, 76, arms::REVERSE); // move 10 inches forward
 
