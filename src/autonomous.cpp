@@ -56,7 +56,7 @@ void fireDisc() {
 	indexer.set_value(indexState);
 
 	// wait for piston to fire, then retract.
-	pros::delay(150);
+	pros::delay(135);
 	indexState = !indexState;
 	indexer.set_value(indexState);
 	pros::delay(21);
