@@ -121,31 +121,26 @@ void Wauton() {
 	move(7, 57);
 
 	setRollerRed(); // we're playing for the red alliance for roller's sake
-	// conveyor.move_velocity(0);
 
 	// move back then turn 90 degrees
 	move(-19, 66, arms::REVERSE);
 	turn(-90, 45, arms::RELATIVE);
 
-	move(18.89, 50); // move forward 24 inches
-	setRollerRed();  // we're playing for the red alliance for roller's sake
+	move(12, 50);
 
-	// move 20 inches back
+	move(7, 57);
+	setRollerRed(); // we're playing for the red alliance for roller's sake
+
 	move(-15.5, 40, arms::REVERSE);
 
 	// turn -135 degrees, and halfway thru we fire two discs for 10 points
-
-	// first, turn -90 to face the goal
 	turn({-147.6, 8.5}, 50);
 	turn(192, 56, arms::RELATIVE); // turn 180 to face ur mom
-	// turn(90, 43, arms::RELATIVE);
 
-	move(-30, 50, arms::REVERSE);
-	fireDiscs(2, 135); // fire two discs, it's a free 10 points, will help in rankings why
-	                   // you say disccs in the fire discs methodz
-	move(30, 50, arms::RELATIVE);
+	move(-30, 76, arms::REVERSE);
+	fireDiscs(2, 135); // fire two discs, it's a free 10 points, will help in rankings why you say discs in the fire discs methods
+	move(30, 76, arms::RELATIVE);
 
-	// turn 180
 	turn(180, 50, arms::RELATIVE);
 
 	turn(-45, 43, arms::RELATIVE); // turn -45 to face the endgame firing position
