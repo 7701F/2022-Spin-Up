@@ -2,7 +2,7 @@
 #define _ARMS_CONFIG_H_
 
 #include "ARMS/api.h"
-#include "ARMS/odom.h"
+
 
 namespace arms {
 
