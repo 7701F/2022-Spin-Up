@@ -69,13 +69,13 @@ void fireDiscs(int discs, int rpm) {
 
 	// loop through firing discs
 	for (int i = 0; i < discs; i++) {
-		while (current_error > 3) {
+		while (current_error > 5) {
 			pros::delay(30);
 		}
 
 		// fire piston and wait to ensure it is fired
 		fireDisc();
-		pros::delay(125);
+		pros::delay(150);
 	}
 
 	// spin down flywheel
@@ -137,8 +137,7 @@ void Wauton() {
 	turn(192, 56, arms::RELATIVE); // turn 180 to face ur mom
 
 	move(-30, 80, arms::REVERSE);
-	fireDiscs(2, 135); // fire two discs, it's a free 10 points, will help in rankings why
-	                   // you say discs in the fire discs methods
+	fireDiscs(2, 135); // fire two discs, it's a free 10 points, will help in rankings
 	move(30, 80, arms::RELATIVE);
 
 	turn(180, 50, arms::RELATIVE);
