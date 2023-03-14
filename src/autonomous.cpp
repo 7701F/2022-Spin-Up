@@ -138,7 +138,7 @@ void Sauton() {
 
 	move(-30, 80, arms::REVERSE);
 	fireDiscs(2, 135); // fire two discs, it's a free 10 points, will help in rankings
-	move(30, 80, arms::RELATIVE);
+	move(30, 80);
 
 	turn(180, 50, arms::RELATIVE);
 
