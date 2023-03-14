@@ -29,7 +29,7 @@ namespace deFenestration {
 const bool showScreen = true;
 
 /* program version definition */
-const std::string version = "4.2.0";
+const std::string CODENAME = "DF23-6M";
 
 } // namespace deFenestration
 #endif // _7701F_SETTINGS_H_

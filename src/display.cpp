@@ -58,8 +58,7 @@ void create() {
 	while (true) {
 		std::stringstream stats;
 		stats << "Flywheel Info:\n"
-		      << "\n  Flywheel MVel: " << (motor_velocity)
-		      << "\n  Flywheel OVel: " << (motor_velocity * 16.3333333334);
+		      << "\n  Flywheel MVel: " << (motor_velocity) << "\n  Flywheel OVel: " << (motor_velocity * 16.3333333334);
 
 		// stats << "(" << arms::odom::getPosition().x << "," << arms::odom::getPosition().y
 		// << ") " << arms::odom::getHeading();

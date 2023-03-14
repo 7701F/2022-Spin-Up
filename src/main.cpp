@@ -35,36 +35,40 @@ void initialize() {
 	// set optical sensor LED to 100% brightness
 	rollerSensor.set_led_pwm(100);
 
-	// Inititalize Flywheel
+	/* Initialize Controler */
+	std::stringstream versionstr;
+	versionstr << "CODENAME: " << deFenestration::CODENAME << "\r";
+	master.print(2, 0, versionstr.str().c_str());
+
+	/* Inititalize Flywheel */
 	pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
 
-	// /* Controller Status Display */
+	/* Controller Status Display */
 	pros::Task controllerTask{[=] {
 		/*
 		 * Only print every 50ms, the controller text update rate is slow.
 		 * Any input faster than this will be dropped.
 		 */
 		int count;
-		std::string textA;
+		std::string autonName;
 		while (true) {
 			if (count == 15) {
 				std::stringstream line1;
-				line1 << "Brake: " << (pbrake ? "ON" : "OFF") << " FW:" << (fwON ? "Y" : "N")
-				      << "\r";
+				line1 << "Brake: " << (pbrake ? "ON" : "OFF") << " FW:" << (fwON ? "Y" : "N") << "\r";
 				master.print(0, 0, line1.str().c_str());
 			} else if (count == 10) {
 				std::stringstream autonstr;
-				int sel_auton = abs(arms::selector::auton);
-				if (sel_auton != 0) {
-					textA = arms::autons[sel_auton - 1];
+				int selAuton = abs(arms::selector::auton);
+				if (selAuton != 0) {
+					autonName = arms::autons[selAuton - 1];
 				} else {
-					textA = "skills";
+					autonName = "SKLS";
 				}
 
 				if (arms::selector::auton > 0) {
-					autonstr << "Auton: R " << textA << "\r";
+					autonstr << "Auton: R " << autonName << "\r";
 				} else if (arms::selector::auton < 0) {
-					autonstr << "Auton: B " << textA << "\r";
+					autonstr << "Auton: B " << autonName << "\r";
 				} else if (arms::selector::auton == 0) {
 					autonstr << "Auton: SKLS"
 					         << "\r";
@@ -72,9 +76,12 @@ void initialize() {
 
 				master.print(1, 0, autonstr.str().c_str());
 			} else if (count == 5) {
-				std::stringstream versionstr;
-				versionstr << "Version: " << deFenestration::version << "\r";
-				master.print(2, 0, versionstr.str().c_str());
+				// float rotation = arms::odom::getHeading();
+				// float lef_position = arms::odom::getLeftEncoder();
+				// float middle_position = arms::odom::getMiddleEncoder();
+				// printf("rotation: %f  left: %f middle: %f\n", rotation, lef_position,
+				// middle_position);
+				printf("x: %f y: %f, h: %f\n", arms::odom::getPosition().x, arms::odom::getPosition().y, arms::odom::getHeading());
 			}
 
 			count++;
