@@ -59,7 +59,7 @@ inline pros::ADIDigitalOut endgame2('F');
 inline pros::ADIDigitalOut endgame('H');
 
 /* Sensors */
-// inline pros::Distance indexerSensor(16);
+inline pros::Distance indexerSensor(16);
 inline pros::Optical rollerSensor(9);
 
 /* LEDs */
@@ -71,19 +71,19 @@ inline sylib::MedianFilter distanceFilter(5, 2, 1);
 
 /* Util Functions */
 
-/* Gets the # of Frisbees in the Indexer */ /*
- inline int getFrisbeesInIndexer() {
-   int sensorDistance = distanceFilter.filter(indexerSensor.get());
-   if (sensorDistance > 105) {
-     return 0;
-   } else if (sensorDistance > 90) {
-     return 1;
-   } else if (sensorDistance > 70) {
-     return 2;
-   } else {
-     return 3;
-   }
- }*/
+/* Gets the # of Frisbees in the Indexer */
+inline int getDiscsInIndexer() {
+	int sensorDistance = distanceFilter.filter(indexerSensor.get());
+	if (sensorDistance > 105) {
+		return 0;
+	} else if (sensorDistance > 90) {
+		return 1;
+	} else if (sensorDistance > 70) {
+		return 2;
+	} else {
+		return 3;
+	}
+}
 
 /* Get the color of the Roller from the Optical Sensor.
 
@@ -176,8 +176,6 @@ void prosBrake(bool on, int type);
 void prosBrake(bool on);
 
 // Declare game system functions.
-int getFrisbeesInIndexer();
-int getRollerColor();
 void fireDisc();
 void toggleEndgame();
 #endif // _7701F_HEAD_H_
