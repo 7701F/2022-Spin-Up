@@ -209,7 +209,7 @@ std::int32_t exponentialDrive(std::int32_t joyVal) {
  */
 void opcontrol() {
 	// set brake mode
-	prosBrake(true);
+	prosBrake(true, 1);
 
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 
@@ -234,29 +234,27 @@ void opcontrol() {
 		if (master.get_digital_new_press(DIGITAL_B) == 1)
 			pbrake = !pbrake;
 
+		// Drive Control
+		prosBrake(pbrake, 1);
 		// clang-format off
 		arms::chassis::arcade(
 			exponentialDrive(leftJoyStick * (double)100 / 127),
 			exponentialDrive(rightJoyStick * (double)100 / 127)
 		);
 		// clang-format on
-		prosBrake(pbrake, 1);
 
-		// Frisbee Shooter Flywheel
-		flywheel2PosState = master.get_digital_new_press(DIGITAL_L1);
-		flywheel3PosState = master.get_digital_new_press(DIGITAL_L2);
-
+		// Disc Flywheel
 		// flywheel on toggle
 		if (master.get_digital_new_press(DIGITAL_A))
 			fwON = !fwON;
 
 		// flywheel full speed
-		if (flywheel2PosState && fwON == true) {
+		if (master.get_digital_new_press(DIGITAL_L1) && fwON == true) {
 			deFenestration::Flywheel::FwVelocitySet(210, 0.81);
 		}
 
 		// flywheel 2/3 speed
-		if (flywheel3PosState && fwON == true) {
+		if (master.get_digital_new_press(DIGITAL_L2) && fwON == true) {
 			deFenestration::Flywheel::FwVelocitySet(120, .6);
 		}
 
@@ -265,7 +263,7 @@ void opcontrol() {
 			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 		}
 
-		// Frisbee Conveyor / Intake
+		// Disc Intake & Roller Mechanism
 		if (master.get_digital(DIGITAL_R1)) {
 			// intake
 			conveyor.move_velocity(600);
@@ -284,7 +282,7 @@ void opcontrol() {
 		}
 		EprevPistonState = EpistonState;
 
-		// flywheel launcher
+		// Indexer, launches discs
 		if (master.get_digital_new_press(DIGITAL_R2))
 			fireDisc();
 
