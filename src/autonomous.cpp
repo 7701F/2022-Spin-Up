@@ -108,7 +108,7 @@ void calibrateAutos() {
 
 /* Programming Skills */
 /* Wauton */
-void Wauton() {
+void Sauton() {
 	using namespace arms::chassis;
 
 	// set the brake
@@ -148,6 +148,52 @@ void Wauton() {
 
 	turn(172, 50, arms::RELATIVE);
 	toggleEndgame(); // fire endgame
+}
+
+void Wauton() {
+	using namespace arms::chassis;
+
+	// set the brake
+	prosBrake(true, 1);
+
+	// reset odom to correct position
+	arms::odom::reset({{0, 0}}, 180);
+
+	move(7, 100);
+	setRollerRed();
+
+	// move back then turn 90 degrees
+	move(-19, 66, arms::REVERSE);
+	turn(-90, 50, arms::RELATIVE);
+
+	move(12, 50);
+
+	move(7, 100);
+	setRollerRed();
+
+	move(-5, 80, arms::REVERSE);
+	turn(-67, 50, arms::RELATIVE);
+	move(50, 80);
+
+	turn({-147.6, 8.5}, 50);
+	turn(180, 50, arms::RELATIVE);
+
+	fireDiscs(2, 135);
+
+	deFenestration::Flywheel::FwVelocitySet(135, .81);
+
+	for (int i = 0; i < 7; i++) {
+		while (getDiscsInIndexer() < 1) {
+			pros::delay(7);
+		}
+
+		// fire disc
+		fireDisc();
+	}
+
+	deFenestration::Flywheel::FwVelocitySet(0, 0);
+
+	move({0, 0, 0});
 }
 
 /* far side auton */
