@@ -32,13 +32,16 @@ void initialize() {
 	arms::init();
 	sylib::initialize();
 
+	/* Initialize Controler */
+	master.print(0, 0, "");
+	pros::delay(50);
+	master.print(1, 0, "");
+	pros::delay(50);
+	master.print(2, 0, deFenestration::CODENAME.c_str());
+	pros::delay(50);
+
 	// set optical sensor LED to 100% brightness
 	rollerSensor.set_led_pwm(100);
-
-	/* Initialize Controler */
-	std::stringstream versionstr;
-	versionstr << "CODENAME: " << deFenestration::CODENAME << "\r";
-	master.print(2, 0, versionstr.str().c_str());
 
 	/* Inititalize Flywheel */
 	pros::Task fwTask(deFenestration::Flywheel::FwControlTask);
@@ -81,6 +84,7 @@ void initialize() {
 				// float middle_position = arms::odom::getMiddleEncoder();
 				// printf("rotation: %f  left: %f middle: %f\n", rotation, lef_position,
 				// middle_position);
+
 				printf("x: %f y: %f, h: %f\n", arms::odom::getPosition().x, arms::odom::getPosition().y, arms::odom::getHeading());
 			}
 
