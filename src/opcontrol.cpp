@@ -233,10 +233,10 @@ void opcontrol() {
 		 */
 		if (master.get_digital_new_press(DIGITAL_B) == 1)
 			pbrake = !pbrake;
-
-		// Drive Control
 		prosBrake(pbrake, 1);
+
 		// clang-format off
+		// Drive Control
 		arms::chassis::arcade(
 			exponentialDrive(leftJoyStick * (double)100 / 127),
 			exponentialDrive(rightJoyStick * (double)100 / 127)
