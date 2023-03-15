@@ -173,7 +173,7 @@ void Wauton() {
 
 	move(-10, 80, arms::REVERSE);
 
-	move({25, 0, 90});
+	move({25, 0, 270});
 	turn({147.6, 8.5}, 50);
 	turn(180, 50, arms::RELATIVE);
 	move(-50, 80, arms::REVERSE);
