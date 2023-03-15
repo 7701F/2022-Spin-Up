@@ -171,12 +171,13 @@ void Wauton() {
 	move(7, 100);
 	setRollerRed();
 
-	move(-5, 80, arms::REVERSE);
-	turn(-67, 50, arms::RELATIVE);
-	move(50, 80);
+	move(-10, 80, arms::REVERSE);
 
-	turn({-147.6, 8.5}, 50);
+
+	move({25, 0, 90});
+	turn({147.6, 8.5}, 50);
 	turn(180, 50, arms::RELATIVE);
+	move(-50, 80, arms::REVERSE);
 
 	fireDiscs(2, 135);
 
