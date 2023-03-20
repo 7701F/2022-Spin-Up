@@ -21,14 +21,16 @@
 */
 #include "7701.hpp"
 
-// handy macros for colors so we don't have to remember what color is what number
 namespace colors {
+/// @brief Blue
 const int BLUE = 1;
+/// @brief Red
 const int RED = 2;
+/// @brief Error (no color detected)
 const int ERROR = 3;
 } // namespace colors
 
-// set roller to red
+/// @brief Set the roller to red using the optical sensor
 void setRollerRed() {
 	int rollerStartTime = pros::millis();
 	conveyor.move_velocity(-500);
@@ -36,10 +38,10 @@ void setRollerRed() {
 		pros::delay(10);
 	}
 	conveyor.move_velocity(0);
-	pros::delay(300);
+	pros::delay(100);
 }
 
-// set roller to blue
+/// @brief Set the roller to blue using the optical sensor
 void setRollerBlue() {
 	int rollerStartTime = pros::millis();
 	conveyor.move_velocity(-500);
@@ -47,9 +49,10 @@ void setRollerBlue() {
 		pros::delay(10);
 	}
 	conveyor.move_velocity(0);
+	pros::delay(100);
 }
 
-// fire disc from indexer
+/// @brief Fire a single disc from the indexer
 void fireDisc() {
 	// extend piston to fire
 	indexState = !indexState;
@@ -59,17 +62,22 @@ void fireDisc() {
 	pros::delay(135);
 	indexState = !indexState;
 	indexer.set_value(indexState);
-	pros::delay(21);
+	pros::delay(5);
 }
 
-// fire disc(s) from indexer
+/// @brief  Fire a specified number of discs at a specified rpm
+/// @param discs number of discs to fire
+/// @param rpm rpm to fire discs at (will wait for flywheel to reach this speed for each disc)
 void fireDiscs(int discs, int rpm) {
+	float frpm = rpm;
+	float predicted_drive = ((frpm / 210) + .02);
+
 	// set the flywheel to the correct speed, then wait for it to be up to speed
-	deFenestration::Flywheel::FwVelocitySet(rpm, .81);
+	deFenestration::Flywheel::FwVelocitySet(rpm, predicted_drive);
 
 	// loop through firing discs
 	for (int i = 0; i < discs; i++) {
-		while (current_error > 5) {
+		while (current_error > 4) {
 			pros::delay(30);
 		}
 
@@ -82,16 +90,14 @@ void fireDiscs(int discs, int rpm) {
 	deFenestration::Flywheel::FwVelocitySet(0, 0);
 }
 
-// function for toggling the endgame
+/// @brief Fires the endgame pistons, deploying our 7 string shooter
 void toggleEndgame() {
 	endgameState = !endgameState;
 	endgame.set_value(endgameState);
 	endgame2.set_value(endgameState);
 }
 
-/* Autonomous Functions */
-
-// calibrate robot distance for movement
+/// @brief Calibration auto
 void calibrateAutos() {
 	using namespace arms::chassis;
 
@@ -100,14 +106,13 @@ void calibrateAutos() {
 	arms::odom::reset({{0, 0}}, 0);
 
 	// move forward 5 inches
-	// move(5, 60, arms::RELATIVE);
+	move(45, 60, arms::RELATIVE);
 
 	// turn right 90 degrees
-	// turn({0, 10}, 60, arms::RELATIVE);
+	turn({0, 10}, 60, arms::RELATIVE);
 }
 
-/* Programming Skills */
-/* Wauton */
+/// @brief 90 pt theoretical Programming Skills Autonomous Routine
 void Sauton() {
 	using namespace arms::chassis;
 
@@ -147,9 +152,10 @@ void Sauton() {
 	move(-9, 76, arms::REVERSE); // move 10 inches forward
 
 	turn(172, 50, arms::RELATIVE);
-	toggleEndgame(); // fire endgame
+	// toggleEndgame(); // fire endgame
 }
 
+/// @brief 174 pt theoretical Programming Skills Autonomous Routine
 void Wauton() {
 	using namespace arms::chassis;
 
@@ -196,7 +202,55 @@ void Wauton() {
 	move({0, 0, 0});
 }
 
-/* far side auton */
+/// @brief Extra bit for Long Side AWP that goes to the row of discs and shoots 3 more discs
+void longAWP() {
+	using namespace arms::chassis;
+
+	turn(-45, 50, arms::RELATIVE);
+	turn(-90, 50, arms::RELATIVE);
+
+	// move to the row of discs
+	move(30, 100);
+
+	// turn on the intake
+	conveyor.move_velocity(500);
+
+	// move to the row of discs
+	move(30, 100);
+
+	// turn on the goal
+	turn({-147.6, -8.5}, 50);
+
+	// turn around so the flywheel is facing the goal
+	turn(180, 25, arms::RELATIVE);
+
+	// fire 2 discs
+	fireDiscs(2, 185);
+}
+
+/// @brief Extra bit for Short Side AWP that goes to the row of discs and shoots 3 more discs
+void shortAWP() {
+	using namespace arms::chassis;
+
+	// move to the row of discs
+	turn(-45, 50, arms::RELATIVE);
+
+	// turn on the intake
+	conveyor.move_velocity(500);
+
+	// move to the row of discs
+	move(30, 100);
+
+	// turn on the goal
+	turn({-147.6, -8.5}, 50);
+
+	// turn around so the flywheel is facing the goal
+	turn(180, 80, arms::RELATIVE);
+}
+
+/// @brief Long Side Autonomous Routine, parameters are color and whether or not we're doing AWP
+/// @param color Refer to COLOR enum
+/// @param AWP Whether or not we're doing AWP (bool)
 void longAuto(int color, bool AWP) {
 	using namespace arms::chassis;
 
@@ -204,7 +258,7 @@ void longAuto(int color, bool AWP) {
 	prosBrake(true, 1);
 
 	// move to the roller
-	move(-16.5, 76, arms::REVERSE);
+	move(-16.5, 100, arms::REVERSE);
 
 	// turn
 	turn(90, 50, arms::RELATIVE);
@@ -213,13 +267,7 @@ void longAuto(int color, bool AWP) {
 	conveyor.move_velocity(-470);
 
 	// drive torwards the roller
-	move(24, 76);
-
-	// set the roller to the correct color
-	// conveyor.move_velocity(100);
-	// pros::delay(500);
-	// conveyor.move_velocity(0);
-	// switch statement on color
+	move(7, 76);
 	switch (color) {
 		case 1:
 			setRollerBlue();
@@ -232,30 +280,30 @@ void longAuto(int color, bool AWP) {
 	}
 
 	// reset odom to correct position
-	arms::odom::reset({{0, 0}}, 0);
+	arms::odom::reset({{0, 0}}, 180);
 
-	// wait 250 just to be safe
-	pros::delay(250);
-
-	// drive forward 10 inches
-	move(10, 76);
-
+	move(-10, 76, arms::REVERSE);
 	// turn to the goal
 	turn({-147.6, -8.5}, 50);
 
 	// turn around so the flywheel is facing the goal
 	turn(180, 25, arms::RELATIVE);
 
+	// fire 2 discs
+	fireDiscs(2, 185);
+
 	// check if AWP is enabled, else exit (return)
 	if (!AWP) {
+		longAWP();
+		return;
+	} else {
 		return;
 	}
-
-	// fire 2 discs
-	fireDiscs(2, 170);
 }
 
-/* close side auton */
+/// @brief Short Side Autonomous Routine, parameters are color and whether or not we're doing AWP
+/// @param color Refer to COLOR enum
+/// @param AWP Whether or not we're doing AWP (bool)
 void shortAuto(int color, bool AWP) {
 	using namespace arms::chassis;
 
@@ -269,7 +317,6 @@ void shortAuto(int color, bool AWP) {
 	conveyor.move_velocity(-470);
 
 	// move to the roller
-	// drives forward 30 inches at 100% speed
 	move(6, 57);
 
 	// switch statement on color
@@ -287,11 +334,6 @@ void shortAuto(int color, bool AWP) {
 	// move back then turn
 	move(-6, 100, arms::REVERSE);
 
-	// check if AWP is enabled, else exit (return)
-	if (!AWP) {
-		return;
-	}
-
 	// turn to the goal
 	turn({-147.6, -8.5}, 100);
 
@@ -299,6 +341,14 @@ void shortAuto(int color, bool AWP) {
 	turn(198, 50, arms::RELATIVE);
 	// fire 2 discs
 	fireDiscs(2, 190);
+
+	// check if AWP is enabled, else exit (return)
+	if (!AWP) {
+		shortAWP();
+		return;
+	} else {
+		return;
+	}
 }
 
 /**

@@ -21,7 +21,9 @@
 */
 #include "7701.hpp"
 
-/* Smart boy motor brake, additional parameter to set brake type */
+/// @brief Smart boy motor brake, additional parameter to set brake type
+/// @param on true to brake, false to coast
+/// @param type 0 to brake, 1 to hold
 void prosBrake(bool on, int type) {
 	if (on == true) {
 		// pros::E_MOTOR_BRAKE_HOLD if type is set to 0
@@ -48,7 +50,8 @@ void prosBrake(bool on, int type) {
 	}
 }
 
-/* Smart boy motor brake */
+/// @brief Smart boy motor brake
+/// @param on true to brake, false to coast
 void prosBrake(bool on) {
 	if (on == true) {
 		// actively holds position
@@ -73,19 +76,16 @@ void prosBrake(bool on) {
 
 namespace deFenestration::Flywheel {
 
-/* Set motor voltage equal to desired velocity
- * value: motor control value
- */
+/// @brief Flywheel motor velocity to voltage conversion
+/// @param value motor velocity in RPM
 void FwMotorSet(int value) {
-	int x;
-	x = (value * 12000) / 200;
+	int x = (value * 12000) / 210;
 	fw.move_voltage(x);
 }
 
-/* Set motor velocity
- * velocity: desired velocity
- * predicted_drive: estimated open loop motor drive
- */
+/// @brief Outward facing function to set flywheel velocity
+/// @param velocity target velocity (motor rpm)
+/// @param predicted_drive predicted open loop drive value
 void FwVelocitySet(int velocity, float predicted_drive) {
 	// set target_velocity velocity (motor rpm)
 	target_velocity = velocity;
@@ -102,7 +102,7 @@ void FwVelocitySet(int velocity, float predicted_drive) {
 	drive_at_zero = 0;
 }
 
-/* Calculate the current flywheel motor velocity */
+/// @brief Calculate the flywheel velocity
 void FwCalculateSpeed() {
 	current_time = pros::millis();
 	delta_ms = 1000.0 / (current_time - millis_last);
@@ -119,7 +119,7 @@ void FwCalculateSpeed() {
 	millis_last = current_time;
 }
 
-/* Update the velocity tbh controller variables */
+/// @brief Update the velocity tbh controller variables
 void FwControlUpdateVelocityTbh() {
 	// calculate error in velocity
 	// target_velocity is desired velocity
@@ -154,7 +154,7 @@ void FwControlUpdateVelocityTbh() {
 	last_error = current_error;
 }
 
-/* Task to control the velocity of the flywheel */
+/// @brief Flywheel control task
 void FwControlTask() {
 	// Set the gain
 	// gain = 0.0005;
@@ -186,11 +186,11 @@ void FwControlTask() {
 
 } // namespace deFenestration::Flywheel
 
-/* Exponential Drive Control
- * If bypass is set to true we switch to direct input,
- * bypassing the exponential curve
- */
+/// @brief Exponential drive function, uses a cubic function to scale joystick values
+/// @param joyVal joystick value
+/// @return scaled joystick value
 std::int32_t exponentialDrive(std::int32_t joyVal) {
+	// return joyVal;
 	return pow(joyVal, 3) / 10000;
 }
 
@@ -211,20 +211,28 @@ void opcontrol() {
 	// set brake mode
 	prosBrake(true, 1);
 
+	// set flywheel velocity to 0
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
+	// set intake velocity to 0
+	conveyor.move_velocity(0);
+
+	// set current limit
+	// arms::chassis::leftMotors->set_voltage_limit(12000);
+	// arms::chassis::rightMotors->set_voltage_limit(12000);
+
+	// set conveyor current limit
+	// conveyor.set_current_limit(7000);
 
 	// Run Loop
 	while (true) {
-		/* Steering
-		 * Handled by ARMS
-		 */
-		int leftJoyStick = master.get_analog(ANALOG_LEFT_Y);
-		int rightJoyStick = master.get_analog(ANALOG_RIGHT_X);
+		/* Steering */
+		int leftJoyStick = (master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127);
+		int rightJoyStick = (master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127);
 
 		// Minor deadzone to account for stick drift
-		if (abs(leftJoyStick) < 3)
+		if (abs(leftJoyStick) < 1.5)
 			leftJoyStick = 0;
-		if (abs(rightJoyStick) < 3)
+		if (abs(rightJoyStick) < 1.5)
 			rightJoyStick = 0;
 
 		/* Brake System
@@ -238,19 +246,18 @@ void opcontrol() {
 		// clang-format off
 		// Drive Control
 		arms::chassis::arcade(
-			exponentialDrive(leftJoyStick * (double)100 / 127),
-			exponentialDrive(rightJoyStick * (double)100 / 127)
+			exponentialDrive(leftJoyStick),
+			exponentialDrive(rightJoyStick)
 		);
 		// clang-format on
 
 		// Disc Flywheel
-		// flywheel on toggle
 		if (master.get_digital_new_press(DIGITAL_A))
 			fwON = !fwON;
 
 		// flywheel full speed
 		if (master.get_digital_new_press(DIGITAL_L1) && fwON == true) {
-			deFenestration::Flywheel::FwVelocitySet(210, 0.81);
+			deFenestration::Flywheel::FwVelocitySet(198, 0.81);
 		}
 
 		// flywheel 2/3 speed
@@ -269,7 +276,7 @@ void opcontrol() {
 			conveyor.move_velocity(600);
 		} else if (master.get_digital(DIGITAL_Y)) {
 			// outtake
-			conveyor.move_velocity(-450);
+			conveyor.move_velocity(-600);
 		} else {
 			// stop if neither button is pressed
 			conveyor.move_velocity(0);

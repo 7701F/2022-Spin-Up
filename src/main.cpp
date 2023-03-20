@@ -79,12 +79,6 @@ void initialize() {
 
 				master.print(1, 0, autonstr.str().c_str());
 			} else if (count == 5) {
-				// float rotation = arms::odom::getHeading();
-				// float lef_position = arms::odom::getLeftEncoder();
-				// float middle_position = arms::odom::getMiddleEncoder();
-				// printf("rotation: %f  left: %f middle: %f\n", rotation, lef_position,
-				// middle_position);
-
 				printf("x: %f y: %f, h: %f\n", arms::odom::getPosition().x, arms::odom::getPosition().y, arms::odom::getHeading());
 			}
 

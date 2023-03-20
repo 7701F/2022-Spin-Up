@@ -25,7 +25,7 @@ lv_obj_t* scr = lv_obj_create(NULL, NULL);
 
 // Custom Display Function
 namespace deFenestration::display {
-// Create a new custom display object
+/// @brief Display a message on the screen
 void create() {
 	// Background Style
 	static lv_style_t backgroundStyle;
@@ -70,7 +70,7 @@ void create() {
 	}
 }
 
-// Destroys the display
+/// @brief Destroy the display
 void destroy() {
 	lv_obj_del(scr);
 }
