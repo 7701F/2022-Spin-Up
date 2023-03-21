@@ -7,14 +7,12 @@
 #ifndef _7701F_HEAD_H_
 #define _7701F_HEAD_H_
 
-#include "main.h"
-#include <string>
-// clang-format off
 #include "ARMS/config.h"
-// clang-format on
+#include "main.h"
 
 // dependencies
 #include <sstream>
+#include <string>
 
 namespace deFenestration::display {
 
