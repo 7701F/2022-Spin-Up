@@ -3,21 +3,6 @@
 
   This software is provided 'as-is', without any express or implied warranty. In no event
   will the authors be held liable for any damages arising from the use of this software.
-
-  Permission is granted to anyone to use this software for any purpose, including
-  commercial applications, and to alter it and redistribute it freely, subject to the
-  following restrictions:
-
-  1. The origin of this software must not be misrepresented; you must not claim that you
-  wrote the original software. If you use this software in a product, an acknowledgment
-  (see the following) in the product documentation is required.
-
-  Portions Copyright (c) 2019-2023 7701F
-
-  2. Altered source versions must be plainly marked as such, and must not be
-  misrepresented as being the original software.
-
-  3. This notice may not be removed or altered from any source distribution.
 */
 #include "7701.hpp"
 
@@ -157,8 +142,8 @@ void FwControlUpdateVelocityTbh() {
 /// @brief Flywheel control task
 void FwControlTask() {
 	// Set the gain
-	// gain = 0.0005;
-	gain = 0.00025;
+	gain = 0.0005;
+	// gain = 0.00025;
 
 	while (true) {
 		// Calculate velocity
@@ -187,10 +172,9 @@ void FwControlTask() {
 } // namespace deFenestration::Flywheel
 
 /// @brief Exponential drive function, uses a cubic function to scale joystick values
-/// @param joyVal joystick value
-/// @return scaled joystick value
+/// @param joyVal Joystick value that has been scaled to -100 to 100
+/// @return Scaled joystick value
 std::int32_t exponentialDrive(std::int32_t joyVal) {
-	// return joyVal;
 	return pow(joyVal, 3) / 10000;
 }
 
@@ -229,12 +213,6 @@ void opcontrol() {
 		int leftJoyStick = (master.get_analog(ANALOG_LEFT_Y) * (double)100 / 127);
 		int rightJoyStick = (master.get_analog(ANALOG_RIGHT_X) * (double)100 / 127);
 
-		// Minor deadzone to account for stick drift
-		if (abs(leftJoyStick) < 1.5)
-			leftJoyStick = 0;
-		if (abs(rightJoyStick) < 1.5)
-			rightJoyStick = 0;
-
 		/* Brake System
 		 * The brake system is a safety feature that prevents the robot from being
 		 * punished by other robots. Uses basic logic for toggle button
@@ -265,6 +243,11 @@ void opcontrol() {
 			deFenestration::Flywheel::FwVelocitySet(120, .6);
 		}
 
+		// flywheel on resting speed if neither L1 or L2 is pressed AND fwON is true
+		if ((master.get_digital_new_press(DIGITAL_L1) == 0 || master.get_digital_new_press(DIGITAL_L2) == 0) && fwON == true) {
+			deFenestration::Flywheel::FwVelocitySet(150, 0.72);
+		}
+
 		// flywheel off if fwON is false or no button is pressed
 		if (fwON == false) {
 			deFenestration::Flywheel::FwVelocitySet(0, 0.0);
@@ -289,6 +272,12 @@ void opcontrol() {
 		}
 		EprevPistonState = EpistonState;
 
+		ApistonState = master.get_digital_new_press(DIGITAL_RIGHT);
+		if (ApistonState == true && AprevPistonState == false) {
+			toggleAngler();
+		}
+		AprevPistonState = ApistonState;
+
 		// Indexer, launches discs
 		if (master.get_digital_new_press(DIGITAL_R2))
 			fireDisc();
@@ -298,7 +287,7 @@ void opcontrol() {
 		 * and the button is pressed, the robot will begin the
 		 * autonomous routine to allow for easy testing.
 		 */
-		if (master.get_digital_new_press(DIGITAL_X) && !pros::competition::is_connected())
+		if (master.get_digital_new_press(DIGITAL_DOWN) && !pros::competition::is_connected())
 			autonomous();
 
 		// Lastly, delay

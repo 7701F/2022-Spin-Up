@@ -3,21 +3,6 @@
 
   This software is provided 'as-is', without any express or implied warranty. In no event
   will the authors be held liable for any damages arising from the use of this software.
-
-  Permission is granted to anyone to use this software for any purpose, including
-  commercial applications, and to alter it and redistribute it freely, subject to the
-  following restrictions:
-
-  1. The origin of this software must not be misrepresented; you must not claim that you
-  wrote the original software. If you use this software in a product, an acknowledgment
-  (see the following) in the product documentation is required.
-
-  Portions Copyright (c) 2019-2023 7701F
-
-  2. Altered source versions must be plainly marked as such, and must not be
-  misrepresented as being the original software.
-
-  3. This notice may not be removed or altered from any source distribution.
 */
 #include "7701.hpp"
 
@@ -97,6 +82,12 @@ void toggleEndgame() {
 	endgame2.set_value(endgameState);
 }
 
+/// @brief toggle angler
+void toggleAngler() {
+	aState = !aState;
+	angler.set_value(aState);
+}
+
 /// @brief Calibration auto
 void calibrateAutos() {
 	using namespace arms::chassis;
@@ -163,34 +154,28 @@ void Wauton() {
 	prosBrake(true, 1);
 
 	// reset odom to correct position
-	arms::odom::reset({{0, 0}}, 180);
+	arms::odom::reset({{0, 0}}, 270);
 
-	move(7, 100);
-	setRollerRed();
+	deFenestration::Flywheel::FwVelocitySet(135, 0.65);
 
-	// move back then turn 90 degrees
-	move(-19, 66, arms::REVERSE);
-	turn(-90, 50, arms::RELATIVE);
-
-	move(12, 50);
-
-	move(7, 100);
-	setRollerRed();
-
-	move(-10, 80, arms::REVERSE);
-
-	move({25, 0, 270});
-	turn({147.6, 8.5}, 50);
-	turn(180, 50, arms::RELATIVE);
-	move(-50, 80, arms::REVERSE);
-
-	fireDiscs(2, 135);
-
-	deFenestration::Flywheel::FwVelocitySet(135, .81);
-
-	for (int i = 0; i < 7; i++) {
-		while (getDiscsInIndexer() < 1) {
+	// fire our preloaded discs
+	for (int i = 0; i < 2; i++) {
+		while (current_error > 3) {
 			pros::delay(7);
+		}
+
+		// fire disc
+		fireDisc();
+	}
+
+	// fire 6 more discs
+	for (int i = 0; i < 7; i++) {
+		while (current_error > 3) {
+			pros::delay(7);
+		}
+
+		while (getDiscsInIndexer() < 1) {
+			pros::delay(2);
 		}
 
 		// fire disc
@@ -199,7 +184,44 @@ void Wauton() {
 
 	deFenestration::Flywheel::FwVelocitySet(0, 0);
 
-	move({0, 0, 0});
+	move({-41, 10, 0}, 0);
+
+	move(7, 67);
+	setRollerRed();
+
+	// move back then turn 90 degrees
+	move(-19, 66, arms::REVERSE);
+	turn(-90, 76, arms::RELATIVE);
+
+	move(12, 50);
+
+	move(7, 100);
+	setRollerRed();
+
+	arms::odom::reset({{0, 0}}, 180);
+
+	move({-139.1, 102, 0}, 90);
+
+	move(7, 100);
+	setRollerRed();
+
+	// move back then turn 90 degrees
+	move(-19, 76, arms::REVERSE);
+	turn(-90, 76, arms::RELATIVE);
+
+	move(12, 80);
+
+	move(7, 100);
+	setRollerRed();
+
+	move(-16, 80, arms::REVERSE);
+
+	turn(90, 90, arms::RELATIVE); // turn -45 to face the endgame firing position
+
+	move(9, 76, arms::REVERSE); // move 10 inches forward
+
+	turn(-45, 50, arms::RELATIVE);
+	// toggleEndgame(); // fire endgame
 }
 
 /// @brief Extra bit for Long Side AWP that goes to the row of discs and shoots 3 more discs
@@ -340,7 +362,9 @@ void shortAuto(int color, bool AWP) {
 	// turn around
 	turn(198, 50, arms::RELATIVE);
 	// fire 2 discs
+	toggleAngler();
 	fireDiscs(2, 190);
+	toggleAngler();
 
 	// check if AWP is enabled, else exit (return)
 	if (!AWP) {

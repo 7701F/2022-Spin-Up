@@ -3,30 +3,15 @@
 
   This software is provided 'as-is', without any express or implied warranty. In no event
   will the authors be held liable for any damages arising from the use of this software.
-
-  Permission is granted to anyone to use this software for any purpose, including
-  commercial applications, and to alter it and redistribute it freely, subject to the
-  following restrictions:
-
-  1. The origin of this software must not be misrepresented; you must not claim that you
-  wrote the original software. If you use this software in a product, an acknowledgment
-  (see the following) in the product documentation is required.
-
-  Portions Copyright (c) 2019-2023 7701F
-
-  2. Altered source versions must be plainly marked as such, and must not be
-  misrepresented as being the original software.
-
-  3. This notice may not be removed or altered from any source distribution.
 */
 #ifndef _7701F_HEAD_H_
 #define _7701F_HEAD_H_
 
 #include "main.h"
+#include <string>
 // clang-format off
 #include "ARMS/config.h"
 // clang-format on
-#include "settings.h"
 
 // dependencies
 #include <sstream>
@@ -56,6 +41,8 @@ inline pros::ADIDigitalOut indexer('G');
 // endgame
 inline pros::ADIDigitalOut endgame2('F');
 inline pros::ADIDigitalOut endgame('H');
+
+inline pros::ADIDigitalOut angler('A');
 
 /* Sensors */
 inline pros::Distance indexerSensor(16);
@@ -168,7 +155,11 @@ inline bool indexState = false;
 // endgame piston state
 inline bool EpistonState = false;
 inline bool EprevPistonState = false;
+inline bool ApistonState = false;
+inline bool AprevPistonState = false;
+
 inline bool endgameState = false;
+inline bool aState = false;
 
 // Declare driver functions.
 void prosBrake(bool on, int type);
@@ -177,4 +168,13 @@ void prosBrake(bool on);
 // Declare game system functions.
 void fireDisc();
 void toggleEndgame();
+void toggleAngler();
+
+namespace deFenestration {
+
+/* program version definition */
+const std::string CODENAME = "DF23-6M";
+
+} // namespace deFenestration
+
 #endif // _7701F_HEAD_H_
