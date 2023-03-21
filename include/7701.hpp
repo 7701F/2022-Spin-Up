@@ -7,8 +7,10 @@
 #ifndef _7701F_HEAD_H_
 #define _7701F_HEAD_H_
 
-#include "ARMS/config.h"
 #include "main.h"
+// clang-format off
+#include "ARMS/config.h"
+// clang-format on
 
 // dependencies
 #include <sstream>
@@ -20,7 +22,7 @@ namespace deFenestration::display {
 void create();
 
 /* destroy custom display*/
-// void destroy();
+void destroy();
 
 } // namespace deFenestration::display
 
