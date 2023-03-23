@@ -4,6 +4,7 @@
   This software is provided 'as-is', without any express or implied warranty. In no event
   will the authors be held liable for any damages arising from the use of this software.
 */
+#pragma once
 #ifndef _7701F_HEAD_H_
 #define _7701F_HEAD_H_
 
@@ -32,7 +33,7 @@ void destroy();
 inline pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 /* Game System Motors */
-inline pros::Motor fw(13, pros::E_MOTOR_GEAR_GREEN, true, pros::E_MOTOR_ENCODER_COUNTS);
+inline pros::Motor fw(18, pros::E_MOTOR_GEAR_GREEN, true, pros::E_MOTOR_ENCODER_COUNTS);
 inline pros::Motor conveyor(10, pros::E_MOTOR_GEAR_BLUE, true, pros::E_MOTOR_ENCODER_COUNTS);
 
 /* Pistons */
@@ -45,11 +46,11 @@ inline pros::ADIDigitalOut endgame('H');
 inline pros::ADIDigitalOut angler('A');
 
 /* Sensors */
-inline pros::Distance indexerSensor(16);
+inline pros::Distance indexerSensor(19);
 inline pros::Optical rollerSensor(9);
 
 /* LEDs */
-// inline sylib::Addrled indexLights(22, 2, 64);
+inline sylib::Addrled indexLights(22, 2, 64);
 
 /* Filters */
 inline sylib::MedianFilter hueFilter(5, 2, 1);
@@ -60,11 +61,11 @@ inline sylib::MedianFilter distanceFilter(5, 2, 1);
 /* Gets the # of Frisbees in the Indexer */
 inline int getDiscsInIndexer() {
 	int sensorDistance = distanceFilter.filter(indexerSensor.get());
-	if (sensorDistance > 105) {
+	if (sensorDistance > 155) {
 		return 0;
-	} else if (sensorDistance > 90) {
+	} else if (sensorDistance > 125) {
 		return 1;
-	} else if (sensorDistance > 70) {
+	} else if (sensorDistance > 80) {
 		return 2;
 	} else {
 		return 3;
@@ -139,7 +140,7 @@ void FwControlTask();
 } // namespace deFenestration::Flywheel
 
 // Declare drive system variables.
-inline bool pbrake = true;
+inline bool pbrake = false;
 
 // Game System Variables
 // flywheel speed state
@@ -173,7 +174,7 @@ void toggleAngler();
 namespace deFenestration {
 
 /* program version definition */
-const std::string CODENAME = "DF23-6M";
+const std::string CODENAME = "DF23-6M-W";
 
 } // namespace deFenestration
 

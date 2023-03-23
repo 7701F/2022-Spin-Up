@@ -64,7 +64,8 @@ namespace deFenestration::Flywheel {
 /// @brief Flywheel motor velocity to voltage conversion
 /// @param value motor velocity in RPM
 void FwMotorSet(int value) {
-	int x = (value * 12000) / 210;
+	int x;
+	x = (value * 12000) / FW_MAX_POWER;
 	fw.move_voltage(x);
 }
 
@@ -142,7 +143,7 @@ void FwControlUpdateVelocityTbh() {
 /// @brief Flywheel control task
 void FwControlTask() {
 	// Set the gain
-	gain = 0.0005;
+	gain = 0.0001;
 	// gain = 0.00025;
 
 	while (true) {
@@ -195,9 +196,9 @@ void opcontrol() {
 	// set brake mode
 	prosBrake(true, 1);
 
-	// set flywheel velocity to 0
+	//
+	arms::odom::reset({0, 0}, 102.06);
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
-	// set intake velocity to 0
 	conveyor.move_velocity(0);
 
 	// set current limit
@@ -244,9 +245,9 @@ void opcontrol() {
 		}
 
 		// flywheel on resting speed if neither L1 or L2 is pressed AND fwON is true
-		if ((master.get_digital_new_press(DIGITAL_L1) == 0 || master.get_digital_new_press(DIGITAL_L2) == 0) && fwON == true) {
-			deFenestration::Flywheel::FwVelocitySet(150, 0.72);
-		}
+		// if ((master.get_digital_new_press(DIGITAL_L1) == 0 && master.get_digital_new_press(DIGITAL_L2) == 0) && fwON == true) {
+		// 	deFenestration::Flywheel::FwVelocitySet(150, 0.72);
+		// }
 
 		// flywheel off if fwON is false or no button is pressed
 		if (fwON == false) {

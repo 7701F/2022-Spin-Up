@@ -64,7 +64,8 @@ void initialize() {
 
 				master.print(1, 0, autonstr.str().c_str());
 			} else if (count == 5) {
-				printf("x: %f y: %f, h: %f\n", arms::odom::getPosition().x, arms::odom::getPosition().y, arms::odom::getHeading());
+				// printf("discs in flywheel: %d\n", getDiscsInIndexer());
+				// printf("x: %f y: %f, h: %f\n", arms::odom::getPosition().x, arms::odom::getPosition().y, arms::odom::getHeading());
 			}
 
 			count++;

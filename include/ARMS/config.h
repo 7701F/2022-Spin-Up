@@ -16,7 +16,7 @@ namespace arms {
 
 // Ticks per inch
 #define TPI 54.46        // Encoder ticks per inch of forward robot movement
-#define MIDDLE_TPI 33 // Ticks per inch for the middle wheel
+#define MIDDLE_TPI 0 // Ticks per inch for the middle wheel
 
 // Tracking wheel distances
 #define TRACK_WIDTH 12.6 // The distance between left and right wheels (or tracker wheels)
@@ -34,7 +34,7 @@ namespace arms {
 #define ANGULAR_EXIT_ERROR 1    // default exit distance for angular movements
 #define SETTLE_THRESH_LINEAR .5 // amount of linear movement for settling
 #define SETTLE_THRESH_ANGULAR 1 // amount of angular movement for settling
-#define SETTLE_TIME 150         // amount of time to count as settled
+#define SETTLE_TIME 175         // amount of time to count as settled
 
 // linear PID constants
 #define LINEAR_KP 5
