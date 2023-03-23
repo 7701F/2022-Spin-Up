@@ -231,9 +231,9 @@ void Wauton() {
 
 	conveyor.move_velocity(-300);
 	// move to 31.17, 16.7, -37.56
-	move({31.17, 16.7, -37.56}, 76);
+	// move({31.17, 16.7, -45.56}, 76);
 	// move to 52, -0.30, -39.89
-	move({52, -0.30, -39.89}, 76);
+	move({52, -0.30, -45.89}, 76);
 	move({84.51, -35.56, 0}, 76);
 	conveyor.move_velocity(0);
 
@@ -257,6 +257,7 @@ void Wauton() {
 
 	turn(0, 50);
 	turn(-45, 50, arms::RELATIVE);
+	move(5, 10);
 	turn(270, 26);
 	// toggleEndgame(); // fire endgame
 }
