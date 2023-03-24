@@ -248,7 +248,6 @@ void opcontrol() {
 			deFenestration::Flywheel::FwVelocitySet(160, 0.76);
 		}
 
-
 		// flywheel on resting speed if neither L1 or L2 is pressed AND fwON is true
 		// if ((master.get_digital_new_press(DIGITAL_L1) == 0 && master.get_digital_new_press(DIGITAL_L2) == 0) && fwON == true) {
 		// 	deFenestration::Flywheel::FwVelocitySet(150, 0.72);
