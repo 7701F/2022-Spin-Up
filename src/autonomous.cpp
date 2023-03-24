@@ -85,21 +85,6 @@ void toggleAngler() {
 	angler.set_value(aState);
 }
 
-/// @brief Calibration auto
-void calibrateAutos() {
-	using namespace arms::chassis;
-
-	prosBrake(true, 1);
-
-	arms::odom::reset({{0, 0}}, 0);
-
-	// move forward 5 inches
-	move(45, 60, arms::RELATIVE);
-
-	// turn right 90 degrees
-	turn({0, 10}, 60, arms::RELATIVE);
-}
-
 /// @brief 90 pt theoretical Programming Skills Autonomous Routine
 void Sauton() {
 	using namespace arms::chassis;
@@ -145,128 +130,6 @@ void Sauton() {
 	// toggleEndgame(); // fire endgame
 }
 
-/// @brief 148 pt theoretical Programming Skills Autonomous Routine
-void WautonOld() {
-	using namespace arms::chassis;
-
-	// Red Goal: 6.52, -44.06
-	// Blue Goal: 95.38, 39.17
-
-	// reset odom to correct position
-	arms::odom::reset({0, 0}, 102.06);
-
-	// deFenestration::Flywheel::FwVelocitySet(157, 0.65);
-
-	// // timeout in case we don't hit the target speed, utilzing a pros::millis() timer. also has an exit check
-	// int startTime = pros::millis();
-	// bool exit = false;
-	// while (pros::millis() - startTime < 5000 && exit == false) {
-	// 	// fire our preloaded discs
-	// 	for (int i = 0; i < 2; i++) {
-	// 		while (current_error > 4) {
-	// 			pros::delay(45);
-	// 		}
-	// 		// fire disc
-	// 		fireDisc();
-	// 		pros::delay(150);
-	// 	}
-	// 	exit = true;
-	// }
-
-	// // another timeout in case we don't detect a disc, utilzing a pros::millis() timer. also has an exit check
-	// startTime = pros::millis();
-	// exit = false;
-	// while (pros::millis() - startTime < 10000 && exit == false) {
-	// 	// fire 7 more discs
-	// 	for (int i = 0; i < 7; i++) {
-	// 		while (current_error > 3) {
-	// 			pros::delay(45);
-	// 		}
-
-	// 		while (getDiscsInIndexer() == 0) {
-	// 			pros::delay(100);
-	// 		}
-
-	// 		// fire disc
-	// 		fireDisc();
-	// 		pros::delay(150);
-	// 	}
-
-	// 	exit = true;
-	// }
-
-	// deFenestration::Flywheel::FwVelocitySet(0, 0);
-
-	// turn(, 50);
-
-	move({16, 36.6, 180}, 76);
-	turn(180, 50);
-
-	move(16, 50);
-	move(7, 100);
-	setRollerRed();
-
-	// move back then turn 90 degrees
-	move(-20, 66, arms::REVERSE);
-	// outtake
-	conveyor.move_velocity(-500);
-	pros::delay(500);
-	conveyor.move_velocity(0);
-	turn(90, 76);
-
-	conveyor.move_velocity(500);
-	move(16, 50);
-	conveyor.move_velocity(0);
-	move(7, 100);
-	setRollerRed();
-
-	// move back 6 inches, then turn to 0, then turn right 45
-	move(-16.6, 66, arms::REVERSE);
-	turn(315, 65);
-
-	// return;
-
-	conveyor.move_velocity(-300);
-	move({31.17, 16, -45}, 76);
-	move({90, 0, 270}, 76);
-	// move({84.51, -36, -45}, 76);
-	move({105.5, -37, 0}, 76);
-	turn(0);
-	move(16.51, 76);
-	conveyor.move_velocity(0);
-
-	// turn(0);
-	conveyor.move_velocity(600);
-	// move({93, -37, 0}, 60);
-
-	move(18, 50);
-	conveyor.move_velocity(0);
-	move(16, 50);
-	move(7, 100);
-	setRollerRed();
-
-	// move back then turn 90 degrees
-	move(-20, 66, arms::REVERSE);
-	// outtake
-	conveyor.move_velocity(-500);
-	pros::delay(500);
-	conveyor.move_velocity(0);
-	turn(270, 76);
-
-	move(16, 50);
-	move(7, 100);
-	setRollerRed();
-
-	move(-16, 80, arms::REVERSE);
-
-	turn(0, 50);
-	turn(-45, 50, arms::RELATIVE);
-	move(5, 10);
-	turn(270, 26);
-	move(7.5, 10);
-	// toggleEndgame(); // fire endgame
-}
-
 void Wauton() {
 	using namespace arms::chassis;
 
@@ -274,7 +137,7 @@ void Wauton() {
 	// Blue Goal: 95.38, 39.17
 
 	// reset odom to correct position
-	arms::odom::reset({0, 0}, 102.06);
+	arms::odom::reset({0, 0}, 105);
 
 	deFenestration::Flywheel::FwVelocitySet(157, 0.65);
 
@@ -350,11 +213,13 @@ void Wauton() {
 	turn({0, 0});
 
 	// move back to position to move to the other corner
-	move({0, 0, 270}, 76);
+	move({0, 0, 90}, 76);
 
 	// shoot 3 discs
-	turn(15, 30, arms::RELATIVE);
+	// turn(15, 30, arms::RELATIVE);
+	turn(105, 50);
 	fireDiscs(3, 155, 0.65);
+	turn(-270, 50, arms::RELATIVE);
 
 	move({-24, 52.6}, 76);
 	turn(0, 50);

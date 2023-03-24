@@ -17,16 +17,6 @@
 #include <sstream>
 #include <string>
 
-namespace deFenestration::display {
-
-/* create custom display */
-void create();
-
-/* destroy custom display*/
-void destroy();
-
-} // namespace deFenestration::display
-
 // Declarations
 
 /* Controller */
@@ -50,7 +40,7 @@ inline pros::Distance indexerSensor(19);
 inline pros::Optical rollerSensor(9);
 
 /* LEDs */
-inline sylib::Addrled indexLights(22, 2, 64);
+// inline sylib::Addrled indexLights(22, 2, 64);
 
 /* Filters */
 inline sylib::MedianFilter hueFilter(5, 2, 1);
@@ -139,8 +129,6 @@ inline bool pbrake = false;
 
 // Game System Variables
 // flywheel speed state
-inline bool flywheel2PosState = false;
-inline bool flywheel3PosState = false;
 inline bool fwON = false;
 
 // firing piston state
