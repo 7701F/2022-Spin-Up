@@ -19,7 +19,7 @@ const int ERROR = 3;
 void setRollerRed() {
 	int rollerStartTime = pros::millis();
 	conveyor.move_velocity(-500);
-	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 900) {
+	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 800) {
 		pros::delay(10);
 	}
 	conveyor.move_velocity(0);
@@ -30,7 +30,7 @@ void setRollerRed() {
 void setRollerBlue() {
 	int rollerStartTime = pros::millis();
 	conveyor.move_velocity(-500);
-	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 900) {
+	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 800) {
 		pros::delay(10);
 	}
 	conveyor.move_velocity(0);
@@ -47,18 +47,15 @@ void fireDisc() {
 	pros::delay(135);
 	indexState = !indexState;
 	indexer.set_value(indexState);
-	pros::delay(5);
+	pros::delay(20);
 }
 
 /// @brief  Fire a specified number of discs at a specified rpm
 /// @param discs number of discs to fire
 /// @param rpm rpm to fire discs at (will wait for flywheel to reach this speed for each disc)
-void fireDiscs(int discs, int rpm) {
-	float frpm = rpm;
-	float predicted_drive = ((frpm / 210) + .02);
-
+void fireDiscs(int discs, int rpm, float predicted_drive) {
 	// set the flywheel to the correct speed, then wait for it to be up to speed
-	deFenestration::Flywheel::FwVelocitySet(rpm, .86);
+	deFenestration::Flywheel::FwVelocitySet(rpm, predicted_drive);
 
 	// loop through firing discs
 	for (int i = 0; i < discs; i++) {
@@ -135,7 +132,7 @@ void Sauton() {
 	turn(192, 56, arms::RELATIVE); // turn 180 to face ur mom
 
 	move(-30, 80, arms::REVERSE);
-	fireDiscs(2, 135); // fire two discs, it's a free 10 points, will help in rankings
+	fireDiscs(2, 135, .86); // fire two discs, it's a free 10 points, will help in rankings
 	move(30, 80);
 
 	turn(180, 50, arms::RELATIVE);
@@ -149,11 +146,11 @@ void Sauton() {
 }
 
 /// @brief 148 pt theoretical Programming Skills Autonomous Routine
-void Wauton() {
+void WautonOld() {
 	using namespace arms::chassis;
 
-	// set the brake
-	// prosBrake(true, 1);
+	// Red Goal: 6.52, -44.06
+	// Blue Goal: 95.38, 39.17
 
 	// reset odom to correct position
 	arms::odom::reset({0, 0}, 102.06);
@@ -169,12 +166,10 @@ void Wauton() {
 	// 		while (current_error > 4) {
 	// 			pros::delay(45);
 	// 		}
-
 	// 		// fire disc
 	// 		fireDisc();
 	// 		pros::delay(150);
 	// 	}
-
 	// 	exit = true;
 	// }
 
@@ -189,9 +184,8 @@ void Wauton() {
 	// 		}
 
 	// 		while (getDiscsInIndexer() == 0) {
-	// 			pros::delay(45);
+	// 			pros::delay(100);
 	// 		}
-	// 		pros::delay(150);
 
 	// 		// fire disc
 	// 		fireDisc();
@@ -203,25 +197,26 @@ void Wauton() {
 
 	// deFenestration::Flywheel::FwVelocitySet(0, 0);
 
-	// turn 25 left
-	turn(76, 50);
+	// turn(, 50);
 
-	// move({6, 7.5, 60}, 50);
-	// move({12, 15, 45}, 60);
-	// // move({6, 15, 45}, 60, arms::THRU);
-	// move({4.73, 34, 182}, 50);
-
-	move({13, 31.56, 180}, 76);
+	move({16, 36.6, 180}, 76);
+	turn(180, 50);
 
 	move(16, 50);
 	move(7, 100);
 	setRollerRed();
 
 	// move back then turn 90 degrees
-	move(-16.6, 66, arms::REVERSE);
+	move(-20, 66, arms::REVERSE);
+	// outtake
+	conveyor.move_velocity(-500);
+	pros::delay(500);
+	conveyor.move_velocity(0);
 	turn(90, 76);
 
+	conveyor.move_velocity(500);
 	move(16, 50);
+	conveyor.move_velocity(0);
 	move(7, 100);
 	setRollerRed();
 
@@ -229,24 +224,33 @@ void Wauton() {
 	move(-16.6, 66, arms::REVERSE);
 	turn(315, 65);
 
+	// return;
+
 	conveyor.move_velocity(-300);
-	// move to 31.17, 16.7, -37.56
-	// move({31.17, 16.7, -45.56}, 76);
-	// move to 52, -0.30, -39.89
-	move({52, -0.30, -45.89}, 76);
-	move({84.51, -35.56, 0}, 76);
+	move({31.17, 16, -45}, 76);
+	move({90, 0, 270}, 76);
+	// move({84.51, -36, -45}, 76);
+	move({105.5, -37, 0}, 76);
+	turn(0);
+	move(16.51, 76);
 	conveyor.move_velocity(0);
 
-	turn(0);
+	// turn(0);
+	conveyor.move_velocity(600);
+	// move({93, -37, 0}, 60);
 
-	move({93, -37, 0}, 60);
-
+	move(18, 50);
+	conveyor.move_velocity(0);
 	move(16, 50);
 	move(7, 100);
 	setRollerRed();
 
 	// move back then turn 90 degrees
-	move(-16.6, 66, arms::REVERSE);
+	move(-20, 66, arms::REVERSE);
+	// outtake
+	conveyor.move_velocity(-500);
+	pros::delay(500);
+	conveyor.move_velocity(0);
 	turn(270, 76);
 
 	move(16, 50);
@@ -259,6 +263,143 @@ void Wauton() {
 	turn(-45, 50, arms::RELATIVE);
 	move(5, 10);
 	turn(270, 26);
+	move(7.5, 10);
+	// toggleEndgame(); // fire endgame
+}
+
+void Wauton() {
+	using namespace arms::chassis;
+
+	// Red Goal: 6.52, -44.06
+	// Blue Goal: 95.38, 39.17
+
+	// reset odom to correct position
+	arms::odom::reset({0, 0}, 102.06);
+
+	deFenestration::Flywheel::FwVelocitySet(157, 0.65);
+
+	// timeout in case we don't hit the target speed, utilzing a pros::millis() timer. also has an exit check
+	int startTime = pros::millis();
+	bool exit = false;
+	while (pros::millis() - startTime < 5000 && exit == false) {
+		// fire our preloaded discs
+		for (int i = 0; i < 2; i++) {
+			while (current_error > 4) {
+				pros::delay(45);
+			}
+			// fire disc
+			fireDisc();
+			pros::delay(150);
+		}
+		exit = true;
+	}
+
+	// another timeout in case we don't detect a disc, utilzing a pros::millis() timer. also has an exit check
+	startTime = pros::millis();
+	exit = false;
+	while (pros::millis() - startTime < 10000 && exit == false) {
+		// fire 7 more discs
+		for (int i = 0; i < 7; i++) {
+			while (current_error > 3) {
+				pros::delay(45);
+			}
+
+			while (getDiscsInIndexer() == 0) {
+				pros::delay(100);
+			}
+
+			// fire disc
+			fireDisc();
+			pros::delay(150);
+		}
+
+		exit = true;
+	}
+
+	deFenestration::Flywheel::FwVelocitySet(0, 0);
+
+	move(10, 76);
+
+	move({16, 36.6, 180}, 76);
+	turn(180, 50);
+
+	move(16, 50);
+	move(7, 100);
+	setRollerRed();
+
+	// move back then turn 90 degrees
+	move(-20, 66, arms::REVERSE);
+	// outtake
+	conveyor.move_velocity(-500);
+	pros::delay(500);
+	conveyor.move_velocity(0);
+	turn(90, 76);
+
+	move(16, 50);
+	move(7, 100);
+	setRollerRed();
+
+	// move back 6 inches, then turn to 0, then turn right 45
+	move(-16.6, 66, arms::REVERSE);
+	turn({28, 36}, 65);
+	conveyor.move_velocity(520);
+	move(16, 50);
+	pros::delay(500);
+	conveyor.move_velocity(0);
+	move(-16, 50, arms::REVERSE);
+	turn({0, 0});
+
+	// move back to position to move to the other corner
+	move({0, 0, 270}, 76);
+
+	// shoot 3 discs
+	turn(15, 30, arms::RELATIVE);
+	fireDiscs(3, 155, 0.65);
+
+	move({-24, 52.6}, 76);
+	turn(0, 50);
+
+	// move to the other corner
+	move({81, -40, 90}, 76);
+
+	turn(90, 50);
+	conveyor.move_velocity(500);
+	move(15, 30);
+	conveyor.move_velocity(0);
+
+	// Red Goal: 6.52, -44.06
+	turn({6.52, -44.06}, 50);
+	turn(180, 50, arms::RELATIVE);
+	move(20, 76);
+	fireDiscs(3, 190, 0.65);
+	move(-20, 76, arms::REVERSE);
+	turn(180, 50, arms::RELATIVE);
+
+	move({93, -36.5, 0}, 76);
+
+	move(16, 50);
+	move(7, 100);
+	setRollerRed();
+
+	// move back then turn 90 degrees
+	move(-20, 66, arms::REVERSE);
+	// outtake
+	conveyor.move_velocity(-500);
+	pros::delay(500);
+	conveyor.move_velocity(0);
+	turn(270, 76);
+
+	move(16, 50);
+	move(7, 100);
+	setRollerRed();
+
+	move(-16, 80, arms::REVERSE);
+
+	turn(0, 50);
+	turn(-45, 50, arms::RELATIVE);
+	move(5, 10);
+	turn(270, 26);
+	move(7.5, 10);
 	// toggleEndgame(); // fire endgame
 }
 
@@ -285,7 +426,7 @@ void longAWP() {
 	turn(180, 25, arms::RELATIVE);
 
 	// fire 2 discs
-	fireDiscs(2, 185);
+	fireDiscs(2, 185, .86);
 }
 
 /// @brief Extra bit for Short Side AWP that goes to the row of discs and shoots 3 more discs
@@ -308,7 +449,7 @@ void shortAWP() {
 
 	// turn around so the flywheel is facing the goal
 	turn(198, 60, arms::RELATIVE);
-	fireDiscs(2, 185);
+	fireDiscs(2, 185, .86);
 }
 
 /// @brief Long Side Autonomous Routine, parameters are color and whether or not we're doing AWP
@@ -354,7 +495,7 @@ void longAuto(int color, bool AWP) {
 	turn(180, 76, arms::RELATIVE);
 
 	// fire 2 discs
-	fireDiscs(2, 185);
+	fireDiscs(2, 185, .86);
 
 	// check if AWP is enabled, else exit (return)
 	if (!AWP) {
@@ -405,7 +546,7 @@ void shortAuto(int color, bool AWP) {
 	turn(198, 50, arms::RELATIVE);
 
 	// fire 2 discs
-	fireDiscs(2, 190);
+	fireDiscs(2, 190, .96);
 
 	// check if AWP is enabled, else exit (return)
 	if (!AWP) {

@@ -72,13 +72,8 @@ inline int getDiscsInIndexer() {
 	}
 }
 
-/* Get the color of the Roller from the Optical Sensor.
-
- * 0 = no color.
- * 1 = blue.
- * 2 = red.
- * 3 = idk.
- */
+/// @brief Gets the color of the roller
+/// @return 1 = blue, 2 = red, 3 = unknown
 inline int getRollerColor() {
 	if (rollerSensor.get_proximity() < 200) {
 		return 0;
