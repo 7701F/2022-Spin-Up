@@ -239,13 +239,14 @@ void opcontrol() {
 			deFenestration::Flywheel::FwVelocitySet(198, 0.81);
 		}
 
+		// 160 / 210 = 76% power
+		if (master.get_digital_new_press(DIGITAL_X) && fwON == true) {
+			deFenestration::Flywheel::FwVelocitySet(160, 0.76);
+		}
+
 		// flywheel 2/3 speed
 		if (master.get_digital_new_press(DIGITAL_L2) && fwON == true) {
 			deFenestration::Flywheel::FwVelocitySet(120, .6);
-		}
-
-		if (master.get_digital_new_press(DIGITAL_X) && fwON == true) {
-			deFenestration::Flywheel::FwVelocitySet(160, 0.76);
 		}
 
 		// flywheel on resting speed if neither L1 or L2 is pressed AND fwON is true

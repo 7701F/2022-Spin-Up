@@ -40,11 +40,11 @@ void initialize() {
 		int count;
 		std::string autonName;
 		while (true) {
-			if (count == 15) {
+			if (count == 10) {
 				std::stringstream line1;
 				line1 << "Brake: " << (pbrake ? "ON" : "OFF") << " FW:" << (fwON ? "Y" : "N") << "\r";
 				master.print(0, 0, line1.str().c_str());
-			} else if (count == 10) {
+			} else if (count == 5) {
 				std::stringstream autonstr;
 				int selAuton = abs(arms::selector::auton);
 				if (selAuton != 0) {
@@ -63,13 +63,10 @@ void initialize() {
 				}
 
 				master.print(1, 0, autonstr.str().c_str());
-			} else if (count == 5) {
-				// printf("discs in flywheel: %d\n", getDiscsInIndexer());
-				// printf("x: %f y: %f, h: %f\n", arms::odom::getPosition().x, arms::odom::getPosition().y, arms::odom::getHeading());
 			}
 
 			count++;
-			count %= 20;
+			count %= 15;
 
 			// indexLights.set_all(0xE62169);
 			pros::delay(10);
