@@ -197,7 +197,7 @@ void opcontrol() {
 	prosBrake(true, 1);
 
 	//
-	arms::odom::reset({0, 0}, 102.06);
+	arms::odom::reset({0, 0}, 105);
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 	conveyor.move_velocity(0);
 

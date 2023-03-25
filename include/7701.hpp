@@ -51,11 +51,11 @@ inline sylib::MedianFilter distanceFilter(5, 2, 1);
 /* Gets the # of Frisbees in the Indexer */
 inline int getDiscsInIndexer() {
 	int sensorDistance = distanceFilter.filter(indexerSensor.get());
-	if (sensorDistance > 155) {
+	if (sensorDistance > 145) {
 		return 0;
 	} else if (sensorDistance > 125) {
 		return 1;
-	} else if (sensorDistance > 80) {
+	} else if (sensorDistance > 84) {
 		return 2;
 	} else {
 		return 3;
@@ -125,7 +125,7 @@ void FwControlTask();
 } // namespace deFenestration::Flywheel
 
 // Declare drive system variables.
-inline bool pbrake = false;
+inline bool pbrake = true;
 
 // Game System Variables
 // flywheel speed state

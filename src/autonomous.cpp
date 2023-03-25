@@ -18,7 +18,7 @@ const int ERROR = 3;
 /// @brief Set the roller to red using the optical sensor
 void setRollerRed() {
 	int rollerStartTime = pros::millis();
-	conveyor.move_velocity(-500);
+	conveyor.move_velocity(-600);
 	while (getRollerColor() != 2 && pros::millis() - rollerStartTime < 800) {
 		pros::delay(10);
 	}
@@ -29,7 +29,7 @@ void setRollerRed() {
 /// @brief Set the roller to blue using the optical sensor
 void setRollerBlue() {
 	int rollerStartTime = pros::millis();
-	conveyor.move_velocity(-500);
+	conveyor.move_velocity(-600);
 	while (getRollerColor() != 1 && pros::millis() - rollerStartTime < 800) {
 		pros::delay(10);
 	}
@@ -137,135 +137,131 @@ void Wauton() {
 	// Blue Goal: 95.38, 39.17
 
 	// reset odom to correct position
-	arms::odom::reset({0, 0}, 105);
+	arms::odom::reset({0, 0}, 107);
 
-	deFenestration::Flywheel::FwVelocitySet(157, 0.65);
+	prosBrake(false);
+
+	deFenestration::Flywheel::FwVelocitySet(136, 0.65);
 
 	// timeout in case we don't hit the target speed, utilzing a pros::millis() timer. also has an exit check
 	int startTime = pros::millis();
 	bool exit = false;
+	int disks;
 	while (pros::millis() - startTime < 5000 && exit == false) {
 		// fire our preloaded discs
-		for (int i = 0; i < 2; i++) {
+		for (int i = 1; i < 3; i++) {
 			while (current_error > 4) {
-				pros::delay(45);
+				pros::delay(100);
 			}
+			pros::delay(200);
+			disks = getDiscsInIndexer();
+
 			// fire disc
 			fireDisc();
-			pros::delay(150);
+			while (getDiscsInIndexer() == 2) {
+				pros::delay(20);
+			}
 		}
 		exit = true;
 	}
+	pros::delay(200);
+	conveyor.move_velocity(600);
 
 	// another timeout in case we don't detect a disc, utilzing a pros::millis() timer. also has an exit check
 	startTime = pros::millis();
 	exit = false;
+	bool discIn = false;
 	while (pros::millis() - startTime < 10000 && exit == false) {
 		// fire 7 more discs
 		for (int i = 0; i < 7; i++) {
-			while (current_error > 3) {
-				pros::delay(45);
-			}
-
-			while (getDiscsInIndexer() == 0) {
+			while (current_error > 4) {
 				pros::delay(100);
 			}
 
+			while (getDiscsInIndexer() == 0 && discIn == false) {
+				pros::delay(75);
+				if (getDiscsInIndexer() > 0) {
+					discIn = true;
+				}
+				pros::delay(75);
+			}
+			pros::delay(200);
+			disks = getDiscsInIndexer();
+
 			// fire disc
 			fireDisc();
-			pros::delay(150);
+			discIn = false;
+			while (getDiscsInIndexer() == disks) {
+				pros::delay(30);
+			}
 		}
 
 		exit = true;
 	}
+	conveyor.move_velocity(0);
 
-	deFenestration::Flywheel::FwVelocitySet(0, 0);
+	turn(60, 76);
+	move(30, 76);
 
-	move(10, 76);
-
-	move({16, 36.6, 180}, 76);
+	move({22, 33.25}, 76);
+	turn(125);
+	move(15);
+	move({19, 34.5}, 76, arms::REVERSE);
 	turn(180, 50);
 
-	move(16, 50);
-	move(7, 100);
+	move(19, 50);
+	move(7, 30);
 	setRollerRed();
 
 	// move back then turn 90 degrees
-	move(-20, 66, arms::REVERSE);
-	// outtake
-	conveyor.move_velocity(-500);
-	pros::delay(500);
-	conveyor.move_velocity(0);
+	// move({19, 33.25}, 76, arms::REVERSE);
+	move(-18.6, arms::REVERSE);
 	turn(90, 76);
 
-	move(16, 50);
-	move(7, 100);
+	move(19, 50);
+	move(7, 30);
 	setRollerRed();
 
-	// move back 6 inches, then turn to 0, then turn right 45
-	move(-16.6, 66, arms::REVERSE);
-	turn({28, 36}, 65);
-	conveyor.move_velocity(520);
-	move(16, 50);
-	pros::delay(500);
-	conveyor.move_velocity(0);
-	move(-16, 50, arms::REVERSE);
-	turn({0, 0});
+	move(-18.6, arms::REVERSE);
+	turn(270);
 
 	// move back to position to move to the other corner
-	move({0, 0, 90}, 76);
-
-	// shoot 3 discs
+	move({6, 0, 270}, 76);
 	// turn(15, 30, arms::RELATIVE);
-	turn(105, 50);
-	fireDiscs(3, 155, 0.65);
-	turn(-270, 50, arms::RELATIVE);
+	// turn(105, 50);
+	// fireDiscs(3, 155, 0.65);
 
-	move({-24, 52.6}, 76);
+	move({6, -46.6}, 76);
+	// move({4, -52.6, 0}, 76);
+	move({16, -46.6}, 76);
+	move({26, -46.6}, 76);
 	turn(0, 50);
 
 	// move to the other corner
-	move({81, -40, 90}, 76);
+	move({90, -34.4}, 80);
 
-	turn(90, 50);
-	conveyor.move_velocity(500);
-	move(15, 30);
-	conveyor.move_velocity(0);
+	turn(0);
 
-	// Red Goal: 6.52, -44.06
-	turn({6.52, -44.06}, 50);
-	turn(180, 50, arms::RELATIVE);
-	move(20, 76);
-	fireDiscs(3, 190, 0.65);
-	move(-20, 76, arms::REVERSE);
-	turn(180, 50, arms::RELATIVE);
-
-	move({93, -36.5, 0}, 76);
-
-	move(16, 50);
-	move(7, 100);
+	move(19, 50);
+	move(7, 30);
 	setRollerRed();
 
 	// move back then turn 90 degrees
-	move(-20, 66, arms::REVERSE);
-	// outtake
-	conveyor.move_velocity(-500);
-	pros::delay(500);
-	conveyor.move_velocity(0);
+	// move({19, 33.25}, 76, arms::REVERSE);
+	move(-18.6, arms::REVERSE);
 	turn(270, 76);
 
-	move(16, 50);
-	move(7, 100);
+	move(19, 50);
+	move(7, 30);
 	setRollerRed();
-
 	move(-16, 80, arms::REVERSE);
 
 	turn(0, 50);
 	turn(-45, 50, arms::RELATIVE);
-	move(5, 10);
-	turn(270, 26);
-	move(7.5, 10);
+	move(11, 10);
 	// toggleEndgame(); // fire endgame
+	turn(270, 26);
+	// move(7.5, 10);
 }
 
 /// @brief Extra bit for Long Side AWP that goes to the row of discs and shoots 3 more discs
