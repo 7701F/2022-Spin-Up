@@ -60,7 +60,7 @@ void fireDiscs(int discs, int rpm, float predicted_drive) {
 	// loop through firing discs
 	for (int i = 0; i < discs; i++) {
 		while (current_error > 5) {
-			pros::delay(30);
+			pros::delay(100);
 		}
 
 		// fire piston and wait to ensure it is fired
@@ -147,6 +147,7 @@ void Wauton() {
 	int startTime = pros::millis();
 	bool exit = false;
 	int disks;
+	bool discIn = false;
 	while (pros::millis() - startTime < 5000 && exit == false) {
 		// fire our preloaded discs
 		for (int i = 1; i < 3; i++) {
@@ -156,11 +157,23 @@ void Wauton() {
 			pros::delay(200);
 			disks = getDiscsInIndexer();
 
+			while (getDiscsInIndexer() == 0 && discIn == false) {
+				pros::delay(75);
+				if (getDiscsInIndexer() > 0) {
+					discIn = true;
+				}
+				pros::delay(30);
+			}
+			pros::delay(200);
+			disks = getDiscsInIndexer();
+
 			// fire disc
 			fireDisc();
-			while (getDiscsInIndexer() == 2) {
-				pros::delay(20);
+			discIn = false;
+			while (getDiscsInIndexer() > disks) {
+				pros::delay(30);
 			}
+			pros::delay(100);
 		}
 		exit = true;
 	}
@@ -170,7 +183,7 @@ void Wauton() {
 	// another timeout in case we don't detect a disc, utilzing a pros::millis() timer. also has an exit check
 	startTime = pros::millis();
 	exit = false;
-	bool discIn = false;
+	discIn = false;
 	while (pros::millis() - startTime < 10000 && exit == false) {
 		// fire 7 more discs
 		for (int i = 0; i < 7; i++) {
@@ -183,7 +196,7 @@ void Wauton() {
 				if (getDiscsInIndexer() > 0) {
 					discIn = true;
 				}
-				pros::delay(75);
+				pros::delay(30);
 			}
 			pros::delay(200);
 			disks = getDiscsInIndexer();
@@ -191,9 +204,10 @@ void Wauton() {
 			// fire disc
 			fireDisc();
 			discIn = false;
-			while (getDiscsInIndexer() == disks) {
+			while (getDiscsInIndexer() < disks) {
 				pros::delay(30);
 			}
+			pros::delay(275);
 		}
 
 		exit = true;
@@ -214,7 +228,6 @@ void Wauton() {
 	setRollerRed();
 
 	// move back then turn 90 degrees
-	// move({19, 33.25}, 76, arms::REVERSE);
 	move(-18.6, arms::REVERSE);
 	turn(90, 76);
 
@@ -227,9 +240,6 @@ void Wauton() {
 
 	// move back to position to move to the other corner
 	move({6, 0, 270}, 76);
-	// turn(15, 30, arms::RELATIVE);
-	// turn(105, 50);
-	// fireDiscs(3, 155, 0.65);
 
 	move({6, -46.6}, 76);
 	// move({4, -52.6, 0}, 76);
@@ -239,6 +249,9 @@ void Wauton() {
 
 	// move to the other corner
 	move({90, -34.4}, 80);
+	turn(56);
+	move(7);
+	move(-7, arms::REVERSE);
 
 	turn(0);
 
@@ -246,8 +259,6 @@ void Wauton() {
 	move(7, 30);
 	setRollerRed();
 
-	// move back then turn 90 degrees
-	// move({19, 33.25}, 76, arms::REVERSE);
 	move(-18.6, arms::REVERSE);
 	turn(270, 76);
 
@@ -259,7 +270,7 @@ void Wauton() {
 	turn(0, 50);
 	turn(-45, 50, arms::RELATIVE);
 	move(11, 10);
-	// toggleEndgame(); // fire endgame
+	toggleEndgame(); // fire endgame
 	turn(270, 26);
 	// move(7.5, 10);
 }
@@ -294,6 +305,16 @@ void longAWP() {
 void shortAWP() {
 	using namespace arms::chassis;
 
+	deFenestration::Flywheel::FwVelocitySet(187, .86);
+
+	// turn to the goal
+	turn({-147.6, -8.5}, 70);
+	turn(185, 70, arms::RELATIVE);
+
+	fireDiscs(2, 187, .96);
+
+	return;
+
 	// move to the row of discs
 	turn(180, 80, arms::RELATIVE);
 	turn(-45, 80, arms::RELATIVE);
@@ -323,16 +344,17 @@ void longAuto(int color, bool AWP) {
 	prosBrake(true, 1);
 
 	// reset odom to correct position
-	arms::odom::reset({{0, 0}}, 0);
+	arms::odom::reset({{7, 0}}, 270);
 
 	// move to the roller
-	move({7, -12, 270}, 76);
-	move({4, -24, 178}, 76);
+	move({7, -20}, 76);
+	// move({4, -24}, 76);
 
 	// pre-spin up the roller
 	conveyor.move_velocity(-470);
 
 	// drive torwards the roller
+	turn(180);
 	move(7, 76);
 	switch (color) {
 		case 1:
@@ -348,23 +370,25 @@ void longAuto(int color, bool AWP) {
 	// reset odom to correct position
 	arms::odom::reset({{0, 0}}, 180);
 
-	move(-10, 76, arms::REVERSE);
+	if(!AWP) return;
+
+
+	move(-5, 76, arms::REVERSE);
 	// turn to the goal
 	turn({-147.6, -8.5}, 50);
 
 	// turn around so the flywheel is facing the goal
-	turn(180, 76, arms::RELATIVE);
+	turn(173, 76, arms::RELATIVE);
 
 	// fire 2 discs
-	fireDiscs(2, 185, .86);
+	fireDiscs(2, 200, .86);
 
 	// check if AWP is enabled, else exit (return)
-	if (!AWP) {
-		longAWP();
-		return;
-	} else {
-		return;
-	}
+		// longAWP();
+		// return;
+	// } else {
+		// return;
+	// }
 }
 
 /// @brief Short Side Autonomous Routine, parameters are color and whether or not we're doing AWP
@@ -400,19 +424,9 @@ void shortAuto(int color, bool AWP) {
 	// move back then turn
 	move(-6, 100, arms::REVERSE);
 
-	// turn to the goal
-	turn({-147.6, -8.5}, 100);
-
-	// turn around
-	turn(198, 50, arms::RELATIVE);
-
-	// fire 2 discs
-	fireDiscs(2, 190, .96);
-
 	// check if AWP is enabled, else exit (return)
-	if (!AWP) {
+	if (AWP) {
 		shortAWP();
-		return;
 	} else {
 		return;
 	}

@@ -55,7 +55,7 @@ namespace arms {
 // Auton selector configuration constants
 #define AUTONS "Short", "Long", "SAWP", "LAWP", "Sit" // Names of autonomi, up to 10
 #define HUE 0     // Color of theme from 0-359(H part of HSV)
-#define DEFAULT 0 // Default auton selected
+#define DEFAULT -4 // Default auton selected
 
 inline const char* autons[] = {AUTONS, ""};
 

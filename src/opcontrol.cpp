@@ -179,6 +179,81 @@ std::int32_t exponentialDrive(std::int32_t joyVal) {
 	return pow(joyVal, 3) / 10000;
 }
 
+/// @brief
+void autoFire() {
+	deFenestration::Flywheel::FwVelocitySet(136, 0.65);
+
+	int startTime = pros::millis();
+	bool exit = false;
+	int disks;
+	bool discIn = false;
+	while (pros::millis() - startTime < 5000 && exit == false) {
+		// fire our preloaded discs
+		for (int i = 1; i < 3; i++) {
+			while (current_error > 4) {
+				pros::delay(100);
+			}
+			pros::delay(200);
+			disks = getDiscsInIndexer();
+
+			while (getDiscsInIndexer() == 0 && discIn == false) {
+				pros::delay(75);
+				if (getDiscsInIndexer() > 0) {
+					discIn = true;
+				}
+				pros::delay(30);
+			}
+			pros::delay(200);
+			disks = getDiscsInIndexer();
+
+			// fire disc
+			fireDisc();
+			discIn = false;
+			while (getDiscsInIndexer() > disks) {
+				pros::delay(30);
+			}
+			pros::delay(100);
+		}
+		exit = true;
+	}
+	pros::delay(200);
+	conveyor.move_velocity(600);
+
+	// another timeout in case we don't detect a disc, utilzing a pros::millis() timer. also has an exit check
+	startTime = pros::millis();
+	exit = false;
+	discIn = false;
+	while (pros::millis() - startTime < 10000 && exit == false) {
+		// fire 7 more discs
+		for (int i = 0; i < 7; i++) {
+			while (current_error > 4) {
+				pros::delay(100);
+			}
+
+			while (getDiscsInIndexer() == 0 && discIn == false) {
+				pros::delay(75);
+				if (getDiscsInIndexer() > 0) {
+					discIn = true;
+				}
+				pros::delay(30);
+			}
+			pros::delay(200);
+			disks = getDiscsInIndexer();
+
+			// fire disc
+			fireDisc();
+			discIn = false;
+			while (getDiscsInIndexer() < disks) {
+				pros::delay(30);
+			}
+			pros::delay(275);
+		}
+
+		exit = true;
+	}
+	conveyor.move_velocity(0);
+}
+
 /*
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -196,7 +271,6 @@ void opcontrol() {
 	// set brake mode
 	prosBrake(true, 1);
 
-	//
 	arms::odom::reset({0, 0}, 105);
 	deFenestration::Flywheel::FwVelocitySet(0, 0.0);
 	conveyor.move_velocity(0);
@@ -218,9 +292,8 @@ void opcontrol() {
 		 * The brake system is a safety feature that prevents the robot from being
 		 * punished by other robots. Uses basic logic for toggle button
 		 */
-		if (master.get_digital_new_press(DIGITAL_B) == 1)
-			pbrake = !pbrake;
-		prosBrake(pbrake, 1);
+		if (master.get_digital_new_press(DIGITAL_B))
+			autoFire();
 
 		// clang-format off
 		// Drive Control
