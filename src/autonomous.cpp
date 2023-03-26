@@ -370,8 +370,8 @@ void longAuto(int color, bool AWP) {
 	// reset odom to correct position
 	arms::odom::reset({{0, 0}}, 180);
 
-	if(!AWP) return;
-
+	if (!AWP)
+		return;
 
 	move(-5, 76, arms::REVERSE);
 	// turn to the goal
@@ -384,10 +384,10 @@ void longAuto(int color, bool AWP) {
 	fireDiscs(2, 200, .86);
 
 	// check if AWP is enabled, else exit (return)
-		// longAWP();
-		// return;
+	// longAWP();
+	// return;
 	// } else {
-		// return;
+	// return;
 	// }
 }
 
